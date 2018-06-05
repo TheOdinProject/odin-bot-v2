@@ -5,4 +5,4 @@ function randomInt(range) {
 function getMentions(message) {
   return message.match(/@\S+/g);
 }
-module.exports = {randomInt, getNamesFromText, getMentions};
+module.exports = {randomInt, getMentions};
