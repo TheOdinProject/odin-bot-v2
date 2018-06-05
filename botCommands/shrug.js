@@ -4,8 +4,9 @@ registerBotCommand(/\/[shurg]{5}/, ({ text }) => {
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
+  const shurgalurg = text.match(/[shurg]{5}/)[0];
   // return early if all chars are not unique
-  if (text.split("").filter(onlyUnique).length !== 6) {
+  if (text.match(/[shurg]{5}/)[0].split("").filter(onlyUnique).length !== 5) {
     return;
   }
 
@@ -16,7 +17,7 @@ registerBotCommand(/\/[shurg]{5}/, ({ text }) => {
     u: `)_`,
     g: `/¯`
   };
-  return text
+  return shurgalurg
     .split("")
     .map(ch => parts[ch])
     .join("");
