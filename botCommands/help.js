@@ -10,7 +10,7 @@ registerBotCommand(/\/help/, ({ room }) => {
     > - For help with gitter commands (and \`code\` syntax) press \`ctl+shift+alt+m\`
     > - Type \`/help\` to view this message again
     > - motivate your fellow odinites with \`/motivate\` and mention them
-    > - I'm open source!  Hack me [HERE](https://github.com/codyloyd/odin-bot-js)!`;
+    > - I'm open source!  Hack me [HERE](https://github.com/codyloyd/odin-bot-v2)!`;
 });
 
 registerBotCommand(/\/code/, ({ room }) => {
