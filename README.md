@@ -13,7 +13,7 @@ const commandFunc = function({data, text}) {
   return 'Hi, I'm a bot lol';
 }
 
-(/regex/, commandFunc)registerBotCommand
+registerBotCommand(/regex/, commandFunc);
 ```
 
 The parameter of the command-function is an object that exposes data about the message that matches the regex.  `text` is simply the full text of the message. `data` has quite a bit of info in it, but likely the most useful is the username of the person that sent the message which you can access like so: `data.fromUser.username`.
