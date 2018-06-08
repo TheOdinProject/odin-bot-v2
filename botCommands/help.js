@@ -13,7 +13,7 @@ registerBotCommand(/\/help/, ({ room }) => {
     > - I'm open source!  Hack me [HERE](https://github.com/codyloyd/odin-bot-v2)!`;
 });
 
-registerBotCommand(/\/code\s/, ({ room }) => {
+registerBotCommand(/\/code\s|\/code$/, ({ room }) => {
   return `> #Composing Code Snippets
     > To write multiple lines of code use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) (on their own line):
     > \\\`\\\`\\\`
