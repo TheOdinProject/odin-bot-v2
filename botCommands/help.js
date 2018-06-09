@@ -1,6 +1,6 @@
 const { registerBotCommand } = require("../bot-engine.js");
 
-registerBotCommand(/\/help/, ({ room }) => {
+registerBotCommand(/\/help\b/, ({ room }) => {
   return `> #Odin-Bot Commands
     > - **By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md)**
     > - give points to someone who has been helpful by mentioning their name and adding ++ : \`@username ++\` or by giving them a star : \`@username :star:\`
