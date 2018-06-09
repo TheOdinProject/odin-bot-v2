@@ -1,15 +1,12 @@
-const config = require("./config.js");
+const glob = require("glob");
+const path = require("path");
 const Gitter = require("node-gitter");
 const { listenToMessages } = require("./bot-engine.js");
+const { gitter: { token, rooms } } = require("./config.js");
 
-const gitter = new Gitter(config.gitter.token);
+const gitter = new Gitter(token);
 
-const rooms = config.gitter.rooms;
-// include your botCommands.. figure out how to do this by folder
-var glob = require("glob"),
-  path = require("path");
-
-glob.sync("./botCommands/**/*.js").forEach(function(file) {
+glob.sync("./botCommands/**/*.js").forEach(file => {
   require(path.resolve(file));
 });
 
