@@ -14,15 +14,16 @@ async function listenToMessages(gitter, roomId) {
     ) {
       return;
     }
+
     const messageData = {
       data: message.model,
       text: message.model.text,
       room: room
     };
 
-    botCommands.forEach(async command => {
-      if (messageData.text.toLowerCase().match(command.regex)) {
-        messageData.room.send(await command.fn(messageData));
+    botCommands.forEach(async ({ regex, fn }) => {
+      if (messageData.text.toLowerCase().match(regex)) {
+        messageData.room.send(await fn(messageData));
       }
     });
   });

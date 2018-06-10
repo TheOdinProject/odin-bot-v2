@@ -1,5 +1,5 @@
-const config = require("../config.js");
-const giphy = require("giphy-api")(config.giphy.apikey);
+const { giphy: { apiKey }} = require("../config.js");
+const giphy = require("giphy-api")(apiKey);
 const { registerBotCommand } = require("../bot-engine.js");
 
 async function chooseRandomGif(searchTerm) {
@@ -46,14 +46,16 @@ async function botResponse({ data, text }) {
     searchTerm = searchTerm.replace(mentionRegex, "");
   }
 
-  if (searchTerm) {
-    try {
-      const image = await chooseRandomGif(searchTerm).catch(e => {});
-      return `@${user} __${searchTerm}__ \n\n [![${searchTerm}](${image.imageUrl})](${image.url})`;
-    } catch (err) {
-      const failImage = await chooseRandomGif("FAIL");
-      return `__no gif was found with that keyword!__ \n\n !["FAIL"](${failImage.imageUrl})`;
-    }
+  if (!searchTerm) {
+    return;
+  }
+
+  try {
+    const image = await chooseRandomGif(searchTerm).catch(e => {});
+    return `@${user} __${searchTerm}__ \n\n [![${searchTerm}](${image.imageUrl})](${image.url})`;
+  } catch (err) {
+    const failImage = await chooseRandomGif("FAIL");
+    return `__no gif was found with that keyword!__ \n\n !["FAIL"](${failImage.imageUrl})`;
   }
 }
 

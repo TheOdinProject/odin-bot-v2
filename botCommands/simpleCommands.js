@@ -1,5 +1,5 @@
 const { registerBotCommand } = require("../bot-engine.js");
-const {getMentions} = require("./helpers.js");
+const { getMentions } = require("./helpers.js");
 
 registerBotCommand(/\/hug/, () => `⊂(´・ω・｀⊂)`);
 
@@ -14,15 +14,15 @@ registerBotCommand(/:fu:/, ({ data }) => {
 
 registerBotCommand(/\/google.*/, ({ text }) => {
   const transform = text => {
-    var url = "http://lmgtfy.com/?q=";
-    return url + text.split(" ").join("+");
+    const query = text.split(" ").join("+");
+    return `http://lmgtfy.com/?q=${query}`;
   };
 
   const query = text.match(/(?!\/google.?) .*/)[0].trim();
   return `[Here's your result!](${transform(query)})`;
 });
 
-registerBotCommand(/\/gandalf/,() => `[![](http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif)](http://giphy.com/gifs/B3hcUhLX3BFHa/tile)`);
+registerBotCommand(/\/gandalf/, () => `[![](http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif)](http://giphy.com/gifs/B3hcUhLX3BFHa/tile)`);
 
 registerBotCommand(/\/motivate/, ({data, text}) => {
   const user = data.fromUser.username;

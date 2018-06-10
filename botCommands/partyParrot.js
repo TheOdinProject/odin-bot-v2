@@ -4,7 +4,7 @@ const { randomInt } = require("./helpers.js");
 registerBotCommand(
   /partyparrot|party_parrot|party parrot|oiseau/,
   ({ text }) => {
-    var parrots = [
+    const parrots = [
       "http://cultofthepartyparrot.com/parrots/parrotdad.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
       "http://cultofthepartyparrot.com/parrots/shuffleparrot.gif",
@@ -22,13 +22,13 @@ registerBotCommand(
     ];
 
     if (text.toLowerCase().match("   p")) {
-      var parrotUrl = "http://cultofthepartyparrot.com/parrots/congaparrot.gif";
-      return `![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})![](${parrotUrl})`;
+      const parrotUrl = "http://cultofthepartyparrot.com/parrots/congaparrot.gif";
+      return `![](${parrotUrl})`.repeat(15);
     } else if (text.toLowerCase().match("!")) {
       return `![](${parrots[0]})`;
     } else {
-      var index = randomInt(parrots.length);
-      return `![]( ${parrots[index]} )`;
+      const index = randomInt(parrots.length);
+      return `![](${parrots[index]})`;
     }
   }
 );

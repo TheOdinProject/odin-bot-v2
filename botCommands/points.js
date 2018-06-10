@@ -3,7 +3,9 @@ const config = require('../config.js');
 const {registerBotCommand} = require('../bot-engine.js');
 
 function getNamesFromText(text) {
-  var regex = /@([a-zA-Z0-9-_]+)\s?(\+\+|:star:)/g, matches = [], match;
+  const regex = /@([a-zA-Z0-9-_]+)\s?(\+\+|:star:)/g;
+  let matches = [];
+  let match;
   while ((match = regex.exec(text)) !== null)
     matches.push(match[1]);
   return matches;
