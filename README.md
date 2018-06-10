@@ -10,7 +10,7 @@ const { registerBotCommand } = require("../bot-engine.js");
 const commandFunc = function({data, text}) {
   // this function should return either a string or a promise that resolves a string.
   // the string that returns is what the bot will say
-  return 'Hi, I'm a bot lol';
+  return "Hi, I'm a bot lol";
 }
 
 registerBotCommand(/regex/, commandFunc);
