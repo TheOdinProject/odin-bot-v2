@@ -15,7 +15,7 @@ registerBotCommand(/\/help\b/, ({ room }) => {
 
 registerBotCommand(/\/code\s|\/code$/, ({ room }) => {
   return `> #Composing Code Snippets
-    > To write multiple lines of code use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) (on their own line, `shift + enter` makes new lines):
+    > To write multiple lines of code use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) (on their own line, \`shift + enter\` makes new lines):
     > \\\`\\\`\\\`
     > [Put your Code here!]
     > \\\`\\\`\\\`
