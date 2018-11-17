@@ -4,26 +4,16 @@ function registerBotCommand(regex, fn) {
   botCommands.push({ regex, fn });
 }
 
-async function listenToMessages(gitter, roomId) {
-  const room = await gitter.rooms.find(roomId);
-  const events = room.streaming().chatMessages();
-  events.on("chatMessages", message => {
-    if (
-      message.operation !== "create" ||
-      message.model.fromUser.username === "odin-bot"
-    ) {
+async function listenToMessages(client) {
+  client.on('message', (messageData) => {
+    // Prevent bot from responding to its own messages
+    if (messageData.author === client.user) {
       return;
     }
-
-    const messageData = {
-      data: message.model,
-      text: message.model.text,
-      room: room
-    };
-
+    
     botCommands.forEach(async ({ regex, fn }) => {
-      if (messageData.text.toLowerCase().match(regex)) {
-        messageData.room.send(await fn(messageData));
+      if (messageData.content.toLowerCase().match(regex)) {
+        messageData.channel.send(await fn(messageData));
       }
     });
   });

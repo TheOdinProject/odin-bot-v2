@@ -30,7 +30,7 @@ const config = {
   pointsbot: {
     token: process.env.POINTSBOT_TOKEN,
   },
-}
+};
 
 
 module.exports = config;

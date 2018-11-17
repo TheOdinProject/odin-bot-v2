@@ -1,17 +1,18 @@
 const axios = require('axios');
 const config = require('../config.js');
+const Discord = require('discord.js')
 const {registerBotCommand} = require('../bot-engine.js');
 
 function getNamesFromText(text) {
-  const regex = /@([a-zA-Z0-9-_]+)\s?(\+\+|:star:)/g;
+  const regex = /@([!a-zA-Z0-9-_]+)>\s?(\+\+|:star:)/g;
   let matches = [];
   let match;
   while ((match = regex.exec(text)) !== null)
-    matches.push(match[1]);
+    matches.push(match[1].replace('!', ''));
   return matches;
 }
 
-registerBotCommand(/@[a-zA-Z0-9-_]+\s?(\-\-)/, () => '![Not Nice](http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif)');
+registerBotCommand(/@([!a-zA-Z0-9-_]+)>\s?(\-\-)/, () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif');
 
 async function requestUserFromGitter(username) {
   try {
@@ -30,9 +31,8 @@ async function requestUserFromGitter(username) {
 
 async function addPointsToUser(username) {
   try {
-    const user = await requestUserFromGitter(username);
-    const pointsBotResponse = await axios.get(`https://odin-points-bot.herokuapp.com/search/${user.username}?access_token=${config.pointsbot.token}`);
-    console.log(pointsBotResponse.data);
+    // const user = await requestUserFromGitter(username);
+    const pointsBotResponse = await axios.get(`https://odin-points-bot.herokuapp.com/search/${username}?access_token=${config.pointsbot.token}`);
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
@@ -61,30 +61,30 @@ function plural(points) {
   return points === 1 ? 'point' : 'points';
 }
 
-async function pointsBotCommand({data, text, room}) {
-  const requesterName = data.fromUser.username;
-  const names = getNamesFromText(text);
+async function pointsBotCommand({author, content, channel, client}) {
+  const requesterName = author.username;
+  const names = getNamesFromText(content);
   names.forEach(async name => {
-    if (name.toLowerCase() == requesterName.toLowerCase()) {
-      room.send('![](http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif)');
-      room.send("You can't do that!");
+    const user = await client.users.get(name)
+    if (user == author) {
+      channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
+      channel.send("You can't do that!");
       return;
-    } else if (name === 'odin-bot') {
-      room.send('awwwww shucks... :heart_eyes:');
+    } else if (user === 'odin-bot') {
+      channel.send('awwwww shucks... :heart_eyes:');
       return;
     }
     try {
-      const user = await addPointsToUser(name);
+      const pointsUser = await addPointsToUser(user.id);
       if (user) {
-        room.send(`${exclamation(user.points)} @${user.name} now has ${user.points} ${plural(user.points)}`);
+        channel.send(`${exclamation(pointsUser.points)} ${user} now has ${pointsUser.points} ${plural(pointsUser.points)}`);
       }
     } catch (err) {
-      room.send(`Hmmm... not sure I know ${user.name} did you spell it correctly?`);
     }
   });
 }
 
-registerBotCommand(/@[a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
+registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
 
 registerBotCommand(/\/leaderboard/, async function (){
   try {

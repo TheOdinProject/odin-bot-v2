@@ -59,4 +59,4 @@ async function botResponse({ data, text }) {
   }
 }
 
-registerBotCommand(/\/giphy.*/, botResponse);
+// registerBotCommand(/\/giphy.*/, botResponse);

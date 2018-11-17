@@ -1,17 +1,17 @@
-const { registerBotCommand } = require("../bot-engine.js");
+const {registerBotCommand} = require("../bot-engine.js");
 
-registerBotCommand(/\/[shurg]{5}/, ({ text }) => {
+registerBotCommand(/\/[shurg]{5}/, ({content}) => {
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
-  const shurgalurg = text.match(/[shurg]{5}/)[0];
+  const shurgalurg = content.match(/[shurg]{5}/)[0];
   // return early if all chars are not unique
-  if (text.match(/[shurg]{5}/)[0].split("").filter(onlyUnique).length !== 5) {
+  if (content.match(/[shurg]{5}/)[0].split("").filter(onlyUnique).length !== 5) {
     return;
   }
 
   const parts = {
-    s: `¯\\\\\\`,
+    s: `¯\\`,
     h: `_(`,
     r: `ツ`,
     u: `)_`,
