@@ -27,8 +27,8 @@ async function chooseRandomGif(searchTerm) {
       } catch (err) {
         reject(err);
       }
-    });
-  }
+    }
+  });
 }
 
 async function botResponse({ data, text }) {
