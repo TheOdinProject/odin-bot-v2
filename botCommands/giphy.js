@@ -4,23 +4,31 @@ const { registerBotCommand } = require("../bot-engine.js");
 
 async function chooseRandomGif(searchTerm) {
   return new Promise(async (resolve, reject) => {
-    try {
-      const result = await giphy.translate(searchTerm);
-      if (
-        result.data.images &&
-        result.data.images.original.url &&
-        result.data.url
-      ) {
-        const imageUrl = result.data.images.original.url;
-        const url = result.data.url;
-        resolve({ url, imageUrl });
+    try {      
+      // hardcode the SEXPRESSO orc
+      if (searchTerm === "SEXPRESSO") {
+        resolve({
+          url: "https://giphy.com/gifs/two-towers-G1q3qhwGoZ0d2",
+          imageUrl: "https://media.giphy.com/media/G1q3qhwGoZ0d2/giphy.gif"
+        })
       } else {
-        reject("no gif");
+        const result = await giphy.translate(searchTerm);
+        if (
+          result.data.images &&
+          result.data.images.original.url &&
+          result.data.url
+        ) {
+          const imageUrl = result.data.images.original.url;
+          const url = result.data.url;
+          resolve({ url, imageUrl });
+        } else {
+          reject("no gif");
+        }
+      } catch (err) {
+        reject(err);
       }
-    } catch (err) {
-      reject(err);
-    }
-  });
+    });
+  }
 }
 
 async function botResponse({ data, text }) {
