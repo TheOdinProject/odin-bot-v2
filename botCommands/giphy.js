@@ -10,7 +10,7 @@ async function chooseRandomGif(searchTerm) {
         resolve({
           url: "https://giphy.com/gifs/two-towers-G1q3qhwGoZ0d2",
           imageUrl: "https://media.giphy.com/media/G1q3qhwGoZ0d2/giphy.gif"
-        })
+        });
       } else {
         const result = await giphy.translate(searchTerm);
         if (
