@@ -24,9 +24,9 @@ async function chooseRandomGif(searchTerm) {
         } else {
           reject("no gif");
         }
-      } catch (err) {
-        reject(err);
       }
+    } catch (err) {
+      reject(err)
     }
   });
 }
