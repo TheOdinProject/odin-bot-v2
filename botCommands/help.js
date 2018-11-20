@@ -18,12 +18,13 @@ I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
 registerBotCommand(/\/code\s|\/code$/, ({room}) => {
   return `
 **HOW TO EMBED CODE SNIPPETS**
-
 To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
+
 \\\`\\\`\\\`
-[Put your Code here!]
+    [Put your Code here!]
 \\\`\\\`\\\`
 
 For \`inline code\` use one backtick:
+
 \\\`Code here!\\\``;
 });
