@@ -1,6 +1,5 @@
 const axios = require('axios');
 const config = require('../config.js');
-const Discord = require('discord.js')
 const {registerBotCommand} = require('../bot-engine.js');
 
 function getNamesFromText(text) {
@@ -12,16 +11,23 @@ function getNamesFromText(text) {
   return matches;
 }
 
-registerBotCommand(/@([!a-zA-Z0-9-_]+)>\s?(\-\-)/, () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif');
+registerBotCommand(
+  /@([!a-zA-Z0-9-_]+)>\s?(\-\-)/,
+  () =>
+    'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif'
+);
 
 async function requestUserFromGitter(username) {
   try {
-    const userResponse = await axios.get('https://api.gitter.im/v1/user?q=' + username , {
-      headers: {Authorization: 'Bearer ' + config.gitter.token}
-    });
+    const userResponse = await axios.get(
+      'https://api.gitter.im/v1/user?q=' + username,
+      {
+        headers: {Authorization: 'Bearer ' + config.gitter.token}
+      }
+    );
     const user = userResponse.data.results[0];
     if (user && user.username.toLowerCase() == username.toLowerCase()) {
-      return (user);
+      return user;
     }
     throw new Error('user not found');
   } catch (err) {
@@ -32,7 +38,11 @@ async function requestUserFromGitter(username) {
 async function addPointsToUser(username) {
   try {
     // const user = await requestUserFromGitter(username);
-    const pointsBotResponse = await axios.get(`https://odin-points-bot.herokuapp.com/search/${username}?access_token=${config.pointsbot.token}`);
+    const pointsBotResponse = await axios.get(
+      `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
+        config.pointsbot.token
+      }`
+    );
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
@@ -65,7 +75,7 @@ async function pointsBotCommand({author, content, channel, client}) {
   const requesterName = author.username;
   const names = getNamesFromText(content);
   names.forEach(async name => {
-    const user = await client.users.get(name)
+    const user = await client.users.get(name);
     if (user == author) {
       channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
       channel.send("You can't do that!");
@@ -77,31 +87,61 @@ async function pointsBotCommand({author, content, channel, client}) {
     try {
       const pointsUser = await addPointsToUser(user.id);
       if (user) {
-        channel.send(`${exclamation(pointsUser.points)} ${user} now has ${pointsUser.points} ${plural(pointsUser.points)}`);
+        channel.send(
+          `${exclamation(pointsUser.points)} ${user} now has ${
+            pointsUser.points
+          } ${plural(pointsUser.points)}`
+        );
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   });
 }
 
 registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
 
-registerBotCommand(/\/leaderboard/, async function (){
+registerBotCommand(/\/leaderboard/, async function({client}) {
   try {
-    const users = await axios.get(`https://odin-points-bot.herokuapp.com/users?access_token=${config.pointsbot.token}`) ;
-    let usersList = '##leaderboard [![partytime](http://cultofthepartyparrot.com/parrots/parrot.gif)](http://cultofthepartyparrot.com/parrots/parrot.gif) \n';
-    for(let i = 0; i < 5; i++) {
+    const users = await axios.get(
+      `https://odin-points-bot-discord.herokuapp.com/users`
+    );
+    let usersList = '**leaderboard** \n';
+    for (let i = 0; i < 5; i++) {
       const user = users.data[i];
-      if (i == 0) {
-        usersList += ` - ${user.name} [${user.points} points] :tada: \n`;
-      } else {
-        usersList += ` - ${user.name} [${user.points} points] \n`;
+      if (user) {
+        const username = await client.users.get(user.name);
+        if (i == 0) {
+          usersList += ` - ${username} [${user.points} points] :tada: \n`;
+        } else {
+          usersList += ` - ${username} [${user.points} points] \n`;
+        }
       }
     }
-    usersList += ` - see the full leaderboard [here](https://odin-bot.github.io) \n`;
     return usersList;
   } catch (err) {
     console.log(err);
   }
 });
 
+registerBotCommand(/\/setpoints/, async function({author, content}) {
+  if (author.id == 418918922507780096) {
+    const id = content
+      .split(' ')
+      .find(word => word.includes('id='))
+      .replace('id=', '');
+    const points = content
+      .split(' ')
+      .find(word => word.includes('p='))
+      .replace('p=', '');
+
+    try {
+      const pointsBotResponse = await axios.get(
+        `https://odin-points-bot-discord.herokuapp.com/users/${id}/set/${points}?access_token=${
+          config.pointsbot.token
+        }`
+      );
+      return `SUCCESS: ${pointsBotResponse.data.name} - ${pointsBotResponse.data.points}`
+    } catch (err) {}
+  } else {
+    return `nice try friend... but you can't do that`;
+  }
+});

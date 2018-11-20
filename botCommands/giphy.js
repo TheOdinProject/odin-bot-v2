@@ -1,6 +1,6 @@
-const { giphy: { apiKey }} = require("../config.js");
-const giphy = require("giphy-api")(apiKey);
-const { registerBotCommand } = require("../bot-engine.js");
+// const { giphy: { apiKey }} = require("../config.js");
+// const giphy = require("giphy-api")(apiKey);
+// const { registerBotCommand } = require("../bot-engine.js");
 
 async function chooseRandomGif(searchTerm) {
   return new Promise(async (resolve, reject) => {

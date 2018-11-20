@@ -21,14 +21,11 @@ registerBotCommand(
       "http://emojis.slackmojis.com/emojis/images/1472757675/1132/otter-dance.gif"
     ];
 
-    if (content.toLowerCase().match("   p")) {
-      const parrotUrl = "http://cultofthepartyparrot.com/parrots/congaparrot.gif";
-      return `![](${parrotUrl})`.repeat(15);
-    } else if (content.toLowerCase().match("!")) {
-      return `![](${parrots[0]})`;
+   if (content.toLowerCase().match("!")) {
+      return `${parrots[0]}`;
     } else {
       const index = randomInt(parrots.length);
-      return `![](${parrots[index]})`;
+      return `${parrots[index]}`;
     }
   }
 );
