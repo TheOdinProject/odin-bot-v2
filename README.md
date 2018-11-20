@@ -7,7 +7,7 @@ All of the bot's commands are found in the `botCommands` folder.  The code that 
 ```javascript
 const { registerBotCommand } = require("../bot-engine.js");
 
-const commandFunc = function({data, text}) {
+const commandFunc = function({content, author}) {
   // this function should return either a string or a promise that resolves a string.
   // the string that returns is what the bot will say
   return "Hi, I'm a bot lol";
@@ -16,4 +16,4 @@ const commandFunc = function({data, text}) {
 registerBotCommand(/regex/, commandFunc);
 ```
 
-The parameter of the command-function is an object that exposes data about the message that matches the regex.  `text` is simply the full text of the message. `data` has quite a bit of info in it, but likely the most useful is the username of the person that sent the message which you can access like so: `data.fromUser.username`.
+The parameter of the command-function is an object that exposes data about the message that matches the regex.  `content` is simply the full text of the message. `author` is the user object of the author of the message.. you can get the username with `author.username`. 
