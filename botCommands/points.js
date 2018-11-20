@@ -90,7 +90,7 @@ registerBotCommand(/\/leaderboard/, async function (){
   try {
     const users = await axios.get(`https://odin-points-bot.herokuapp.com/users?access_token=${config.pointsbot.token}`) ;
     let usersList = '##leaderboard [![partytime](http://cultofthepartyparrot.com/parrots/parrot.gif)](http://cultofthepartyparrot.com/parrots/parrot.gif) \n';
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < 10; i++) {
       const user = users.data[i];
       if (i == 0) {
         usersList += ` - ${user.name} [${user.points} points] :tada: \n`;
