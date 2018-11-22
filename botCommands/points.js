@@ -138,7 +138,7 @@ registerBotCommand(/\/points/, async function({content, client, channel, guild})
   })
 })
 
-registerBotCommand(/\/leaderboard/, async function({client}) {
+registerBotCommand(/\/leaderboard/, async function({guild}) {
   try {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
@@ -147,11 +147,11 @@ registerBotCommand(/\/leaderboard/, async function({client}) {
     for (let i = 0; i < 5; i++) {
       const user = users.data[i];
       if (user) {
-        const username = await client.users.get(user.name);
+        const username = guild.members.get(user.name).displayName
         if (i == 0) {
-          usersList += ` - ${username.username} [${user.points} points] :tada: \n`;
+          usersList += ` - ${username} [${user.points} points] :tada: \n`;
         } else {
-          usersList += ` - ${username.username} [${user.points} points] \n`;
+          usersList += ` - ${username} [${user.points} points] \n`;
         }
       }
     }
