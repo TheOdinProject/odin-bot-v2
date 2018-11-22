@@ -27,32 +27,15 @@ registerBotCommand(
     'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif'
 );
 
-async function requestUserFromGitter(username) {
-  try {
-    const userResponse = await axios.get(
-      'https://api.gitter.im/v1/user?q=' + username,
-      {
-        headers: {Authorization: 'Bearer ' + config.gitter.token}
-      }
-    );
-    const user = userResponse.data.results[0];
-    if (user && user.username.toLowerCase() == username.toLowerCase()) {
-      return user;
-    }
-    throw new Error('user not found');
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-
 async function addPointsToUser(username) {
   try {
     // const user = await requestUserFromGitter(username);
     const pointsBotResponse = await axios.get(
-      `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
+      `https://odin-points-bot-discord.herokuapp.com/inc/${username}?access_token=${
         config.pointsbot.token
       }`
     );
+    console.log(pointsBotResponse.data)
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
