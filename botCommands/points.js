@@ -11,6 +11,16 @@ function getNamesFromText(text) {
   return matches;
 }
 
+function getNamesFromTextNoStar(text) {
+  console.log(text)
+  const regex = /@([!a-zA-Z0-9-_]+)/g;
+  let matches = [];
+  let match;
+  while ((match = regex.exec(text)) !== null)
+    matches.push(match[1].replace('!', ''));
+  return matches;
+}
+
 registerBotCommand(
   /@([!a-zA-Z0-9-_]+)>\s?(\-\-)/,
   () =>
@@ -36,6 +46,20 @@ async function requestUserFromGitter(username) {
 }
 
 async function addPointsToUser(username) {
+  try {
+    // const user = await requestUserFromGitter(username);
+    const pointsBotResponse = await axios.get(
+      `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
+        config.pointsbot.token
+      }`
+    );
+    return pointsBotResponse.data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+async function lookUpUser(username) {
   try {
     // const user = await requestUserFromGitter(username);
     const pointsBotResponse = await axios.get(
@@ -99,6 +123,21 @@ async function pointsBotCommand({author, content, channel, client}) {
 
 registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
 
+registerBotCommand(/\/points/, async function({content, client, channel, guild}) {
+  const names = getNamesFromTextNoStar(content);
+  console.log(names)
+  names.forEach(async name => {
+    const user = await client.users.get(name);
+    try {
+      const userPoints = await lookUpUser(user.id)
+      const username = guild.members.get(name).displayName
+      if (userPoints) {
+        channel.send(`${username} has ${userPoints.points} points!`)
+      }
+    } catch (err) {}
+  })
+})
+
 registerBotCommand(/\/leaderboard/, async function({client}) {
   try {
     const users = await axios.get(
@@ -110,9 +149,9 @@ registerBotCommand(/\/leaderboard/, async function({client}) {
       if (user) {
         const username = await client.users.get(user.name);
         if (i == 0) {
-          usersList += ` - ${username} [${user.points} points] :tada: \n`;
+          usersList += ` - ${username.username} [${user.points} points] :tada: \n`;
         } else {
-          usersList += ` - ${username} [${user.points} points] \n`;
+          usersList += ` - ${username.username} [${user.points} points] \n`;
         }
       }
     }
