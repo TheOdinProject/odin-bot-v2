@@ -125,7 +125,6 @@ registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
 
 registerBotCommand(/\/points/, async function({content, client, channel, guild}) {
   const names = getNamesFromTextNoStar(content);
-  console.log(names)
   names.forEach(async name => {
     const user = await client.users.get(name);
     try {
