@@ -87,7 +87,7 @@ async function pointsBotCommand({author, content, channel, client}) {
       channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
       channel.send("You can't do that!");
       return;
-    } else if (user === 'odin-bot') {
+    } else if (user === client.user) {
       channel.send('awwwww shucks... :heart_eyes:');
       return;
     }
