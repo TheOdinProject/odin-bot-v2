@@ -2,42 +2,24 @@ const axios = require('axios');
 const config = require('../config.js');
 const {registerBotCommand} = require('../bot-engine.js');
 
-function getNamesFromText(text) {
-  const regex = /@([!a-zA-Z0-9-_]+)>\s?(\+\+|:star:)/g;
-  let matches = [];
+const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/ug
+
+function getUserIdsFromMessage(text) {
+  const matches = [];
   let match;
-  while ((match = regex.exec(text)) !== null)
+  while ((match = AWARD_POINT_REGEX.exec(text)) !== null)
     matches.push(match[1].replace('!', ''));
   return matches;
 }
 
 registerBotCommand(
-  /@([!a-zA-Z0-9-_]+)>\s?(\-\-)/,
+  /@!?(\d+)>\s?(\-\-)/,
   () =>
     'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif'
 );
 
-async function requestUserFromGitter(username) {
-  try {
-    const userResponse = await axios.get(
-      'https://api.gitter.im/v1/user?q=' + username,
-      {
-        headers: {Authorization: 'Bearer ' + config.gitter.token}
-      }
-    );
-    const user = userResponse.data.results[0];
-    if (user && user.username.toLowerCase() == username.toLowerCase()) {
-      return user;
-    }
-    throw new Error('user not found');
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-
 async function addPointsToUser(username) {
   try {
-    // const user = await requestUserFromGitter(username);
     const pointsBotResponse = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
         config.pointsbot.token
@@ -72,10 +54,9 @@ function plural(points) {
 }
 
 async function pointsBotCommand({author, content, channel, client}) {
-  const requesterName = author.username;
-  const names = getNamesFromText(content);
-  names.forEach(async name => {
-    const user = await client.users.get(name);
+  const userIds = getUserIdsFromMessage(content);
+  userIds.forEach(async userId => {
+    const user = await client.users.get(userId);
     if (user == author) {
       channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
       channel.send("You can't do that!");
@@ -97,7 +78,7 @@ async function pointsBotCommand({author, content, channel, client}) {
   });
 }
 
-registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
+registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
 
 registerBotCommand(/\/leaderboard/, async function({client}) {
   try {
