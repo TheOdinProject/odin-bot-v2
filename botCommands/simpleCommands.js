@@ -1,5 +1,4 @@
-const {registerBotCommand} = require('../bot-engine.js');
-const {getMentions} = require('./helpers.js');
+const {registerBotCommand} = require('../botEngine.js');
 
 registerBotCommand(/\/hug/, () => `⊂(´・ω・｀⊂)`);
 

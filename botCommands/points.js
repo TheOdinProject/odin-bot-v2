@@ -1,20 +1,11 @@
 const axios = require('axios');
 const config = require('../config.js');
-const {registerBotCommand} = require('../bot-engine.js');
+const {registerBotCommand} = require('../botEngine.js');
 
-function getNamesFromText(text) {
-  const regex = /@([!a-zA-Z0-9-_]+)>\s?(\+\+|:star:)/g;
-  let matches = [];
-  let match;
-  while ((match = regex.exec(text)) !== null)
-    matches.push(match[1].replace('!', ''));
-  return matches;
-}
+const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/ug
 
-function getNamesFromTextNoStar(text) {
-  console.log(text)
-  const regex = /@([!a-zA-Z0-9-_]+)/g;
-  let matches = [];
+function getUserIdsFromMessage(text, regex) {
+  const matches = [];
   let match;
   while ((match = regex.exec(text)) !== null)
     matches.push(match[1].replace('!', ''));
@@ -22,20 +13,18 @@ function getNamesFromTextNoStar(text) {
 }
 
 registerBotCommand(
-  /@([!a-zA-Z0-9-_]+)>\s?(\-\-)/,
+  /@!?(\d+)>\s?(\-\-)/,
   () =>
     'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif'
 );
 
 async function addPointsToUser(username) {
   try {
-    // const user = await requestUserFromGitter(username);
     const pointsBotResponse = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/inc/${username}?access_token=${
         config.pointsbot.token
       }`
     );
-    console.log(pointsBotResponse.data)
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
@@ -44,7 +33,6 @@ async function addPointsToUser(username) {
 
 async function lookUpUser(username) {
   try {
-    // const user = await requestUserFromGitter(username);
     const pointsBotResponse = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
         config.pointsbot.token
@@ -79,10 +67,9 @@ function plural(points) {
 }
 
 async function pointsBotCommand({author, content, channel, client}) {
-  const requesterName = author.username;
-  const names = getNamesFromText(content);
-  names.forEach(async name => {
-    const user = await client.users.get(name);
+  const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
+  userIds.forEach(async userId => {
+    const user = await client.users.get(userId);
     if (user == author) {
       channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
       channel.send("You can't do that!");
@@ -104,12 +91,12 @@ async function pointsBotCommand({author, content, channel, client}) {
   });
 }
 
-registerBotCommand(/@[!a-zA-Z0-9-_]+\s?(\+\+|:star:|)/, pointsBotCommand);
+registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
 
 registerBotCommand(/\/points/, async function({content, client, channel, guild}) {
-  const names = getNamesFromTextNoStar(content);
-  names.forEach(async name => {
-    const user = await client.users.get(name);
+  const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
+  userIds.forEach(async userId => {
+    const user = await client.users.get(userId);
     try {
       const userPoints = await lookUpUser(user.id)
       const username = guild.members.get(name).displayName

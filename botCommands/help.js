@@ -1,4 +1,4 @@
-const {registerBotCommand} = require("../bot-engine.js");
+const {registerBotCommand} = require("../botEngine.js");
 
 registerBotCommand(/\/help\b/, ({room}) => {
   return `

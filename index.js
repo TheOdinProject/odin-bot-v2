@@ -1,6 +1,6 @@
 const glob = require("glob");
 const path = require("path");
-const {listenToMessages} = require("./bot-engine.js");
+const {listenToMessages} = require("./botEngine.js");
 require('dotenv').config();
 
 glob.sync("./botCommands/**/*.js").forEach(file => {

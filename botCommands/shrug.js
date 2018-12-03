@@ -1,4 +1,4 @@
-const {registerBotCommand} = require("../bot-engine.js");
+const {registerBotCommand} = require("../botEngine.js");
 
 registerBotCommand(/\/[shurg]{5}/, ({content}) => {
   function onlyUnique(value, index, self) {
