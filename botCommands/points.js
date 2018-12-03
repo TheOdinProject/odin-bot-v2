@@ -1,6 +1,6 @@
 const axios = require('axios');
 const config = require('../config.js');
-const {registerBotCommand} = require('../bot-engine.js');
+const {registerBotCommand} = require('../botEngine.js');
 
 const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/ug
 
