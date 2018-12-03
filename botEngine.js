@@ -1,17 +1,17 @@
 const botCommands = [];
 
 function registerBotCommand(regex, fn) {
-  botCommands.push({regex, fn});
+  botCommands.push({ regex, fn });
 }
 
 async function listenToMessages(client) {
-  client.on('message', message => {
+  client.on("message", message => {
     // Prevent bot from responding to its own messages
     if (message.author === client.user) {
       return;
     }
 
-    const NOBOT_ROLE_ID = '513916941212188698'
+    const NOBOT_ROLE_ID = "513916941212188698";
 
     // can't bot if user is NOBOT
     if (
@@ -24,12 +24,15 @@ async function listenToMessages(client) {
       return;
     }
 
-    botCommands.forEach(async ({regex, fn}) => {
+    botCommands.forEach(async ({ regex, fn }) => {
       if (message.content.toLowerCase().match(regex)) {
-        message.channel.send(await fn(message));
+        const response = await fn(message);
+        if (response) {
+          message.channel.send(response);
+        }
       }
     });
   });
 }
 
-module.exports = {listenToMessages, registerBotCommand};
+module.exports = { listenToMessages, registerBotCommand };

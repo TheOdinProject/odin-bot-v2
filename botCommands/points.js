@@ -1,21 +1,21 @@
-const axios = require('axios');
-const config = require('../config.js');
-const {registerBotCommand} = require('../botEngine.js');
+const axios = require("axios");
+const config = require("../config.js");
+const { registerBotCommand } = require("../botEngine.js");
 
-const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/ug
+const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
 
 function getUserIdsFromMessage(text, regex) {
   const matches = [];
   let match;
   while ((match = regex.exec(text)) !== null)
-    matches.push(match[1].replace('!', ''));
+    matches.push(match[1].replace("!", ""));
   return matches;
 }
 
 registerBotCommand(
   /@!?(\d+)>\s?(\-\-)/,
   () =>
-    'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif'
+    "http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"
 );
 
 async function addPointsToUser(username) {
@@ -46,36 +46,36 @@ async function lookUpUser(username) {
 
 function exclamation(points) {
   if (points < 5) {
-    return 'Nice!';
+    return "Nice!";
   } else if (points < 25) {
-    return 'Sweet!';
+    return "Sweet!";
   } else if (points < 99) {
-    return 'Woot!';
+    return "Woot!";
   } else if (points < 105) {
-    return 'HOLY CRAP!!';
+    return "HOLY CRAP!!";
   } else if (points > 199 && points < 206) {
-    return 'DAM SON:';
+    return "DAM SON:";
   } else if (points > 299 && points < 306) {
-    return 'OK YOU CAN STOP NOW:';
+    return "OK YOU CAN STOP NOW:";
   } else {
-    return 'Woot!';
+    return "Woot!";
   }
 }
 
 function plural(points) {
-  return points === 1 ? 'point' : 'points';
+  return points === 1 ? "point" : "points";
 }
 
-async function pointsBotCommand({author, content, channel, client}) {
+async function pointsBotCommand({ author, content, channel, client }) {
   const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
   userIds.forEach(async userId => {
     const user = await client.users.get(userId);
     if (user == author) {
-      channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
+      channel.send("http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif");
       channel.send("You can't do that!");
       return;
     } else if (user === client.user) {
-      channel.send('awwwww shucks... :heart_eyes:');
+      channel.send("awwwww shucks... :heart_eyes:");
       return;
     }
     try {
@@ -93,34 +93,52 @@ async function pointsBotCommand({author, content, channel, client}) {
 
 registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
 
-registerBotCommand(/\/points/, async function({content, client, channel, guild}) {
+registerBotCommand(/\/points/, async function({
+  content,
+  client,
+  channel,
+  guild
+}) {
   const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
   userIds.forEach(async userId => {
     const user = await client.users.get(userId);
     try {
-      const userPoints = await lookUpUser(user.id)
-      const username = guild.members.get(name).displayName
+      const userPoints = await lookUpUser(user.id);
+      const username = guild.members.get(userPoints.name).displayName;
       if (userPoints) {
-        channel.send(`${username} has ${userPoints.points} points!`)
+        channel.send(`${username} has ${userPoints.points} points!`);
       }
     } catch (err) {}
-  })
-})
+  });
+});
 
-registerBotCommand(/\/leaderboard/, async function({guild}) {
+registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
   try {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
     );
-    let usersList = '**leaderboard** \n';
-    for (let i = 0; i < 5; i++) {
+    const nEquals = content.split(" ").find(word => word.includes("n="));
+    let length = nEquals ? nEquals.replace("n=", "") : 5;
+    length = Math.min(length, 25);
+    length = Math.max(length, 1);
+    let usersList = "**leaderboard** \n";
+    for (let i = 0; i < length; i++) {
       const user = users.data[i];
       if (user) {
-        const username = guild.members.get(user.name).displayName
+        const member = guild.members.get(user.name);
+        const username = member ? member.displayName : "undefined";
         if (i == 0) {
-          usersList += ` - ${username} [${user.points} points] :tada: \n`;
+          usersList += `${i + 1} - ${username} [${
+            user.points
+          } points] :tada: \n`;
         } else {
-          usersList += ` - ${username} [${user.points} points] \n`;
+          if (i == 4) {
+            usersList += `${i + 1} - ${username} :sad: [${
+              user.points
+            } points] \n`;
+          } else {
+            usersList += `${i + 1} - ${username} [${user.points} points] \n`;
+          }
         }
       }
     }
@@ -130,16 +148,16 @@ registerBotCommand(/\/leaderboard/, async function({guild}) {
   }
 });
 
-registerBotCommand(/\/setpoints/, async function({author, content}) {
+registerBotCommand(/\/setpoints/, async function({ author, content }) {
   if (author.id == 418918922507780096) {
     const id = content
-      .split(' ')
-      .find(word => word.includes('id='))
-      .replace('id=', '');
+      .split(" ")
+      .find(word => word.includes("id="))
+      .replace("id=", "");
     const points = content
-      .split(' ')
-      .find(word => word.includes('p='))
-      .replace('p=', '');
+      .split(" ")
+      .find(word => word.includes("p="))
+      .replace("p=", "");
 
     try {
       const pointsBotResponse = await axios.get(
@@ -147,7 +165,9 @@ registerBotCommand(/\/setpoints/, async function({author, content}) {
           config.pointsbot.token
         }`
       );
-      return `SUCCESS: ${pointsBotResponse.data.name} - ${pointsBotResponse.data.points}`
+      return `SUCCESS: ${pointsBotResponse.data.name} - ${
+        pointsBotResponse.data.points
+      }`;
     } catch (err) {}
   } else {
     return `nice try friend... but you can't do that`;
