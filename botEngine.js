@@ -28,7 +28,11 @@ async function listenToMessages(client) {
       if (message.content.toLowerCase().match(regex)) {
         const response = await fn(message);
         if (response) {
-          message.channel.send(response);
+          try {
+            message.channel.send(response);
+          } catch (e) {
+            console.log(e);
+          }
         }
       }
     });
