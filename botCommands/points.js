@@ -132,8 +132,8 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
             user.points
           } points] :tada: \n`;
         } else {
-          if (i == 4) {
-            usersList += `${i + 1} - ${username} :sad: [${
+          if (member == 217822024607727616) {
+            usersList += `${i + 1} - ${username} :tardasaur: [${
               user.points
             } points] \n`;
           } else {
