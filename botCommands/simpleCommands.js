@@ -40,3 +40,7 @@ registerBotCommand(/\/justdoit/, ({data, text}) => {
   return `${mentions} What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
 });
 
+registerBotCommand(/\/howtoask/, ({data, text}) => {
+  return 'Read this and Rephrase --> https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603'
+}
+
