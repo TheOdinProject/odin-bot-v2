@@ -36,3 +36,7 @@ registerBotCommand(/\/motivate/, () => {
 registerBotCommand(/\/justdoit/, () => {
   return `What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
 });
+
+registerBotCommand(/\/pairs/, () => {
+  return `**Find your coding partner here:** https://forum.theodinproject.com/c/pairs`;
+});
