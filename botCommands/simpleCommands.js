@@ -12,9 +12,9 @@ registerBotCommand(/:fu:/, ({ data }) => {
   return `@${user} \n ![Not Nice](http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif)`;
 });
 
-registerBotCommand(/\/google\s+.+/, ({ text }) => {
+registerBotCommand(/\B\/google\s+.+/, ({ text }) => {
   const transform = text => {
-    const query = text.match(/google\s+(.+)/)[1].split(" ").map(encodeURIComponent).join("+");
+    const query = text.match(/\B\/google\s+(.+)/)[1].split(" ").map(encodeURIComponent).join("+");
     return `http://lmgtfy.com/?q=${query}`;
   };
 
