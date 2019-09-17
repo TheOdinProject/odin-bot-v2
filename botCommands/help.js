@@ -1,6 +1,6 @@
 const { registerBotCommand } = require("../bot-engine.js");
 
-registerBotCommand(/\/help\b/, ({ room }) => {
+registerBotCommand(/\B\/help\b/, ({ room }) => {
   return `> #Odin-Bot Commands
     > - **By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md)**
     > - give points to someone who has been helpful by mentioning their name and adding ++ : \`@username ++\` or by giving them a star : \`@username :star:\`
@@ -13,7 +13,7 @@ registerBotCommand(/\/help\b/, ({ room }) => {
     > - I'm open source!  Hack me [HERE](https://github.com/codyloyd/odin-bot-v2)!`;
 });
 
-registerBotCommand(/\/code\s|\/code$/, ({ room }) => {
+registerBotCommand(/\B\/code\s|\B\/code$/, ({ room }) => {
   return `> #Composing Code Snippets
     > To write multiple lines of code use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) (on their own line, \`shift + enter\` makes new lines):
     > \\\`\\\`\\\`
