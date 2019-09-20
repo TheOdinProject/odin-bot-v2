@@ -14,13 +14,13 @@ registerBotCommand(/\peen/, ({author}) => {
   }
 });
 
-registerBotCommand(/\/google.*/, ({content}) => {
+registerBotCommand(/\B\/google\s+.+/, ({content}) => {
   const transform = content => {
-    const query = content.split(' ').join('+');
-    return `**HERE YOU GO BABY >** <http://lmgtfy.com/?q=${query}>`;
+    const query = content.split(' ').map(encodeURIComponent).join('+');
+    return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
   };
 
-  const query = content.match(/(?!\/google.?) .*/)[0].trim();
+  const query = content.match(/\B\/google\s+(.+)/)[1];
   return `${transform(query)}`;
 });
 

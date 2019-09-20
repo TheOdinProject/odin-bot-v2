@@ -1,6 +1,6 @@
 const {registerBotCommand} = require("../botEngine.js");
 
-registerBotCommand(/\/help\b/, ({room}) => {
+registerBotCommand(/\B\/help\b/, ({room}) => {
   return `
   **By posting in this chatroom you agree to our code of conduct:** <https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md>
 
@@ -15,7 +15,7 @@ Motivate your fellow odinites with \`/motivate\` and mention them
 I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
 });
 
-registerBotCommand(/\/code\s|\/code$/, ({room}) => {
+registerBotCommand(/\B\/code\b/, ({room}) => {
   return `
 **HOW TO EMBED CODE SNIPPETS**
 To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
