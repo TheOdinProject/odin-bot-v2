@@ -1,6 +1,6 @@
 const {registerBotCommand} = require('../botEngine.js');
 
-registerBotCommand(/\/hug/, () => `⊂(´・ω・｀⊂)`);
+registerBotCommand(/\B\/hug\b/, () => `⊂(´・ω・｀⊂)`);
 
 registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
