@@ -6,6 +6,7 @@ function registerBotCommand(regex, fn) {
 
 async function listenToMessages(client) {
   client.on("message", message => {
+    console.log(message)
     // Prevent bot from responding to its own messages
     if (message.author === client.user) {
       return;
@@ -26,7 +27,13 @@ async function listenToMessages(client) {
 
     botCommands.forEach(async ({ regex, fn }) => {
       if (message.content.toLowerCase().match(regex)) {
-        const response = await fn(message);
+        try {
+          const response = await fn(message);
+        }
+        catch(e) {
+          console.log(e)
+        }
+
         if (response) {
           try {
             message.channel.send(response);
