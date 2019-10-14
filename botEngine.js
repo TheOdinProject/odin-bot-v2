@@ -29,17 +29,17 @@ async function listenToMessages(client) {
       if (message.content.toLowerCase().match(regex)) {
         try {
           const response = await fn(message);
+
+          if (response) {
+            try {
+              message.channel.send(response);
+            } catch (e) {
+              console.log(e);
+            }
+          }
         }
         catch(e) {
           console.log(e)
-        }
-
-        if (response) {
-          try {
-            message.channel.send(response);
-          } catch (e) {
-            console.log(e);
-          }
         }
       }
     });
