@@ -23,6 +23,7 @@ registerBotCommand(/\/google.*/, ({ text }) => {
 });
 
 registerBotCommand(/\/gandalf/, () => `[![](http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif)](http://giphy.com/gifs/B3hcUhLX3BFHa/tile)`);
+registerBotCommand(/\/dab/, () => `[![](https://tenor.com/view/bettywhite-dab-gif-5044603)]`);
 
 registerBotCommand(/\/motivate/, ({data, text}) => {
   const user = data.fromUser.username;
