@@ -7,6 +7,8 @@ registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
 registerBotCommand(/\/flip/, () => String.raw`(╯°□°）╯︵ ┻━━━━┻ `);
 
+registerBotCommand(/\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
+
 registerBotCommand(/:fu:/, ({ data }) => {
   const user = data.fromUser.username;
   return `@${user} \n ![Not Nice](http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif)`;
