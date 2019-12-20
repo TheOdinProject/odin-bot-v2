@@ -117,12 +117,16 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
     );
+    const sEquals = content.split(" ").find(word => word.includes("start="));
+    let start = sEquals ? sEquals.replace("start=", "") : 0;
+    start = Math.max(start, 0);
+
     const nEquals = content.split(" ").find(word => word.includes("n="));
     let length = nEquals ? nEquals.replace("n=", "") : 5;
     length = Math.min(length, 25);
     length = Math.max(length, 1);
     let usersList = "**leaderboard** \n";
-    for (let i = 0; i < length; i++) {
+    for (let i = start; i < (length+start); i++) {
       const user = users.data[i];
       if (user) {
         const member = guild.members.get(user.name);
