@@ -1,9 +1,9 @@
-const { registerBotCommand } = require("../bot-engine.js");
-const { randomInt } = require("./helpers.js");
+const {registerBotCommand} = require("../botEngine.js");
+const {randomInt} = require("./helpers.js");
 
 registerBotCommand(
   /partyparrot|party_parrot|party parrot|oiseau/,
-  ({ text }) => {
+  ({content}) => {
     const parrots = [
       "http://cultofthepartyparrot.com/parrots/parrotdad.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
@@ -21,14 +21,11 @@ registerBotCommand(
       "http://emojis.slackmojis.com/emojis/images/1472757675/1132/otter-dance.gif"
     ];
 
-    if (text.toLowerCase().match("   p")) {
-      const parrotUrl = "http://cultofthepartyparrot.com/parrots/congaparrot.gif";
-      return `![](${parrotUrl})`.repeat(15);
-    } else if (text.toLowerCase().match("!")) {
-      return `![](${parrots[0]})`;
+   if (content.toLowerCase().match("!")) {
+      return `${parrots[0]}`;
     } else {
       const index = randomInt(parrots.length);
-      return `![](${parrots[index]})`;
+      return `${parrots[index]}`;
     }
   }
 );
