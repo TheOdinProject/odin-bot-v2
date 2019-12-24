@@ -6,12 +6,20 @@ registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
 // registerBotCommand(/\/flip/, () => String.raw`(╯°□°）╯︵ ┻━━━━┻ `);
 
+
+registerBotCommand(/\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
+
+registerBotCommand(/:fu:/, ({ data }) => {
+  const user = data.fromUser.username;
+  return `@${user} \n ![Not Nice](http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif)`;
+
 registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
 
 registerBotCommand(/\peen/, ({author}) => {
   if (author.id == 418918922507780096) {
     return `https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif`;
   }
+
 });
 
 registerBotCommand(/\B\/google\s+.+/, ({content}) => {
