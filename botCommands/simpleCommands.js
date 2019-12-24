@@ -4,9 +4,6 @@ registerBotCommand(/\/hug/, () => `⊂(´・ω・｀⊂)`);
 
 registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
-// registerBotCommand(/\/flip/, () => String.raw`(╯°□°）╯︵ ┻━━━━┻ `);
-
-
 registerBotCommand(/\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
 
 registerBotCommand(/:fu:/, ({ data }) => {
@@ -32,10 +29,13 @@ registerBotCommand(/\B\/google\s+.+/, ({content}) => {
   return `${transform(query)}`;
 });
 
+registerBotCommand(/\/dab/, () => `[![](https://tenor.com/view/bettywhite-dab-gif-5044603)]`);
+
 registerBotCommand(
   /\/gandalf/,
   () => `http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif`
 );
+
 
 registerBotCommand(/\/motivate/, () => {
   return `Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE`;
