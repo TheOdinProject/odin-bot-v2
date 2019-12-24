@@ -6,4 +6,4 @@ function getMentions(message) {
   return message.match(/@\S+/g);
 }
 
-module.exports = { randomInt, getMentions };
+module.exports = {randomInt, getMentions};
