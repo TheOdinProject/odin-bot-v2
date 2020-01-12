@@ -68,7 +68,14 @@ function plural(points) {
 
 async function pointsBotCommand({ author, content, channel, client }) {
   const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
-  userIds.forEach(async userId => {
+  userIds.forEach(async(userId, i) => {
+    // this limits the number of calls per message to 5 to avoid abuse
+    if (i > 4) {
+      return
+    }
+    if (i == 4 ) {
+      channel.send('you can only do 5 at a time..... ')
+    }
     const user = await client.users.get(userId);
     if (user == author) {
       channel.send("http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif");
