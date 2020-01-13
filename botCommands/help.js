@@ -7,6 +7,7 @@ registerBotCommand(/\B\/help\b/, ({room}) => {
 Give points to someone who has been helpful by mentioning their name and adding ++ : \`@username ++\` or by giving them a star : \`@username :star:\`
 
 View the points leaderboard with \`/leaderboard\`
+Modify it with \`n=\` and \`start=\` i.e. \`/leaderboard n=25 start=30\`
 
 Type \`/help\` to view this message again
 
