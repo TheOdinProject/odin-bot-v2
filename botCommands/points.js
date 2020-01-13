@@ -111,7 +111,7 @@ registerBotCommand(/\/points/, async function({
     const user = await client.users.get(userId);
     try {
       const userPoints = await lookUpUser(user.id);
-      const username = guild.members.get(userPoints.name).displayName;
+      const username = guild.members.get(userPoints.name).displayName.replace(/\//g, "\\/");
       if (userPoints) {
         channel.send(`${username} has ${userPoints.points} points!`);
       }
@@ -137,7 +137,7 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
       const user = users.data[i];
       if (user) {
         const member = guild.members.get(user.name);
-        const username = member ? member.displayName : "undefined";
+        const username = member ? member.displayName.replace(/\//g, "\\/") : "undefined";
         if (i == 0) {
           usersList += `${i + 1} - ${username} [${
             user.points
