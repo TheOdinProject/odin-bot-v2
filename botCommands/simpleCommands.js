@@ -22,7 +22,7 @@ registerBotCommand(/\peen/, ({author}) => {
 registerBotCommand(/\B\/google\s+.+/, ({content}) => {
   const transform = content => {
     const query = content.split(' ').map(encodeURIComponent).join('+');
-    return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
+    return `**HERE YOU GO BABY >** <http://letmegooglethat.com/?q=${query}>`;
   };
 
   const query = content.match(/\B\/google\s+(.+)/)[1];
