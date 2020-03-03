@@ -13,9 +13,10 @@ Type \`/help\` to view this message again
 
 Motivate your fellow odinites with \`/motivate\` and mention them
 
+** The Odin Project Forums currently down as of 3/1/2020 **
+
 I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
 });
-***3/1/20 - The Odin Project Forums are currently down.***
 registerBotCommand(/\B\/code\b/, ({room}) => {
   return `
 **HOW TO EMBED CODE SNIPPETS**
