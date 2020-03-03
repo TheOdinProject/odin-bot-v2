@@ -46,9 +46,11 @@ async function lookUpUser(username) {
 
 function exclamation(points) {
   if (points < 5) {
-    return "Nice!";
+    return "Cool!";
   } else if (points < 25) {
     return "Sweet!";
+  } else if (points == 69) {
+    return "...nice.";
   } else if (points < 99) {
     return "Woot!";
   } else if (points < 105) {
@@ -57,6 +59,10 @@ function exclamation(points) {
     return "DAM SON:";
   } else if (points > 299 && points < 306) {
     return "OK YOU CAN STOP NOW:";
+  } else if (points == 420) {
+    return "*coughs*";
+  } else if (points > 500) {
+    return "Wow!";
   } else {
     return "Woot!";
   }
