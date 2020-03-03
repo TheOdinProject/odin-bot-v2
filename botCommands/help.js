@@ -15,7 +15,7 @@ Motivate your fellow odinites with \`/motivate\` and mention them
 
 I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
 });
-
+***3/1/20 - The Odin Project Forums are currently down.***
 registerBotCommand(/\B\/code\b/, ({room}) => {
   return `
 **HOW TO EMBED CODE SNIPPETS**
