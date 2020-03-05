@@ -29,6 +29,16 @@ registerBotCommand(/\B\/google\s+.+/, ({content}) => {
   return `${transform(query)}`;
 });
 
+registerBotCommand(/\B\/fg\s+.+/, ({content}) => {
+  const transform = content => {
+    const query = content.split(' ').map(encodeURIComponent).join('+');
+    return `**This is what you should have typed into Google >** <https://google.com/?q=${query}>`;
+  };
+
+  const query = content.match(/\B\/fg\s+(.+)/)[1];
+  return `${transform(query)}`;
+});
+
 registerBotCommand(/\/dab/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
 
 registerBotCommand(
