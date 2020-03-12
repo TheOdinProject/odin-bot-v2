@@ -58,6 +58,9 @@ async function listenToMessages(client) {
 
 
     botCommands.forEach(async ({ regex, fn }) => {
+      if (process.argv.includes("dev") && message.channel.type != 'dm') {
+        return
+      }
       if (message.content.toLowerCase().match(regex)) {
         authorBuffer.push(createAuthorEntry(message))
         try {
