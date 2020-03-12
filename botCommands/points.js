@@ -4,6 +4,10 @@ const { registerBotCommand } = require("../botEngine.js");
 
 const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
 
+if (process.argv.includes('dev')) {
+  return;
+}
+
 function getUserIdsFromMessage(text, regex) {
   const matches = [];
   let match;
