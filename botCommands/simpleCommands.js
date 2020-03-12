@@ -29,7 +29,7 @@ registerBotCommand(/\B\/google\s+.+/, ({content}) => {
   return `${transform(query)}`;
 });
 
-registerBotCommand(/\/dab/, () => `[![](https://tenor.com/view/bettywhite-dab-gif-5044603)]`);
+registerBotCommand(/\/dab/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
 
 registerBotCommand(
   /\/gandalf/,
