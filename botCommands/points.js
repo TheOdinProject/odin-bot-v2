@@ -104,7 +104,7 @@ async function pointsBotCommand({ author, content, channel, client }) {
 
 registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
 
-registerBotCommand(/\/points/, async function({
+registerBotCommand(/^\/points/, async function({
   content,
   client,
   channel,
@@ -123,7 +123,7 @@ registerBotCommand(/\/points/, async function({
   });
 });
 
-registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
+registerBotCommand(/^\/leaderboard/, async function({ guild, content }) {
   try {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
@@ -157,7 +157,7 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
   }
 });
 
-registerBotCommand(/\/setpoints/, async function({ author, content }) {
+registerBotCommand(/^\/setpoints/, async function({ author, content }) {
   if (author.id == 418918922507780096) {
     const id = content
       .split(" ")
