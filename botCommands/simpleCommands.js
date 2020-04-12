@@ -6,9 +6,9 @@ registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
 registerBotCommand(/\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
 
-registerBotCommand(/:fu:/, ({ data }) => {
-  const user = data.fromUser.username;
-  return `@${user} \n ![Not Nice](http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif)`;
+registerBotCommand(/:fu:/, async (message) => {
+  await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
+  return null;
 });
 
 registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
