@@ -5,7 +5,7 @@ registerBotCommand(
   /partyparrot|party_parrot|party parrot|oiseau/,
   ({content}) => {
     const parrots = [
-      "http://cultofthepartyparrot.com/parrots/parrotdad.gif",
+      "https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
       "http://cultofthepartyparrot.com/parrots/shuffleparrot.gif",
       "http://cultofthepartyparrot.com/parrots/parrotcop.gif",
