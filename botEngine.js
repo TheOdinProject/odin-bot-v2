@@ -43,6 +43,12 @@ async function listenToMessages(client) {
       return;
     }
 
+    if (message.channel.id === '693255421607280670') {
+      message.channel.send("Hello! If you haven't yet, go read the rules for instructions on how to access the rest of our discord server.")
+      message.channel.send("If you are still having trouble after following the instructions, DM a moderator")
+      return
+    }
+
     const authorEntryCount = authorBuffer.reduce((count, current) => {
       if (current.author == message.author.id) {
         return count + 1

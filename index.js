@@ -10,8 +10,12 @@ glob.sync("./botCommands/**/*.js").forEach(file => {
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+let listening = false
 client.on('ready', () => {
-  listenToMessages(client);
+  if (!listening) {
+    listenToMessages(client);
+    listening = true;
+  }
 });
 
 client.login(process.env.DISCORD_API_KEY);
