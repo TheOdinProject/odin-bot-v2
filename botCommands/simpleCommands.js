@@ -6,6 +6,11 @@ registerBotCommand(/\/smart/, () => String.raw`f(ಠ‿↼)z`);
 
 registerBotCommand(/\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
 
+registerBotCommand(/:fu:/, async (message) => {
+  await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
+  return null;
+});
+
 registerBotCommand(/\/question/, () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`);
 
 registerBotCommand(/\/data/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
