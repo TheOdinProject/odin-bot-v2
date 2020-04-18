@@ -11,7 +11,7 @@ registerBotCommand(/:fu:/, async (message) => {
   return null;
 });
 
-registerBotCommand(/\/question/, () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`);
+registerBotCommand(/\B\/question\b/, () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`);
 
 registerBotCommand(/\/data/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
 
