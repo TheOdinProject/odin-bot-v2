@@ -1,10 +1,10 @@
 const {registerBotCommand} = require('../botEngine.js');
 
-registerBotCommand(/(?<=\s?)\/hug/, () => `⊂(´・ω・｀⊂)`);
+registerBotCommand(/(?<=\s?)\/hug\b/, () => `⊂(´・ω・｀⊂)`);
 
-registerBotCommand(/(?<=\s?)\/smart/, () => String.raw`f(ಠ‿↼)z`);
+registerBotCommand(/(?<=\s?)\/smart\b/, () => String.raw`f(ಠ‿↼)z`);
 
-registerBotCommand(/(?<=\s?)\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
+registerBotCommand(/(?<=\s?)\/lenny\b/, () => String.raw`( ͡° ͜ʖ ͡°)`);
 
 registerBotCommand(/:fu:/, async (message) => {
   await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
@@ -13,7 +13,7 @@ registerBotCommand(/:fu:/, async (message) => {
 
 registerBotCommand(/(?<=\s?)\/question\b/, () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`);
 
-registerBotCommand(/(?<=\s?)\/data/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
+registerBotCommand(/(?<=\s?)\/data\b/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
 
 registerBotCommand(/:fu:/, ({ data }) => {
   const user = data.fromUser.username;
@@ -48,22 +48,22 @@ registerBotCommand(/(?<=\s?)\/fg\s+.+/, ({content}) => {
 });
 
 
-registerBotCommand(/(?<=\s?)\/dab/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
+registerBotCommand(/(?<=\s?)\/dab\b/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
 
 registerBotCommand(
-  /(?<=\s?)\/gandalf/,
+  /(?<=\s?)\/gandalf\b/,
   () => `http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif`
 );
 
 
-registerBotCommand(/(?<=\s?)\/motivate/, () => {
+registerBotCommand(/(?<=\s?)\/motivate\b/, () => {
   return `Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE`;
 });
 
-registerBotCommand(/\/justdoit/, () => {
+registerBotCommand(/(?<=\s?)\/justdoit\b/, () => {
   return `What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
 });
 
-registerBotCommand(/\/pairs/, () => {
+registerBotCommand(/(?<=\s?)\/pairs\b/, () => {
   return `**Find your coding partner here:** https://forum.theodinproject.com/c/pairs`;
 });
