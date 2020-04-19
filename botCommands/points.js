@@ -2,7 +2,9 @@ const axios = require("axios");
 const config = require("../config.js");
 const { registerBotCommand } = require("../botEngine.js");
 
-const AWARD_POINT_REGEX = ["<@!?(\d+)>\s?(\+\+|\u{2b50})", "gu"];
+// if you change one change the other to match 
+const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
+const API_CONSISTENT_AWARD_POINT_REGEX = ["<@!?(\d+)>\s?(\+\+|\u{2b50})", "gu"];
 
 if (process.argv.includes('dev')) {
   return;
@@ -102,7 +104,7 @@ async function pointsBotCommand({ author, content, channel, client }) {
   });
 }
 
-registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
+registerBotCommand(API_CONSISTENT_AWARD_POINT_REGEX, pointsBotCommand);
 
 registerBotCommand("/points", async function({
   content,
