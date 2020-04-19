@@ -2,7 +2,7 @@ const axios = require("axios");
 const config = require("../config.js");
 const { registerBotCommand } = require("../botEngine.js");
 
-const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
+const AWARD_POINT_REGEX = ["<@!?(\d+)>\s?(\+\+|\u{2b50})", "gu"];
 
 if (process.argv.includes('dev')) {
   return;
@@ -17,7 +17,7 @@ function getUserIdsFromMessage(text, regex) {
 }
 
 registerBotCommand(
-  /@!?(\d+)>\s?(\-\-)/,
+  "@!?(\d+)>\s?(\-\-)",
   () =>
     "http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"
 );
@@ -104,7 +104,7 @@ async function pointsBotCommand({ author, content, channel, client }) {
 
 registerBotCommand(AWARD_POINT_REGEX, pointsBotCommand);
 
-registerBotCommand(/\/points/, async function({
+registerBotCommand("/points", async function({
   content,
   client,
   channel,
@@ -123,7 +123,7 @@ registerBotCommand(/\/points/, async function({
   });
 });
 
-registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
+registerBotCommand("/leaderboard", async function({ guild, content }) {
   try {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
@@ -157,7 +157,7 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
   }
 });
 
-registerBotCommand(/\/setpoints/, async function({ author, content }) {
+registerBotCommand("/setpoints", async function({ author, content }) {
   if (author.id == 418918922507780096) {
     const id = content
       .split(" ")

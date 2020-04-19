@@ -2,7 +2,7 @@ const {registerBotCommand} = require("../botEngine.js");
 const {randomInt} = require("./helpers.js");
 
 registerBotCommand(
-  /partyparrot|party_parrot|party parrot|oiseau/,
+  "partyparrot|party_parrot|party parrot|oiseau",
   ({content}) => {
     const parrots = [
       "https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif",

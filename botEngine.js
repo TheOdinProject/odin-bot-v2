@@ -19,8 +19,24 @@ const flushAuthorEntries = function() {
   authorBuffer = authorBuffer.filter(entry => entry.timeOut == false)
 }
 
-function registerBotCommand(regex, fn) {
-  botCommands.push({ regex, fn });
+function registerBotCommand(_pattern, fn) {
+	let pattern, modifiers;
+	if (_pattern.pop) {
+		[pattern, modifiers] = _pattern;
+	} else {
+		pattern = _pattern;
+		modifiers = "";
+	}
+
+	botCommands.push({
+    regex: [
+      new RegExp("^" + pattern + "$", modifiers),
+      new RegExp("^" + pattern + "(?![\a\d/])", modifiers),
+      new RegExp("(?<=[^\a\d/])" + pattern + "$", modifiers),
+      new RegExp("(?<=[^\a\d/])" + pattern + "(?![\a\d/])", modifiers),
+  ],
+    fn,
+  });
 }
 
 async function listenToMessages(client) {
@@ -63,27 +79,34 @@ async function listenToMessages(client) {
     }
 
 
-    botCommands.forEach(async ({ regex, fn }) => {
+    botCommands.forEach(async command => {
       if (process.argv.includes("dev") && message.channel.type != 'dm') {
         return
       }
-      if (message.content.toLowerCase().match(regex)) {
-        authorBuffer.push(createAuthorEntry(message))
-        try {
-          const response = await fn(message);
+			let matched = false;
+			command.regex.forEach(pattern => {
+				if (!matched) {
+					const match = message.content.toLowerCase().match(pattern);
+					if (match) {
+						matched = true;
+						authorBuffer.push(createAuthorEntry(message))
+						try {
+							const response = await command.fn(message);
 
-          if (response) {
-            try {
-              message.channel.send(response);
-            } catch (e) {
-              console.log(e);
-            }
-          }
-        }
-        catch(e) {
-          console.log(e)
-        }
-      }
+							if (response) {
+								try {
+									message.channel.send(response);
+								} catch (e) {
+									console.log(e);
+								}
+							}
+						}
+						catch(e) {
+							console.log(e)
+						}
+					}
+				}
+			});
     });
   });
 }
