@@ -15,7 +15,9 @@ registerBotCommand(/\B\/question/, () => `**It looks like you're trying to ask a
 
 registerBotCommand(/\B\/data/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
 
-registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
+// registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
+
+registerBotCommand(/\/sexpresso/, () => `https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590`);
 
 registerBotCommand(/\peen/, ({author}) => {
   if (author.id == 418918922507780096) {
