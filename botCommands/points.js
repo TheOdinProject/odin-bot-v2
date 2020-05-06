@@ -70,7 +70,7 @@ function plural(points) {
   return points === 1 ? "point" : "points";
 }
 
-async function pointsBotCommand({ author, content, channel, client }) {
+async function pointsBotCommand({ author, content, channel, client, guild }) {
   const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
   userIds.forEach(async(userId, i) => {
     // this limits the number of calls per message to 5 to avoid abuse
@@ -92,11 +92,12 @@ async function pointsBotCommand({ author, content, channel, client }) {
     try {
       const pointsUser = await addPointsToUser(user.id);
       if (user) {
-        if (pointsUser.points > 39) {
-          let pointsRole = message.guild.roles.find(r => r.name === "testing")
-          console.log(user, pointsUser.points, pointsRole)
-          user.addRole(pointsRole)
-        }
+        // if (pointsUser.points > 39) {
+        //   let pointsRole = guild.roles.find(r => r.name === "testing")
+        //   // console.log(pointsRole)
+        //     // user.addRole(pointsRole)
+            // console.log(client.user)
+        // }
 
         channel.send(
           `${exclamation(pointsUser.points)} ${user} now has ${
