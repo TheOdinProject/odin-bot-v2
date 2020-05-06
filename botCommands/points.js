@@ -147,11 +147,11 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
         const username = member ? member.displayName.replace(/\//g, "\\/") : undefined;
         if (username) {
           if (i == 0) {
-            usersList += `${i} - ${username} [${
+            usersList += `${i+1} - ${username} [${
               user.points
-            } points] :tadx: \n`;
+            } points] :tada: \n`;
           } else {
-            usersList += `${i} - ${username} [${user.points} points] \n`;
+            usersList += `${i+1} - ${username} [${user.points} points] \n`;
           }
         } else {
           usersList += 'UNDEFINED \n'
