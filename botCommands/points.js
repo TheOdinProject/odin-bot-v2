@@ -128,6 +128,9 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
     );
+    const data = users.data.filter(u => {
+      return guild.members.get(u.name)
+    })
     const sEquals = content.split(" ").find(word => word.includes("start="));
     let start = sEquals ? sEquals.replace("start=", "") : 1;
     start = Math.max(start, 1);
@@ -138,16 +141,20 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     length = Math.max(length, 1);
     let usersList = "**leaderboard** \n";
     for (let i = (start-1); i < (length+start-1); i++) {
-      const user = users.data[i];
+      const user = data[i];
       if (user) {
         const member = guild.members.get(user.name);
-        const username = member ? member.displayName.replace(/\//g, "\\/") : "undefined";
-        if (i == 0) {
-          usersList += `${i + 1} - ${username} [${
-            user.points
-          } points] :tada: \n`;
+        const username = member ? member.displayName.replace(/\//g, "\\/") : undefined;
+        if (username) {
+          if (i == 0) {
+            usersList += `${i} - ${username} [${
+              user.points
+            } points] :tadx: \n`;
+          } else {
+            usersList += `${i} - ${username} [${user.points} points] \n`;
+          }
         } else {
-          usersList += `${i + 1} - ${username} [${user.points} points] \n`;
+          usersList += 'UNDEFINED \n'
         }
       }
     }
