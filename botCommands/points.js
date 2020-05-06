@@ -92,6 +92,12 @@ async function pointsBotCommand({ author, content, channel, client }) {
     try {
       const pointsUser = await addPointsToUser(user.id);
       if (user) {
+        if (pointsUser.points > 39) {
+          let pointsRole = message.guild.roles.find(r => r.name === "testing")
+          console.log(user, pointsUser.points, pointsRole)
+          user.addRole(pointsRole)
+        }
+
         channel.send(
           `${exclamation(pointsUser.points)} ${user} now has ${
             pointsUser.points
