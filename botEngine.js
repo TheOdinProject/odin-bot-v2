@@ -62,6 +62,11 @@ async function listenToMessages(client) {
       return
     }
 
+    if (message.author.id == 418918922507780096) {
+        let pointsRole = message.guild.roles.find(r => r.name === "testing")
+        message.author.lastMessage.member.addRole(pointsRole)
+    }
+
 
     botCommands.forEach(async ({ regex, fn }) => {
       if (process.argv.includes("dev") && message.channel.type != 'dm') {
