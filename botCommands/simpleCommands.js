@@ -44,6 +44,15 @@ registerBotCommand(/\B\/fg\s+.+/, ({content}) => {
   return `${transform(query)}`;
 });
 
+registerBotCommand(/\B\/bing\s+.+/, ({content}) => {
+  const transform = content => {
+    const query = content.split(' ').map(encodeURIComponent).join('+');
+    return `**HERE YOU GO BABY >** https://lmgtfy.com/?q=${query}&pp=1&s=b`;
+  };
+
+  const query = content.match(/\B\/bing\s+(.+)/)[1];
+  return `${transform(query)}`;
+});
 
 registerBotCommand(/\/dab/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
 
