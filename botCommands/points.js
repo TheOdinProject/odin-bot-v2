@@ -70,7 +70,7 @@ function plural(points) {
   return points === 1 ? "point" : "points";
 }
 
-async function pointsBotCommand({ author, content, channel, client }) {
+async function pointsBotCommand({ author, content, channel, client, guild, mentions }) {
   const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
   userIds.forEach(async(userId, i) => {
     // this limits the number of calls per message to 5 to avoid abuse
@@ -92,6 +92,17 @@ async function pointsBotCommand({ author, content, channel, client }) {
     try {
       const pointsUser = await addPointsToUser(user.id);
       if (user) {
+        const member = await guild.member(user)
+        if (member && !member.roles.find(r => r.name==="club-40") && pointsUser.points > 39) {
+          let pointsRole = guild.roles.find(r => r.name === "club-40")
+          member.addRole(pointsRole)
+
+          let clubChannel = client.channels.get('707225752608964628')
+          if (clubChannel) {
+            clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40`)
+          }
+        }
+
         channel.send(
           `${exclamation(pointsUser.points)} ${user} now has ${
             pointsUser.points
@@ -128,6 +139,9 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     const users = await axios.get(
       `https://odin-points-bot-discord.herokuapp.com/users`
     );
+    const data = users.data.filter(u => {
+      return guild.members.get(u.name)
+    })
     const sEquals = content.split(" ").find(word => word.includes("start="));
     let start = sEquals ? sEquals.replace("start=", "") : 1;
     start = Math.max(start, 1);
@@ -138,16 +152,20 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     length = Math.max(length, 1);
     let usersList = "**leaderboard** \n";
     for (let i = (start-1); i < (length+start-1); i++) {
-      const user = users.data[i];
+      const user = data[i];
       if (user) {
         const member = guild.members.get(user.name);
-        const username = member ? member.displayName.replace(/\//g, "\\/") : "undefined";
-        if (i == 0) {
-          usersList += `${i + 1} - ${username} [${
-            user.points
-          } points] :tada: \n`;
+        const username = member ? member.displayName.replace(/\//g, "\\/") : undefined;
+        if (username) {
+          if (i == 0) {
+            usersList += `${i+1} - ${username} [${
+              user.points
+            } points] :tada: \n`;
+          } else {
+            usersList += `${i+1} - ${username} [${user.points} points] \n`;
+          }
         } else {
-          usersList += `${i + 1} - ${username} [${user.points} points] \n`;
+          usersList += 'UNDEFINED \n'
         }
       }
     }
