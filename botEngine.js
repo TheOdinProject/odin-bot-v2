@@ -43,7 +43,10 @@ async function listenToMessages(client) {
       return;
     }
 
-    if (message.channel.id === '693255421607280670') {
+    if (
+      message.channel.id === '693255421607280670' &&
+      message.member.roles.find(role => role.name === 'loki?')
+    ) {
       message.channel.send("Hello! If you haven't yet, go read the rules for instructions on how to access the rest of our discord server.")
       message.channel.send("If you are still having trouble after following the instructions, DM a moderator")
       return
