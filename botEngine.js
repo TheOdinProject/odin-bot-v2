@@ -47,9 +47,16 @@ async function listenToMessages(client) {
       message.channel.id === '693255421607280670' &&
       message.member.roles.find(role => role.name === 'loki?')
     ) {
-      message.channel.send("Hello! If you haven't yet, go read the rules for instructions on how to access the rest of our discord server.")
-      message.channel.send("If you are still having trouble after following the instructions, DM a moderator")
-      return
+      if (message == 'ok') //TODO add || for or emoji, no idea how to add this. -ZM
+        {
+          message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
+        } 
+        else 
+        {
+          message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
+If you are still having trouble after following the instructions, DM a maintainer or core member.`);
+        }
+      return;
     }
 
     const authorEntryCount = authorBuffer.reduce((count, current) => {
