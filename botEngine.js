@@ -47,7 +47,7 @@ async function listenToMessages(client) {
       message.channel.id === '693255421607280670' &&
       message.member.roles.find(role => role.name === 'loki?')
     ) {
-      if (message == 'ok') //TODO add || for or emoji, no idea how to add this. -ZM
+      if (message == 'ok' || message == 'OK') //TODO add || for or emoji, no idea how to add this. -ZM
         {
           message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
         } 
