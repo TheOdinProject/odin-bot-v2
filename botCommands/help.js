@@ -25,7 +25,13 @@ To write multiple lines of code use three backticks <https://i.stack.imgur.com/E
     [Put your Code here!]
 \\\`\\\`\\\`
 
-For \`inline code\` use one backtick:
+Add the language directly after the three backticks to enable syntax highlighting:
+
+\\\`\\\`\\\`js
+    [Put your JavaScript Code here!]
+\\\`\\\`\\\
+
+For \`inline code\` use one backtick (no syntax highlighting):
 
 \\\`Code here!\\\``;
 });
