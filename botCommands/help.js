@@ -13,7 +13,7 @@ Type \`/help\` to view this message again
 
 Motivate your fellow odinites with \`/motivate\` and mention them
 
-I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
+I'm open source!  Hack me HERE: <https://github.com/TheOdinProject/odin-bot-v2>`;
 });
 
 registerBotCommand(/\B\/code\b/, ({room}) => {
