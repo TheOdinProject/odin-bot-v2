@@ -19,7 +19,7 @@ I'm open source!  Hack me HERE: <https://github.com/codyloyd/odin-bot-v2>`;
 registerBotCommand(/\B\/code\b/, async ({ room, mentions }) => {
   let users = '';
   if (mentions.users) {
-    for (user of mentions.users) users += `${user} `;
+    for (user of mentions.users) users += `${user[1]} `;
   }
 
   return `
