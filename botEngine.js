@@ -55,7 +55,7 @@ async function listenToMessages(client) {
       else 
         {
           message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
-If you are still having trouble after following the instructions, DM a maintainer or core member.`);
+If you are still having trouble after following the instructions, DM a Maintainer or Core member.`);
         }
       return;
     }
