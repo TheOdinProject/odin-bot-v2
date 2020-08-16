@@ -29,7 +29,8 @@ async function listenToMessages(client) {
     if (message.author === client.user) {
       return;
     }
-
+    
+    const regex = new RegExp("ok", "i");
     const NOBOT_ROLE_ID = "513916941212188698";
 
     // can't bot if user is NOBOT
@@ -47,9 +48,16 @@ async function listenToMessages(client) {
       message.channel.id === '693255421607280670' &&
       message.member.roles.find(role => role.name === 'loki?')
     ) {
-      message.channel.send("Hello! If you haven't yet, go read the rules for instructions on how to access the rest of our discord server.")
-      message.channel.send("If you are still having trouble after following the instructions, DM a moderator")
-      return
+      if (regex.test(message))
+        {
+          message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
+        }
+      else 
+        {
+          message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
+If you are still having trouble after following the instructions, DM a Maintainer or Core member.`);
+        }
+      return;
     }
 
     const authorEntryCount = authorBuffer.reduce((count, current) => {
