@@ -30,9 +30,7 @@ async function listenToMessages(client) {
       return;
     }
     
-    const regexOk = new RegExp("ok", "i");
-    const regexHi = new RegExp("hi", "i");
-    const regexHello = new RegExp("hello", "i");
+    const regex = new RegExp("ok", "i");
     const NOBOT_ROLE_ID = "513916941212188698";
 
     // can't bot if user is NOBOT
@@ -50,14 +48,11 @@ async function listenToMessages(client) {
       message.channel.id === '693255421607280670' &&
       message.member.roles.find(role => role.name === 'loki?')
     ) {
-      if (message == regexOk)
+      if (regex.test(message))
         {
           message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
         }
-      if else (message == regexHi || regexHello) {
-        message.channel.send(`Hello back at you, ${message.author}! You need to return to <#693244715839127653> and read so you can gain access to the rest of the chat and reintroduce yourself.`);
-      }
-        else 
+      else 
         {
           message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
 If you are still having trouble after following the instructions, DM a maintainer or core member.`);
