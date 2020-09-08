@@ -59,9 +59,8 @@ If you are still having trouble after following the instructions, DM a Maintaine
         }
       return;
     } else if (message.channel.id === '627445384297316352') { // creations-showcase
-      message.channel
-        .send("Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel #creations-discussion")
-        .delete({ timeout: 43200000 }); // self delete after 12 hours
+      const msg = await message.channel.send("Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel #creations-discussion");
+      msg.delete({ timeout: 43200000 }); // self delete after 12 hours
       return;
     }
 
