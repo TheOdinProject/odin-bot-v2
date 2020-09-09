@@ -64,7 +64,7 @@ If you are still having trouble after following the instructions, DM a Maintaine
       if (creationsMessage) {
         creationsMessage.delete()
       }
-      creationsMessage = await message.channel.send("Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel #creations-discussion");
+      creationsMessage = await message.channel.send("Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel <#634025871614803968>");
       return;
     }
 
