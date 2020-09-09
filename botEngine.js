@@ -29,7 +29,7 @@ async function listenToMessages(client) {
     if (message.author === client.user) {
       return;
     }
-    
+
     const regex = new RegExp("ok", "i");
     const NOBOT_ROLE_ID = "513916941212188698";
 
@@ -52,11 +52,15 @@ async function listenToMessages(client) {
         {
           message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
         }
-      else 
+      else
         {
           message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
 If you are still having trouble after following the instructions, DM a Maintainer or Core member.`);
         }
+      return;
+    } else if (message.channel.id === '627445384297316352') { // creations-showcase
+      const msg = await message.channel.send("Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel #creations-discussion");
+      msg.delete({ timeout: 43200000 }); // self delete after 12 hours
       return;
     }
 
