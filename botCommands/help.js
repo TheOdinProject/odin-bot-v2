@@ -1,6 +1,6 @@
 const { registerBotCommand } = require('../botEngine.js');
 
-registerBotCommand(/\B\/help\b/, ({ room }) => {
+registerBotCommand(/\B\/help(\s+)?$/, ({ room }) => {
   return `
   **By posting in this chatroom you agree to our code of conduct:** <https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md>
 
