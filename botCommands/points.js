@@ -1,8 +1,9 @@
 const axios = require("axios");
 const config = require("../config.js");
 const { registerBotCommand } = require("../botEngine.js");
-
 const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
+
+axios.defaults.headers.post['Authorization'] = `Token ${config.pointsbot.token}`
 
 if (process.argv.includes('dev')) {
   return;
@@ -22,25 +23,22 @@ registerBotCommand(
     "http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"
 );
 
-async function addPointsToUser(username) {
+async function addPointsToUser(discord_id) {
   try {
-    const pointsBotResponse = await axios.get(
-      `https://odin-points-bot-discord.herokuapp.com/inc/${username}?access_token=${
-        config.pointsbot.token
-      }`
+    const pointsBotResponse = await axios.post(
+      `https://theodinproject.com/api/points?discord_id=${discord_id}`
     );
+
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
   }
 }
 
-async function lookUpUser(username) {
+async function lookUpUser(discord_id) {
   try {
     const pointsBotResponse = await axios.get(
-      `https://odin-points-bot-discord.herokuapp.com/search/${username}?access_token=${
-        config.pointsbot.token
-      }`
+      `https://theodinproject.com/api/points/${discord_id}`
     );
     return pointsBotResponse.data;
   } catch (err) {
@@ -70,7 +68,7 @@ function plural(points) {
   return points === 1 ? "point" : "points";
 }
 
-async function pointsBotCommand({ author, content, channel, client, guild, mentions }) {
+async function pointsBotCommand({ author, content, channel, client, guild }) {
   const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
   userIds.forEach(async(userId, i) => {
     // this limits the number of calls per message to 5 to avoid abuse
@@ -126,7 +124,7 @@ registerBotCommand(/\/points/, async function({
     const user = await client.users.get(userId);
     try {
       const userPoints = await lookUpUser(user.id);
-      const username = guild.members.get(userPoints.name).displayName.replace(/\//g, "\\/");
+      const username = guild.members.get(userPoints.discord_id).displayName.replace(/\//g, "\\/");
       if (userPoints) {
         channel.send(`${username} has ${userPoints.points} points!`);
       }
@@ -136,12 +134,8 @@ registerBotCommand(/\/points/, async function({
 
 registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
   try {
-    const users = await axios.get(
-      `https://odin-points-bot-discord.herokuapp.com/users`
-    );
-    const data = users.data.filter(u => {
-      return guild.members.get(u.name)
-    })
+    const users = await axios.get('https://theodinproject.com/api/points');
+    const data = users.data.filter(user => guild.members.get(user.discord_id));
     const sEquals = content.split(" ").find(word => word.includes("start="));
     let start = sEquals ? sEquals.replace("start=", "") : 1;
     start = Math.max(start, 1);
@@ -154,7 +148,7 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     for (let i = (start-1); i < (length+start-1); i++) {
       const user = data[i];
       if (user) {
-        const member = guild.members.get(user.name);
+        const member = guild.members.get(user.discord_id);
         const username = member ? member.displayName.replace(/\//g, "\\/") : undefined;
         if (username) {
           if (i == 0) {
@@ -172,31 +166,5 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     return usersList;
   } catch (err) {
     console.log(err);
-  }
-});
-
-registerBotCommand(/\/setpoints/, async function({ author, content }) {
-  if (author.id == 418918922507780096) {
-    const id = content
-      .split(" ")
-      .find(word => word.includes("id="))
-      .replace("id=", "");
-    const points = content
-      .split(" ")
-      .find(word => word.includes("p="))
-      .replace("p=", "");
-
-    try {
-      const pointsBotResponse = await axios.get(
-        `https://odin-points-bot-discord.herokuapp.com/users/${id}/set/${points}?access_token=${
-          config.pointsbot.token
-        }`
-      );
-      return `SUCCESS: ${pointsBotResponse.data.name} - ${
-        pointsBotResponse.data.points
-      }`;
-    } catch (err) {}
-  } else {
-    return `nice try friend... but you can't do that`;
   }
 });
