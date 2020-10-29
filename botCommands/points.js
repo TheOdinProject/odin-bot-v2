@@ -134,8 +134,6 @@ registerBotCommand(/\/points/, async function({
 
 registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
   try {
-    const users = await axios.get('https://theodinproject.com/api/points');
-    const data = users.data.filter(user => guild.members.get(user.discord_id));
     const sEquals = content.split(" ").find(word => word.includes("start="));
     let start = sEquals ? sEquals.replace("start=", "") : 1;
     start = Math.max(start, 1);
@@ -144,6 +142,10 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     let length = nEquals ? nEquals.replace("n=", "") : 5;
     length = Math.min(length, 25);
     length = Math.max(length, 1);
+
+    const users = await axios.get(`http://localhost:3000/api/points?offset=${start}&limit=${length}`);
+    const data = users.data.filter(user => guild.members.get(user.discord_id));
+
     let usersList = "**leaderboard** \n";
     for (let i = (start-1); i < (length+start-1); i++) {
       const user = data[i];
