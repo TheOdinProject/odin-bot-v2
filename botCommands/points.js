@@ -143,7 +143,7 @@ registerBotCommand(/\/leaderboard/, async function({ guild, content }) {
     length = Math.min(length, 25);
     length = Math.max(length, 1);
 
-    const users = await axios.get(`https://theodinproject.com/api/points?offset=${start}&limit=${length}`);
+    const users = await axios.get(`https://theodinproject.com/api/points`);
     const data = users.data.filter(user => guild.members.get(user.discord_id));
 
     let usersList = "**leaderboard** \n";
