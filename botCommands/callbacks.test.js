@@ -9,12 +9,12 @@ describe('/callbacks', ()=>{
         // Use .test() to check if the regex finds a match against the string
         expect(command.regex.test('/callbacks')).toBeTruthy()
 
-        expect(command.regex.test('/coolbacks @odin-bot')).toBeTruthy()
+        expect(command.regex.test('/callbacks @odin-bot')).toBeTruthy()
     })
     test('incorrect strings do not trigger the callback',()=> {
         // Alternatively, we want to ensure that the *incorrect* strings don't trigger the command
         expect(command.regex.test('/coolbacks')).toBeFalsy()
-        expect(command.regex.test('/cllbacks')).toBeFalsy()
+        expect(command.regex.test('/cllbacks')).toBeFalsy() 
     })
 })
 
