@@ -1,8 +1,7 @@
-const shrug = require('./shrug')
-const botEngine = require('./mockBotEngine')
+const command = require('./shrug')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

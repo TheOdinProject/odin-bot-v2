@@ -1,8 +1,7 @@
-const carlosQuote = require('./carlosQuote')
-const botEngine = require('./mockBotEngine')
+const command = require('./carlosQuote')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

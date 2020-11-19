@@ -1,8 +1,7 @@
-const points = require('./points')
-const botEngine = require('./mockBotEngine')
+const commands = require('./points')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

@@ -1,8 +1,7 @@
-const time = require('./time')
-const botEngine = require('./mockBotEngine')
+const command = require('./time')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

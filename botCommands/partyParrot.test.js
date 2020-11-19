@@ -1,8 +1,7 @@
-const partyParrot = require('./partyParrot')
-const botEngine = require('./mockBotEngine')
+const command = require('./partyParrot')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

@@ -1,8 +1,7 @@
-const simpleCommands = require('./simpleCommands')
-const botEngine = require('./mockBotEngine')
+const commands = require('./simpleCommands')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })
