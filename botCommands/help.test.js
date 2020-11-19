@@ -1,7 +1,9 @@
 const help = require('./help')
+const botEngine = require('./mockBotEngine.test')
 
-describe('', ()=>{
+describe('Help Command', ()=>{
     test('',()=> {
 
     })
 })
+
