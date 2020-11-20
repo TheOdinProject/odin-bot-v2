@@ -1,7 +1,7 @@
-const simpleCommands = require('./simpleCommands')
+const commands = require('./simpleCommands')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

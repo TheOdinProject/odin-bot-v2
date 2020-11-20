@@ -1,7 +1,7 @@
-const partyParrot = require('./partyParrot')
+const command = require('./partyParrot')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

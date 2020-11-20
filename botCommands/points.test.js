@@ -1,7 +1,7 @@
-const points = require('./points')
+const commands = require('./points')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

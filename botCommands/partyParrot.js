@@ -1,9 +1,9 @@
 const {registerBotCommand} = require("../botEngine.js");
 const {randomInt} = require("./helpers.js");
 
-registerBotCommand(
-  /partyparrot|party_parrot|party parrot|oiseau/,
-  ({content}) => {
+const command = {
+  regex : /partyparrot|party_parrot|party parrot|oiseau/,
+  cb: ({content}) => {
     const parrots = [
       "https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
@@ -28,4 +28,6 @@ registerBotCommand(
       return `${parrots[index]}`;
     }
   }
-);
+}
+
+registerBotCommand(command.regex, command.cb)

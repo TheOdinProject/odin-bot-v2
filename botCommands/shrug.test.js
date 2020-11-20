@@ -1,7 +1,7 @@
-const shrug = require('./shrug')
+const command = require('./shrug')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

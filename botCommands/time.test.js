@@ -1,7 +1,7 @@
-const time = require('./time')
+const command = require('./time')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

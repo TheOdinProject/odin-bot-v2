@@ -1,7 +1,7 @@
-const carlosQuote = require('./carlosQuote')
+const command = require('./carlosQuote')
 
 describe('', ()=>{
-    test('',()=> {
+    xit('',()=> {
 
     })
 })

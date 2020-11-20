@@ -1,5 +1,6 @@
 const botCommands = [];
 
+
 let authorBuffer = []
 
 let creationsMessage = null
