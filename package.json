@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test" : "jest"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,12 @@
     "prettier": "^1.13.4"
   },
   "devDependencies": {
+    "husky": "^4.3.0",
     "jest": "^26.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npx jest"
+    }
   }
 }
