@@ -34,7 +34,7 @@ async function listenToMessages(client) {
     }
 
     const regex = new RegExp("ok", "i");
-    const NOBOT_ROLE_ID = "513916941212188698";
+    const NOBOT_ROLE_ID = "783764176178774036";
 
     // can't bot if user is NOBOT
     if (
