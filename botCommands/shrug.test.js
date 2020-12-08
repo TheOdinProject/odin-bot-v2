@@ -10,6 +10,7 @@ describe('/shrug', () => {
     it.each(permutationsArr)('correct strings trigger the callback', (string) => {
       expect(command.regex.test("/" + string)).toBeTruthy()
     })
+
     it.each([
       ['/shrugs'],
       ['shrug'],
@@ -29,6 +30,7 @@ describe('/shrug', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(command.regex.test(string)).toBeFalsy()
     })
+
     it.each([
       ['Check this out! /shrug'],
       ['Don\'t worry about /shrug'],
@@ -37,6 +39,7 @@ describe('/shrug', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['@user/shrug'],
       ['it\'s about/shrug'],
@@ -48,6 +51,7 @@ describe('/shrug', () => {
       expect(command.regex.test(string)).toBeFalsy()
     })
   })
+  
   describe('callback', () => {
     it.each(permutationsArr)('returns correct output', (content) => {
       expect(command.cb({ content })).toMatchSnapshot()

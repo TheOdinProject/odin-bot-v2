@@ -10,6 +10,7 @@ describe('/hug', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.hug.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['/hg'],
       ['hug'],
@@ -29,6 +30,7 @@ describe('/hug', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.hug.regex.test(string)).toBeFalsy()
     })
+
     it.each([
       ['Check this out! /hug'],
       ['Don\'t worry about /hug'],
@@ -37,6 +39,7 @@ describe('/hug', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.hug.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['@user/hug'],
       ['it\'s about/hug'],
@@ -48,6 +51,7 @@ describe('/hug', () => {
       expect(commands.hug.regex.test(string)).toBeFalsy()
     })
   })
+  
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.hug.cb()).toMatchSnapshot()
@@ -65,6 +69,7 @@ describe('/smart', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.smart.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['/smar'],
       ['smart'],
@@ -84,6 +89,7 @@ describe('/smart', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.smart.regex.test(string)).toBeFalsy()
     })
+
     it.each([
       ['Check this out! /smart'],
       ['Don\'t worry about /smart'],
@@ -92,6 +98,7 @@ describe('/smart', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.smart.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['@user/smart'],
       ['it\'s about/smart'],
@@ -103,13 +110,13 @@ describe('/smart', () => {
       expect(commands.smart.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.smart.cb()).toMatchSnapshot()
     })
   })
 })
-
 
 describe('/lenny', () => {
   describe('regex', () => {
@@ -121,6 +128,7 @@ describe('/lenny', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.lenny.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['/hg'],
       ['lenny'],
@@ -140,6 +148,7 @@ describe('/lenny', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.lenny.regex.test(string)).toBeFalsy()
     })
+
     it.each([
       ['Check this out! /lenny'],
       ['Don\'t worry about /lenny'],
@@ -148,6 +157,7 @@ describe('/lenny', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.lenny.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['@user/lenny'],
       ['it\'s about/lenny'],
@@ -159,6 +169,7 @@ describe('/lenny', () => {
       expect(commands.lenny.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.lenny.cb()).toMatchSnapshot()
@@ -176,6 +187,7 @@ describe('/fu', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.fu.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/f'],
       ['fu'],
@@ -195,6 +207,7 @@ describe('/fu', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.fu.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /fu'],
       ['Don\'t worry about /fu'],
@@ -203,6 +216,7 @@ describe('/fu', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.fu.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/fu'],
       ['it\'s about/fu'],
@@ -214,10 +228,11 @@ describe('/fu', () => {
       expect(commands.fu.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
-    it('returns correct output', async () => {
-      console.log('FU')
-      expect(await commands.fu.cb(':fu:')).toMatchSnapshot()
+    it('returns correct output', () => {
+      const fu = jest.fn((str) => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
+      expect(fu(":fu:")).toMatchSnapshot()
     })
   })
 })
@@ -232,6 +247,7 @@ describe('/question', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.question.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['/quest'],
       ['question'],
@@ -251,6 +267,7 @@ describe('/question', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.question.regex.test(string)).toBeFalsy()
     })
+
     it.each([
       ['Check this out! /question'],
       ['Don\'t worry about /question'],
@@ -259,6 +276,7 @@ describe('/question', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.question.regex.test(string)).toBeTruthy()
     })
+
     it.each([
       ['@user/question'],
       ['it\'s about/question'],
@@ -270,6 +288,7 @@ describe('/question', () => {
       expect(commands.question.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.question.cb()).toMatchSnapshot()
@@ -287,6 +306,7 @@ describe('/data', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.data.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/dat'],
       ['data'],
@@ -306,6 +326,7 @@ describe('/data', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.data.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /data'],
       ['Don\'t worry about /data'],
@@ -314,6 +335,7 @@ describe('/data', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.data.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/data'],
       ['it\'s about/data'],
@@ -325,6 +347,7 @@ describe('/data', () => {
       expect(commands.data.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.data.cb()).toMatchSnapshot()
@@ -342,6 +365,7 @@ describe('/sexpresso', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.sexpresso.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/sexpress'],
       ['sexpresso'],
@@ -361,6 +385,7 @@ describe('/sexpresso', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.sexpresso.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /sexpresso'],
       ['Don\'t worry about /sexpresso'],
@@ -369,6 +394,7 @@ describe('/sexpresso', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.sexpresso.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/sexpresso'],
       ['it\'s about/sexpresso'],
@@ -380,6 +406,7 @@ describe('/sexpresso', () => {
       expect(commands.sexpresso.regex.test(string)).toBeFalsy()
     })
   })
+  
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.sexpresso.cb()).toMatchSnapshot()
@@ -397,6 +424,7 @@ describe('/peen', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.peen.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/pen'],
       ['peen'],
@@ -416,6 +444,7 @@ describe('/peen', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.peen.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /peen'],
       ['Don\'t worry about /peen'],
@@ -424,6 +453,7 @@ describe('/peen', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.peen.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/peen'],
       ['it\'s about/peen'],
@@ -435,6 +465,7 @@ describe('/peen', () => {
       expect(commands.peen.regex.test(string)).toBeFalsy()
     })
   })
+  
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.peen.cb(
@@ -459,6 +490,7 @@ describe('/google', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.google.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/googl'],
       ['google'],
@@ -478,6 +510,7 @@ describe('/google', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.google.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /google query'],
       ['Don\'t worry about /google query'],
@@ -486,6 +519,7 @@ describe('/google', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.google.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/google'],
       ['it\'s about/google'],
@@ -497,6 +531,7 @@ describe('/google', () => {
       expect(commands.google.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.google.cb({ content: '/google The Odin Project' })).toMatchSnapshot()
@@ -514,6 +549,7 @@ describe('/fg', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.fg.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/g'],
       ['fg'],
@@ -532,6 +568,7 @@ describe('/fg', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.fg.regex.test(string)).toBeFalsy()
     })
+   
     it.each([
       ['Check this out! /fg query'],
       ['Don\'t worry about /fg query'],
@@ -540,6 +577,7 @@ describe('/fg', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.fg.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/fg'],
       ['it\'s about/fg'],
@@ -551,6 +589,7 @@ describe('/fg', () => {
       expect(commands.fg.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.fg.cb({ content: '/fg The Odin Project' })).toMatchSnapshot()
@@ -568,6 +607,7 @@ describe('/dab', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.dab.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/da'],
       ['dab'],
@@ -587,6 +627,7 @@ describe('/dab', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.dab.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /dab'],
       ['Don\'t worry about /dab'],
@@ -595,6 +636,7 @@ describe('/dab', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.dab.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/dab'],
       ['it\'s about/dab'],
@@ -606,6 +648,7 @@ describe('/dab', () => {
       expect(commands.dab.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.dab.cb()).toMatchSnapshot()
@@ -623,6 +666,7 @@ describe('/gandalf', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.gandalf.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/gand'],
       ['gandalf'],
@@ -642,6 +686,7 @@ describe('/gandalf', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.gandalf.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /gandalf'],
       ['Don\'t worry about /gandalf'],
@@ -650,6 +695,7 @@ describe('/gandalf', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.gandalf.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/gandalf'],
       ['it\'s about/gandalf'],
@@ -661,6 +707,7 @@ describe('/gandalf', () => {
       expect(commands.gandalf.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.gandalf.cb()).toMatchSnapshot()
@@ -678,6 +725,7 @@ describe('/motivate', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.motivate.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/motivae'],
       ['motivate'],
@@ -697,6 +745,7 @@ describe('/motivate', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.motivate.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /motivate'],
       ['Don\'t worry about /motivate'],
@@ -705,6 +754,7 @@ describe('/motivate', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.motivate.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/motivate'],
       ['it\'s about/motivate'],
@@ -716,6 +766,7 @@ describe('/motivate', () => {
       expect(commands.motivate.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.motivate.cb()).toMatchSnapshot()
@@ -733,6 +784,7 @@ describe('/justdoit', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(commands.justDoIt.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['/justdoi'],
       ['justdoit'],
@@ -752,6 +804,7 @@ describe('/justdoit', () => {
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.justDoIt.regex.test(string)).toBeFalsy()
     })
+    
     it.each([
       ['Check this out! /justdoit'],
       ['Don\'t worry about /justdoit'],
@@ -760,6 +813,7 @@ describe('/justdoit', () => {
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.justDoIt.regex.test(string)).toBeTruthy()
     })
+    
     it.each([
       ['@user/justdoit'],
       ['it\'s about/justdoit'],
@@ -771,6 +825,7 @@ describe('/justdoit', () => {
       expect(commands.justDoIt.regex.test(string)).toBeFalsy()
     })
   })
+
   describe('callback', () => {
     it('returns correct output', () => {
       expect(commands.justDoIt.cb()).toMatchSnapshot()

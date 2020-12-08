@@ -4,6 +4,7 @@ const {randomInt} = require("./helpers.js");
 const command = {
   regex : /partyparrot|party_parrot|party parrot|oiseau/,
   cb: ({content}) => {
+    console.log(content, "content")
     const parrots = [
       "https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
