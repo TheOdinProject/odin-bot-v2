@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/dab callback returns correct output 1`] = `"https://tenor.com/view/bettywhite-dab-gif-5044603"`;
+
+exports[`/data callback returns correct output 1`] = `"**Please state your question in the form of a question! https://www.dontasktoask.com/**"`;
+
+exports[`/fg callback returns correct output 1`] = `"**This is what you should have typed into Google >** <https://google.com/search?q=The+Odin+Project>"`;
+
+exports[`/fu callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;
+
+exports[`/gandalf callback returns correct output 1`] = `"http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif"`;
+
+exports[`/google callback returns correct output 1`] = `"**HERE YOU GO BABY >** <https://lmgtfy.com/?q=The+Odin+Project>"`;
+
+exports[`/hug callback returns correct output 1`] = `"⊂(´・ω・｀⊂)"`;
+
+exports[`/justdoit callback returns correct output 1`] = `"What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0"`;
+
+exports[`/lenny callback returns correct output 1`] = `"( ͡° ͜ʖ ͡°)"`;
+
+exports[`/motivate callback returns correct output 1`] = `"Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE"`;
+
+exports[`/peen callback returns correct output 1`] = `"https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif"`;
+
+exports[`/question callback returns correct output 1`] = `"**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**"`;
+
+exports[`/sexpresso callback returns correct output 1`] = `"https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590"`;
+
+exports[`/smart callback returns correct output 1`] = `"f(ಠ‿↼)z"`;
