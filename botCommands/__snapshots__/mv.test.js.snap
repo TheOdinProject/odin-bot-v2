@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/mv snapshot should return the correct output 1`] = `"Microverse is using The Odin Project's licensed content without permission. Please read this: https://discord.com/channels/505093832157691914/505093832157691916/781170792095809547"`;
