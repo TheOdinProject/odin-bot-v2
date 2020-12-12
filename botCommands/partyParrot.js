@@ -4,7 +4,6 @@ const {randomInt} = require("./helpers.js");
 const command = {
   regex : /partyparrot|party_parrot|party parrot|oiseau/,
   cb: ({content}) => {
-    console.log(content, "content")
     const parrots = [
       "https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif",
       "http://cultofthepartyparrot.com/parrots/parrot.gif",
@@ -22,7 +21,7 @@ const command = {
       "http://emojis.slackmojis.com/emojis/images/1472757675/1132/otter-dance.gif"
     ];
 
-   if (content.toLowerCase().match("!")) {
+   if (content.match("!")) {
       return `${parrots[0]}`;
     } else {
       const index = randomInt(parrots.length);
