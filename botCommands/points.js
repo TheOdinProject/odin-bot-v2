@@ -5,10 +5,6 @@ const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
 
 axios.defaults.headers.post['Authorization'] = `Token ${config.pointsbot.token}`
 
-if (process.argv.includes('dev')) {
-  return;
-}
-
 function getUserIdsFromMessage(text, regex) {
   const matches = [];
   let match;
@@ -188,8 +184,10 @@ const leaderboard = {
 registerBotCommand(leaderboard.regex, leaderboard.cb)
 
 module.exports = {
+  addPointsToUser,
   awardPoints, 
   deductPoints,
+  getUserIdsFromMessage,
   points,
   leaderboard
 }
