@@ -8,3 +8,5 @@ const command = {
 }
 
 registerBotCommand(command.regex, command.cb)
+
+module.exports = command
