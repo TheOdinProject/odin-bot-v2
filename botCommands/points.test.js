@@ -1,10 +1,12 @@
 const commands = require('./points')
 const generateMentions = require('./mockData')
+const axios = require('axios')
+jest.mock('axios')
 
 describe('add points', ()=>{
 
   describe('regex',()=> {
-    it.each([
+    xit.each([
       ['@odin-bot ++'],
       ['thanks @odin-bot ++'],
       ['@odin-bot++']
@@ -12,7 +14,7 @@ describe('add points', ()=>{
       expect(commands.awardPoints.regex.test(string)).toBeTruthy()
     })
 
-    it.each([
+    xit.each([
       ['++'],
       [''],
       [' '],
@@ -24,7 +26,7 @@ describe('add points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    it.each([
+    xit.each([
       ['Check this out! @odin-bot ++'],
       ['Don\'t worry about it @odin-bot ++'],
       ['Hey @odin-bot ++'],
@@ -33,7 +35,7 @@ describe('add points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
     
-    it.each([
+    xit.each([
       ['@user/++'],
       ['it\'s about/@odin-bot++'],
       ['@odin-bot++isanillusion'],
@@ -46,11 +48,73 @@ describe('add points', ()=>{
   })
 
   describe('callback', () => {
-    // need to mock getUserIdsFromMessage
-    // 
-    
+
+  
+     const {Guild, Channel, Client, User} = require('discord.js')
+     const user = User([{name: 'club-40'}],1, 10)
+     // in order to filter properly, the user or users must be passed in as an array
+     const client = Client([user])  
+     // this is an inelegant solution that does not allow for dynamic users to be passed in
+     axios.post.mockResolvedValue({data: 
+       {
+         ...user, 
+         points: user.points++
+       }
+     })
+     jest.mock('discord.js', () => {
+       return {
+         Client : jest.fn().mockImplementation((users, user) => {
+           return {
+             // we use a template string here to ensure that the user ID is able to be filtered against the formatting of the array of mocked Users we pass in
+             users : {
+               get : (userId) => users.filter(user => `<@${userId}>` === user.id)
+             },
+             // dynamically generated user so we can test for client/odin bot user
+             user : user
+           }
+         }),
+ 
+         Guild : jest.fn().mockImplementation(() => {
+           return {
+             members : {
+               
+             },
+             
+             member : (userArray) => {
+               return userArray[0]
+             }
+           }
+         }),
+
+         Channel : jest.fn().mockImplementation(() => {
+           return {
+             send: (message) => {
+               return message
+             }
+           }
+         }),
+
+         User : jest.fn().mockImplementation((roles, id, points) => {
+           return {
+             roles: roles,
+             id: `<@${id}>`,
+             points: points,
+             addRole: ()=> {roles.push('club-40')}
+           }
+         })
+       }
+     })
+     
     it('returns correct output', async () => {
-      expect(commands.awardPoints.cb()).toMatchSnapshot()
+      const data = {
+        author : user,
+        content: `${user.id} ++`,
+        channel : Channel(),
+        client :  client,
+        guild : Guild()
+      }
+      expect(await commands.awardPoints.cb(data)).toMatchSnapshot()
+      
     })
   })
 })
@@ -58,14 +122,14 @@ describe('add points', ()=>{
 describe('deduct points', ()=>{
 
   describe('regex',()=> {
-    it.each([
+    xit.each([
       ['@odin-bot --'],
       ['thanks @odin-bot --'],
       ['@odin-bot--']
     ])('correct strings trigger the callback', (string) => {
     
     })
-    it.each([
+    xit.each([
       ['--'],
       [''],
       [' '],
@@ -77,7 +141,7 @@ describe('deduct points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    it.each([
+    xit.each([
       ['Check this out! @odin-bot --'],
       ['Don\'t worry about it @odin-bot --'],
       ['Hey @odin-bot --'],
@@ -86,7 +150,7 @@ describe('deduct points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
     
-    it.each([
+    xit.each([
       ['@user/--'],
       ['it\'s about/@odin-bot--'],
       ['@odin-bot--isanillusion'],
@@ -99,7 +163,7 @@ describe('deduct points', ()=>{
   })
 
   describe('callback', () => {
-    it('returns correct output', async () => {
+    xit('returns correct output', async () => {
       expect(commands.deductPoints()).toMatchSnapshot()
     })
   })
@@ -107,7 +171,7 @@ describe('deduct points', ()=>{
 
 describe('/points', ()=>{
   describe('regex',()=> {
-    it.each([
+    xit.each([
       ['/points @odin-bot'],
       ['let me check out my /points @odin-bot'],
       ['/points @odin-bot @odin-bot-v2']
@@ -120,7 +184,7 @@ describe('/points', ()=>{
 describe('/leaderboard', ()=>{
 
   describe('regex',()=> {
-    it.each([
+    xit.each([
       ['/leaderboard'],
       ['@odin-bot /leaderboard'],
       ['/leaderboard n=10 start=30'],
@@ -131,7 +195,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
 
-    it.each([
+    xit.each([
       ['/leaderboad'],
       [''],
       [' '],
@@ -149,7 +213,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    it.each([
+    xit.each([
       ['Check this out! /leaderboard'],
       ['Don\'t worry about /leaderboard'],
       ['Hey @odin-bot, /leaderboard'],
@@ -158,7 +222,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
 
-    it.each([
+    xit.each([
       ['@user/leaderboard'],
       ['it\'s about/leaderboard'],
       ['/leaderboardisanillusion'],
@@ -171,43 +235,7 @@ describe('/leaderboard', ()=>{
   })
 
   describe('callback', () => {
-    // mock channel and guild modules 
-    const {Guild, Channel} = require('discord.js')
-
-    jest.mock('discord.js', () => {
-
-      return {
-        Client : jest.fn().mockImplementation(() => {
-          return {
-            users : {
-              get : (userId) => user
-            }
-          }
-        }),
-
-        Guild : jest.fn().mockImplementation(() => {
-          return {
-            member : (user) => {
-              return user
-            }
-          }
-        }),
-        Channel : jest.fn().mockImplementation(() => {
-          return {
-            send: (message) => {
-              return message
-            }
-          }
-        })
-      }
-    })
-
-    const mockAxios = jest.fn((number) => {
-      return 
-    })
-    
-  
-    it('returns correct output', async () => {
+    xit('returns correct output', async () => {
       expect(await commands.leaderboard.cb("/leaderboard n=10 start=10")).toMatchSnapshot()
     })
   })

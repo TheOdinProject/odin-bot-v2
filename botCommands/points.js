@@ -28,9 +28,9 @@ async function addPointsToUser(discord_id) {
     const pointsBotResponse = await axios.post(
       `https://theodinproject.com/api/points?discord_id=${discord_id}`
     );
-
     return pointsBotResponse.data;
   } catch (err) {
+    console.log('error')
     throw new Error(err.message);
   }
 }
@@ -72,6 +72,7 @@ const awardPoints = {
   regex: /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu,
   cb: async function pointsBotCommand({ author, content, channel, client, guild }) {
     const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
+    console.log(userIds, " user Ids")
     userIds.forEach(async(userId, i) => {
       // this limits the number of calls per message to 5 to avoid abuse
       if (i > 4) {
@@ -91,18 +92,17 @@ const awardPoints = {
       }
       try {
         const pointsUser = await addPointsToUser(user.id);
+        console.log(pointsUser)
         if (user) {
           const member = await guild.member(user)
           if (member && !member.roles.find(r => r.name==="club-40") && pointsUser.points > 39) {
             let pointsRole = guild.roles.find(r => r.name === "club-40")
             member.addRole(pointsRole)
-  
             let clubChannel = client.channels.get('707225752608964628')
             if (clubChannel) {
               clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40`)
             }
           }
-  
           channel.send(
             `${exclamation(pointsUser.points)} ${user} now has ${
               pointsUser.points
