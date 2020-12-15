@@ -1,6 +1,12 @@
 const axios = require("axios");
 const config = require("../config.js");
 const { registerBotCommand } = require("../botEngine.js");
+const {  addPointsToUser,
+  awardPoints, 
+  deductPoints,
+  getUserIdsFromMessage,
+  points,
+  leaderboard} = require("./points")
 const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
 
 axios.defaults.headers.post['Authorization'] = `Token ${config.pointsbot.token}`

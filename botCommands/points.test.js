@@ -46,6 +46,8 @@ describe('add points', ()=>{
   })
 
   describe('callback', () => {
+    // need to mock getUserIdsFromMessage
+    // 
     
     it('returns correct output', async () => {
       expect(commands.awardPoints.cb()).toMatchSnapshot()
@@ -169,33 +171,37 @@ describe('/leaderboard', ()=>{
   })
 
   describe('callback', () => {
-    const mockCallback = jest.fn(str => {
-      const sEquals = str.split(" ").find(word => word.includes("start="));
-      let start = sEquals ? sEquals.replace("start=", "") : 1;
-      start = Math.max(start, 1);
-  
-      const nEquals = str.split(" ").find(word => word.includes("n="));
-      let length = nEquals ? nEquals.replace("n=", "") : 5;
-      length = Math.min(length, 25);
-      length = Math.max(length, 1);
-      let usersList = "**leaderboard** \n";
-      for (let i = (start-1); i < (length+start-1); i++) {
-        const user = 'user'
-        if (user) {
-          const username = `${user+i}`
-            if (i == 0) {
-              usersList += `${i+1} - ${username} [XX points] :tada: \n`;
-            } else {
-              usersList += `${i+1} - ${username} [XX points] \n`;
+    // mock channel and guild modules 
+    const {Guild, Channel} = require('discord.js')
+
+    jest.mock('discord.js', () => {
+
+      return {
+
+        Guild : jest.fn().mockImplementation(()=> {
+          return {
+            member : (user) => {
+              return user
             }
-          } else {
-            usersList += 'UNDEFINED \n'
-        }
+          }
+        }),
+        Channel : jest.fn().mockImplementation(()=> {
+          return {
+            send: (message) => {
+              return message
+            }
+          }
+        })
       }
-      return usersList;
     })
+
+    const mockAxios = jest.fn((number) => {
+      return 
+    })
+    
+  
     it('returns correct output', async () => {
-      expect(await mockCallback("/leaderboard n=10 start=10")).toMatchSnapshot()
+      expect(await commands.leaderboard.cb("/leaderboard n=10 start=10")).toMatchSnapshot()
     })
   })
 })
