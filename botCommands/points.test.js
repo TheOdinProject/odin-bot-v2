@@ -177,15 +177,22 @@ describe('/leaderboard', ()=>{
     jest.mock('discord.js', () => {
 
       return {
+        Client : jest.fn().mockImplementation(() => {
+          return {
+            users : {
+              get : (userId) => user
+            }
+          }
+        }),
 
-        Guild : jest.fn().mockImplementation(()=> {
+        Guild : jest.fn().mockImplementation(() => {
           return {
             member : (user) => {
               return user
             }
           }
         }),
-        Channel : jest.fn().mockImplementation(()=> {
+        Channel : jest.fn().mockImplementation(() => {
           return {
             send: (message) => {
               return message
