@@ -1,4 +1,5 @@
 const command = require("./partyParrot");
+const { randomInt } = require("./helpers");
 
 describe("/partyparrot", () => {
   it.each([
@@ -49,11 +50,30 @@ describe("/partyparrot", () => {
   });
 });
 
+// mock randomInt
+jest.mock("./helpers");
+
 describe("partyparrot snapshot", () => {
-  it.each([["party parrot"], ["partyparrot"], ["party_parrot"], ["oiseau"]])(
-    "'%s' - should return the correct output",
+  it.each([
+    ["party parrot!"],
+    ["!partyparrot"],
+    ["party_parrot!"],
+    ["oiseau!"],
+    ["!"],
+  ])(
+    "messages including an exclamation point always return the first index in the array",
     (string) => {
-      expect(command.regex.test({ content: string })).toMatchSnapshot();
+      expect(command.cb({ content: string })).toMatchSnapshot();
     }
   );
+
+  it("when randomInt is mocked, the output remains the same", () => {
+    // NOTE: if the length of the parrot array changes,
+    // this for loop will need to be updated to reflect that change
+    for (let i = 0; i < 13; i++) {
+      randomInt.mockReturnValueOnce(i);
+
+      expect(command.cb({ content: "" })).toMatchSnapshot();
+    }
+  });
 });

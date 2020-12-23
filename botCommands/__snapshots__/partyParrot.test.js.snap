@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`partyparrot snapshot messages including an exclamation point always return the first index in the array 1`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot messages including an exclamation point always return the first index in the array 2`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot messages including an exclamation point always return the first index in the array 3`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot messages including an exclamation point always return the first index in the array 4`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot messages including an exclamation point always return the first index in the array 5`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 1`] = `"https://cultofthepartyparrot.com/parrots/hd/dadparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 2`] = `"http://cultofthepartyparrot.com/parrots/parrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 3`] = `"http://cultofthepartyparrot.com/parrots/shuffleparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 4`] = `"http://cultofthepartyparrot.com/parrots/parrotcop.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 5`] = `"http://cultofthepartyparrot.com/parrots/fiestaparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 6`] = `"http://cultofthepartyparrot.com/parrots/explodyparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 7`] = `"http://cultofthepartyparrot.com/parrots/aussieparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 8`] = `"http://cultofthepartyparrot.com/parrots/slomoparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 9`] = `"http://cultofthepartyparrot.com/parrots/stableparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 10`] = `"http://cultofthepartyparrot.com/parrots/twinsparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 11`] = `"http://cultofthepartyparrot.com/parrots/hd/dealwithitparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 12`] = `"http://cultofthepartyparrot.com/parrots/tripletsparrot.gif"`;
+
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 13`] = `"http://emojis.slackmojis.com/emojis/images/1450738632/246/leftshark.png"`;
