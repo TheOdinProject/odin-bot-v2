@@ -110,7 +110,7 @@ describe("/code", () => {
 });
 
 describe("/code snapshot", () => {
-  // numbers 1, 3 & 10 are of no significance, they're just random quantites of mentions being used to test
+  // numbers 1, 3 & 10 are of no significance, they're just random quantities of mentions being used to test
   it.each([[1], [3], [10]])(
     "should return the correct output",
     (quantityOfMentions) => {
