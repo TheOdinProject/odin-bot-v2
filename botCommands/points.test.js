@@ -48,12 +48,11 @@ describe('add points', ()=>{
   })
 
   describe('callback', () => {
-
-  
      const {Guild, Channel, Client, User} = require('discord.js')
      const user = User([{name: 'club-40'}],1, 10)
      // in order to filter properly, the user or users must be passed in as an array
      const client = Client([user])  
+
      // this is an inelegant solution that does not allow for dynamic users to be passed in
      axios.post.mockResolvedValue({data: 
        {
@@ -61,6 +60,14 @@ describe('add points', ()=>{
          points: user.points++
        }
      })
+
+     const mockSend = jest.fn()
+
+     mockSend.mockImplementation(message => {
+       console.log(message)
+      return message
+    })
+
      jest.mock('discord.js', () => {
        return {
          Client : jest.fn().mockImplementation((users, user) => {
@@ -88,9 +95,7 @@ describe('add points', ()=>{
 
          Channel : jest.fn().mockImplementation(() => {
            return {
-             send: (message) => {
-               return message
-             }
+             send: mockSend
            }
          }),
 
@@ -109,12 +114,15 @@ describe('add points', ()=>{
       const data = {
         author : user,
         content: `${user.id} ++`,
-        channel : Channel(),
+        channel : {
+          send: jest.fn()
+        },
         client :  client,
         guild : Guild()
       }
-      expect(await commands.awardPoints.cb(data)).toMatchSnapshot()
-      
+      await commands.awardPoints.cb(data)
+      expect(data.channel.send).toHaveBeenCalled()
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
     })
   })
 })
