@@ -110,8 +110,44 @@ describe('add points', ()=>{
        }
      })
      
-    it('returns correct output', async () => {
+    it('returns correct output for a single user w/o club-40', async () => {
+      // single non club 40 user
       const data = {
+        // author can just be a standard user
+        author : user,
+        content: `${user.id} ++`,
+        channel : {
+          send: jest.fn()
+        },
+        client :  client,
+        guild : Guild()
+      }
+      await commands.awardPoints.cb(data)
+      expect(data.channel.send).toHaveBeenCalled()
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
+    })
+
+    it('returns correct output for a single user entering club-4', async () => {
+      // single non club 40 user
+      const data = {
+        // author can just be a standard user
+        author : user,
+        content: `${user.id} ++`,
+        channel : {
+          send: jest.fn()
+        },
+        client :  client,
+        guild : Guild()
+      }
+      await commands.awardPoints.cb(data)
+      expect(data.channel.send).toHaveBeenCalled()
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
+    })
+
+    it('returns correct output for multiple users', async () => {
+      // single non club 40 user
+      const data = {
+        // author can just be a standard user
         author : user,
         content: `${user.id} ++`,
         channel : {
