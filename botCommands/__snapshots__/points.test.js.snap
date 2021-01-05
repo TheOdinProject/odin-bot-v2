@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`add points callback returns correct output 1`] = `"Sweet! [object Object] now has 10 points"`;
+exports[`add points callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO [object Object] the newest member of CLUB 40"`;
+
+exports[`add points callback returns correct output for a single user entering club-40 2`] = `"Woot! [object Object] now has 40 points"`;
+
+exports[`add points callback returns correct output for a single user w/o club-40 1`] = `"Sweet! [object Object] now has 21 points"`;
+
+exports[`add points callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
+
+exports[`add points callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;

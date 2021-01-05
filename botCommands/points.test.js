@@ -63,7 +63,7 @@ describe('add points', ()=>{
                get : () => channel
              },
              users : {
-               get : (userId) => users.filter(user => `<@${userId}>` === user.id)
+               get : (userId) => users.filter(user => `<@${userId}>` === user.id)[0]
              }
            }
          }),
@@ -73,7 +73,7 @@ describe('add points', ()=>{
              members : members,
              roles : [{name : "club-40"}],
              member : (user) => {
-              return user[0]
+              return members.filter(member => member === user)[0]
              }
            }
          }),
@@ -94,6 +94,11 @@ describe('add points', ()=>{
          })
        }
      })
+
+     beforeEach(() => {
+      axios.post.mockClear();
+      mockSend.mockClear()
+    });
      
     it('returns correct output for a single user w/o club-40', async () => {
       const author = User([], 1, 10)
@@ -119,13 +124,12 @@ describe('add points', ()=>{
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
-      data.channel.send.mockClear()
+    
     })
 
     it('returns correct output for a single user entering club-40', async () => {
       const author = User([], 1, 10)
       const mentionedUser = User([], 2, 39)
-      // users must be passed in as an array
       const channel = Channel()
       const client = Client([author, mentionedUser], channel)  
       const data = {
@@ -145,17 +149,111 @@ describe('add points', ()=>{
 
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
+      console.log(data.channel.send.mock.calls)
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
       expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
-      data.channel.send.mockClear()
     })
 
-    xit('returns correct output for multiple users', async () => {
+    it('returns correct output for up to five mentioned users', async () => {
+      const author = User([], 1, 10)
+      const channel = Channel()
+
+      const mentionedUser1 = User([], 2, 39)
+      const mentionedUser2 = User([], 2, 39)
+      const mentionedUser3 = User([], 2, 39)
+      const mentionedUser4 = User([], 2, 39)
+      const client = Client([author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4], channel)  
+
+      const data = {
+        author : author,
+        content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++`,
+        channel : channel,
+        client :  client,
+        guild : Guild([author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4])
+      }
+
+      axios.post.mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser1, 
+          points: mentionedUser.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser1, 
+          points: mentionedUser1.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser2, 
+          points: mentionedUser2.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser3, 
+          points: mentionedUser3.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser4, 
+          points: mentionedUser4.points +=1
+        }
+      })
+
+      await commands.awardPoints.cb()
+      expect(data.channel.send).toHaveBeenCalledTimes(4)
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot()    
+    })
+
+    xit('returns correct output for more than five mentioned users', async () => {
       
  
       await commands.awardPoints.cb()
       expect(data.channel.send).toHaveBeenCalled()
-      expect().toMatchSnapshot()    
+      expect().toMatchSnapshot()   
+      data.channel.send.mockClear() 
+    })
+
+    it('returns correct output for a user mentioning themselves', async () => {
+    
+      const author = User([], 1, 10)
+      const channel = Channel()
+      // users must be passed in as an array
+      const client = Client([author], channel)  
+      const data = {
+        author : author,
+        content: `${author.id} ++`,
+        channel : channel,
+        client :  client,
+        guild : Guild([author])
+      }
+
+      axios.post.mockResolvedValue({data: 
+        {
+          ...author, 
+          points: author.points +=1
+        }
+      }) 
+ 
+      await commands.awardPoints.cb(data)
+      expect(data.channel.send).toHaveBeenCalled()
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()  
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()  
+  
+    })
+
+    xit('returns correct output for a user mentioning Odin Bot', async () => {
+      
+ 
+      await commands.awardPoints.cb()
+      expect(data.channel.send).toHaveBeenCalled()
+      expect().toMatchSnapshot()   
     })
   })
 })

@@ -92,11 +92,14 @@ const awardPoints = {
       try {
         const pointsUser = await addPointsToUser(user.id);
         if (user) {
+          console.log(user)
           const member = await guild.member(user)
+          console.log(member)
           if (member && !member.roles.find(r => r.name==="club-40") && pointsUser.points > 39) {
             let pointsRole = guild.roles.find(r => r.name === "club-40")
             member.addRole(pointsRole)
             let clubChannel = client.channels.get('707225752608964628')
+        
             if (clubChannel) {
               clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40`)
             }
@@ -107,7 +110,7 @@ const awardPoints = {
             } ${plural(pointsUser.points)}`
           );
         }
-      } catch (err) {}
+      } catch (err) {console.log(err)}
     }));
   }
 }
