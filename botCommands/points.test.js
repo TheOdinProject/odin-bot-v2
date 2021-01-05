@@ -1,7 +1,6 @@
 const commands = require('./points')
 const generateMentions = require('./mockData')
 const axios = require('axios')
-jest.mock('axios')
 
 describe('add points', ()=>{
 
@@ -49,22 +48,11 @@ describe('add points', ()=>{
 
   describe('callback', () => {
      const {Guild, Channel, Client, User} = require('discord.js')
-     const user = User([{name: 'club-40'}],1, 10)
-     // in order to filter properly, the user or users must be passed in as an array
-     const client = Client([user])  
-
-     // this is an inelegant solution that does not allow for dynamic users to be passed in
-     axios.post.mockResolvedValue({data: 
-       {
-         ...user, 
-         points: user.points++
-       }
-     })
-
+     axios.post = jest.fn()
+  
      const mockSend = jest.fn()
-
      mockSend.mockImplementation(message => {
-       console.log(message)
+      console.log('in mock send')
       return message
     })
 
@@ -72,23 +60,19 @@ describe('add points', ()=>{
        return {
          Client : jest.fn().mockImplementation((users, user) => {
            return {
-             // we use a template string here to ensure that the user ID is able to be filtered against the formatting of the array of mocked Users we pass in
              users : {
                get : (userId) => users.filter(user => `<@${userId}>` === user.id)
              },
-             // dynamically generated user so we can test for client/odin bot user
              user : user
            }
          }),
  
-         Guild : jest.fn().mockImplementation(() => {
+         Guild : jest.fn().mockImplementation((members) => {
            return {
-             members : {
-               
-             },
+             members : members,
              
-             member : (userArray) => {
-               return userArray[0]
+             member : (user) => {
+              return user[0]
              }
            }
          }),
@@ -111,54 +95,47 @@ describe('add points', ()=>{
      })
      
     it('returns correct output for a single user w/o club-40', async () => {
-      // single non club 40 user
+      const author = User([], 1, 10)
+      const mentionedUser = User([], 2, 20)
+      // users must be passed in as an array
+      const client = Client([author, mentionedUser])  
       const data = {
-        // author can just be a standard user
-        author : user,
-        content: `${user.id} ++`,
+        author : author,
+        content: `${mentionedUser.id} ++`,
         channel : {
           send: jest.fn()
         },
         client :  client,
-        guild : Guild()
+        guild : Guild([author, mentionedUser])
       }
+
+      axios.post.mockResolvedValue({data: 
+        {
+          ...mentionedUser, 
+          points: mentionedUser.points++
+        }
+      })
+
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
     })
 
-    it('returns correct output for a single user entering club-4', async () => {
-      // single non club 40 user
+    xit('returns correct output for a single user entering club-40', async () => {
       const data = {
-        // author can just be a standard user
-        author : user,
-        content: `${user.id} ++`,
-        channel : {
-          send: jest.fn()
-        },
-        client :  client,
-        guild : Guild()
+     
       }
       await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
+      expect().toHaveBeenCalled()
+      expect().toMatchSnapshot()    
     })
 
-    it('returns correct output for multiple users', async () => {
-      // single non club 40 user
-      const data = {
-        // author can just be a standard user
-        author : user,
-        content: `${user.id} ++`,
-        channel : {
-          send: jest.fn()
-        },
-        client :  client,
-        guild : Guild()
-      }
-      await commands.awardPoints.cb(data)
+    xit('returns correct output for multiple users', async () => {
+      
+ 
+      await commands.awardPoints.cb()
       expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
+      expect().toMatchSnapshot()    
     })
   })
 })
