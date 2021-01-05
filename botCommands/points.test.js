@@ -52,25 +52,26 @@ describe('add points', ()=>{
   
      const mockSend = jest.fn()
      mockSend.mockImplementation(message => {
-      console.log('in mock send')
       return message
     })
 
      jest.mock('discord.js', () => {
        return {
-         Client : jest.fn().mockImplementation((users, user) => {
+         Client : jest.fn().mockImplementation((users, channel) => {
            return {
+             channels : {
+               get : () => channel
+             },
              users : {
                get : (userId) => users.filter(user => `<@${userId}>` === user.id)
-             },
-             user : user
+             }
            }
          }),
  
          Guild : jest.fn().mockImplementation((members) => {
            return {
              members : members,
-             
+             roles : [{name : "club-40"}],
              member : (user) => {
               return user[0]
              }
@@ -97,14 +98,13 @@ describe('add points', ()=>{
     it('returns correct output for a single user w/o club-40', async () => {
       const author = User([], 1, 10)
       const mentionedUser = User([], 2, 20)
+      const channel = Channel()
       // users must be passed in as an array
-      const client = Client([author, mentionedUser])  
+      const client = Client([author, mentionedUser], channel)  
       const data = {
         author : author,
         content: `${mentionedUser.id} ++`,
-        channel : {
-          send: jest.fn()
-        },
+        channel : channel,
         client :  client,
         guild : Guild([author, mentionedUser])
       }
@@ -112,22 +112,42 @@ describe('add points', ()=>{
       axios.post.mockResolvedValue({data: 
         {
           ...mentionedUser, 
-          points: mentionedUser.points++
+          points: mentionedUser.points +=1
         }
       })
 
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()    
+      data.channel.send.mockClear()
     })
 
-    xit('returns correct output for a single user entering club-40', async () => {
+    it('returns correct output for a single user entering club-40', async () => {
+      const author = User([], 1, 10)
+      const mentionedUser = User([], 2, 39)
+      // users must be passed in as an array
+      const channel = Channel()
+      const client = Client([author, mentionedUser], channel)  
       const data = {
-     
+        author : author,
+        content: `${mentionedUser.id} ++`,
+        channel : channel,
+        client :  client,
+        guild : Guild([author, mentionedUser])
       }
+
+      axios.post.mockResolvedValue({data: 
+        {
+          ...mentionedUser, 
+          points: mentionedUser.points +=1
+        }
+      })
+
       await commands.awardPoints.cb(data)
-      expect().toHaveBeenCalled()
-      expect().toMatchSnapshot()    
+      expect(data.channel.send).toHaveBeenCalled()
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
+      data.channel.send.mockClear()
     })
 
     xit('returns correct output for multiple users', async () => {
