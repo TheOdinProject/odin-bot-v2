@@ -30,7 +30,6 @@ async function addPointsToUser(discord_id) {
     );
     return pointsBotResponse.data;
   } catch (err) {
-    console.log('error')
     throw new Error(err.message);
   }
 }
@@ -154,7 +153,7 @@ const leaderboard = {
   
       const users = await axios.get(`https://theodinproject.com/api/points`);
       const data = users.data.filter(user => guild.members.get(user.discord_id));
-  
+      
       let usersList = "**leaderboard** \n";
       for (let i = (start-1); i < (length+start-1); i++) {
         const user = data[i];
