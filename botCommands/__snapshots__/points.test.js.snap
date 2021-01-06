@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/leaderboard callback returns correct output 1`] = `undefined`;
+exports[`/leaderboard callback returns correct output 1`] = `
+"**leaderboard** 
+1 - user1 [2508 points] :tada: 
+2 - user2 [1769 points] 
+3 - user3 [1714 points] 
+4 - user4 [1377 points] 
+5 - user5 [1270 points] 
+"
+`;
 
 exports[`@user ++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO [object Object] the newest member of CLUB 40"`;
 

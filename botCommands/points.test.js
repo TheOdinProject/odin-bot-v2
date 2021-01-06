@@ -1,6 +1,64 @@
 const commands = require('./points')
 const generateMentions = require('./mockData')
 const axios = require('axios')
+const {Guild, Channel, Client, User} = require('discord.js')
+axios.post = jest.fn()
+
+const mockSend = jest.fn()
+mockSend.mockImplementation(message => {
+ return message
+})
+
+jest.mock('discord.js', () => {
+  return {
+    Client : jest.fn().mockImplementation((users, channel, user) => {
+      return {
+        channels : {
+          get : () => channel
+        },
+        users : {
+          get : (userId) => users.filter(user => `<@${userId}>` === user.id)[0]
+        },
+        user : user
+      }
+    }),
+
+    Guild : jest.fn().mockImplementation((users) => {
+      return {
+        members : {
+          members : users,
+          get : (id) => {
+            return users.filter(member => member.discord_id === id)[0]
+          }
+        },
+        roles : [{name : "club-40"}],
+        member : (user) => {
+         return users.filter(member => member === user)[0]
+        }
+      }
+    }),
+
+    Channel : jest.fn().mockImplementation(() => {
+      return {
+        send: mockSend
+      }
+    }),
+
+    User : jest.fn().mockImplementation((roles, id, points) => {
+      return {
+        roles: roles,
+        id: `<@${id}>`,
+        points: points,
+        addRole: ()=> {roles.push('club-40')}
+      }
+    })
+  }
+})
+
+beforeEach(() => {
+ axios.post.mockClear();
+ mockSend.mockClear()
+});
 
 describe('@user ++', ()=>{
 
@@ -47,59 +105,7 @@ describe('@user ++', ()=>{
   })
 
   describe('callback', () => {
-     const {Guild, Channel, Client, User} = require('discord.js')
-     axios.post = jest.fn()
-  
-     const mockSend = jest.fn()
-     mockSend.mockImplementation(message => {
-      return message
-    })
-
-     jest.mock('discord.js', () => {
-       return {
-         Client : jest.fn().mockImplementation((users, channel, user) => {
-           return {
-             channels : {
-               get : () => channel
-             },
-             users : {
-               get : (userId) => users.filter(user => `<@${userId}>` === user.id)[0]
-             },
-             user : user
-           }
-         }),
- 
-         Guild : jest.fn().mockImplementation((members) => {
-           return {
-             members : members,
-             roles : [{name : "club-40"}],
-             member : (user) => {
-              return members.filter(member => member === user)[0]
-             }
-           }
-         }),
-
-         Channel : jest.fn().mockImplementation(() => {
-           return {
-             send: mockSend
-           }
-         }),
-
-         User : jest.fn().mockImplementation((roles, id, points) => {
-           return {
-             roles: roles,
-             id: `<@${id}>`,
-             points: points,
-             addRole: ()=> {roles.push('club-40')}
-           }
-         })
-       }
-     })
-
-     beforeEach(() => {
-      axios.post.mockClear();
-      mockSend.mockClear()
-    });
+    
      
     it('returns correct output for a single user w/o club-40', async () => {
       const author = User([], 1, 10)
@@ -430,7 +436,49 @@ describe('/leaderboard', ()=>{
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      expect(await commands.leaderboard.cb("/leaderboard n=10 start=10")).toMatchSnapshot()
+      const members = [{
+        id: 1310,
+        discord_id: "1",
+        points: 2508,
+        displayName : "user1"
+        },
+        {
+        id: 1350,
+        discord_id: "2",
+        points: 1769,
+        displayName : "user2"
+        },
+        {
+        id: 1338,
+        discord_id: "3",
+        points: 1714,
+        displayName : "user3"
+        },
+        {
+        id: 1084,
+        discord_id: "4",
+        points: 1377,
+        displayName : "user4"
+        },
+        {
+        id: 407,
+        discord_id: "5",
+        points: 1270,
+        displayName : "user5"
+        }]
+      axios.get = jest.fn()
+      axios.get.mockResolvedValue({
+          data : members
+        })
+
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=5 start=1"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=3 start=1"
+      })).toMatchSnapshot()
     })
   })
 })
