@@ -92,9 +92,7 @@ const awardPoints = {
       try {
         const pointsUser = await addPointsToUser(user.id);
         if (user) {
-          console.log(user)
           const member = await guild.member(user)
-          console.log(member)
           if (member && !member.roles.find(r => r.name==="club-40") && pointsUser.points > 39) {
             let pointsRole = guild.roles.find(r => r.name === "club-40")
             member.addRole(pointsRole)

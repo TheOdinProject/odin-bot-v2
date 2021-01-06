@@ -2,10 +2,10 @@ const commands = require('./points')
 const generateMentions = require('./mockData')
 const axios = require('axios')
 
-describe('add points', ()=>{
+describe('@user ++', ()=>{
 
   describe('regex',()=> {
-    xit.each([
+    it.each([
       ['@odin-bot ++'],
       ['thanks @odin-bot ++'],
       ['@odin-bot++']
@@ -13,7 +13,7 @@ describe('add points', ()=>{
       expect(commands.awardPoints.regex.test(string)).toBeTruthy()
     })
 
-    xit.each([
+    it.each([
       ['++'],
       [''],
       [' '],
@@ -25,7 +25,7 @@ describe('add points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    xit.each([
+    it.each([
       ['Check this out! @odin-bot ++'],
       ['Don\'t worry about it @odin-bot ++'],
       ['Hey @odin-bot ++'],
@@ -34,7 +34,7 @@ describe('add points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
     
-    xit.each([
+    it.each([
       ['@user/++'],
       ['it\'s about/@odin-bot++'],
       ['@odin-bot++isanillusion'],
@@ -57,14 +57,15 @@ describe('add points', ()=>{
 
      jest.mock('discord.js', () => {
        return {
-         Client : jest.fn().mockImplementation((users, channel) => {
+         Client : jest.fn().mockImplementation((users, channel, user) => {
            return {
              channels : {
                get : () => channel
              },
              users : {
                get : (userId) => users.filter(user => `<@${userId}>` === user.id)[0]
-             }
+             },
+             user : user
            }
          }),
  
@@ -149,7 +150,6 @@ describe('add points', ()=>{
 
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
-      console.log(data.channel.send.mock.calls)
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
       expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
     })
@@ -158,10 +158,10 @@ describe('add points', ()=>{
       const author = User([], 1, 10)
       const channel = Channel()
 
-      const mentionedUser1 = User([], 2, 39)
-      const mentionedUser2 = User([], 2, 39)
-      const mentionedUser3 = User([], 2, 39)
-      const mentionedUser4 = User([], 2, 39)
+      const mentionedUser1 = User([], 2, 33)
+      const mentionedUser2 = User([], 2, 21)
+      const mentionedUser3 = User([], 2, 2)
+      const mentionedUser4 = User([], 2, 0)
       const client = Client([author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4], channel)  
 
       const data = {
@@ -173,12 +173,6 @@ describe('add points', ()=>{
       }
 
       axios.post.mockResolvedValueOnce({data: 
-        {
-          ...mentionedUser1, 
-          points: mentionedUser.points +=1
-        }
-      })
-      .mockResolvedValueOnce({data: 
         {
           ...mentionedUser1, 
           points: mentionedUser1.points +=1
@@ -203,7 +197,7 @@ describe('add points', ()=>{
         }
       })
 
-      await commands.awardPoints.cb()
+      await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalledTimes(4)
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
       expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
@@ -211,20 +205,70 @@ describe('add points', ()=>{
       expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot()    
     })
 
-    xit('returns correct output for more than five mentioned users', async () => {
-      
- 
-      await commands.awardPoints.cb()
-      expect(data.channel.send).toHaveBeenCalled()
-      expect().toMatchSnapshot()   
-      data.channel.send.mockClear() 
+    it('returns correct output for more than five mentioned users', async () => {
+      const author = User([], 1, 10)
+      const channel = Channel()
+
+      const mentionedUser1 = User([], 2, 10)
+      const mentionedUser2 = User([], 2, 3)
+      const mentionedUser3 = User([], 2, 1)
+      const mentionedUser4 = User([], 2, 0)
+      const mentionedUser5 = User([], 2, 21)
+      const client = Client([author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4, mentionedUser5], channel)  
+    
+      const data = {
+        author : author,
+        content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++ ${mentionedUser5.id} ++`,
+        channel : channel,
+        client :  client,
+        guild : Guild([author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4, mentionedUser5])
+      }
+
+      axios.post.mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser1, 
+          points: mentionedUser1.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser2, 
+          points: mentionedUser1.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser3, 
+          points: mentionedUser2.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser4, 
+          points: mentionedUser3.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser5, 
+          points: mentionedUser4.points +=1
+        }
+      })
+
+      await commands.awardPoints.cb(data)
+      expect(data.channel.send).toHaveBeenCalledTimes(6)
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()    
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[4][0]).toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[5][0]).toMatchSnapshot()   
     })
 
     it('returns correct output for a user mentioning themselves', async () => {
     
       const author = User([], 1, 10)
       const channel = Channel()
-      // users must be passed in as an array
       const client = Client([author], channel)  
       const data = {
         author : author,
@@ -248,27 +292,38 @@ describe('add points', ()=>{
   
     })
 
-    xit('returns correct output for a user mentioning Odin Bot', async () => {
-      
+    it('returns correct output for a user mentioning Odin Bot', async () => {
+      const author = User([], 1, 10)
+      const odinBot = User([], 0, 0)
+      const channel = Channel()
+      const client = Client([author, odinBot], channel, odinBot)  
+      const data = {
+        author : author,
+        content: `${odinBot.id} ++`,
+        channel : channel,
+        client :  client,
+        guild : Guild([author])
+      }
+
  
-      await commands.awardPoints.cb()
+      await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
-      expect().toMatchSnapshot()   
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
     })
   })
 })
 
-describe('deduct points', ()=>{
+describe('@user --', ()=>{
 
   describe('regex',()=> {
-    xit.each([
+    it.each([
       ['@odin-bot --'],
       ['thanks @odin-bot --'],
       ['@odin-bot--']
     ])('correct strings trigger the callback', (string) => {
     
     })
-    xit.each([
+    it.each([
       ['--'],
       [''],
       [' '],
@@ -280,7 +335,7 @@ describe('deduct points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    xit.each([
+    it.each([
       ['Check this out! @odin-bot --'],
       ['Don\'t worry about it @odin-bot --'],
       ['Hey @odin-bot --'],
@@ -289,7 +344,7 @@ describe('deduct points', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
     
-    xit.each([
+    it.each([
       ['@user/--'],
       ['it\'s about/@odin-bot--'],
       ['@odin-bot--isanillusion'],
@@ -302,7 +357,7 @@ describe('deduct points', ()=>{
   })
 
   describe('callback', () => {
-    xit('returns correct output', async () => {
+    it('returns correct output', async () => {
       expect(commands.deductPoints()).toMatchSnapshot()
     })
   })
@@ -310,7 +365,7 @@ describe('deduct points', ()=>{
 
 describe('/points', ()=>{
   describe('regex',()=> {
-    xit.each([
+    it.each([
       ['/points @odin-bot'],
       ['let me check out my /points @odin-bot'],
       ['/points @odin-bot @odin-bot-v2']
@@ -323,7 +378,7 @@ describe('/points', ()=>{
 describe('/leaderboard', ()=>{
 
   describe('regex',()=> {
-    xit.each([
+    it.each([
       ['/leaderboard'],
       ['@odin-bot /leaderboard'],
       ['/leaderboard n=10 start=30'],
@@ -334,7 +389,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
 
-    xit.each([
+    it.each([
       ['/leaderboad'],
       [''],
       [' '],
@@ -352,7 +407,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeFalsy()
     })
 
-    xit.each([
+    it.each([
       ['Check this out! /leaderboard'],
       ['Don\'t worry about /leaderboard'],
       ['Hey @odin-bot, /leaderboard'],
@@ -361,7 +416,7 @@ describe('/leaderboard', ()=>{
       expect(commands.leaderboard.regex.test(string)).toBeTruthy()
     })
 
-    xit.each([
+    it.each([
       ['@user/leaderboard'],
       ['it\'s about/leaderboard'],
       ['/leaderboardisanillusion'],
@@ -374,7 +429,7 @@ describe('/leaderboard', ()=>{
   })
 
   describe('callback', () => {
-    xit('returns correct output', async () => {
+    it('returns correct output', async () => {
       expect(await commands.leaderboard.cb("/leaderboard n=10 start=10")).toMatchSnapshot()
     })
   })
