@@ -1,5 +1,4 @@
 const { Collection, ClientUser } = require("discord.js")
-const {User} = require('./points.test')
 
 const generateMentions = (number) => {
   const collection = new Collection()

@@ -1,5 +1,5 @@
 const commands = require('./points')
-const {generateLeaderData, mockGuild} = require('./mockData')
+const {generateLeaderData} = require('./mockData')
 const axios = require('axios')
 const {Guild, Channel, Client, User} = require('discord.js')
 axios.post = jest.fn()
