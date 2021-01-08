@@ -2,7 +2,7 @@
 
 here lies the code that runs Odin's right hand bot... 
 
-## How to Run 
+## Setup
 
 First, navigate to the desired directory and `git clone` this repository. Once the repository has been cloned, you will need to create a `.env` file using `touch .env` or your editor's filesystem, and update it with your own Discord API key. A sample of this file can be found at `.env.sample`, including formatting for your key that will be used when you run the bot. 
 

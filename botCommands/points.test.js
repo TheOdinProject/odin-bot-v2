@@ -445,6 +445,26 @@ describe('/leaderboard', ()=>{
         guild: Guild(members),
         content: "/leaderboard n=2 start=3"
       })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard start=3"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=2"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=2 start=wtf"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=wtf start=3"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=25 start=9999"
+      })).toMatchSnapshot()
     })
   })
 })

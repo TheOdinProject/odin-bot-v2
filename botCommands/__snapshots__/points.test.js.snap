@@ -25,6 +25,36 @@ exports[`/leaderboard callback returns correct output 3`] = `
 "
 `;
 
+exports[`/leaderboard callback returns correct output 4`] = `
+"**leaderboard** 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 5`] = `
+"**leaderboard** 
+1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 6`] = `
+"**leaderboard** 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 7`] = `
+"**leaderboard** 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 8`] = `
+"**leaderboard** 
+"
+`;
+
 exports[`@user ++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40"`;
 
 exports[`@user ++ callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
