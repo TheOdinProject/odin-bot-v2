@@ -49,7 +49,10 @@ jest.mock('discord.js', () => {
         roles: roles,
         id: `<@${id}>`,
         points: points,
-        addRole: ()=> {roles.push('club-40')}
+        addRole: () => {
+          roles.push('club-40')
+        },
+        toString : () => `<@${id}>`
       }
     })
   }
@@ -58,6 +61,7 @@ jest.mock('discord.js', () => {
 beforeEach(() => {
  axios.post.mockClear();
  mockSend.mockClear()
+ User.mockClear()
 });
 
 describe('@user ++', ()=>{
@@ -364,7 +368,7 @@ describe('@user --', ()=>{
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      expect(commands.deductPoints()).toMatchSnapshot()
+      expect(commands.deductPoints.cb()).toMatchSnapshot()
     })
   })
 })
@@ -478,6 +482,10 @@ describe('/leaderboard', ()=>{
       expect(await commands.leaderboard.cb({
         guild: Guild(members),
         content: "/leaderboard n=3 start=1"
+      })).toMatchSnapshot()
+      expect(await commands.leaderboard.cb({
+        guild: Guild(members),
+        content: "/leaderboard n=2 start=3"
       })).toMatchSnapshot()
     })
   })
