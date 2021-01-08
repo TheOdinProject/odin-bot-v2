@@ -2,6 +2,27 @@
 
 here lies the code that runs Odin's right hand bot... 
 
+## How to Run 
+
+First, navigate to the desired directory and `git clone` this repository. Once the repository has been cloned, you will need to create a `.env` file using `touch .env` or your editor's filesystem, and update it with your own Discord API key. A sample of this file can be found at `.env.sample`, including formatting for your key that will be used when you run the bot. 
+
+### Getting Your Discord API Key
+
+1. To get your key, you will need to go to https://discord.com/developers/applications
+2. Create a new application by clicking on the "New Application" button on the top right corner of the screen. 
+3. Give your application a name. Try to make the name unique, as your bot will share this name by default. The name may be changed after the bot is created, but if Discord has too many users with the same name as your application, it will not allow you to create a bot until you use a more unique application name.
+4. After creating the application, you will then need to add a bot by clicking the "Bot" tab on the left-hand sidebar, and pressing "Add Bot". You may change the bot's default username that will be displayed in your server at this point.
+5. Click the "Copy" button to copy your bot's token, then paste it into the `.env` file as the value for `DISCORD_API_KEY`. 
+**Note: This is sensitive information, ensure the `.env` file is listed in your .gitignore and NEVER push this key to Github!**
+6. Return to the Application's page and click on your both, then navigate to the OAuth2 tab.
+7. Under Scopes, check off "bot".
+8. Under the Bot Permissions you may give your new instance of Odin-Bot as many or as few pesmissions as you'd like. At minimum, it should have permission to send messages, manage messages, embed links, and view channels.
+9. Paste the resulting URL into your browser and then invite the bot to your server of choice!
+
+Once Odin-Bot has been added to your server, go back to the terminal, run `npm start` and try a command! Odin Bot should now be live! 
+
+## Commands
+
 All of the bot's commands are found in the `botCommands` folder.  The code that listens to and runs the various commands can be found in `botEngine.js`.  The botEngine scans the entire botCommands directory and loads all .js files, so to create a new command all you have to do is either include it in one of the existing files, or create a new file with your command.  New commands should be exported for use in our test files. Commands should be added with the `registerBotCommand()` function like so:
 
 ```javascript
