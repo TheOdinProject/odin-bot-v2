@@ -153,7 +153,6 @@ const leaderboard = {
   
       const users = await axios.get(`https://theodinproject.com/api/points`);
       const data = users.data.filter(user => guild.members.get(user.discord_id));
-      
       let usersList = "**leaderboard** \n";
       for (let i = (start-1); i < (length+start-1); i++) {
         const user = data[i];
@@ -175,7 +174,7 @@ const leaderboard = {
       }
       return usersList;
     } catch (err) {
-      console.log(err);
+      throw new Error(err.message);
     }
   }
 }

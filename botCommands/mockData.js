@@ -21,5 +21,30 @@ const generateMentions = (number) => {
 }
 
 
-module.exports = generateMentions
+const generateLeaderData = (num) => {
+  let arr = []
+  let id = 100
+  let points = 1000
+
+  for (let i = 0; i < num; i++){
+    arr.push({
+      id: id,
+      discord_id: id,
+      points: points,
+      displayName : `user${id}`
+    })
+    id++
+    points--
+  }
+
+  return arr
+}
+
+
+
+
+module.exports = {
+  generateMentions,
+  generateLeaderData
+}
 

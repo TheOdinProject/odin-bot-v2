@@ -1,5 +1,5 @@
 const commands = require('./points')
-const {generateLeaderData} = require('./mockData')
+const {generateLeaderData, mockGuild} = require('./mockData')
 const axios = require('axios')
 const {Guild, Channel, Client, User} = require('discord.js')
 axios.post = jest.fn()
@@ -109,12 +109,11 @@ describe('@user ++', ()=>{
   })
 
   describe('callback', () => {
-    
+    const author = User([], 1, 10)
+    const channel = Channel()
      
     it('returns correct output for a single user w/o club-40', async () => {
-      const author = User([], 1, 10)
       const mentionedUser = User([], 2, 20)
-      const channel = Channel()
       // users must be passed in as an array
       const client = Client([author, mentionedUser], channel)  
       const data = {
@@ -141,7 +140,6 @@ describe('@user ++', ()=>{
     it('returns correct output for a single user entering club-40', async () => {
       const author = User([], 1, 10)
       const mentionedUser = User([], 2, 39)
-      const channel = Channel()
       const client = Client([author, mentionedUser], channel)  
       const data = {
         author : author,
@@ -166,8 +164,6 @@ describe('@user ++', ()=>{
 
     it('returns correct output for up to five mentioned users', async () => {
       const author = User([], 1, 10)
-      const channel = Channel()
-
       const mentionedUser1 = User([], 2, 33)
       const mentionedUser2 = User([], 2, 21)
       const mentionedUser3 = User([], 2, 2)
@@ -217,7 +213,6 @@ describe('@user ++', ()=>{
 
     it('returns correct output for more than five mentioned users', async () => {
       const author = User([], 1, 10)
-      const channel = Channel()
 
       const mentionedUser1 = User([], 2, 10)
       const mentionedUser2 = User([], 2, 3)
@@ -278,7 +273,6 @@ describe('@user ++', ()=>{
     it('returns correct output for a user mentioning themselves', async () => {
     
       const author = User([], 1, 10)
-      const channel = Channel()
       const client = Client([author], channel)  
       const data = {
         author : author,
@@ -305,7 +299,6 @@ describe('@user ++', ()=>{
     it('returns correct output for a user mentioning Odin Bot', async () => {
       const author = User([], 1, 10)
       const odinBot = User([], 0, 0)
-      const channel = Channel()
       const client = Client([author, odinBot], channel, odinBot)  
       const data = {
         author : author,
