@@ -299,7 +299,7 @@ describe('@user ++', ()=>{
         client :  client,
         guild : Guild([author])
       }
-      
+
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
@@ -448,8 +448,3 @@ describe('/leaderboard', ()=>{
     })
   })
 })
-
-
-module.export ={
-  User
-}
