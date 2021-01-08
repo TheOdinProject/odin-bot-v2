@@ -40,9 +40,7 @@ async function lookUpUser(discord_id) {
       `https://theodinproject.com/api/points/${discord_id}`
     );
     return pointsBotResponse.data;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  } catch (err) {}
 }
 
 function exclamation(points) {
