@@ -1,5 +1,5 @@
 const commands = require('./points')
-const generateMentions = require('./mockData')
+const {generateLeaderData} = require('./mockData')
 const axios = require('axios')
 const {Guild, Channel, Client, User} = require('discord.js')
 axios.post = jest.fn()
@@ -440,36 +440,10 @@ describe('/leaderboard', ()=>{
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      const members = [{
-        id: 1310,
-        discord_id: "1",
-        points: 2508,
-        displayName : "user1"
-        },
-        {
-        id: 1350,
-        discord_id: "2",
-        points: 1769,
-        displayName : "user2"
-        },
-        {
-        id: 1338,
-        discord_id: "3",
-        points: 1714,
-        displayName : "user3"
-        },
-        {
-        id: 1084,
-        discord_id: "4",
-        points: 1377,
-        displayName : "user4"
-        },
-        {
-        id: 407,
-        discord_id: "5",
-        points: 1270,
-        displayName : "user5"
-        }]
+
+            
+      const members = generateLeaderData(5)
+
       axios.get = jest.fn()
       axios.get.mockResolvedValue({
           data : members
