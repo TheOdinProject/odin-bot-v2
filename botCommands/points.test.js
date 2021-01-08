@@ -138,7 +138,6 @@ describe('@user ++', ()=>{
     })
 
     it('returns correct output for a single user entering club-40', async () => {
-      const author = User([], 1, 10)
       const mentionedUser = User([], 2, 39)
       const client = Client([author, mentionedUser], channel)  
       const data = {
@@ -163,7 +162,6 @@ describe('@user ++', ()=>{
     })
 
     it('returns correct output for up to five mentioned users', async () => {
-      const author = User([], 1, 10)
       const mentionedUser1 = User([], 2, 33)
       const mentionedUser2 = User([], 2, 21)
       const mentionedUser3 = User([], 2, 2)
@@ -212,8 +210,6 @@ describe('@user ++', ()=>{
     })
 
     it('returns correct output for more than five mentioned users', async () => {
-      const author = User([], 1, 10)
-
       const mentionedUser1 = User([], 2, 10)
       const mentionedUser2 = User([], 2, 3)
       const mentionedUser3 = User([], 2, 1)
@@ -238,25 +234,25 @@ describe('@user ++', ()=>{
       .mockResolvedValueOnce({data: 
         {
           ...mentionedUser2, 
-          points: mentionedUser1.points +=1
-        }
-      })
-      .mockResolvedValueOnce({data: 
-        {
-          ...mentionedUser3, 
           points: mentionedUser2.points +=1
         }
       })
       .mockResolvedValueOnce({data: 
         {
-          ...mentionedUser4, 
+          ...mentionedUser3, 
           points: mentionedUser3.points +=1
         }
       })
       .mockResolvedValueOnce({data: 
         {
-          ...mentionedUser5, 
+          ...mentionedUser4, 
           points: mentionedUser4.points +=1
+        }
+      })
+      .mockResolvedValueOnce({data: 
+        {
+          ...mentionedUser5, 
+          points: mentionedUser5.points +=1
         }
       })
 
@@ -271,8 +267,6 @@ describe('@user ++', ()=>{
     })
 
     it('returns correct output for a user mentioning themselves', async () => {
-    
-      const author = User([], 1, 10)
       const client = Client([author], channel)  
       const data = {
         author : author,
@@ -293,11 +287,9 @@ describe('@user ++', ()=>{
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()  
       expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()  
-  
     })
 
     it('returns correct output for a user mentioning Odin Bot', async () => {
-      const author = User([], 1, 10)
       const odinBot = User([], 0, 0)
       const client = Client([author, odinBot], channel, odinBot)  
       const data = {
@@ -307,8 +299,7 @@ describe('@user ++', ()=>{
         client :  client,
         guild : Guild([author])
       }
-
- 
+      
       await commands.awardPoints.cb(data)
       expect(data.channel.send).toHaveBeenCalled()
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()   
@@ -457,3 +448,8 @@ describe('/leaderboard', ()=>{
     })
   })
 })
+
+
+module.export ={
+  User
+}
