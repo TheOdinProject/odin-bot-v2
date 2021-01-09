@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/leaderboard callback returns correct output 1`] = `
+"**leaderboard** 
+1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 2`] = `
+"**leaderboard** 
+1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+3 - user102 [998 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 3`] = `
+"**leaderboard** 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 4`] = `
+"**leaderboard** 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 5`] = `
+"**leaderboard** 
+1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 6`] = `
+"**leaderboard** 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 7`] = `
+"**leaderboard** 
+"
+`;
+
+exports[`/leaderboard callback returns correct output 8`] = `
+"**leaderboard** 
+"
+`;
+
+exports[`@user ++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40"`;
+
+exports[`@user ++ callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
+
+exports[`@user ++ callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
+
+exports[`@user ++ callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
+
+exports[`@user ++ callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
+
+exports[`@user ++ callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 2`] = `"Sweet! <@2> now has 11 points"`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 3`] = `"Nice! <@2> now has 4 points"`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 4`] = `"Nice! <@2> now has 2 points"`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 5`] = `"Nice! <@2> now has 1 point"`;
+
+exports[`@user ++ callback returns correct output for more than five mentioned users 6`] = `"Sweet! <@2> now has 22 points"`;
+
+exports[`@user ++ callback returns correct output for up to five mentioned users 1`] = `"Woot! <@2> now has 34 points"`;
+
+exports[`@user ++ callback returns correct output for up to five mentioned users 2`] = `"Sweet! <@2> now has 22 points"`;
+
+exports[`@user ++ callback returns correct output for up to five mentioned users 3`] = `"Nice! <@2> now has 3 points"`;
+
+exports[`@user ++ callback returns correct output for up to five mentioned users 4`] = `"Nice! <@2> now has 1 point"`;
+
+exports[`@user -- callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;

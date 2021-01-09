@@ -20,7 +20,7 @@ const command = {
       "http://emojis.slackmojis.com/emojis/images/1450738632/246/leftshark.png",
     ];
 
-    if (content.toLowerCase().match("!")) {
+   if (content.match("!")) {
       return `${parrots[0]}`;
     } else {
       const index = randomInt(parrots.length);
