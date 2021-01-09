@@ -14,9 +14,9 @@ First, navigate to the desired directory and `git clone` this repository. Once t
 4. After creating the application, you will then need to add a bot by clicking the "Bot" tab on the left-hand sidebar, and pressing "Add Bot". You may change the bot's default username that will be displayed in your server at this point.
 5. Click the "Copy" button to copy your bot's token, then paste it into the `.env` file as the value for `DISCORD_API_KEY`. 
 **Note: This is sensitive information, ensure the `.env` file is listed in your .gitignore and NEVER push this key to Github!**
-6. Return to the Application's page and click on your both, then navigate to the OAuth2 tab.
+6. Return to the Applications page and click on your bot, then navigate to the OAuth2 tab.
 7. Under Scopes, check off "bot".
-8. Under the Bot Permissions you may give your new instance of Odin-Bot as many or as few pesmissions as you'd like. At minimum, it should have permission to send messages, manage messages, embed links, and view channels.
+8. Under the Bot Permissions you may give your new instance of Odin-Bot as many or as few permissions as you'd like. At minimum, it should have permission to send messages, manage messages, embed links, and view channels.
 9. Paste the resulting URL into your browser and then invite the bot to your server of choice!
 
 Once Odin-Bot has been added to your server, go back to the terminal, run `npm start` and try a command! Odin Bot should now be live! 
