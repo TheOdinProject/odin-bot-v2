@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/shrug callback returns correct output 1`] = `"¯\\\\_(ツ)_/¯"`;
+
+exports[`/shrug callback returns correct output 2`] = `"_(¯\\\\ツ)_/¯"`;
+
+exports[`/shrug callback returns correct output 3`] = `"ツ¯\\\\_()_/¯"`;
+
+exports[`/shrug callback returns correct output 4`] = `"¯\\\\ツ_()_/¯"`;
+
+exports[`/shrug callback returns correct output 5`] = `"_(ツ¯\\\\)_/¯"`;
+
+exports[`/shrug callback returns correct output 6`] = `"ツ_(¯\\\\)_/¯"`;
+
+exports[`/shrug callback returns correct output 7`] = `")__(¯\\\\ツ/¯"`;
+
+exports[`/shrug callback returns correct output 8`] = `"_()_¯\\\\ツ/¯"`;
+
+exports[`/shrug callback returns correct output 9`] = `"¯\\\\)__(ツ/¯"`;
+
+exports[`/shrug callback returns correct output 10`] = `")_¯\\\\_(ツ/¯"`;
+
+exports[`/shrug callback returns correct output 11`] = `"_(¯\\\\)_ツ/¯"`;
+
+exports[`/shrug callback returns correct output 12`] = `"¯\\\\_()_ツ/¯"`;
+
+exports[`/shrug callback returns correct output 13`] = `"¯\\\\ツ)__(/¯"`;
+
+exports[`/shrug callback returns correct output 14`] = `"ツ¯\\\\)__(/¯"`;
+
+exports[`/shrug callback returns correct output 15`] = `")_¯\\\\ツ_(/¯"`;
+
+exports[`/shrug callback returns correct output 16`] = `"¯\\\\)_ツ_(/¯"`;
+
+exports[`/shrug callback returns correct output 17`] = `"ツ)_¯\\\\_(/¯"`;
+
+exports[`/shrug callback returns correct output 18`] = `")_ツ¯\\\\_(/¯"`;
+
+exports[`/shrug callback returns correct output 19`] = `")_ツ_(¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 20`] = `"ツ)__(¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 21`] = `"_()_ツ¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 22`] = `")__(ツ¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 23`] = `"ツ_()_¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 24`] = `"_(ツ)_¯\\\\/¯"`;
+
+exports[`/shrug callback returns correct output 25`] = `"/¯ツ)_¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 26`] = `"ツ/¯)_¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 27`] = `")_/¯ツ¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 28`] = `"/¯)_ツ¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 29`] = `"ツ)_/¯¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 30`] = `")_ツ/¯¯\\\\_("`;
+
+exports[`/shrug callback returns correct output 31`] = `"¯\\\\ツ/¯)__("`;
+
+exports[`/shrug callback returns correct output 32`] = `"ツ¯\\\\/¯)__("`;
+
+exports[`/shrug callback returns correct output 33`] = `"/¯¯\\\\ツ)__("`;
+
+exports[`/shrug callback returns correct output 34`] = `"¯\\\\/¯ツ)__("`;
+
+exports[`/shrug callback returns correct output 35`] = `"ツ/¯¯\\\\)__("`;
+
+exports[`/shrug callback returns correct output 36`] = `"/¯ツ¯\\\\)__("`;
+
+exports[`/shrug callback returns correct output 37`] = `"/¯)_¯\\\\ツ_("`;
+
+exports[`/shrug callback returns correct output 38`] = `")_/¯¯\\\\ツ_("`;
+
+exports[`/shrug callback returns correct output 39`] = `"¯\\\\/¯)_ツ_("`;
+
+exports[`/shrug callback returns correct output 40`] = `"/¯¯\\\\)_ツ_("`;
+
+exports[`/shrug callback returns correct output 41`] = `")_¯\\\\/¯ツ_("`;
+
+exports[`/shrug callback returns correct output 42`] = `"¯\\\\)_/¯ツ_("`;
+
+exports[`/shrug callback returns correct output 43`] = `"¯\\\\)_ツ/¯_("`;
+
+exports[`/shrug callback returns correct output 44`] = `")_¯\\\\ツ/¯_("`;
+
+exports[`/shrug callback returns correct output 45`] = `"ツ¯\\\\)_/¯_("`;
+
+exports[`/shrug callback returns correct output 46`] = `"¯\\\\ツ)_/¯_("`;
+
+exports[`/shrug callback returns correct output 47`] = `")_ツ¯\\\\/¯_("`;
+
+exports[`/shrug callback returns correct output 48`] = `"ツ)_¯\\\\/¯_("`;
+
+exports[`/shrug callback returns correct output 49`] = `"_()_¯\\\\/¯ツ"`;
+
+exports[`/shrug callback returns correct output 50`] = `")__(¯\\\\/¯ツ"`;
+
+exports[`/shrug callback returns correct output 51`] = `"¯\\\\_()_/¯ツ"`;
+
+exports[`/shrug callback returns correct output 52`] = `"_(¯\\\\)_/¯ツ"`;
+
+exports[`/shrug callback returns correct output 53`] = `")_¯\\\\_(/¯ツ"`;
+
+exports[`/shrug callback returns correct output 54`] = `"¯\\\\)__(/¯ツ"`;
+
+exports[`/shrug callback returns correct output 55`] = `"/¯)__(¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 56`] = `")_/¯_(¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 57`] = `"_(/¯)_¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 58`] = `"/¯_()_¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 59`] = `")__(/¯¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 60`] = `"_()_/¯¯\\\\ツ"`;
+
+exports[`/shrug callback returns correct output 61`] = `"_(¯\\\\/¯)_ツ"`;
+
+exports[`/shrug callback returns correct output 62`] = `"¯\\\\_(/¯)_ツ"`;
+
+exports[`/shrug callback returns correct output 63`] = `"/¯_(¯\\\\)_ツ"`;
+
+exports[`/shrug callback returns correct output 64`] = `"_(/¯¯\\\\)_ツ"`;
+
+exports[`/shrug callback returns correct output 65`] = `"¯\\\\/¯_()_ツ"`;
+
+exports[`/shrug callback returns correct output 66`] = `"/¯¯\\\\_()_ツ"`;
+
+exports[`/shrug callback returns correct output 67`] = `"/¯¯\\\\)__(ツ"`;
+
+exports[`/shrug callback returns correct output 68`] = `"¯\\\\/¯)__(ツ"`;
+
+exports[`/shrug callback returns correct output 69`] = `")_/¯¯\\\\_(ツ"`;
+
+exports[`/shrug callback returns correct output 70`] = `"/¯)_¯\\\\_(ツ"`;
+
+exports[`/shrug callback returns correct output 71`] = `"¯\\\\)_/¯_(ツ"`;
+
+exports[`/shrug callback returns correct output 72`] = `")_¯\\\\/¯_(ツ"`;
+
+exports[`/shrug callback returns correct output 73`] = `"ツ¯\\\\/¯_()_"`;
+
+exports[`/shrug callback returns correct output 74`] = `"¯\\\\ツ/¯_()_"`;
+
+exports[`/shrug callback returns correct output 75`] = `"/¯ツ¯\\\\_()_"`;
+
+exports[`/shrug callback returns correct output 76`] = `"ツ/¯¯\\\\_()_"`;
+
+exports[`/shrug callback returns correct output 77`] = `"¯\\\\/¯ツ_()_"`;
+
+exports[`/shrug callback returns correct output 78`] = `"/¯¯\\\\ツ_()_"`;
+
+exports[`/shrug callback returns correct output 79`] = `"_(¯\\\\ツ/¯)_"`;
+
+exports[`/shrug callback returns correct output 80`] = `"¯\\\\_(ツ/¯)_"`;
+
+exports[`/shrug callback returns correct output 81`] = `"ツ_(¯\\\\/¯)_"`;
+
+exports[`/shrug callback returns correct output 82`] = `"_(ツ¯\\\\/¯)_"`;
+
+exports[`/shrug callback returns correct output 83`] = `"¯\\\\ツ_(/¯)_"`;
+
+exports[`/shrug callback returns correct output 84`] = `"ツ¯\\\\_(/¯)_"`;
+
+exports[`/shrug callback returns correct output 85`] = `"ツ/¯_(¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 86`] = `"/¯ツ_(¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 87`] = `"_(ツ/¯¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 88`] = `"ツ_(/¯¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 89`] = `"/¯_(ツ¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 90`] = `"_(/¯ツ¯\\\\)_"`;
+
+exports[`/shrug callback returns correct output 91`] = `"_(/¯¯\\\\ツ)_"`;
+
+exports[`/shrug callback returns correct output 92`] = `"/¯_(¯\\\\ツ)_"`;
+
+exports[`/shrug callback returns correct output 93`] = `"¯\\\\_(/¯ツ)_"`;
+
+exports[`/shrug callback returns correct output 94`] = `"_(¯\\\\/¯ツ)_"`;
+
+exports[`/shrug callback returns correct output 95`] = `"/¯¯\\\\_(ツ)_"`;
+
+exports[`/shrug callback returns correct output 96`] = `"¯\\\\/¯_(ツ)_"`;
+
+exports[`/shrug callback returns correct output 97`] = `")_/¯_(ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 98`] = `"/¯)__(ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 99`] = `"_()_/¯ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 100`] = `")__(/¯ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 101`] = `"/¯_()_ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 102`] = `"_(/¯)_ツ¯\\\\"`;
+
+exports[`/shrug callback returns correct output 103`] = `"ツ/¯)__(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 104`] = `"/¯ツ)__(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 105`] = `")_ツ/¯_(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 106`] = `"ツ)_/¯_(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 107`] = `"/¯)_ツ_(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 108`] = `")_/¯ツ_(¯\\\\"`;
+
+exports[`/shrug callback returns correct output 109`] = `")__(ツ/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 110`] = `"_()_ツ/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 111`] = `"ツ)__(/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 112`] = `")_ツ_(/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 113`] = `"_(ツ)_/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 114`] = `"ツ_()_/¯¯\\\\"`;
+
+exports[`/shrug callback returns correct output 115`] = `"ツ_(/¯)_¯\\\\"`;
+
+exports[`/shrug callback returns correct output 116`] = `"_(ツ/¯)_¯\\\\"`;
+
+exports[`/shrug callback returns correct output 117`] = `"/¯ツ_()_¯\\\\"`;
+
+exports[`/shrug callback returns correct output 118`] = `"ツ/¯_()_¯\\\\"`;
+
+exports[`/shrug callback returns correct output 119`] = `"_(/¯ツ)_¯\\\\"`;
+
+exports[`/shrug callback returns correct output 120`] = `"/¯_(ツ)_¯\\\\"`;

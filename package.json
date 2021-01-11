@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test" : "jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,8 @@
     "dotenv": "^5.0.1",
     "glob": "^7.1.2",
     "prettier": "^1.13.4"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
