@@ -1,13 +1,10 @@
 const axios = require("axios");
 const config = require("../config.js");
 const { registerBotCommand } = require("../botEngine.js");
+
 const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
 
 axios.defaults.headers.post['Authorization'] = `Token ${config.pointsbot.token}`
-
-if (process.argv.includes('dev')) {
-  return;
-}
 
 function getUserIdsFromMessage(text, regex) {
   const matches = [];
@@ -31,7 +28,6 @@ async function addPointsToUser(discord_id) {
     const pointsBotResponse = await axios.post(
       `https://theodinproject.com/api/points?discord_id=${discord_id}`
     );
-
     return pointsBotResponse.data;
   } catch (err) {
     throw new Error(err.message);
@@ -44,9 +40,7 @@ async function lookUpUser(discord_id) {
       `https://theodinproject.com/api/points/${discord_id}`
     );
     return pointsBotResponse.data;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  } catch (err) {}
 }
 
 function exclamation(points) {
@@ -75,7 +69,7 @@ const awardPoints = {
   regex: /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu,
   cb: async function pointsBotCommand({ author, content, channel, client, guild }) {
     const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
-    userIds.forEach(async(userId, i) => {
+    return Promise.all(userIds.map(async(userId, i) => {
       // this limits the number of calls per message to 5 to avoid abuse
       if (i > 4) {
         return
@@ -99,21 +93,20 @@ const awardPoints = {
           if (member && !member.roles.find(r => r.name==="club-40") && pointsUser.points > 39) {
             let pointsRole = guild.roles.find(r => r.name === "club-40")
             member.addRole(pointsRole)
-  
             let clubChannel = client.channels.get('707225752608964628')
+        
             if (clubChannel) {
               clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40`)
             }
           }
-  
           channel.send(
             `${exclamation(pointsUser.points)} ${user} now has ${
               pointsUser.points
             } ${plural(pointsUser.points)}`
           );
         }
-      } catch (err) {}
-    });
+      } catch (err) {console.log(err)}
+    }));
   }
 }
 
@@ -158,7 +151,6 @@ const leaderboard = {
   
       const users = await axios.get(`https://theodinproject.com/api/points`);
       const data = users.data.filter(user => guild.members.get(user.discord_id));
-  
       let usersList = "**leaderboard** \n";
       for (let i = (start-1); i < (length+start-1); i++) {
         const user = data[i];
@@ -180,7 +172,7 @@ const leaderboard = {
       }
       return usersList;
     } catch (err) {
-      console.log(err);
+      throw new Error(err.message);
     }
   }
 }
@@ -188,8 +180,10 @@ const leaderboard = {
 registerBotCommand(leaderboard.regex, leaderboard.cb)
 
 module.exports = {
+  addPointsToUser,
   awardPoints, 
   deductPoints,
+  getUserIdsFromMessage,
   points,
   leaderboard
 }
