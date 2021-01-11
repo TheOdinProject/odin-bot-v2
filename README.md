@@ -105,7 +105,7 @@ describe('/commandname', () => {
 
 ```
 
-Once you have filled out your test suite, run `npm test` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. Once you have confirmed that your snapshot matches the correct output, you may submit a pull request for review. 
+Once you have filled out your test suite, run `npm test filename.test.js` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. Once you have confirmed that your snapshot matches the correct output, you may submit a pull request for review. Your tests **must** pass in order for your pull request to be merged. 
 
 If your particular command requires mentions to be passed into the callback, you may use the `generateMentions` helper located inside of `mockData.js`, which dynamically creates Discord User objects for you to leverage in your tests.
 
