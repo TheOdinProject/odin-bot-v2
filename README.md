@@ -42,9 +42,10 @@ registerBotCommand(command.regex, command.cb);
 module.exports = command
 ```
 
-The parameter of the command-function is an object that exposes data about the message that matches the regex.  `content` is simply the full text of the message. `author` is the user object of the author of the message.. you can get the username with `author.username`. 
+The parameter of the command-function is an object that exposes data about the message that matches the regex.  `content` is simply the full text of the message. `author` is the user object of the author of the message.. you can get the username with `author.username`. If your particular command requires mentions to be passed into the callback, you may use the `generateMentions` helper located inside of `mockData.js`, which dynamically creates Discord User objects for you to leverage in your tests.
 
-The documentation for Discord.JS can be found [here](https://discord.js.org/#/docs/main/stable/general/welcome).
+
+The documentation for Discord.JS can be found [here](https://discord.js.org/#/docs/main/stable/general/welcome). There you may find other Discord-specific arguments that may be passed in from a message, such as roles, guild, channel, and more!
 
 ## Testing
 
@@ -105,7 +106,4 @@ describe('/commandname', () => {
 
 ```
 
-Once you have filled out your test suite, run `npm test filename.test.js` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. Once you have confirmed that your snapshot matches the correct output, you may submit a pull request for review. Your tests **must** pass in order for your pull request to be merged. 
-
-If your particular command requires mentions to be passed into the callback, you may use the `generateMentions` helper located inside of `mockData.js`, which dynamically creates Discord User objects for you to leverage in your tests.
-
+Once you have filled out your test suite, make sure you have saved `command.js`, then run `npm test command.test.js` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. If your command produces a different output based on number of mentions, or other variable factors in a message, such as the user calling the command, server roles, etc, you must create snapshots for each of these scenarios. Once you have confirmed that your snapshot file matches the correct output, you may submit a pull request for review. Your tests **must** pass in order for your pull request to be merged. 
