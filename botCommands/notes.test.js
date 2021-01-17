@@ -1,44 +1,44 @@
-const command = require('./note')
+const command = require('./notes')
 
-describe('/note', () => {
+describe('/notes', () => {
   describe('regex', () => {
     it.each([
-      ['/note'],
-      [' /note'],
-      ['/note @odin-bot'],
-      ['@odin-bot /note'],
+      ['/notes'],
+      [' /notes'],
+      ['/notes @odin-bot'],
+      ['@odin-bot /notes'],
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
     
     it.each([
-     ["ntoe"],
-     ["note"],
-     ["noet"],
-     ["/noet"],
-     ["/ntoe"],
-     ["/ note"],
-     ["/anote"]
+     ["ntoes"],
+     ["notes"],
+     ["noets"],
+     ["/noets"],
+     ["/ntoes"],
+     ["/ notes"],
+     ["/anotes"]
     ])("'%s' does not trigger the callback", (string) => {
       expect(command.regex.test(string)).toBeFalsy()
     })
 
     it.each([
-      ['Check this out! /note'],
-      ['Don\'t worry about /note'],
-      ['Hey @odin-bot, /note'],
-      ['/@odin-bot ^ /me /note /tests$*']
+      ['Check this out! /notes'],
+      ['Don\'t worry about /notes'],
+      ['Hey @odin-bot, /notes'],
+      ['/@odin-bot ^ /me /notes /tests$*']
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
 
     it.each([
-      ['@user/note'],
-      ['it\'s about/note'],
+      ['@user/notes'],
+      ['it\'s about/notes'],
       ['/notesanillusion'],
-      ['/note/'],
-      ['/note*'],
-      ['/note...']
+      ['/notes/'],
+      ['/notes*'],
+      ['/notes...']
     ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
       expect(command.regex.test(string)).toBeFalsy()
     })

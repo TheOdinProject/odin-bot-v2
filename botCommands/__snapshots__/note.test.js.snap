@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`/note callback returns correct output 1`] = `"To note, or not to note, that is the question. Please read this: https://docs.google.com/document/d/1fas8xwMRi4GVrnCtp9U5OL7Y9QB6v5H_Wx19m4UQwgI/edit"`;
