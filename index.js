@@ -3,7 +3,7 @@ const path = require("path");
 const {listenToMessages} = require("./botEngine.js");
 require('dotenv').config();
 
-glob.sync("./botCommands/**/*.js").forEach(file => {
+glob.sync("./botCommands/**/*.js", {"ignore" : "./botCommands/**/*.test.js"}).forEach(file => {
   require(path.resolve(file));
 });
 
