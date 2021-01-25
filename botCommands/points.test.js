@@ -1,69 +1,55 @@
-const commands = require('./points')
-const { generateLeaderData } = require('./mockData')
-const axios = require('axios')
-const { Guild, Channel, Client, User } = require('discord.js')
-axios.post = jest.fn()
+const axios = require('axios');
+const {
+  Guild, Channel, Client, User,
+} = require('discord.js');
+const commands = require('./points');
+const { generateLeaderData } = require('./mockData');
 
-const mockSend = jest.fn()
-mockSend.mockImplementation((message) => {
-  return message
-})
+axios.post = jest.fn();
 
-jest.mock('discord.js', () => {
-  return {
-    Client: jest.fn().mockImplementation((users, channel, user) => {
-      return {
-        channels: {
-          get: () => channel,
-        },
-        users: {
-          get: (userId) =>
-            users.filter((user) => `<@${userId}>` === user.id)[0],
-        },
-        user: user,
-      }
-    }),
+const mockSend = jest.fn();
+mockSend.mockImplementation((message) => message);
 
-    Guild: jest.fn().mockImplementation((users) => {
-      return {
-        members: {
-          members: users,
-          get: (id) => {
-            return users.filter((member) => member.discord_id === id)[0]
-          },
-        },
-        roles: [{ name: 'club-40' }],
-        member: (user) => {
-          return users.filter((member) => member === user)[0]
-        },
-      }
-    }),
+jest.mock('discord.js', () => ({
+  Client: jest.fn().mockImplementation((users, channel, user) => ({
+    channels: {
+      get: () => channel,
+    },
+    users: {
+      get: (userId) => users.filter((user) => `<@${userId}>` === user.id)[0],
+    },
+    user,
+  })),
 
-    Channel: jest.fn().mockImplementation(() => {
-      return {
-        send: mockSend,
-      }
-    }),
+  Guild: jest.fn().mockImplementation((users) => ({
+    members: {
+      members: users,
+      get: (id) => users.filter((member) => member.discord_id === id)[0],
+    },
+    roles: [{ name: 'club-40' }],
+    member: (user) => users.filter((member) => member === user)[0],
+  })),
 
-    User: jest.fn().mockImplementation((roles, id, points) => {
-      return {
-        roles: roles,
-        id: `<@${id}>`,
-        points: points,
-        addRole: () => {
-          roles.push('club-40')
-        },
-        toString: () => `<@${id}>`,
-      }
-    }),
-  }
-})
+  Channel: jest.fn().mockImplementation(() => ({
+    send: mockSend,
+  })),
+
+  User: jest.fn().mockImplementation((roles, id, points) => ({
+    roles,
+    id: `<@${id}>`,
+    points,
+    addRole: () => {
+      roles.push('club-40');
+    },
+    toString: () => `<@${id}>`,
+  })),
+}));
 
 beforeEach(() => {
-  axios.post.mockClear()
-  mockSend.mockClear()
-  User.mockClear()
-})
+  axios.post.mockClear();
+  mockSend.mockClear();
+  User.mockClear();
+});
 
 describe('<@!1233456679> ++', () => {
   describe('regex', () => {
@@ -72,8 +58,8 @@ describe('<@!1233456679> ++', () => {
       ['thanks <@!1233456679> ++'],
       ['<@!1233456679>++'],
     ])('correct strings trigger the callback', (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.awardPoints.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['++'],
@@ -84,8 +70,8 @@ describe('<@!1233456679> ++', () => {
       ['/++'],
       ['```function("<@!1233456679> ++", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeFalsy()
-    })
+      expect(commands.awardPoints.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! <@!1233456679> ++'],
@@ -93,8 +79,8 @@ describe('<@!1233456679> ++', () => {
       ['Hey <@!1233456679> ++'],
       ['/ <@!1233456679>++ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.awardPoints.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/++'],
@@ -106,68 +92,68 @@ describe('<@!1233456679> ++', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(commands.awardPoints.regex.test(string)).toBeFalsy()
-      }
-    )
-  })
+        expect(commands.awardPoints.regex.test(string)).toBeFalsy();
+      },
+    );
+  });
 
   describe('callback', () => {
-    const author = User([], 1, 10)
-    const channel = Channel()
+    const author = User([], 1, 10);
+    const channel = Channel();
 
     it('returns correct output for a single user w/o club-40', async () => {
-      const mentionedUser = User([], 2, 20)
+      const mentionedUser = User([], 2, 20);
       // users must be passed in as an array
-      const client = Client([author, mentionedUser], channel)
+      const client = Client([author, mentionedUser], channel);
       const data = {
-        author: author,
+        author,
         content: `${mentionedUser.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([author, mentionedUser]),
-      }
+      };
 
       axios.post.mockResolvedValue({
         data: {
           ...mentionedUser,
           points: (mentionedUser.points += 1),
         },
-      })
+      });
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-    })
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalled();
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    });
 
     it('returns correct output for a single user entering club-40', async () => {
-      const mentionedUser = User([], 2, 39)
-      const client = Client([author, mentionedUser], channel)
+      const mentionedUser = User([], 2, 39);
+      const client = Client([author, mentionedUser], channel);
       const data = {
-        author: author,
+        author,
         content: `${mentionedUser.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([author, mentionedUser]),
-      }
+      };
 
       axios.post.mockResolvedValue({
         data: {
           ...mentionedUser,
           points: (mentionedUser.points += 1),
         },
-      })
+      });
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()
-    })
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalled();
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    });
 
     it('returns correct output for up to five mentioned users', async () => {
-      const mentionedUser1 = User([], 2, 33)
-      const mentionedUser2 = User([], 2, 21)
-      const mentionedUser3 = User([], 2, 2)
-      const mentionedUser4 = User([], 2, 0)
+      const mentionedUser1 = User([], 2, 33);
+      const mentionedUser2 = User([], 2, 21);
+      const mentionedUser3 = User([], 2, 2);
+      const mentionedUser4 = User([], 2, 0);
       const client = Client(
         [
           author,
@@ -176,14 +162,14 @@ describe('<@!1233456679> ++', () => {
           mentionedUser3,
           mentionedUser4,
         ],
-        channel
-      )
+        channel,
+      );
 
       const data = {
-        author: author,
+        author,
         content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([
           author,
           mentionedUser1,
@@ -191,7 +177,7 @@ describe('<@!1233456679> ++', () => {
           mentionedUser3,
           mentionedUser4,
         ]),
-      }
+      };
 
       axios.post
         .mockResolvedValueOnce({
@@ -217,22 +203,22 @@ describe('<@!1233456679> ++', () => {
             ...mentionedUser4,
             points: (mentionedUser4.points += 1),
           },
-        })
+        });
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalledTimes(4)
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot()
-    })
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalledTimes(4);
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
+    });
 
     it('returns correct output for more than five mentioned users', async () => {
-      const mentionedUser1 = User([], 2, 10)
-      const mentionedUser2 = User([], 2, 3)
-      const mentionedUser3 = User([], 2, 1)
-      const mentionedUser4 = User([], 2, 0)
-      const mentionedUser5 = User([], 2, 21)
+      const mentionedUser1 = User([], 2, 10);
+      const mentionedUser2 = User([], 2, 3);
+      const mentionedUser3 = User([], 2, 1);
+      const mentionedUser4 = User([], 2, 0);
+      const mentionedUser5 = User([], 2, 21);
       const client = Client(
         [
           author,
@@ -242,14 +228,14 @@ describe('<@!1233456679> ++', () => {
           mentionedUser4,
           mentionedUser5,
         ],
-        channel
-      )
+        channel,
+      );
 
       const data = {
-        author: author,
+        author,
         content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++ ${mentionedUser5.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([
           author,
           mentionedUser1,
@@ -258,7 +244,7 @@ describe('<@!1233456679> ++', () => {
           mentionedUser4,
           mentionedUser5,
         ]),
-      }
+      };
 
       axios.post
         .mockResolvedValueOnce({
@@ -290,58 +276,58 @@ describe('<@!1233456679> ++', () => {
             ...mentionedUser5,
             points: (mentionedUser5.points += 1),
           },
-        })
+        });
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalledTimes(6)
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[4][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[5][0]).toMatchSnapshot()
-    })
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalledTimes(6);
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[4][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[5][0]).toMatchSnapshot();
+    });
 
     it('returns correct output for a user mentioning themselves', async () => {
-      const client = Client([author], channel)
+      const client = Client([author], channel);
       const data = {
-        author: author,
+        author,
         content: `${author.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([author]),
-      }
+      };
 
       axios.post.mockResolvedValue({
         data: {
           ...author,
           points: (author.points += 1),
         },
-      })
+      });
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot()
-    })
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalled();
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    });
 
     it('returns correct output for a user mentioning Odin Bot', async () => {
-      const odinBot = User([], 0, 0)
-      const client = Client([author, odinBot], channel, odinBot)
+      const odinBot = User([], 0, 0);
+      const client = Client([author, odinBot], channel, odinBot);
       const data = {
-        author: author,
+        author,
         content: `${odinBot.id} ++`,
-        channel: channel,
-        client: client,
+        channel,
+        client,
         guild: Guild([author]),
-      }
+      };
 
-      await commands.awardPoints.cb(data)
-      expect(data.channel.send).toHaveBeenCalled()
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot()
-    })
-  })
-})
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalled();
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    });
+  });
+});
 
 describe('@user --', () => {
   describe('regex', () => {
@@ -350,8 +336,8 @@ describe('@user --', () => {
       ['thanks <@!1233456679> --'],
       ['<@!1233456679>--'],
     ])('correct strings trigger the callback', (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.deductPoints.regex.test(string)).toBeTruthy();
+    });
     it.each([
       ['--'],
       [''],
@@ -361,8 +347,8 @@ describe('@user --', () => {
       ['/--'],
       ['```function("<@!1233456679> --", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeFalsy()
-    })
+      expect(commands.deductPoints.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! <@!1233456679> --'],
@@ -370,8 +356,8 @@ describe('@user --', () => {
       ['Hey <@!1233456679> --'],
       ['/ <@!1233456679>-- ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.deductPoints.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/--'],
@@ -383,17 +369,17 @@ describe('@user --', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(commands.deductPoints.regex.test(string)).toBeFalsy()
-      }
-    )
-  })
+        expect(commands.deductPoints.regex.test(string)).toBeFalsy();
+      },
+    );
+  });
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      expect(commands.deductPoints.cb()).toMatchSnapshot()
-    })
-  })
-})
+      expect(commands.deductPoints.cb()).toMatchSnapshot();
+    });
+  });
+});
 
 describe('/points', () => {
   describe('regex', () => {
@@ -402,10 +388,10 @@ describe('/points', () => {
       ['let me check out my /points <@!1233456679>'],
       ['/points <@!1233456679> <@!1233456679>-v2'],
     ])('correct strings trigger the callback', (string) => {
-      expect(commands.points.regex.test(string)).toBeTruthy()
-    })
-  })
-})
+      expect(commands.points.regex.test(string)).toBeTruthy();
+    });
+  });
+});
 
 describe('/leaderboard', () => {
   describe('regex', () => {
@@ -417,8 +403,8 @@ describe('/leaderboard', () => {
       ['/leaderboard n=10'],
       ['/leaderboard start=30'],
     ])('correct strings trigger the callback', (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.leaderboard.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['/leaderboad'],
@@ -435,8 +421,8 @@ describe('/leaderboard', () => {
       ['<@!1233456679> /leaderbard'],
       ['/leaderbord n=10 start=30'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeFalsy()
-    })
+      expect(commands.leaderboard.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! /leaderboard'],
@@ -444,8 +430,8 @@ describe('/leaderboard', () => {
       ['Hey <@!1233456679>, /leaderboard'],
       ['/<@!1233456679> ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.leaderboard.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/leaderboard'],
@@ -457,68 +443,68 @@ describe('/leaderboard', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(commands.leaderboard.regex.test(string)).toBeFalsy()
-      }
-    )
-  })
+        expect(commands.leaderboard.regex.test(string)).toBeFalsy();
+      },
+    );
+  });
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      const members = generateLeaderData(5)
+      const members = generateLeaderData(5);
 
-      axios.get = jest.fn()
+      axios.get = jest.fn();
       axios.get.mockResolvedValue({
         data: members,
-      })
+      });
 
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=5 start=1',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=3 start=1',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=2 start=3',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard start=3',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=2',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=2 start=wtf',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=wtf start=3',
-        })
-      ).toMatchSnapshot()
+        }),
+      ).toMatchSnapshot();
       expect(
         await commands.leaderboard.cb({
           guild: Guild(members),
           content: '/leaderboard n=25 start=9999',
-        })
-      ).toMatchSnapshot()
-    })
-  })
-})
+        }),
+      ).toMatchSnapshot();
+    });
+  });
+});
