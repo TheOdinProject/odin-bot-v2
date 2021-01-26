@@ -107,7 +107,7 @@ registerBotCommand(motivate.regex, motivate.cb);
 
 
 const justDoIt = {
-  regex: /\/justdoit/,
+  regex: /(?<!\S)\/justdoit(?!\S)/,
   cb: () => {
     return `What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
   }
