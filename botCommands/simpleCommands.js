@@ -34,7 +34,7 @@ const question = {
 registerBotCommand(question.regex, question.cb);
 
 const data = {
-  regex: /\B\/data/,
+  regex: /(?<!\S)\/data(?!\S)/,
   cb: () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`
 }
 registerBotCommand(data.regex, data.cb);

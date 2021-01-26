@@ -313,7 +313,7 @@ describe('/data', () => {
       ['/daa'],
       ['/datas'],
       ['```function("/data", () => {}```'],
-      ['/data'],
+      ['/dataa'],
       [''],
       [' '],
       [' /'],
