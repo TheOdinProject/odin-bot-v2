@@ -431,7 +431,7 @@ describe('/peen', () => {
       ['/pee'],
       ['/peens'],
       ['```function("/peen", () => {}```'],
-      ['/peen'],
+      ['/peena'],
       [''],
       [' '],
       [' /'],

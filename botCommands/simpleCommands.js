@@ -48,7 +48,7 @@ const sexpresso = {
 registerBotCommand(sexpresso.regex, sexpresso.cb);
 
 const peen = {
-  regex: /\peen/,
+  regex: /(?<!\S)\/peen(?!\S)/,
   cb: ({ author }) => {
     if (author.id == 418918922507780096) {
       return `https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif`;
