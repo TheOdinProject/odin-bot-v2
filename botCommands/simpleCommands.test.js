@@ -135,7 +135,7 @@ describe('/lenny', () => {
       ['/hu'],
       ['/lennys'],
       ['```function("/lenny", () => {}```'],
-      ['/lenny'],
+      ['/lennya'],
       [''],
       [' '],
       [' /'],

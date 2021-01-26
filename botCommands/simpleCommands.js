@@ -13,7 +13,7 @@ const smart = {
 registerBotCommand(smart.regex, smart.cb);
 
 const lenny = {
-  regex: /\B\/lenny/,
+  regex: /(?<!\S)\/lenny(?!\S)/,
   cb: () => String.raw`( ͡° ͜ʖ ͡°)`
 }
 registerBotCommand(lenny.regex, lenny.cb);
