@@ -19,7 +19,7 @@ const lenny = {
 registerBotCommand(lenny.regex, lenny.cb);
 
 const fu = {
-  regex: /:fu:/,
+  regex: /(?<!\S)\/fu(?!\S)/,
   cb: async (message) => {
     await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
     return null;
