@@ -42,7 +42,7 @@ registerBotCommand(data.regex, data.cb);
 // registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
 
 const sexpresso = {
-  regex: /\/sexpresso/,
+  regex: /(?<!\S)\/sexpresso(?!\S)/,
   cb: () => `https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590`
 }
 registerBotCommand(sexpresso.regex, sexpresso.cb);
