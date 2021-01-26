@@ -76,7 +76,7 @@ describe('/smart', () => {
       ['/smrt'],
       ['/smarts'],
       ['```function("/smart", () => {}```'],
-      ['/smart'],
+      ['/smarta'],
       [''],
       [' '],
       [' /'],

@@ -7,7 +7,7 @@ const hug = {
 registerBotCommand(hug.regex, hug.cb);
 
 const smart = {
-  regex: /\B\/smart/,
+  regex: /(?<!\S)\/smart(?!\S)/,
   cb: () => String.raw`f(ಠ‿↼)z`
 }
 registerBotCommand(smart.regex, smart.cb);
