@@ -1,7 +1,7 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const hug = {
-  regex: /\B\/hug/,
+  regex: /(?<!\S)\/hug(?!\S)/,
   cb: () => `⊂(´・ω・｀⊂)`
 }
 registerBotCommand(hug.regex, hug.cb);
