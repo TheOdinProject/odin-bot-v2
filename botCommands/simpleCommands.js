@@ -98,7 +98,7 @@ const gandalf = {
 registerBotCommand(gandalf.regex, gandalf.cb);
 
 const motivate = {
-  regex: /\/motivate/,
+  regex: /(?<!\S)\/motivate(?!\S)/,
   cb: () => {
     return `Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE`;
   }
