@@ -86,7 +86,7 @@ const fg = {
 registerBotCommand(fg.regex, fg.cb);
 
 const dab = {
-  regex: /\/dab/,
+  regex: /(?<!\S)\/dab(?!\S)/,
   cb: () => `https://tenor.com/view/bettywhite-dab-gif-5044603`
 }
 registerBotCommand(dab.regex, dab.cb);
