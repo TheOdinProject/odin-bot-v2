@@ -20,7 +20,7 @@ const help = {
 }
 
 const code = {
-  regex: /\B\/code\b/,
+  regex: /(?<!\S)\/code(?!\S)/,
   cb: ({ room, mentions }) => {
     let users = '';
     if (mentions.users) {

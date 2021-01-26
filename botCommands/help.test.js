@@ -1,5 +1,5 @@
 const commands = require("./help");
-const generateMentions = require("./mockData");
+const { generateMentions } = require('./mockData');
 
 describe("/help", () => {
   it.each([
