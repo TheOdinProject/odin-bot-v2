@@ -1,5 +1,5 @@
 const command = require('./time')
-const generateMentions = require('./mockData')
+const { generateMentions } = require('./mockData')
 
 describe('/time', () => {
   describe('regex', () => {
@@ -18,7 +18,7 @@ describe('/time', () => {
       ['/ti'],
       ['/times'],
       ['```function("/time", () => {}```'],
-      ['/time'],
+      ['/timea'],
       [''],
       [' '],
       [' /'],
