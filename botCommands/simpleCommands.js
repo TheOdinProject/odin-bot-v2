@@ -92,7 +92,7 @@ const dab = {
 registerBotCommand(dab.regex, dab.cb);
 
 const gandalf = {
-  regex: /\/gandalf/,
+  regex: /(?<!\S)\/gandalf(?!\S)/,
   cb: () => `http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif`
 }
 registerBotCommand(gandalf.regex, gandalf.cb);
