@@ -254,7 +254,7 @@ describe('/question', () => {
       ['/questio'],
       ['/questions'],
       ['```function("/question", () => {}```'],
-      ['/question'],
+      ['/questiona'],
       [''],
       [' '],
       [' /'],
