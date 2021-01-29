@@ -17,7 +17,7 @@ describe('/shrug', () => {
       ['/shurgs'],
       ['/shrg'],
       ['```function("/shrug", () => {}```'],
-      ['/shurg'],
+      ['/shurga'],
       [''],
       [' '],
       [' /'],
