@@ -1,8 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable comma-dangle */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable no-shadow */
-
 const { registerBotCommand } = require('../botEngine.js');
 
 const hug = {
