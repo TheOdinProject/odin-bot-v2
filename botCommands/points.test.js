@@ -51,12 +51,12 @@ beforeEach(() => {
   User.mockClear();
 });
 
-describe('<@!1233456679> ++', () => {
+describe('<@!123456789> ++', () => {
   describe('regex', () => {
     it.each([
-      ['<@!1233456679> ++'],
-      ['thanks <@!1233456679> ++'],
-      ['<@!1233456679>++'],
+      ['<@!123456789> ++'],
+      ['thanks <@!123456789> ++'],
+      ['<@!123456789>++'],
     ])('correct strings trigger the callback', (string) => {
       expect(commands.awardPoints.regex.test(string)).toBeTruthy();
     });
@@ -68,27 +68,27 @@ describe('<@!1233456679> ++', () => {
       [' /'],
       ['odin-bot++'],
       ['/++'],
-      ['```function("<@!1233456679> ++", () => {}```'],
+      ['```function("<@!123456789> ++", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.awardPoints.regex.test(string)).toBeFalsy();
     });
 
     it.each([
-      ['Check this out! <@!1233456679> ++'],
-      ["Don't worry about it <@!1233456679> ++"],
-      ['Hey <@!1233456679> ++'],
-      ['/ <@!1233456679>++ ^ /me /leaderboard /tests$*'],
+      ['Check this out! <@!123456789> ++'],
+      ["Don't worry about it <@!123456789> ++"],
+      ['Hey <@!123456789> ++'],
+      ['/ <@!123456789>++ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.awardPoints.regex.test(string)).toBeTruthy();
     });
 
     it.each([
       ['@user/++'],
-      ["it's about/<@!1233456679>++"],
-      ['<@!1233456679>++isanillusion'],
-      ['<@!1233456679>++/'],
-      ['<@!1233456679>++*'],
-      ['<@!1233456679>++...'],
+      ["it's about/<@!123456789>++"],
+      ['<@!123456789>++isanillusion'],
+      ['<@!123456789>++/'],
+      ['<@!123456789>++*'],
+      ['<@!123456789>++...'],
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
@@ -332,9 +332,9 @@ describe('<@!1233456679> ++', () => {
 describe('@user --', () => {
   describe('regex', () => {
     it.each([
-      ['<@!1233456679> --'],
-      ['thanks <@!1233456679> --'],
-      ['<@!1233456679>--'],
+      ['<@!123456789> --'],
+      ['thanks <@!123456789> --'],
+      ['<@!123456789>--'],
     ])('correct strings trigger the callback', (string) => {
       expect(commands.deductPoints.regex.test(string)).toBeTruthy();
     });
@@ -345,27 +345,27 @@ describe('@user --', () => {
       [' /'],
       ['odin-bot--'],
       ['/--'],
-      ['```function("<@!1233456679> --", () => {}```'],
+      ['```function("<@!123456789> --", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.deductPoints.regex.test(string)).toBeFalsy();
     });
 
     it.each([
-      ['Check this out! <@!1233456679> --'],
-      ["Don't worry about it <@!1233456679> --"],
-      ['Hey <@!1233456679> --'],
-      ['/ <@!1233456679>-- ^ /me /leaderboard /tests$*'],
+      ['Check this out! <@!123456789> --'],
+      ["Don't worry about it <@!123456789> --"],
+      ['Hey <@!123456789> --'],
+      ['/ <@!123456789>-- ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.deductPoints.regex.test(string)).toBeTruthy();
     });
 
     it.each([
       ['@user/--'],
-      ["it's about/<@!1233456679>--"],
-      ['<@!1233456679>--isanillusion'],
-      ['<@!1233456679>--/'],
-      ['<@!1233456679>--*'],
-      ['<@!1233456679>--...'],
+      ["it's about/<@!123456789>--"],
+      ['<@!123456789>--isanillusion'],
+      ['<@!123456789>--/'],
+      ['<@!123456789>--*'],
+      ['<@!123456789>--...'],
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
@@ -384,9 +384,9 @@ describe('@user --', () => {
 describe('/points', () => {
   describe('regex', () => {
     it.each([
-      ['/points <@!1233456679>'],
-      ['let me check out my /points <@!1233456679>'],
-      ['/points <@!1233456679> <@!1233456679>-v2'],
+      ['/points <@!123456789>'],
+      ['let me check out my /points <@!123456789>'],
+      ['/points <@!123456789> <@!123456789>-v2'],
     ])('correct strings trigger the callback', (string) => {
       expect(commands.points.regex.test(string)).toBeTruthy();
     });
@@ -397,7 +397,7 @@ describe('/leaderboard', () => {
   describe('regex', () => {
     it.each([
       ['/leaderboard'],
-      ['<@!1233456679> /leaderboard'],
+      ['<@!123456789> /leaderboard'],
       ['/leaderboard n=10 start=30'],
       ['/leaderboard n=20 start=50'],
       ['/leaderboard n=10'],
@@ -417,8 +417,8 @@ describe('/leaderboard', () => {
       ['/leaderboards'],
       ['```function("/leaderboard", () => {}```'],
       ['/leader'],
-      ['<@!1233456679> / leaderboard'],
-      ['<@!1233456679> /leaderbard'],
+      ['<@!123456789> / leaderboard'],
+      ['<@!123456789> /leaderbard'],
       ['/leaderbord n=10 start=30'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(commands.leaderboard.regex.test(string)).toBeFalsy();
@@ -427,8 +427,8 @@ describe('/leaderboard', () => {
     it.each([
       ['Check this out! /leaderboard'],
       ["Don't worry about /leaderboard"],
-      ['Hey <@!1233456679>, /leaderboard'],
-      ['/<@!1233456679> ^ /me /leaderboard /tests$*'],
+      ['Hey <@!123456789>, /leaderboard'],
+      ['/<@!123456789> ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(commands.leaderboard.regex.test(string)).toBeTruthy();
     });
