@@ -1,25 +1,25 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const hug = {
-  regex: /\B\/hug/,
+  regex: /(?<!\S)\/hug(?!\S)/,
   cb: () => `⊂(´・ω・｀⊂)`
 }
 registerBotCommand(hug.regex, hug.cb);
 
 const smart = {
-  regex: /\B\/smart/,
+  regex: /(?<!\S)\/smart(?!\S)/,
   cb: () => String.raw`f(ಠ‿↼)z`
 }
 registerBotCommand(smart.regex, smart.cb);
 
 const lenny = {
-  regex: /\B\/lenny/,
+  regex: /(?<!\S)\/lenny(?!\S)/,
   cb: () => String.raw`( ͡° ͜ʖ ͡°)`
 }
 registerBotCommand(lenny.regex, lenny.cb);
 
 const fu = {
-  regex: /:fu:/,
+  regex: /(?<!\S)\/fu(?!\S)/,
   cb: async (message) => {
     await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
     return null;
@@ -28,13 +28,13 @@ const fu = {
 registerBotCommand(fu.regex, fu.cb);
 
 const question = {
-  regex: /\B\/question/,
+  regex: /(?<!\S)\/question(?!\S)/,
   cb: () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`
 }
 registerBotCommand(question.regex, question.cb);
 
 const data = {
-  regex: /\B\/data/,
+  regex: /(?<!\S)\/data(?!\S)/,
   cb: () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`
 }
 registerBotCommand(data.regex, data.cb);
@@ -42,13 +42,13 @@ registerBotCommand(data.regex, data.cb);
 // registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
 
 const sexpresso = {
-  regex: /\/sexpresso/,
+  regex: /(?<!\S)\/sexpresso(?!\S)/,
   cb: () => `https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590`
 }
 registerBotCommand(sexpresso.regex, sexpresso.cb);
 
 const peen = {
-  regex: /\peen/,
+  regex: /(?<!\S)\/peen(?!\S)/,
   cb: ({ author }) => {
     if (author.id == 418918922507780096) {
       return `https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif`;
@@ -86,19 +86,19 @@ const fg = {
 registerBotCommand(fg.regex, fg.cb);
 
 const dab = {
-  regex: /\/dab/,
+  regex: /(?<!\S)\/dab(?!\S)/,
   cb: () => `https://tenor.com/view/bettywhite-dab-gif-5044603`
 }
 registerBotCommand(dab.regex, dab.cb);
 
 const gandalf = {
-  regex: /\/gandalf/,
+  regex: /(?<!\S)\/gandalf(?!\S)/,
   cb: () => `http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif`
 }
 registerBotCommand(gandalf.regex, gandalf.cb);
 
 const motivate = {
-  regex: /\/motivate/,
+  regex: /(?<!\S)\/motivate(?!\S)/,
   cb: () => {
     return `Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE`;
   }
@@ -107,7 +107,7 @@ registerBotCommand(motivate.regex, motivate.cb);
 
 
 const justDoIt = {
-  regex: /\/justdoit/,
+  regex: /(?<!\S)\/justdoit(?!\S)/,
   cb: () => {
     return `What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
   }

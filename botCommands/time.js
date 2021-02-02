@@ -1,7 +1,7 @@
 const { registerBotCommand } = require("../botEngine.js");
 
 const command = {
-    regex: /\B\/time\b/,
+    regex: /(?<!\S)\/time(?!\S)/,
     cb: async ({ mentions }) => {
         let users = '';
         const mentionedUsers = mentions.users.array()
