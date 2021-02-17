@@ -1,4 +1,4 @@
-const command = require('./windows')
+const command = require('./windows');
 
 describe('/windows', () => {
   describe('regex', () => {
@@ -8,29 +8,29 @@ describe('/windows', () => {
       ['/windows @odin-bot'],
       ['@odin-bot /windows'],
     ])('correct strings trigger the callback', (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
-    
+      expect(command.regex.test(string)).toBeTruthy();
+    });
+
     it.each([
-     ["wndows"],
-     ["windows"],
-     ["window"],
-     ["/wndows"],
-     ["/window"],
-     ["/ windows"],
-     ["/awindows"]
+      ['wndows'],
+      ['windows'],
+      ['window'],
+      ['/wndows'],
+      ['/window'],
+      ['/ windows'],
+      ['/awindows'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! /windows'],
       ['Don\'t worry about /windows'],
       ['Hey @odin-bot, /windows'],
-      ['/@odin-bot ^ /me /windows /tests$*']
+      ['/@odin-bot ^ /me /windows /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
+      expect(command.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/windows'],
@@ -38,15 +38,15 @@ describe('/windows', () => {
       ['/windowsanillusion'],
       ['/windows/'],
       ['/windows*'],
-      ['/windows...']
+      ['/windows...'],
     ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
-  })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
+  });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(command.cb()).toMatchSnapshot()
-    })
-  })
-})
+      expect(command.cb()).toMatchSnapshot();
+    });
+  });
+});
