@@ -51,14 +51,13 @@ beforeEach(() => {
   User.mockClear();
 });
 
-describe('<@!123456789> ++', () => {
-  describe('regex', () => {
+describe('award points', () => {
+  describe('regex ++', () => {
     it.each([
       ['<@!123456789> ++'],
       ['thanks <@!123456789> ++'],
-      ['<@!123456789>++'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeTruthy();
+    ])("%s' - triggers the callback", (string) => {
+      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -70,29 +69,73 @@ describe('<@!123456789> ++', () => {
       ['/++'],
       ['```function("<@!123456789> ++", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeFalsy();
+      expect(string.match(commands.awardPoints.regex)).toBeFalsy();
     });
 
     it.each([
       ['Check this out! <@!123456789> ++'],
       ["Don't worry about it <@!123456789> ++"],
       ['Hey <@!123456789> ++'],
-      ['/ <@!123456789>++ ^ /me /leaderboard /tests$*'],
+      ['/ <@!123456789> ++ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.awardPoints.regex.test(string)).toBeTruthy();
+      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+    });
+
+    it.each([
+      ['@user/ ++'],
+      ["it's about/<@!123456789> ++"],
+      ['<@!123456789> ++isanillusion'],
+      ['<@!123456789> ++/'],
+      ['<@!123456789> ++*'],
+      ['<@!123456789> ++...'],
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+      },
+    );
+  });
+
+  describe('regex ⭐', () => {
+    it.each([
+      ['<@!123456789> ⭐'],
+      ['thanks <@!123456789> ⭐'],
+    ])("'%s' - correct strings trigger the callback", (string) => {
+      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+    });
+
+    it.each([
+      ['⭐'],
+      [''],
+      [' '],
+      [' /'],
+      ['odin-bot⭐'],
+      ['/⭐'],
+      ['```function("<@!123456789> ⭐", () => {}```'],
+    ])("'%s' does not trigger the callback", (string) => {
+      expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+    });
+
+    it.each([
+      ['Check this out! <@!123456789> ⭐'],
+      ["Don't worry about it <@!123456789> ⭐"],
+      ['Hey <@!123456789> ⭐'],
+      ['/ <@!123456789> ⭐ ^ /me /leaderboard /tests$*'],
+    ])("'%s' - command can be anywhere in the string", (string) => {
+      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
       ['@user/++'],
-      ["it's about/<@!123456789>++"],
-      ['<@!123456789>++isanillusion'],
-      ['<@!123456789>++/'],
-      ['<@!123456789>++*'],
-      ['<@!123456789>++...'],
+      ["it's about/<@!123456789> ⭐"],
+      ['<@!123456789> ⭐isanillusion'],
+      ['<@!123456789> ⭐/'],
+      ['<@!123456789> ⭐*'],
+      ['<@!123456789> ⭐...'],
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(commands.awardPoints.regex.test(string)).toBeFalsy();
+        expect(string.match(commands.awardPoints.regex)).toBeFalsy();
       },
     );
   });
