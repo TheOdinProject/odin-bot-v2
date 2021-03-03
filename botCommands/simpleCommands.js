@@ -29,8 +29,8 @@ registerBotCommand(fu.regex, fu.cb);
 
 const question = {
   regex: /(?<!\S)\/question(?!\S)/,
-  cb: () => `**We'd love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`
-}
+  cb: () => '**We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**',
+};
 registerBotCommand(question.regex, question.cb);
 
 const data = {
