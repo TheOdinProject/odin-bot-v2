@@ -1,4 +1,5 @@
-const {registerBotCommand} = require("../botEngine.js");
+/* eslint-disable */
+const { registerBotCommand } = require("../botEngine.js");
 
 const command = {
     regex: /(?<!\S)\/cqg(?!\S)/,
@@ -13,5 +14,5 @@ const command = {
     **-Carlos**`
 }
 registerBotCommand(command.regex, command.cb);
-  
+
 module.exports = command;

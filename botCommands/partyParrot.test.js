@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require("./partyParrot");
 const { randomInt } = require("./helpers");
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require('./shrug')
 
 describe('/shrug', () => {
@@ -51,7 +52,7 @@ describe('/shrug', () => {
       expect(command.regex.test(string)).toBeFalsy()
     })
   })
-  
+
   describe('callback', () => {
     it.each(permutationsArr)('returns correct output', (content) => {
       expect(command.cb({ content })).toMatchSnapshot()

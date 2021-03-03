@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {

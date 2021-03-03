@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { Collection, ClientUser } = require("discord.js")
 
 const generateMentions = (number) => {
@@ -26,12 +27,12 @@ const generateLeaderData = (num) => {
   let id = 100
   let points = 1000
 
-  for (let i = 0; i < num; i++){
+  for (let i = 0; i < num; i++) {
     arr.push({
       id: id,
       discord_id: id,
       points: points,
-      displayName : `user${id}`
+      displayName: `user${id}`
     })
     id++
     points--

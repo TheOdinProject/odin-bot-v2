@@ -1,3 +1,4 @@
+/* eslint-disable */
 const commands = require("./help");
 const { generateMentions } = require('./mockData');
 

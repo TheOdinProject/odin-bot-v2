@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require('./notes')
 
 describe('/notes', () => {
@@ -10,15 +11,15 @@ describe('/notes', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
-    
+
     it.each([
-     ["ntoes"],
-     ["notes"],
-     ["noets"],
-     ["/noets"],
-     ["/ntoes"],
-     ["/ notes"],
-     ["/anotes"]
+      ["ntoes"],
+      ["notes"],
+      ["noets"],
+      ["/noets"],
+      ["/ntoes"],
+      ["/ notes"],
+      ["/anotes"]
     ])("'%s' does not trigger the callback", (string) => {
       expect(command.regex.test(string)).toBeFalsy()
     })

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require('./time')
 const { generateMentions } = require('./mockData')
 
@@ -11,7 +12,7 @@ describe('/time', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
-    
+
     it.each([
       ['/tim'],
       ['tie'],
