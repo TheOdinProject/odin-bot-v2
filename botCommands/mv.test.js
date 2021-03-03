@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require('./mv')
 
 describe('/mv', () => {
@@ -10,7 +11,7 @@ describe('/mv', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
-    
+
     it.each([
       ['/v'],
       ['mv'],

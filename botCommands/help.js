@@ -1,8 +1,9 @@
+/* eslint-disable */
 const { registerBotCommand } = require('../botEngine.js');
 
 const help = {
   regex: /(?<!\S)\/help(?!\S)/,
-  cb : ({ room }) => {
+  cb: ({ room }) => {
     return `
     **By posting in this chatroom you agree to our code of conduct:** <https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md>
   
@@ -26,7 +27,7 @@ const code = {
     if (mentions.users) {
       for (user of mentions.users) users += `${user[1]} `;
     }
-  
+
     return `
   Hey, ${users}
   

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { registerBotCommand } = require("../botEngine.js");
 const { randomInt } = require("./helpers.js");
 
@@ -20,7 +21,7 @@ const command = {
       "http://emojis.slackmojis.com/emojis/images/1450738632/246/leftshark.png",
     ];
 
-   if (content.match("!")) {
+    if (content.match("!")) {
       return `${parrots[0]}`;
     } else {
       const index = randomInt(parrots.length);

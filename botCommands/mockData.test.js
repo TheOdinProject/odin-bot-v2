@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { generateMentions } = require("./mockData");
 
 describe("Generate Mentions", () => {

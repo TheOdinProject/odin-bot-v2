@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require("./carlosQuote");
 
 describe("/cqg", () => {

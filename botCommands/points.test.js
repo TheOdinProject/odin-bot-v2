@@ -1,3 +1,4 @@
+/* eslint-disable */
 const axios = require('axios');
 const {
   Guild, Channel, Client, User,

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const command = require('./windows')
 
 describe('/windows', () => {
@@ -10,15 +11,15 @@ describe('/windows', () => {
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy()
     })
-    
+
     it.each([
-     ["wndows"],
-     ["windows"],
-     ["window"],
-     ["/wndows"],
-     ["/window"],
-     ["/ windows"],
-     ["/awindows"]
+      ["wndows"],
+      ["windows"],
+      ["window"],
+      ["/wndows"],
+      ["/window"],
+      ["/ windows"],
+      ["/awindows"]
     ])("'%s' does not trigger the callback", (string) => {
       expect(command.regex.test(string)).toBeFalsy()
     })

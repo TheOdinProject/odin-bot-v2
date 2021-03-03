@@ -1,3 +1,4 @@
+/* eslint-disable */
 const axios = require('axios');
 const config = require('../config.js');
 const { registerBotCommand } = require('../botEngine.js');
@@ -37,7 +38,7 @@ async function lookUpUser(discord_id) {
       `https://theodinproject.com/api/points/${discord_id}`,
     );
     return pointsBotResponse.data;
-  } catch (err) {}
+  } catch (err) { }
 }
 
 function exclamation(points) {
@@ -109,8 +110,7 @@ const awardPoints = {
               }
             }
             channel.send(
-              `${exclamation(pointsUser.points)} ${user} now has ${
-                pointsUser.points
+              `${exclamation(pointsUser.points)} ${user} now has ${pointsUser.points
               } ${plural(pointsUser.points)}`,
             );
           }
@@ -140,7 +140,7 @@ const points = {
         if (userPoints) {
           channel.send(`${username} has ${userPoints.points} points!`);
         }
-      } catch (err) {}
+      } catch (err) { }
     });
   },
 };
@@ -172,9 +172,8 @@ const leaderboard = {
             : undefined;
           if (username) {
             if (i == 0) {
-              usersList += `${i + 1} - ${username} [${
-                user.points
-              } points] :tada: \n`;
+              usersList += `${i + 1} - ${username} [${user.points
+                } points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }

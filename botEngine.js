@@ -1,3 +1,4 @@
+/* eslint-disable */
 const botCommands = [];
 
 
@@ -5,20 +6,20 @@ let authorBuffer = []
 
 let creationsMessage = null
 
-const createAuthorEntry = function(message) {
+const createAuthorEntry = function (message) {
   const entry = {
     author: message.author.id,
     timeOut: false
   }
 
-  setTimeout(function(){
+  setTimeout(function () {
     entry.timeOut = true
   }, 60000)
 
   return entry
 }
 
-const flushAuthorEntries = function() {
+const flushAuthorEntries = function () {
   authorBuffer = authorBuffer.filter(entry => entry.timeOut == false)
 }
 
@@ -51,15 +52,13 @@ async function listenToMessages(client) {
       message.channel.id === '693255421607280670' &&
       message.member.roles.find(role => role.name === 'loki?')
     ) {
-      if (regex.test(message))
-        {
-          message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
-        }
-      else
-        {
-          message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
+      if (regex.test(message)) {
+        message.channel.send(`Hello there, ${message.author}! It seems you misunderstood our instructions. Please return to <#693244715839127653> and read carefully.`);
+      }
+      else {
+        message.channel.send(`Hello ${message.author}! If you haven't yet, go read the <#693244715839127653> for instructions on how to access the rest of our discord server.
 If you are still having trouble after following the instructions, DM a Maintainer or Core member.`);
-        }
+      }
       return;
     } else if (message.channel.id === '627445384297316352') { // creations-showcase
       if (creationsMessage) {
@@ -73,7 +72,7 @@ If you are still having trouble after following the instructions, DM a Maintaine
       if (current.author == message.author.id) {
         return count + 1
       }
-    },0)
+    }, 0)
 
     flushAuthorEntries()
 
@@ -99,7 +98,7 @@ If you are still having trouble after following the instructions, DM a Maintaine
             }
           }
         }
-        catch(e) {
+        catch (e) {
           console.log(e)
         }
       }
