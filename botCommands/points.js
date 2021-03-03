@@ -3,7 +3,7 @@ const axios = require('axios');
 const config = require('../config.js');
 const { registerBotCommand } = require('../botEngine.js');
 
-const AWARD_POINT_REGEX = /<@!?(\d+)>\s?(\+\+|\u{2b50})/gu;
+const AWARD_POINT_REGEX = /(?<!\S)<@!?(\d+)>\s?(\+\+|\u{2b50})(?!\S)/gu;
 
 axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
@@ -62,8 +62,14 @@ function plural(points) {
   return points === 1 ? 'point' : 'points';
 }
 
+const userRegex = '<@!?(\\d+)>';
+const starRegex = '\u{2b50}';
+const plusRegex = '(\\+\\+)';
+
 const awardPoints = {
-  regex: /(?<!\S)<@!?(\d+)>\s?(\+\+)(?!\S)/,
+  // uses a negative lookback to isolate the command
+  // followed by the Discord User, a whitespace character and either the star or plus incrementer
+  regex: new RegExp(`(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`, 'gu'),
   cb: async function pointsBotCommand({
     author,
     content,
