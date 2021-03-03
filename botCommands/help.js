@@ -39,7 +39,9 @@ const code = {
   
   For \`inline code\` use one backtick:
   
-  \\\`Code here!\\\``;
+  \\\`Code here!\\\`
+  
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>`;
   }
 }
 
