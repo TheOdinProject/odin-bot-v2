@@ -1,4 +1,3 @@
-/* eslint-disable */
 require('dotenv').config();
 
 const config = {
@@ -6,6 +5,5 @@ const config = {
     token: process.env.POINTSBOT_TOKEN,
   },
 };
-
 
 module.exports = config;
