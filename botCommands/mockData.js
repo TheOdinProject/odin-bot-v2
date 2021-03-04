@@ -1,51 +1,44 @@
-/* eslint-disable */
-const { Collection, ClientUser } = require("discord.js")
+const { Collection, ClientUser } = require('discord.js');
 
 const generateMentions = (number) => {
-  const collection = new Collection()
+  const collection = new Collection();
 
-  for (let i = 0; i < number; i++) {
+  for (let i = 0; i < number; i += 1) {
     collection.set(`User${i + 1}`,
       new ClientUser('client',
         {
           id: i + 1,
-          username: `User${i + 1}`
-        })
-    )
+          username: `User${i + 1}`,
+        }));
   }
 
   return {
     mentions: {
-      users: collection
-    }
-  }
-}
-
+      users: collection,
+    },
+  };
+};
 
 const generateLeaderData = (num) => {
-  let arr = []
-  let id = 100
-  let points = 1000
+  const arr = [];
+  let id = 100;
+  let points = 1000;
 
-  for (let i = 0; i < num; i++) {
+  for (let i = 0; i < num; i += 1) {
     arr.push({
-      id: id,
+      id,
       discord_id: id,
-      points: points,
-      displayName: `user${id}`
-    })
-    id++
-    points--
+      points,
+      displayName: `user${id}`,
+    });
+    id += 1;
+    points -= 1;
   }
 
-  return arr
-}
-
-
-
+  return arr;
+};
 
 module.exports = {
   generateMentions,
-  generateLeaderData
-}
-
+  generateLeaderData,
+};
