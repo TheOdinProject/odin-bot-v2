@@ -1,10 +1,8 @@
-/* eslint-disable */
 const { registerBotCommand } = require('../botEngine.js');
 
 const help = {
   regex: /(?<!\S)\/help(?!\S)/,
-  cb: ({ room }) => {
-    return `
+  cb: () => `
     **By posting in this chatroom you agree to our code of conduct:** <https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md>
   
   Give points to someone who has been helpful by mentioning their name and adding ++ : \`@username ++\` or by giving them a star : \`@username :star:\`
@@ -16,16 +14,15 @@ const help = {
   
   Motivate your fellow odinites with \`/motivate\` and mention them
   
-  I'm open source!  Hack me HERE: <https://github.com/TheOdinProject/odin-bot-v2>`;
-  }
-}
+  I'm open source!  Hack me HERE: <https://github.com/TheOdinProject/odin-bot-v2>`,
+};
 
 const code = {
   regex: /(?<!\S)\/code(?!\S)/,
-  cb: ({ room, mentions }) => {
+  cb: ({ mentions }) => {
     let users = '';
     if (mentions.users) {
-      for (user of mentions.users) users += `${user[1]} `;
+      mentions.users.forEach((user) => { users += `${user[1]} `; });
     }
 
     return `
@@ -41,13 +38,13 @@ const code = {
   For \`inline code\` use one backtick:
   
   \\\`Code here!\\\``;
-  }
-}
+  },
+};
 
-registerBotCommand(help.regex, help.cb)
-registerBotCommand(code.regex, code.cb)
+registerBotCommand(help.regex, help.cb);
+registerBotCommand(code.regex, code.cb);
 
 module.exports = {
   help,
-  code
-}
+  code,
+};
