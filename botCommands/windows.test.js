@@ -1,4 +1,3 @@
-/* eslint-disable */
 const command = require('./windows');
 
 describe('/windows', () => {
