@@ -1,5 +1,4 @@
-/* eslint-disable */
-const command = require('./mv')
+const command = require('./mv');
 
 describe('/mv', () => {
   describe('regex', () => {
@@ -9,8 +8,8 @@ describe('/mv', () => {
       ['/mv @odin-bot'],
       ['@odin-bot /mv'],
     ])('correct strings trigger the callback', (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
+      expect(command.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['/v'],
@@ -26,19 +25,19 @@ describe('/mv', () => {
       ['/m^v'],
       ['/mv!'],
       ['@odin-bot/ mv'],
-      ['https://mv.com']
+      ['https://mv.com'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! /mv'],
       ['Don\'t worry about /mv'],
       ['Hey @odin-bot, /mv'],
-      ['/@odin-bot ^ /me /mv /tests$*']
+      ['/@odin-bot ^ /me /mv /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
+      expect(command.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/mv'],
@@ -46,16 +45,15 @@ describe('/mv', () => {
       ['/mvisanillusion'],
       ['/mv/'],
       ['/mv*'],
-      ['/mv...']
+      ['/mv...'],
     ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
-  })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
+  });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(command.cb()).toMatchSnapshot()
-    })
-  })
-})
-
+      expect(command.cb()).toMatchSnapshot();
+    });
+  });
+});
