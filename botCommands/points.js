@@ -1,4 +1,3 @@
-/* eslint-disable */
 const axios = require('axios');
 const config = require('../config.js');
 const { registerBotCommand } = require('../botEngine.js');
@@ -9,22 +8,25 @@ axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
 function getUserIdsFromMessage(text, regex) {
   const matches = [];
-  let match;
-  while ((match = regex.exec(text)) !== null) matches.push(match[1].replace('!', ''));
+  let match = regex.exec(text);
+  while (match !== null) {
+    matches.push(match[1].replace('!', ''));
+    match = regex.exec(text);
+  }
   return matches;
 }
 
 const deductPoints = {
-  regex: /(?<!\S)<@!?(\d+)>\s?(\-\-)(?!\S)/,
+  regex: /(?<!\S)<@!?(\d+)>\s?(--)(?!\S)/,
   cb: () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
 };
 
 registerBotCommand(deductPoints.regex, deductPoints.cb);
 
-async function addPointsToUser(discord_id) {
+async function addPointsToUser(discordId) {
   try {
     const pointsBotResponse = await axios.post(
-      `https://theodinproject.com/api/points?discord_id=${discord_id}`,
+      `https://theodinproject.com/api/points?discord_id=${discordId}`,
     );
     return pointsBotResponse.data;
   } catch (err) {
@@ -32,13 +34,15 @@ async function addPointsToUser(discord_id) {
   }
 }
 
-async function lookUpUser(discord_id) {
+async function lookUpUser(discordId) {
   try {
     const pointsBotResponse = await axios.get(
-      `https://theodinproject.com/api/points/${discord_id}`,
+      `https://theodinproject.com/api/points/${discordId}`,
     );
     return pointsBotResponse.data;
-  } catch (err) { }
+  } catch (err) {
+    return false;
+  }
 }
 
 function exclamation(points) {
@@ -84,11 +88,11 @@ const awardPoints = {
         if (i > 4) {
           return;
         }
-        if (i == 4) {
+        if (i === 4) {
           channel.send('you can only do 5 at a time..... ');
         }
         const user = await client.users.get(userId);
-        if (user == author) {
+        if (user === author) {
           channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
           channel.send("You can't do that!");
           return;
@@ -140,13 +144,15 @@ const points = {
       const user = await client.users.get(userId);
       try {
         const userPoints = await lookUpUser(user.id);
-        const username = guild.members
-          .get(userPoints.discord_id)
-          .displayName.replace(/\//g, '\\/');
         if (userPoints) {
+          const username = guild.members
+            .get(userPoints.discord_id)
+            .displayName.replace(/\//g, '\\/');
           channel.send(`${username} has ${userPoints.points} points!`);
         }
-      } catch (err) { }
+      } catch (err) {
+        console.log(err);
+      }
     });
   },
 };
@@ -169,7 +175,7 @@ const leaderboard = {
       const users = await axios.get('https://theodinproject.com/api/points');
       const data = users.data.filter((user) => guild.members.get(user.discord_id));
       let usersList = '**leaderboard** \n';
-      for (let i = start - 1; i < length + start - 1; i++) {
+      for (let i = start - 1; i < length + start - 1; i += 1) {
         const user = data[i];
         if (user) {
           const member = guild.members.get(user.discord_id);
@@ -177,9 +183,9 @@ const leaderboard = {
             ? member.displayName.replace(/\//g, '\\/')
             : undefined;
           if (username) {
-            if (i == 0) {
+            if (i === 0) {
               usersList += `${i + 1} - ${username} [${user.points
-                } points] :tada: \n`;
+              } points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }
