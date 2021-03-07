@@ -38,7 +38,7 @@ const code = {
   For \`inline code\` use one backtick:
   
   \\\`Code here!\\\``;
-  };
+  },
 };
 
 registerBotCommand(help.regex, help.cb);
