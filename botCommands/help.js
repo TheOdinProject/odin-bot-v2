@@ -19,11 +19,11 @@ const help = {
 
 const code = {
   regex: /(?<!\S)\/code(?!\S)/,
-  cb: ({ mentions }) => {
+  cb: ({ room, mentions }) => {
     let users = '';
     if (mentions.users) {
-      mentions.users.forEach((user) => { users += `${user[1]} `; });
-    }
+      for (user of mentions.users) users += `${user[1]} `;
+    };
 
     return `
   Hey, ${users}
@@ -37,10 +37,8 @@ const code = {
   
   For \`inline code\` use one backtick:
   
-  \\\`Code here!\\\``
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>`;
-  },
+  \\\`Code here!\\\``;
+  };
 };
 
 registerBotCommand(help.regex, help.cb);
