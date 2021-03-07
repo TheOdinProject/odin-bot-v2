@@ -110,13 +110,10 @@ describe('/code', () => {
 });
 
 describe('/code snapshot', () => {
-  // numbers 1, 3 & 10 are of no significance,
-  // they're just random quantities of mentions being used to test
-  it.each([[1], [3], [10]])(
-    'should return the correct output',
-    (quantityOfMentions) => {
-      const mentions = generateMentions(quantityOfMentions);
-      expect(commands.code.regex.test(mentions)).toBeFalsy();
-    },
-  );
+  it('returns correct output', () => {
+    expect(commands.code.cb(generateMentions(0))).toMatchSnapshot();
+    expect(commands.code.cb(generateMentions(1))).toMatchSnapshot();
+    expect(commands.code.cb(generateMentions(2))).toMatchSnapshot();
+    expect(commands.code.cb(generateMentions(3))).toMatchSnapshot();
+  });
 });
