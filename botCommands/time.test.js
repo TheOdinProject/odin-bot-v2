@@ -1,6 +1,5 @@
-/* eslint-disable */
-const command = require('./time')
-const { generateMentions } = require('./mockData')
+const command = require('./time');
+const { generateMentions } = require('./mockData');
 
 describe('/time', () => {
   describe('regex', () => {
@@ -10,8 +9,8 @@ describe('/time', () => {
       ['/time @odin-bot'],
       ['@odin-bot /time'],
     ])('correct strings trigger the callback', (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
+      expect(command.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['/tim'],
@@ -28,19 +27,19 @@ describe('/time', () => {
       ['/tim^e'],
       ['/time!'],
       ['@odin-bot/ time'],
-      ['https://time.com']
+      ['https://time.com'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! /time'],
       ['Don\'t worry about /time'],
       ['Hey @odin-bot, /time'],
-      ['/@odin-bot ^ /me /time /tests$*']
+      ['/@odin-bot ^ /me /time /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(command.regex.test(string)).toBeTruthy()
-    })
+      expect(command.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/time'],
@@ -48,19 +47,18 @@ describe('/time', () => {
       ['/timeisanillusion'],
       ['/time/'],
       ['/time*'],
-      ['/time...']
+      ['/time...'],
     ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(command.regex.test(string)).toBeFalsy()
-    })
-  })
+      expect(command.regex.test(string)).toBeFalsy();
+    });
+  });
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      expect(await command.cb(generateMentions(0))).toMatchSnapshot()
-      expect(await command.cb(generateMentions(1))).toMatchSnapshot()
-      expect(await command.cb(generateMentions(2))).toMatchSnapshot()
-      expect(await command.cb(generateMentions(3))).toMatchSnapshot()
-    })
-  })
-})
-
+      expect(await command.cb(generateMentions(0))).toMatchSnapshot();
+      expect(await command.cb(generateMentions(1))).toMatchSnapshot();
+      expect(await command.cb(generateMentions(2))).toMatchSnapshot();
+      expect(await command.cb(generateMentions(3))).toMatchSnapshot();
+    });
+  });
+});

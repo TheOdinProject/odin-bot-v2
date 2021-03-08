@@ -1,4 +1,3 @@
-/* eslint-disable */
 const axios = require('axios');
 const {
   Guild, Channel, Client, User,
@@ -17,7 +16,7 @@ jest.mock('discord.js', () => ({
       get: () => channel,
     },
     users: {
-      get: (userId) => users.filter((user) => `<@${userId}>` === user.id)[0],
+      get: (userId) => users.filter((filteredUser) => `<@${userId}>` === filteredUser.id)[0],
     },
     user,
   })),

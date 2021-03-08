@@ -1,5 +1,4 @@
-/* eslint-disable */
-const { registerBotCommand } = require("../botEngine.js");
+const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
   regex: /(?<!\S)\/[shurg]{5}(?!\S)/,
@@ -9,25 +8,25 @@ const command = {
     }
     const shurgalurg = content.match(/[shurg]{5}/)[0];
     // return early if all chars are not unique
-    if (content.match(/[shurg]{5}/)[0].split("").filter(onlyUnique).length !== 5) {
-      return;
+    if (content.match(/[shurg]{5}/)[0].split('').filter(onlyUnique).length !== 5) {
+      return null;
     }
 
     const parts = {
-      s: `¯\\`,
-      h: `_(`,
-      r: `ツ`,
-      u: `)_`,
-      g: `/¯`
+      s: '¯\\',
+      h: '_(',
+      r: 'ツ',
+      u: ')_',
+      g: '/¯',
     };
+
     return shurgalurg
-      .split("")
-      .map(ch => parts[ch])
-      .join("");
-  }
-}
+      .split('')
+      .map((ch) => parts[ch])
+      .join('');
+  },
+};
 
 registerBotCommand(command.regex, command.cb);
 
 module.exports = command;
-
