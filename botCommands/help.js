@@ -22,7 +22,7 @@ const code = {
   cb: ({ mentions }) => {
     let users = '';
     if (mentions.users) {
-      mentions.users.forEach((user) => { users += `${user[1]} `; });
+      mentions.users.forEach((user) => { users += `<@${user.id}> `; });
     }
 
     return `
