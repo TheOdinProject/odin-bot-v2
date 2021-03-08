@@ -1,5 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`/code snapshot returns correct output 1`] = `
+"
+  Hey, 
+  
+  **HOW TO EMBED CODE SNIPPETS**
+  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
+  
+  \\\\\`\\\\\`\\\\\`
+      [Put your Code here!]
+  \\\\\`\\\\\`\\\\\`
+  
+  For \`inline code\` use one backtick:
+  
+  \\\\\`Code here!\\\\\`
+  
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>"
+`;
+
+exports[`/code snapshot returns correct output 2`] = `
+"
+  Hey, <@1> 
+  
+  **HOW TO EMBED CODE SNIPPETS**
+  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
+  
+  \\\\\`\\\\\`\\\\\`
+      [Put your Code here!]
+  \\\\\`\\\\\`\\\\\`
+  
+  For \`inline code\` use one backtick:
+  
+  \\\\\`Code here!\\\\\`
+  
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>"
+`;
+
+exports[`/code snapshot returns correct output 3`] = `
+"
+  Hey, <@1> <@2> 
+  
+  **HOW TO EMBED CODE SNIPPETS**
+  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
+  
+  \\\\\`\\\\\`\\\\\`
+      [Put your Code here!]
+  \\\\\`\\\\\`\\\\\`
+  
+  For \`inline code\` use one backtick:
+  
+  \\\\\`Code here!\\\\\`
+  
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>"
+`;
+
+exports[`/code snapshot returns correct output 4`] = `
+"
+  Hey, <@1> <@2> <@3> 
+  
+  **HOW TO EMBED CODE SNIPPETS**
+  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
+  
+  \\\\\`\\\\\`\\\\\`
+      [Put your Code here!]
+  \\\\\`\\\\\`\\\\\`
+  
+  For \`inline code\` use one backtick:
+  
+  \\\\\`Code here!\\\\\`
+  
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>"
+`;
+
 exports[`/help snapshot should return the correct output 1`] = `
 "
     **By posting in this chatroom you agree to our code of conduct:** <https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md>
