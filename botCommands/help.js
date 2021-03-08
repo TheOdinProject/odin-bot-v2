@@ -19,7 +19,7 @@ const help = {
 
 const code = {
   regex: /(?<!\S)\/code(?!\S)/,
-  cb: ({ room, mentions }) => {
+  cb: ({ mentions }) => {
     let users = '';
     if (mentions.users) {
       mentions.users.forEach((user) => { users += `<@${user.id}> `; });
