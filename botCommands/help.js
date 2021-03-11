@@ -22,7 +22,9 @@ const code = {
   cb: ({ mentions }) => {
     let users = '';
     if (mentions.users) {
-      mentions.users.forEach((user) => { users += `<@${user.id}> `; });
+      mentions.users.forEach((user) => {
+        users += `<@${user.id}> `;
+      });
     }
 
     return `
@@ -39,7 +41,7 @@ const code = {
   
   \\\`Code here!\\\`
   
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://repl.it>`;
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://replit.com>`;
   },
 };
 
