@@ -41,7 +41,7 @@ const code = {
   
   \\\`Code here!\\\`
   
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Repl.it <https://replit.com>`;
+  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>`;
   },
 };
 
