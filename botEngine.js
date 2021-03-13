@@ -1,76 +1,78 @@
 const botCommands = [];
 
-let authorBuffer = []
+let authorBuffer = [];
 
-const createAuthorEntry = function(message) {
+let creationsMessage = null;
+
+const createAuthorEntry = function (message) {
   const entry = {
     author: message.author.id,
-    timeOut: false
-  }
+    timeOut: false,
+  };
 
-  setTimeout(function(){
-    entry.timeOut = true
-  }, 60000)
+  setTimeout(() => {
+    entry.timeOut = true;
+  }, 60000);
 
-  return entry
-}
+  return entry;
+};
 
-const flushAuthorEntries = function() {
-  authorBuffer = authorBuffer.filter(entry => entry.timeOut == false)
-}
+const flushAuthorEntries = function () {
+  authorBuffer = authorBuffer.filter((entry) => entry.timeOut === false);
+};
 
 function registerBotCommand(regex, fn) {
   botCommands.push({ regex, fn });
 }
 
 async function listenToMessages(client) {
-  client.on("message", message => {
+  client.on('message', async (message) => {
     // Prevent bot from responding to its own messages
     if (message.author === client.user) {
       return;
     }
 
-    const NOBOT_ROLE_ID = "513916941212188698";
+    const NOBOT_ROLE_ID = '783764176178774036';
 
     // can't bot if user is NOBOT
     if (
-      message.author &&
-      message.author.lastMessage &&
-      message.author.lastMessage.member &&
-      message.author.lastMessage.member.roles &&
-      message.author.lastMessage.member.roles.has(NOBOT_ROLE_ID)
+      message.author
+      && message.author.lastMessage
+      && message.author.lastMessage.member
+      && message.author.lastMessage.member.roles
+      && message.author.lastMessage.member.roles.has(NOBOT_ROLE_ID)
     ) {
       return;
     }
 
-    if (
-      message.channel.id === '693255421607280670' &&
-      message.member.roles.find(role => role.name === 'loki?')
-    ) {
-      message.channel.send("Hello! If you haven't yet, go read the rules for instructions on how to access the rest of our discord server.")
-      message.channel.send("If you are still having trouble after following the instructions, DM a moderator")
-      return
+    if (message.channel.id === '627445384297316352') { // creations-showcase
+      if (creationsMessage) {
+        creationsMessage.delete();
+      }
+      creationsMessage = await message.channel.send('Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel <#634025871614803968>');
+      return;
     }
 
     const authorEntryCount = authorBuffer.reduce((count, current) => {
-      if (current.author == message.author.id) {
-        return count + 1
+      if (current.author === message.author.id) {
+        return count + 1;
       }
-    },0)
+      return count;
+    }, 0);
 
-    flushAuthorEntries()
+    flushAuthorEntries();
 
     if (authorEntryCount > 10) {
-      console.log('DENIED')
-      return
+      console.log('DENIED');
+      return;
     }
 
     botCommands.forEach(async ({ regex, fn }) => {
-      if (process.argv.includes("dev") && message.channel.type != 'dm') {
-        return
+      if (process.argv.includes('dev') && message.channel.type !== 'dm') {
+        return;
       }
       if (message.content.toLowerCase().match(regex)) {
-        authorBuffer.push(createAuthorEntry(message))
+        authorBuffer.push(createAuthorEntry(message));
         try {
           const response = await fn(message);
 
@@ -81,9 +83,8 @@ async function listenToMessages(client) {
               console.log(e);
             }
           }
-        }
-        catch(e) {
-          console.log(e)
+        } catch (e) {
+          console.log(e);
         }
       }
     });

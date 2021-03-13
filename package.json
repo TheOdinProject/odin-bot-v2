@@ -4,15 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "discord.js": "^11.4.2",
     "dotenv": "^5.0.1",
     "glob": "^7.1.2",
     "prettier": "^1.13.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npx jest && npx eslint ."
+    }
   }
 }

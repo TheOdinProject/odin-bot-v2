@@ -1,16 +1,17 @@
-const glob = require("glob");
-const path = require("path");
-const {listenToMessages} = require("./botEngine.js");
+const Discord = require('discord.js');
+
+const glob = require('glob');
+const path = require('path');
+const { listenToMessages } = require('./botEngine.js');
 require('dotenv').config();
 
-glob.sync("./botCommands/**/*.js").forEach(file => {
-  require(path.resolve(file));
+glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).forEach((file) => {
+  require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
 });
 
-const Discord = require('discord.js');
 const client = new Discord.Client();
 
-let listening = false
+let listening = false;
 client.on('ready', () => {
   if (!listening) {
     listenToMessages(client);

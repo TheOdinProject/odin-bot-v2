@@ -1,66 +1,128 @@
-const {registerBotCommand} = require('../botEngine.js');
+const { registerBotCommand } = require('../botEngine.js');
 
-registerBotCommand(/\B\/hug/, () => `⊂(´・ω・｀⊂)`);
+const hug = {
+  regex: /(?<!\S)\/hug(?!\S)/,
+  cb: () => '⊂(´・ω・｀⊂)',
+};
+registerBotCommand(hug.regex, hug.cb);
 
-registerBotCommand(/\B\/smart/, () => String.raw`f(ಠ‿↼)z`);
+const smart = {
+  regex: /(?<!\S)\/smart(?!\S)/,
+  cb: () => String.raw`f(ಠ‿↼)z`,
+};
+registerBotCommand(smart.regex, smart.cb);
 
-registerBotCommand(/\B\/lenny/, () => String.raw`( ͡° ͜ʖ ͡°)`);
+const lenny = {
+  regex: /(?<!\S)\/lenny(?!\S)/,
+  cb: () => String.raw`( ͡° ͜ʖ ͡°)`,
+};
+registerBotCommand(lenny.regex, lenny.cb);
 
-registerBotCommand(/:fu:/, async (message) => {
-  await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif')
-  return null;
-});
+const fu = {
+  regex: /(?<!\S)\/fu(?!\S)/,
+  cb: async (message) => {
+    await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif');
+    return null;
+  },
+};
+registerBotCommand(fu.regex, fu.cb);
 
-registerBotCommand(/\B\/question/, () => `**It looks like you're trying to ask a question! Please give this page a read: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**`);
+const question = {
+  regex: /(?<!\S)\/question(?!\S)/,
+  cb: () => '**We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**',
+};
+registerBotCommand(question.regex, question.cb);
 
-registerBotCommand(/\B\/data/, () => `**Please state your question in the form of a question! https://www.dontasktoask.com/**`);
+const data = {
+  regex: /(?<!\S)\/data(?!\S)/,
+  cb: () => '**Please state your question in the form of a question! https://www.dontasktoask.com/**',
+};
+registerBotCommand(data.regex, data.cb);
 
 // registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
 
-registerBotCommand(/\/sexpresso/, () => `https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590`);
+const sexpresso = {
+  regex: /(?<!\S)\/sexpresso(?!\S)/,
+  cb: () => 'https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590',
+};
+registerBotCommand(sexpresso.regex, sexpresso.cb);
 
-registerBotCommand(/\peen/, ({author}) => {
-  if (author.id == 418918922507780096) {
-    return `https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif`;
-  }
-});
+const peen = {
+  regex: /(?<!\S)\/peen(?!\S)/,
+  cb: ({ author }) => {
+    if (author.id === 418918922507780096) {
+      return 'https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif';
+    }
+    return null;
+  },
+};
+registerBotCommand(peen.regex, peen.cb);
 
-registerBotCommand(/\B\/google\s+.+/, ({content}) => {
-  const transform = content => {
-    const query = content.split(' ').map(encodeURIComponent).join('+');
-    return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
-  };
+const google = {
+  regex: /\B\/google\s+.+/,
+  cb: ({ content }) => {
+    const transform = (transformContent) => {
+      const query = transformContent.split(' ').map(encodeURIComponent).join('+');
+      return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
+    };
 
-  const query = content.match(/\B\/google\s+(.+)/)[1];
-  return `${transform(query)}`;
-});
-registerBotCommand(/\B\/fg\s+.+/, ({content}) => {
-  const transform = content => {
-    const query = content.split(' ').map(encodeURIComponent).join('+');
-    return `**This is what you should have typed into Google >** <https://google.com/search?q=${query}>`;
-  };
+    const query = content.match(/\B\/google\s+(.+)/)[1];
+    return `${transform(query)}`;
+  },
+};
+registerBotCommand(google.regex, google.cb);
 
-  const query = content.match(/\B\/fg\s+(.+)/)[1];
-  return `${transform(query)}`;
-});
+const fg = {
+  regex: /\B\/fg\s+.+/,
+  cb: ({ content }) => {
+    const transform = (transformContent) => {
+      const query = transformContent.split(' ').map(encodeURIComponent).join('+');
+      return `**This is what you should have typed into Google >** <https://google.com/search?q=${query}>`;
+    };
 
+    const query = content.match(/\B\/fg\s+(.+)/)[1];
+    return `${transform(query)}`;
+  },
+};
+registerBotCommand(fg.regex, fg.cb);
 
-registerBotCommand(/\/dab/, () => `https://tenor.com/view/bettywhite-dab-gif-5044603`);
+const dab = {
+  regex: /(?<!\S)\/dab(?!\S)/,
+  cb: () => 'https://tenor.com/view/bettywhite-dab-gif-5044603',
+};
+registerBotCommand(dab.regex, dab.cb);
 
-registerBotCommand(
-  /\/gandalf/,
-  () => `http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif`
-);
+const gandalf = {
+  regex: /(?<!\S)\/gandalf(?!\S)/,
+  cb: () => 'http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif',
+};
+registerBotCommand(gandalf.regex, gandalf.cb);
 
+const motivate = {
+  regex: /(?<!\S)\/motivate(?!\S)/,
+  cb: () => 'Don\'t give up! https://www.youtube.com/watch?v=KxGRhd_iWuE',
+};
+registerBotCommand(motivate.regex, motivate.cb);
 
-registerBotCommand(/\/motivate/, () => {
-  return `Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE`;
-});
+const justDoIt = {
+  regex: /(?<!\S)\/justdoit(?!\S)/,
+  cb: () => 'What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0',
+};
+registerBotCommand(justDoIt.regex, justDoIt.cb);
 
-registerBotCommand(/\/justdoit/, () => {
-  return `What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0`;
-});
-
-registerBotCommand(/\/pairs/, () => {
-  return `**Find your coding partner here:** https://forum.theodinproject.com/c/pairs`;
-});
+module.exports = {
+  hug,
+  smart,
+  lenny,
+  fu,
+  question,
+  data,
+  sexpresso,
+  peen,
+  google,
+  fg,
+  dab,
+  gandalf,
+  motivate,
+  justDoIt,
+};
