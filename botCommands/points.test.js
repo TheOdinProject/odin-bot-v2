@@ -55,6 +55,8 @@ describe('award points', () => {
   describe('regex ++', () => {
     it.each([
       ['<@!123456789> ++'],
+      ['<@!123456789> +++'],
+      ['<@!123456789> ++++++++++++'],
       ['thanks <@!123456789> ++'],
     ])("%s' - triggers the callback", (string) => {
       expect(string.match(commands.awardPoints.regex)).toBeTruthy();

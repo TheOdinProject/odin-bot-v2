@@ -68,7 +68,8 @@ function plural(points) {
 
 const userRegex = '<@!?(\\d+)>';
 const starRegex = '\u{2b50}';
-const plusRegex = '(\\+\\+)';
+// matches at least two plus signs
+const plusRegex = '(\\+){2,}';
 
 const awardPoints = {
   // uses a negative lookback to isolate the command
