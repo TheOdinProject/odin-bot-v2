@@ -2,8 +2,6 @@ const axios = require('axios');
 const config = require('../config.js');
 const { registerBotCommand } = require('../botEngine.js');
 
-const AWARD_POINT_REGEX = /(?<!\S)<@!?(\d+)>\s?(\+\+|\u{2b50})(?!\S)/gu;
-
 axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
 function getUserIdsFromMessage(text, regex) {
@@ -82,7 +80,7 @@ const awardPoints = {
     client,
     guild,
   }) {
-    const userIds = getUserIdsFromMessage(content, AWARD_POINT_REGEX);
+    const userIds = getUserIdsFromMessage(content, new RegExp(`(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`, 'gu'));
     return Promise.all(
       userIds.map(async (userId, i) => {
         // this limits the number of calls per message to 5 to avoid abuse
