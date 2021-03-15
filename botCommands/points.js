@@ -185,8 +185,7 @@ const leaderboard = {
             : undefined;
           if (username) {
             if (i === 0) {
-              usersList += `${i + 1} - ${username} [${user.points
-                } points] :tada: \n`;
+              usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }
