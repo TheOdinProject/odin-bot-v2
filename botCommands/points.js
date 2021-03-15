@@ -26,7 +26,7 @@ registerBotCommand(deductPoints.regex, deductPoints.cb);
 async function addPointsToUser(discordId) {
   try {
     const pointsBotResponse = await axios.post(
-      `https://theodinproject.com/api/points?discord_id=${discordId}`,
+      `https://www.theodinproject.com/api/points?discord_id=${discordId}`,
     );
     return pointsBotResponse.data;
   } catch (err) {
@@ -37,7 +37,7 @@ async function addPointsToUser(discordId) {
 async function lookUpUser(discordId) {
   try {
     const pointsBotResponse = await axios.get(
-      `https://theodinproject.com/api/points/${discordId}`,
+      `https://www.theodinproject.com/api/points/${discordId}`,
     );
     return pointsBotResponse.data;
   } catch (err) {
@@ -172,7 +172,7 @@ const leaderboard = {
       length = Math.min(length, 25);
       length = Math.max(length, 1);
 
-      const users = await axios.get('https://theodinproject.com/api/points');
+      const users = await axios.get('https://www.theodinproject.com/api/points');
       const data = users.data.filter((user) => guild.members.get(user.discord_id));
       let usersList = '**leaderboard** \n';
       for (let i = start - 1; i < length + start - 1; i += 1) {
@@ -185,7 +185,7 @@ const leaderboard = {
           if (username) {
             if (i === 0) {
               usersList += `${i + 1} - ${username} [${user.points
-              } points] :tada: \n`;
+                } points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }
