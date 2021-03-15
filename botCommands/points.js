@@ -68,7 +68,8 @@ function plural(points) {
 
 const userRegex = '<@!?(\\d+)>';
 const starRegex = '\u{2b50}';
-const plusRegex = '(\\+\\+)';
+// matches at least two plus signs
+const plusRegex = '(\\+){2,}';
 
 const awardPoints = {
   // uses a negative lookback to isolate the command
@@ -184,8 +185,7 @@ const leaderboard = {
             : undefined;
           if (username) {
             if (i === 0) {
-              usersList += `${i + 1} - ${username} [${user.points
-                } points] :tada: \n`;
+              usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }
