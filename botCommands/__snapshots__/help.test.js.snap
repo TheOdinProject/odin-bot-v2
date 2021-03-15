@@ -14,7 +14,8 @@ exports[`/code snapshot returns correct output 1`] = `
   Add the language directly after the three backticks to enable syntax highlighting:
   \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\  
+  \\\\\`\\\\\`\\\\\`
+  
   For \`inline code\` use one backtick (no syntax highlighting):
   
   \\\\\`Code here!\\\\\`
@@ -36,7 +37,8 @@ exports[`/code snapshot returns correct output 2`] = `
   Add the language directly after the three backticks to enable syntax highlighting:
   \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\  
+  \\\\\`\\\\\`\\\\\`
+  
   For \`inline code\` use one backtick (no syntax highlighting):
   
   \\\\\`Code here!\\\\\`
@@ -58,7 +60,8 @@ exports[`/code snapshot returns correct output 3`] = `
   Add the language directly after the three backticks to enable syntax highlighting:
   \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\  
+  \\\\\`\\\\\`\\\\\`
+  
   For \`inline code\` use one backtick (no syntax highlighting):
   
   \\\\\`Code here!\\\\\`
@@ -80,7 +83,8 @@ exports[`/code snapshot returns correct output 4`] = `
   Add the language directly after the three backticks to enable syntax highlighting:
   \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\  
+  \\\\\`\\\\\`\\\\\`
+  
   For \`inline code\` use one backtick (no syntax highlighting):
   
   \\\\\`Code here!\\\\\`
