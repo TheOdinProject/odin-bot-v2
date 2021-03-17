@@ -28,4 +28,4 @@ exports[`/sexpresso callback returns correct output 1`] = `"https://tenor.com/vi
 
 exports[`/smart callback returns correct output 1`] = `"f(ಠ‿↼)z"`;
 
-exports[`/xy callback returns correct output 1`] = `"What problem are you *really* trying to solve? Check out this article to help others better understand your question: https://xyproblem.info/"`;
+exports[`/xy callback returns correct output 1`] = `"What problem are you *really* trying to solve? Check out this article to help others better understand your question: <https://xyproblem.info/>"`;
