@@ -22,8 +22,10 @@ exports[`/motivate callback returns correct output 1`] = `"Don't give up! https:
 
 exports[`/peen callback returns correct output 1`] = `"https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif"`;
 
-exports['/question callback returns correct output 1'] = '"**We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**"';
+exports[`/question callback returns correct output 1`] = `"**We'd love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603**"`;
 
 exports[`/sexpresso callback returns correct output 1`] = `"https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590"`;
 
 exports[`/smart callback returns correct output 1`] = `"f(ಠ‿↼)z"`;
+
+exports[`/xy callback returns correct output 1`] = `"What problem are you *really* trying to solve? Check out this article to help others better understand your question: https://xyproblem.info/"`;
