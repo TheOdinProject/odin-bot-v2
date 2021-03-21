@@ -3,6 +3,7 @@ const botCommands = [];
 let authorBuffer = [];
 
 let creationsMessage = null;
+let introductionMessage = null;
 
 const createAuthorEntry = function (message) {
   const entry = {
@@ -50,6 +51,14 @@ async function listenToMessages(client) {
         creationsMessage.delete();
       }
       creationsMessage = await message.channel.send('Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel <#634025871614803968>');
+      return;
+    }
+
+    if (message.channel.id === '690618925494566912') { // introductions-and-checkins
+      if (introductionMessage) {
+        introductionMessage.delete();
+      }
+      introductionMessage = await message.channel.send('Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!');
       return;
     }
 
