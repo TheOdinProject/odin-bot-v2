@@ -24,7 +24,6 @@ describe('/faq', () => {
     ['/ '],
     ['@odin-bot / faq'],
     ['/fafaq'],
-    ['/bigNum'],
   ])("'%s' does not trigger the callback", (string) => {
     expect(command.regex.test(string)).toBeFalsy();
   });
