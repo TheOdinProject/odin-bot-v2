@@ -1,7 +1,20 @@
 version: 2.1
+
 orbs:
   node: circleci/node@3.0.0
+
+jobs:
+  tests-and-linters:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run: npm test
+      - run: npm run eslint
+
 workflows:
-  node-tests:
+  build:
     jobs:
-      - node/test
+      - tests-and-linters

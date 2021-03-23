@@ -915,12 +915,9 @@ describe('/xy', () => {
       ['/xy/'],
       ['/xy*'],
       ['/xy...'],
-    ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
-      (string) => {
-        expect(commands.xy.regex.test(string)).toBeFalsy();
-      },
-    );
+    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
+      expect(commands.xy.regex.test(string)).toBeFalsy();
+    });
   });
 
   describe('callback', () => {
