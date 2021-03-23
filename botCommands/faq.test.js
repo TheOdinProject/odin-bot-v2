@@ -7,7 +7,6 @@ describe('/faq', () => {
     [' /faq'],
     ['/faq @odin-bot'],
     [' /faq @odin-bot'],
-    ['/faq @user'],
   ])("'%s' triggers the callback", (string) => {
     expect(command.regex.test(string)).toBeTruthy();
   });
