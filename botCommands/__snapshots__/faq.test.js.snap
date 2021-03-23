@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`callback should return the correct output 1`] = `"**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**"`;
+exports[`callback should return the correct output 1`] = `"**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**"`;
 
-exports[`callback should return the correct output 2`] = `", <@1> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**"`;
+exports[`callback should return the correct output 2`] = `"<@1> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**"`;
 
-exports[`callback should return the correct output 3`] = `" <@1> and <@2> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**"`;
+exports[`callback should return the correct output 3`] = `" <@1> and <@2> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**"`;
 
-exports[`callback should return the correct output 4`] = `" <@1>, <@2>, and <@3> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**"`;
+exports[`callback should return the correct output 4`] = `" <@1>, <@2>, and <@3> **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**"`;
