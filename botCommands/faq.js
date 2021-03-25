@@ -24,7 +24,11 @@ const command = {
     } else if (mentionedUsers.length === 1) {
       users = ` ${mentionedUsers[0]}`;
     }
+<<<<<<< HEAD
     return !users ? '**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**' : `**The definition of insanity is answering the same question over and over again when we have an FAQ! ${users}, help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**`;
+=======
+    return !users ? '**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**' : `${users} **The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**`;
+>>>>>>> 881a45b07ffd291507ac2b44a170d2c3f799adfe
   },
 };
 
