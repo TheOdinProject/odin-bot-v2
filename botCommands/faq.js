@@ -26,7 +26,7 @@ const command = {
     }
     return !users
       ? '**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**'
-      : `**The definition of insanity is answering the same question over and over again when we have an FAQ!${users} Help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**`;
+      : `**The definition of insanity is answering the same question over and over again when we have an FAQ!${users}, help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**`;
   },
 };
 
