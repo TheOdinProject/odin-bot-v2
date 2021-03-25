@@ -31,7 +31,7 @@ describe("/faq", () => {
     ["that gets asked a lot /faq give this a read"],
     ["hey @odin-bot, /faq"],
     ["/@odin-bot ^ /me /faq /test$*"],
-  ])("'%s' - the command can be anywhere in the string", (string) => {
+  ])("%s' - the command can be anywhere in the string", (string) => {
     expect(command.regex.test(string)).toBeTruthy();
   });
 
