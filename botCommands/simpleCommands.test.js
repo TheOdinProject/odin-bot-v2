@@ -240,8 +240,7 @@ describe('/fu', () => {
   describe('callback', () => {
     it('returns correct output', () => {
       const fu = jest.fn(
-        () =>
-          'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
+        () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
       );
       expect(fu(':fu:')).toMatchSnapshot();
     });
