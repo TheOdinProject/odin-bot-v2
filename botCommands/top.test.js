@@ -6,14 +6,14 @@ describe('/top', () => {
       'correct strings trigger the callback',
       (string) => {
         expect(command.regex.test(string)).toBeTruthy();
-      }
+      },
     );
 
     it.each([['tp'], ['toop'], ['topp'], ['/ top'], ['/atop']])(
       "'%s' does not trigger the callback",
       (string) => {
         expect(command.regex.test(string)).toBeFalsy();
-      }
+      },
     );
 
     it.each([
@@ -36,7 +36,7 @@ describe('/top', () => {
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
         expect(command.regex.test(string)).toBeFalsy();
-      }
+      },
     );
   });
 

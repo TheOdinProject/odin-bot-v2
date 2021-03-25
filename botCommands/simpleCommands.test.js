@@ -2,14 +2,12 @@ const commands = require('./simpleCommands');
 
 describe('/hug', () => {
   describe('regex', () => {
-    it.each([
-      ['/hug'],
-      [' /hug'],
-      ['/hug @odin-bot'],
-      ['@odin-bot /hug'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.hug.regex.test(string)).toBeTruthy();
-    });
+    it.each([['/hug'], [' /hug'], ['/hug @odin-bot'], ['@odin-bot /hug']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.hug.regex.test(string)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['/hg'],
@@ -33,7 +31,7 @@ describe('/hug', () => {
 
     it.each([
       ['Check this out! /hug'],
-      ['Don\'t worry about /hug'],
+      ["Don't worry about /hug"],
       ['Hey @odin-bot, /hug'],
       ['/@odin-bot ^ /me /hug /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -42,14 +40,17 @@ describe('/hug', () => {
 
     it.each([
       ['@user/hug'],
-      ['it\'s about/hug'],
+      ["it's about/hug"],
       ['/hugisanillusion'],
       ['/hug/'],
       ['/hug*'],
       ['/hug...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.hug.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.hug.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -92,7 +93,7 @@ describe('/smart', () => {
 
     it.each([
       ['Check this out! /smart'],
-      ['Don\'t worry about /smart'],
+      ["Don't worry about /smart"],
       ['Hey @odin-bot, /smart'],
       ['/@odin-bot ^ /me /smart /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -101,14 +102,17 @@ describe('/smart', () => {
 
     it.each([
       ['@user/smart'],
-      ['it\'s about/smart'],
+      ["it's about/smart"],
       ['/smartisanillusion'],
       ['/smart/'],
       ['/smart*'],
       ['/smart...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.smart.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.smart.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -151,7 +155,7 @@ describe('/lenny', () => {
 
     it.each([
       ['Check this out! /lenny'],
-      ['Don\'t worry about /lenny'],
+      ["Don't worry about /lenny"],
       ['Hey @odin-bot, /lenny'],
       ['/@odin-bot ^ /me /lenny /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -160,14 +164,17 @@ describe('/lenny', () => {
 
     it.each([
       ['@user/lenny'],
-      ['it\'s about/lenny'],
+      ["it's about/lenny"],
       ['/lennyisanillusion'],
       ['/lenny/'],
       ['/lenny*'],
       ['/lenny...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.lenny.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.lenny.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -179,14 +186,12 @@ describe('/lenny', () => {
 
 describe('/fu', () => {
   describe('regex', () => {
-    it.each([
-      ['/fu'],
-      [' /fu'],
-      ['/fu @odin-bot'],
-      ['@odin-bot /fu'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.fu.regex.test(string)).toBeTruthy();
-    });
+    it.each([['/fu'], [' /fu'], ['/fu @odin-bot'], ['@odin-bot /fu']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.fu.regex.test(string)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['/f'],
@@ -210,7 +215,7 @@ describe('/fu', () => {
 
     it.each([
       ['Check this out! /fu'],
-      ['Don\'t worry about /fu'],
+      ["Don't worry about /fu"],
       ['Hey @odin-bot, /fu'],
       ['/@odin-bot ^ /me /fu /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -219,19 +224,24 @@ describe('/fu', () => {
 
     it.each([
       ['@user/fu'],
-      ['it\'s about/fu'],
+      ["it's about/fu"],
       ['/fuisanillusion'],
       ['/fu/'],
       ['/fu*'],
       ['/fu...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.fu.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.fu.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      const fu = jest.fn(() => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif');
+      const fu = jest.fn(
+        () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
+      );
       expect(fu(':fu:')).toMatchSnapshot();
     });
   });
@@ -270,7 +280,7 @@ describe('/question', () => {
 
     it.each([
       ['Check this out! /question'],
-      ['Don\'t worry about /question'],
+      ["Don't worry about /question"],
       ['Hey @odin-bot, /question'],
       ['/@odin-bot ^ /me /question /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -279,14 +289,17 @@ describe('/question', () => {
 
     it.each([
       ['@user/question'],
-      ['it\'s about/question'],
+      ["it's about/question"],
       ['/questionisanillusion'],
       ['/question/'],
       ['/question*'],
       ['/question...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.question.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.question.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -298,14 +311,12 @@ describe('/question', () => {
 
 describe('/data', () => {
   describe('regex', () => {
-    it.each([
-      ['/data'],
-      [' /data'],
-      ['/data @odin-bot'],
-      ['@odin-bot /data'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.data.regex.test(string)).toBeTruthy();
-    });
+    it.each([['/data'], [' /data'], ['/data @odin-bot'], ['@odin-bot /data']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.data.regex.test(string)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['/dat'],
@@ -329,7 +340,7 @@ describe('/data', () => {
 
     it.each([
       ['Check this out! /data'],
-      ['Don\'t worry about /data'],
+      ["Don't worry about /data"],
       ['Hey @odin-bot, /data'],
       ['/@odin-bot ^ /me /data /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -338,14 +349,17 @@ describe('/data', () => {
 
     it.each([
       ['@user/data'],
-      ['it\'s about/data'],
+      ["it's about/data"],
       ['/dataisanillusion'],
       ['/data/'],
       ['/data*'],
       ['/data...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.data.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.data.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -388,7 +402,7 @@ describe('/sexpresso', () => {
 
     it.each([
       ['Check this out! /sexpresso'],
-      ['Don\'t worry about /sexpresso'],
+      ["Don't worry about /sexpresso"],
       ['Hey @odin-bot, /sexpresso'],
       ['/@odin-bot ^ /me /sexpresso /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -397,14 +411,17 @@ describe('/sexpresso', () => {
 
     it.each([
       ['@user/sexpresso'],
-      ['it\'s about/sexpresso'],
+      ["it's about/sexpresso"],
       ['/sespressoisanillusion'],
       ['/sexpresso/'],
       ['/sexpresso*'],
       ['/sexpresso...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.sexpresso.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.sexpresso.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -416,14 +433,12 @@ describe('/sexpresso', () => {
 
 describe('/peen', () => {
   describe('regex', () => {
-    it.each([
-      ['/peen'],
-      [' /peen'],
-      ['/peen @odin-bot'],
-      ['@odin-bot /peen'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.peen.regex.test(string)).toBeTruthy();
-    });
+    it.each([['/peen'], [' /peen'], ['/peen @odin-bot'], ['@odin-bot /peen']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.peen.regex.test(string)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['/pen'],
@@ -447,7 +462,7 @@ describe('/peen', () => {
 
     it.each([
       ['Check this out! /peen'],
-      ['Don\'t worry about /peen'],
+      ["Don't worry about /peen"],
       ['Hey @odin-bot, /peen'],
       ['/@odin-bot ^ /me /peen /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -456,25 +471,28 @@ describe('/peen', () => {
 
     it.each([
       ['@user/peen'],
-      ['it\'s about/peen'],
+      ["it's about/peen"],
       ['/peenisanillusion'],
       ['/peen/'],
       ['/peen*'],
       ['/peen...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.peen.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.peen.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(commands.peen.cb(
-        {
+      expect(
+        commands.peen.cb({
           author: {
             id: 418918922507780096,
           },
-        },
-      )).toMatchSnapshot();
+        }),
+      ).toMatchSnapshot();
     });
   });
 });
@@ -512,7 +530,7 @@ describe('/google', () => {
 
     it.each([
       ['Check this out! /google query'],
-      ['Don\'t worry about /google query'],
+      ["Don't worry about /google query"],
       ['Hey @odin-bot, /google query'],
       ['/@odin-bot ^ /me /google /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -521,19 +539,24 @@ describe('/google', () => {
 
     it.each([
       ['@user/google'],
-      ['it\'s about/google'],
+      ["it's about/google"],
       ['/googleisanillusion'],
       ['/google/'],
       ['/google*'],
       ['/google...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.google.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.google.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(commands.google.cb({ content: '/google The Odin Project' })).toMatchSnapshot();
+      expect(
+        commands.google.cb({ content: '/google The Odin Project' }),
+      ).toMatchSnapshot();
     });
   });
 });
@@ -570,7 +593,7 @@ describe('/fg', () => {
 
     it.each([
       ['Check this out! /fg query'],
-      ['Don\'t worry about /fg query'],
+      ["Don't worry about /fg query"],
       ['Hey @odin-bot, /fg query'],
       ['/@odin-bot ^ /me /fg /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -579,33 +602,36 @@ describe('/fg', () => {
 
     it.each([
       ['@user/fg'],
-      ['it\'s about/fg'],
+      ["it's about/fg"],
       ['/fgisanillusion'],
       ['/fg/'],
       ['/fg*'],
       ['/fg...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.fg.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.fg.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(commands.fg.cb({ content: '/fg The Odin Project' })).toMatchSnapshot();
+      expect(
+        commands.fg.cb({ content: '/fg The Odin Project' }),
+      ).toMatchSnapshot();
     });
   });
 });
 
 describe('/dab', () => {
   describe('regex', () => {
-    it.each([
-      ['/dab'],
-      [' /dab'],
-      ['/dab @odin-bot'],
-      ['@odin-bot /dab'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.dab.regex.test(string)).toBeTruthy();
-    });
+    it.each([['/dab'], [' /dab'], ['/dab @odin-bot'], ['@odin-bot /dab']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.dab.regex.test(string)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['/da'],
@@ -629,7 +655,7 @@ describe('/dab', () => {
 
     it.each([
       ['Check this out! /dab'],
-      ['Don\'t worry about /dab'],
+      ["Don't worry about /dab"],
       ['Hey @odin-bot, /dab'],
       ['/@odin-bot ^ /me /dab /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -638,14 +664,17 @@ describe('/dab', () => {
 
     it.each([
       ['@user/dab'],
-      ['it\'s about/dab'],
+      ["it's about/dab"],
       ['/dabisanillusion'],
       ['/dab/'],
       ['/dab*'],
       ['/dab...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.dab.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.dab.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -688,7 +717,7 @@ describe('/gandalf', () => {
 
     it.each([
       ['Check this out! /gandalf'],
-      ['Don\'t worry about /gandalf'],
+      ["Don't worry about /gandalf"],
       ['Hey @odin-bot, /gandalf'],
       ['/@odin-bot ^ /me /gandalf /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -697,14 +726,17 @@ describe('/gandalf', () => {
 
     it.each([
       ['@user/gandalf'],
-      ['it\'s about/gandalf'],
+      ["it's about/gandalf"],
       ['/gandalfisanillusion'],
       ['/gandalf/'],
       ['/gandalf*'],
       ['/gandalf...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.gandalf.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.gandalf.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -747,7 +779,7 @@ describe('/motivate', () => {
 
     it.each([
       ['Check this out! /motivate'],
-      ['Don\'t worry about /motivate'],
+      ["Don't worry about /motivate"],
       ['Hey @odin-bot, /motivate'],
       ['/@odin-bot ^ /me /motivate /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -756,14 +788,17 @@ describe('/motivate', () => {
 
     it.each([
       ['@user/motivate'],
-      ['it\'s about/motivate'],
+      ["it's about/motivate"],
       ['/motivateisanillusion'],
       ['/motivate/'],
       ['/motivate*'],
       ['/motivate...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.motivate.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.motivate.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -806,7 +841,7 @@ describe('/justdoit', () => {
 
     it.each([
       ['Check this out! /justdoit'],
-      ['Don\'t worry about /justdoit'],
+      ["Don't worry about /justdoit"],
       ['Hey @odin-bot, /justdoit'],
       ['/@odin-bot ^ /me /justdoit /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
@@ -815,14 +850,17 @@ describe('/justdoit', () => {
 
     it.each([
       ['@user/justdoit'],
-      ['it\'s about/justdoit'],
+      ["it's about/justdoit"],
       ['/dabisanillusion'],
       ['/justdoit/'],
       ['/justdoit*'],
       ['/justdoit...'],
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.justDoIt.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.justDoIt.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {
@@ -834,15 +872,13 @@ describe('/justdoit', () => {
 
 describe('/xy', () => {
   describe('regex', () => {
-    it.each([
-      ['/xy'],
-      [' /xy'],
-      ['/xy @odin-bot'],
-      ['@odin-bot /xy'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.xy.regex.test(string)).toBeTruthy()
-    })
-    
+    it.each([['/xy'], [' /xy'], ['/xy @odin-bot'], ['@odin-bot /xy']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.xy.regex.test(string)).toBeTruthy();
+      },
+    );
+
     it.each([
       ['/yx'],
       ['xy'],
@@ -860,33 +896,36 @@ describe('/xy', () => {
       ['@odin-bot/ xy'],
       ['https://xy.com'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.xy.regex.test(string)).toBeFalsy()
-    })
+      expect(commands.xy.regex.test(string)).toBeFalsy();
+    });
 
     it.each([
       ['Check this out! /xy'],
-      ['Don\'t worry about /xy'],
+      ["Don't worry about /xy"],
       ['Hey @odin-bot, /xy'],
-      ['/@odin-bot ^ /me /xy /tests$*']
+      ['/@odin-bot ^ /me /xy /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.xy.regex.test(string)).toBeTruthy()
-    })
+      expect(commands.xy.regex.test(string)).toBeTruthy();
+    });
 
     it.each([
       ['@user/xy'],
-      ['it\'s about/xy'],
+      ["it's about/xy"],
       ['/xyisanillusion'],
       ['/xy/'],
       ['/xy*'],
-      ['/xy...']
-    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
-      expect(commands.xy.regex.test(string)).toBeFalsy()
-    })
-  })
+      ['/xy...'],
+    ])(
+      "'%s' - command should be its own word/group - no leading or trailing characters",
+      (string) => {
+        expect(commands.xy.regex.test(string)).toBeFalsy();
+      },
+    );
+  });
 
   describe('callback', () => {
     it('returns correct output', () => {
-      expect(commands.xy.cb()).toMatchSnapshot()
-    })
-  })
-})
+      expect(commands.xy.cb()).toMatchSnapshot();
+    });
+  });
+});
