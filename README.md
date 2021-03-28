@@ -4,7 +4,7 @@ here lies the code that runs Odin's right hand bot...
 
 ## Setup
 
-First, navigate to the desired directory and `git clone` this repository. Then, `cd` into the folder and run `npm install` to install all dependencies. Once the repository has been cloned and the dependencies have been installed, you will need to create a `.env` file using `touch .env` or your editor's filesystem, and update it with your own Discord API key. A sample of this file can be found at `.env.sample`, including formatting for your key that will be used when you run the bot. You may skip to the [**Commands**](https://github.com/TheOdinProject/odin-bot-v2/blob/master/README.md#commands) section if you do not want to run your own instance of the Odin-Bot.
+First, fork this repository, then `git clone` the repository. Then, `cd` into the folder and run `npm install` to install all dependencies. Once the repository has been cloned and the dependencies have been installed, you will need to create a `.env` file using `touch .env` or your editor's filesystem, and update it with your own Discord API key. A sample of this file can be found at `.env.sample`, including formatting for your key that will be used when you run the bot. You may skip to the [**Commands**](https://github.com/TheOdinProject/odin-bot-v2/blob/master/README.md#commands) section if you do not want to run your own instance of the Odin-Bot.
 
 ### Getting Your Discord API Key
 
@@ -42,8 +42,7 @@ registerBotCommand(command.regex, command.cb);
 module.exports = command
 ```
 
-The parameter of the command-function is an object that exposes data about the message that matches the regex.  `content` is simply the full text of the message. `author` is the user object of the author of the message.. you can get the username with `author.username`. If your particular command requires mentions to be passed into the callback, you may use the `generateMentions` helper located inside of `mockData.js`, which dynamically creates Discord User objects for you to leverage in your tests.
-
+The parameter of the command-function is an object that exposes data about the message that matches the regex.  `content` is simply the full text of the message. `author` is the user object of the author of the message. Additionally, you can get the username with `author.username`. If your particular command requires mentions to be passed into the callback, you may use the `generateMentions` helper located inside of `mockData.js`, which dynamically creates Discord User objects for you to leverage in your tests.
 
 The documentation for Discord.JS can be found [here](https://discord.js.org/#/docs/main/stable/general/welcome). There you may find other Discord-specific arguments that may be passed in from a message, such as roles, guild, channel, and more!
 
@@ -106,4 +105,4 @@ describe('/commandname', () => {
 
 ```
 
-Once you have filled out your test suite, make sure you have saved `command.js`, then run `npm test command.test.js` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. If your command produces a different output based on number of mentions, or other variable factors in a message, such as the user calling the command, server roles, etc, you must create snapshots for each of these scenarios. Once you have confirmed that your snapshot file matches the correct output, you may submit a pull request for review. Your tests **must** pass in order for your pull request to be merged. 
+Once you have filled out your test suite, make sure you have saved `<command>.js`, then run `npm test <command>.test.js` to ensure all tests for your command pass and a snapshot is generated in the `__snapshots__` directory. If your command produces a different output based on number of mentions, or other variable factors in a message, such as the user calling the command, server roles, etc, you must create snapshots for each of these scenarios. Once you have confirmed that your snapshot file matches the correct output, you may submit a pull request for review. Your tests **must** pass in order for your pull request to be merged. 
