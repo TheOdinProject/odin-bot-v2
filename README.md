@@ -2,7 +2,7 @@
 
 here lies the code that runs Odin's right hand bot... 
 
-This bot is used in a server for [theodinproject.com](https://www.theodinproject.com), an open source web development bootcamp, and is used by tens of thousands of Odinites. This bot has been built with NodeJS and [DiscordJS](https://discord.js.org/#/docs/main/stable/general/welcome).
+This bot is used in a Discord server for [theodinproject.com](https://www.theodinproject.com), an open source web development bootcamp, and is used by tens of thousands of Odinites. This bot has been built with NodeJS and [DiscordJS](https://discord.js.org/#/docs/main/stable/general/welcome).
 
 Follow [this link](https://discord.gg/fbFCkYabZB) to join our Discord server!
 
