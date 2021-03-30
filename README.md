@@ -4,8 +4,6 @@ here lies the code that runs Odin's right hand bot...
 
 This bot is used in a server for [theodinproject.com](https://www.theodinproject.com), an open source web development bootcamp, and is used by tens of thousands of Odinites. This bot has been built with NodeJS and [DiscordJS](https://discord.js.org/#/docs/main/stable/general/welcome).
 
-This repo contains the main app for the Odin Project which can be found online at [theodinproject.com](https://www.theodinproject.com). It pulls in lesson and project content from our [curriculum repo](https://github.com/TheOdinProject/curriculum).
-
 Follow [this link](https://discord.gg/fbFCkYabZB) to join our Discord server!
 
 ## Getting Started
