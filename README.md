@@ -6,12 +6,10 @@ This bot is used in a server for [theodinproject.com](https://www.theodinproject
 
 Follow [this link](https://discord.gg/fbFCkYabZB) to join our Discord server!
 
-## Getting Started
-Please check out our [wiki](https://github.com/TheOdinProject/odin-bot-v2/wiki) for instructions on how to get started. 
-
 ## Contributing
 [![Build Status](https://circleci.com/gh/TheOdinProject/theodinproject.svg?style=svg)](https://app.circleci.com/pipelines/github/TheOdinProject/odin-bot-v2)
 
 Thank you for your interesting contributing to the Odin Bot. The Odin Project depends on open source contributions to grow, improve, and thrive. We welcome contributions from beginners and experienced developers alike.
 
-To find out more about how you can contribute, please read our [contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
+To find out more about how you can contribute, please read our [getting started](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and [contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
+
