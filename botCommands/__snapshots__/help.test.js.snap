@@ -1,95 +1,207 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`/code snapshot returns correct output 1`] = `
-"
-  Hey, 
-  
-  **HOW TO EMBED CODE SNIPPETS**
-  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
-  
-  \\\\\`\\\\\`\\\\\`
-      [Put your Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  Add the language directly after the three backticks to enable syntax highlighting:
-  \\\\\`\\\\\`\\\\\`js
+Object {
+  "author": null,
+  "color": 39423,
+  "description": "Hey, here's some helpful tips on sharing your code with others!",
+  "fields": Array [
+    Object {
+      "inline": false,
+      "name": "Sharing Code on Discord",
+      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      
+      \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  For \`inline code\` use one backtick (no syntax highlighting):
-  
-  \\\\\`Code here!\\\\\`
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>"
+      \\\\\`\\\\\`\\\\\`
+
+      For \`inline code\` use one backtick (no syntax highlighting):
+
+      \\\\\`Code here!\\\\\`
+      ",
+    },
+    Object {
+      "inline": false,
+      "name": "​",
+      "value": "​",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Code Sandbox to share Webpack/React examples",
+      "value": "https://codesandbox.io/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Repl.it to share Javascript/Ruby examples",
+      "value": "https://replit.com/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+      "value": "https://codepen.io/",
+    },
+  ],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "HOW TO EMBED CODE SNIPPETS",
+  "type": "rich",
+  "url": undefined,
+}
 `;
 
 exports[`/code snapshot returns correct output 2`] = `
-"
-  Hey, <@1> 
-  
-  **HOW TO EMBED CODE SNIPPETS**
-  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
-  
-  \\\\\`\\\\\`\\\\\`
-      [Put your Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  Add the language directly after the three backticks to enable syntax highlighting:
-  \\\\\`\\\\\`\\\\\`js
+Object {
+  "author": null,
+  "color": 39423,
+  "description": "Hey, <@1>, here's some helpful tips on sharing your code with others!",
+  "fields": Array [
+    Object {
+      "inline": false,
+      "name": "Sharing Code on Discord",
+      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      
+      \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  For \`inline code\` use one backtick (no syntax highlighting):
-  
-  \\\\\`Code here!\\\\\`
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>"
+      \\\\\`\\\\\`\\\\\`
+
+      For \`inline code\` use one backtick (no syntax highlighting):
+
+      \\\\\`Code here!\\\\\`
+      ",
+    },
+    Object {
+      "inline": false,
+      "name": "​",
+      "value": "​",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Code Sandbox to share Webpack/React examples",
+      "value": "https://codesandbox.io/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Repl.it to share Javascript/Ruby examples",
+      "value": "https://replit.com/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+      "value": "https://codepen.io/",
+    },
+  ],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "HOW TO EMBED CODE SNIPPETS",
+  "type": "rich",
+  "url": undefined,
+}
 `;
 
 exports[`/code snapshot returns correct output 3`] = `
-"
-  Hey, <@1> <@2> 
-  
-  **HOW TO EMBED CODE SNIPPETS**
-  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
-  
-  \\\\\`\\\\\`\\\\\`
-      [Put your Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  Add the language directly after the three backticks to enable syntax highlighting:
-  \\\\\`\\\\\`\\\\\`js
+Object {
+  "author": null,
+  "color": 39423,
+  "description": "Hey, <@1> <@2>, here's some helpful tips on sharing your code with others!",
+  "fields": Array [
+    Object {
+      "inline": false,
+      "name": "Sharing Code on Discord",
+      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      
+      \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  For \`inline code\` use one backtick (no syntax highlighting):
-  
-  \\\\\`Code here!\\\\\`
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>"
+      \\\\\`\\\\\`\\\\\`
+
+      For \`inline code\` use one backtick (no syntax highlighting):
+
+      \\\\\`Code here!\\\\\`
+      ",
+    },
+    Object {
+      "inline": false,
+      "name": "​",
+      "value": "​",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Code Sandbox to share Webpack/React examples",
+      "value": "https://codesandbox.io/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Repl.it to share Javascript/Ruby examples",
+      "value": "https://replit.com/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+      "value": "https://codepen.io/",
+    },
+  ],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "HOW TO EMBED CODE SNIPPETS",
+  "type": "rich",
+  "url": undefined,
+}
 `;
 
 exports[`/code snapshot returns correct output 4`] = `
-"
-  Hey, <@1> <@2> <@3> 
-  
-  **HOW TO EMBED CODE SNIPPETS**
-  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
-  
-  \\\\\`\\\\\`\\\\\`
-      [Put your Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  Add the language directly after the three backticks to enable syntax highlighting:
-  \\\\\`\\\\\`\\\\\`js
+Object {
+  "author": null,
+  "color": 39423,
+  "description": "Hey, <@1> <@2> <@3>, here's some helpful tips on sharing your code with others!",
+  "fields": Array [
+    Object {
+      "inline": false,
+      "name": "Sharing Code on Discord",
+      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      
+      \\\\\`\\\\\`\\\\\`js
       [Put your JavaScript Code here!]
-  \\\\\`\\\\\`\\\\\`
-  
-  For \`inline code\` use one backtick (no syntax highlighting):
-  
-  \\\\\`Code here!\\\\\`
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>"
+      \\\\\`\\\\\`\\\\\`
+
+      For \`inline code\` use one backtick (no syntax highlighting):
+
+      \\\\\`Code here!\\\\\`
+      ",
+    },
+    Object {
+      "inline": false,
+      "name": "​",
+      "value": "​",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Code Sandbox to share Webpack/React examples",
+      "value": "https://codesandbox.io/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Repl.it to share Javascript/Ruby examples",
+      "value": "https://replit.com/",
+    },
+    Object {
+      "inline": true,
+      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+      "value": "https://codepen.io/",
+    },
+  ],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "HOW TO EMBED CODE SNIPPETS",
+  "type": "rich",
+  "url": undefined,
+}
 `;
 
 exports[`/help snapshot should return the correct output 1`] = `
