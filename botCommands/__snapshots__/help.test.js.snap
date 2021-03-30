@@ -21,11 +21,6 @@ Object {
       ",
     },
     Object {
-      "inline": false,
-      "name": "​",
-      "value": "​",
-    },
-    Object {
       "inline": true,
       "name": "Link a Code Sandbox to share Webpack/React examples",
       "value": "https://codesandbox.io/",
@@ -70,11 +65,6 @@ Object {
 
       \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": false,
-      "name": "​",
-      "value": "​",
     },
     Object {
       "inline": true,
@@ -123,11 +113,6 @@ Object {
       ",
     },
     Object {
-      "inline": false,
-      "name": "​",
-      "value": "​",
-    },
-    Object {
       "inline": true,
       "name": "Link a Code Sandbox to share Webpack/React examples",
       "value": "https://codesandbox.io/",
@@ -172,11 +157,6 @@ Object {
 
       \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": false,
-      "name": "​",
-      "value": "​",
     },
     Object {
       "inline": true,
