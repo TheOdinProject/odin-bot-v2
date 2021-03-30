@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const help = {
@@ -27,26 +28,42 @@ const code = {
       });
     }
 
-    return `
-  Hey, ${users}
-  
-  **HOW TO EMBED CODE SNIPPETS**
-  To write multiple lines of code use three backticks <https://i.stack.imgur.com/ETTnT.jpg> (on their own line, \`shift + enter\` makes new lines):
-  
-  \\\`\\\`\\\`
-      [Put your Code here!]
-  \\\`\\\`\\\`
-  
-  Add the language directly after the three backticks to enable syntax highlighting:
-  \\\`\\\`\\\`js
+    const codeCommandEmbed = new Discord.RichEmbed()
+      .setColor('#0099ff')
+      .setTitle('HOW TO EMBED CODE SNIPPETS')
+      .setDescription(
+        !users ? 'Hey, here\'s some helpful tips on sharing your code with others!' : `Hey, ${users.trim()}, here's some helpful tips on sharing your code with others!`,
+      )
+      .addField(
+        'Sharing Code on Discord',
+        `To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      
+      \\\`\\\`\\\`js
       [Put your JavaScript Code here!]
-  \\\`\\\`\\\`
-  
-  For \`inline code\` use one backtick (no syntax highlighting):
-  
-  \\\`Code here!\\\`
-  
-  For larger code snippets, please create a CodePen <https://codepen.io/> or Replit <https://replit.com>`;
+      \\\`\\\`\\\`
+
+      For \`inline code\` use one backtick (no syntax highlighting):
+
+      \\\`Code here!\\\`
+      `,
+      )
+      .addField(
+        'Link a Code Sandbox to share Webpack/React examples',
+        'https://codesandbox.io/',
+        true,
+      )
+      .addField(
+        'Link a Repl.it to share Javascript/Ruby examples',
+        'https://replit.com/',
+        true,
+      )
+      .addField(
+        'Link a Codepen to share basic HTML/CSS/Javascript examples',
+        'https://codepen.io/',
+        true,
+      );
+
+    return codeCommandEmbed;
   },
 };
 
