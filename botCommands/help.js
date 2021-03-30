@@ -47,7 +47,6 @@ const code = {
       \\\`Code here!\\\`
       `,
       )
-      .addBlankField()
       .addField(
         'Link a Code Sandbox to share Webpack/React examples',
         'https://codesandbox.io/',
