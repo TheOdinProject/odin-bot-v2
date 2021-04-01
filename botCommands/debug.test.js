@@ -57,7 +57,7 @@ describe('/debug', () => {
     "'%s' - command should be its own word/group - no leading or trailing characters",
     (string) => {
       expect(command.regex.test(string)).toBeFalsy();
-    }
+    },
   );
 });
 
