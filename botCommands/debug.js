@@ -1,29 +1,26 @@
+const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
   regex: /(?<!\S)\/debug(?!\S)/,
-  cb: ({ content }) => {
-    const query = content.match(/\B\/debug\s?(\S+)?/)[1];
+  cb: () => {
+    const template = new Discord.MessageEmbed()
+      .setColor('0x0099ff')
+      .setTitle('DEBUGGING')
+      .setURL('https://en.wikipedia.org/wiki/Debugging')
+      .setDescription(
+        'Based on the description of your problem, you can get to the root of it using a debugger. Learning how to track down problems like this is an inevitable part of being a developer.',
+      )
+      .addField(
+        'Javascript',
+        'https://developers.google.com/web/tools/chrome-devtools/javascript',
+      )
+      .addField(
+        'Ruby',
+        'https://www.theodinproject.com/courses/ruby-programming/lessons/debugging#debugging-with-pry-byebug',
+      );
 
-    const template = 'Based on the description of your problem, you can get to the root of it using a debugger. Learning how to track down problems like this is an inevitable part of being a developer.';
-
-    switch (query) {
-      case 'js':
-        return `
-          ${template}
-<https://developers.google.com/web/tools/chrome-devtools/javascript>
-        `;
-      case 'rb':
-        return `
-          ${template} 
-<https://www.theodinproject.com/courses/ruby-programming/lessons/debugging#debugging-with-pry-byebug>
-        `;
-      default:
-        return `${template}
-<https://en.wikipedia.org/wiki/Debugging>
-
-To get a language specific resource on Javascript or Ruby, run \`/debug js\` or \`/debug rb\`.`;
-    }
+    return template;
   },
 };
 
