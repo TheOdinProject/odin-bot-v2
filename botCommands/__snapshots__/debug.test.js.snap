@@ -17,7 +17,7 @@ exports[`/debug rb should return the correct output 1`] = `
 exports[`/debug should return the correct output 1`] = `
 Object {
   "author": null,
-  "color": 39423,
+  "color": 13407555,
   "description": "Based on the description of your problem, you can get to the root of it using a debugger. Learning how to track down problems like this is an inevitable part of being a developer.",
   "fields": Array [
     Object {

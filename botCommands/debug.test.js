@@ -63,7 +63,7 @@ describe('/debug', () => {
 
 describe('/debug', () => {
   it('should return the correct output', () => {
-    expect(command.cb({ content: '/debug' })).toMatchSnapshot();
+    expect(command.cb()).toMatchSnapshot();
   });
 });
 
