@@ -5,7 +5,7 @@ const command = {
   regex: /(?<!\S)\/debug(?!\S)/,
   cb: () => {
     const template = new Discord.MessageEmbed()
-      .setColor('0x0099ff')
+      .setColor('#cc9543')
       .setTitle('DEBUGGING')
       .setURL('https://en.wikipedia.org/wiki/Debugging')
       .setDescription(
