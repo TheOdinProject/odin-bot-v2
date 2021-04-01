@@ -109,8 +109,8 @@ const awardPoints = {
               && pointsUser.points > 39
             ) {
               const pointsRole = guild.roles.cache.find((r) => r.name === 'club-40');
-              member.addRole(pointsRole);
-              const clubChannel = client.channels.get('707225752608964628');
+              member.roles.add(pointsRole);
+              const clubChannel = client.channels.cache.get('707225752608964628');
 
               if (clubChannel) {
                 clubChannel.send(
