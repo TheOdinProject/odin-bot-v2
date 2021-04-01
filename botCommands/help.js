@@ -28,7 +28,7 @@ const code = {
       });
     }
 
-    const codeCommandEmbed = new Discord.RichEmbed()
+    const codeCommandEmbed = new Discord.MessageEmbed()
       .setColor('#0099ff')
       .setTitle('HOW TO EMBED CODE SNIPPETS')
       .setDescription(

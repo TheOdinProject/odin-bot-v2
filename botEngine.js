@@ -40,8 +40,8 @@ async function listenToMessages(client) {
       message.author
       && message.author.lastMessage
       && message.author.lastMessage.member
-      && message.author.lastMessage.member.roles
-      && message.author.lastMessage.member.roles.has(NOBOT_ROLE_ID)
+      && message.author.lastMessage.member.cache.roles
+      && message.author.lastMessage.member.cache.roles.has(NOBOT_ROLE_ID)
     ) {
       return;
     }
