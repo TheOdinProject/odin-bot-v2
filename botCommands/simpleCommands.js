@@ -104,8 +104,6 @@ module.exports = {
   fu,
   question,
   data,
-  sexpresso,
-  peen,
   google,
   fg,
   dab,
