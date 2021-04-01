@@ -90,7 +90,7 @@ const awardPoints = {
         if (i === 4) {
           channel.send('you can only do 5 at a time..... ');
         }
-        const user = await client.users.get(userId);
+        const user = await client.users.cache.get(userId);
         if (user === author) {
           channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
           channel.send("You can't do that!");
@@ -105,12 +105,12 @@ const awardPoints = {
             const member = await guild.member(user);
             if (
               member
-              && !member.roles.find((r) => r.name === 'club-40')
+              && !member.roles.cache.find((r) => r.name === 'club-40')
               && pointsUser.points > 39
             ) {
-              const pointsRole = guild.roles.find((r) => r.name === 'club-40');
-              member.addRole(pointsRole);
-              const clubChannel = client.channels.get('707225752608964628');
+              const pointsRole = guild.roles.cache.find((r) => r.name === 'club-40');
+              member.roles.add(pointsRole);
+              const clubChannel = client.channels.cache.get('707225752608964628');
 
               if (clubChannel) {
                 clubChannel.send(
@@ -140,7 +140,7 @@ const points = {
   }) {
     const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
     userIds.forEach(async (userId) => {
-      const user = await client.users.get(userId);
+      const user = await client.users.cache.get(userId);
       try {
         const userPoints = await lookUpUser(user.id);
         if (userPoints) {
