@@ -6,6 +6,14 @@ describe('/debug', () => {
     [' /debug'],
     ['/debug @odin-bot'],
     [' /debug @odin-bot'],
+    ['/debug js'],
+    ['/debug rb'],
+    [' /debug js'],
+    [' /debug rb'],
+    ['/debug js @odin-bot'],
+    ['/debug rb @odin-bot'],
+    [' /debug js @odin-bot'],
+    [' /debug rb @odin-bot'],
   ])("'%s' triggers the callback", (string) => {
     expect(command.regex.test(string)).toBeTruthy();
   });
@@ -55,6 +63,18 @@ describe('/debug', () => {
 
 describe('/debug', () => {
   it('should return the correct output', () => {
-    expect(command.cb()).toMatchSnapshot();
+    expect(command.cb({ content: '/debug' })).toMatchSnapshot();
+  });
+});
+
+describe('/debug js', () => {
+  it('should return the correct output', () => {
+    expect(command.cb({ content: '/debug js' })).toMatchSnapshot();
+  });
+});
+
+describe('/debug rb', () => {
+  it('should return the correct output', () => {
+    expect(command.cb({ content: '/debug rb' })).toMatchSnapshot();
   });
 });
