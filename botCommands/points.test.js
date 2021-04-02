@@ -13,7 +13,9 @@ mockSend.mockImplementation((message) => message);
 jest.mock('discord.js', () => ({
   Client: jest.fn().mockImplementation((users, channel, user) => ({
     channels: {
-      get: () => channel,
+      cache: {
+        get: () => channel,
+      },
     },
     users: {
       cache: {
@@ -26,7 +28,9 @@ jest.mock('discord.js', () => ({
   Guild: jest.fn().mockImplementation((users) => ({
     members: {
       members: users,
-      get: (id) => users.filter((member) => member.discord_id === id)[0],
+      cache: {
+        get: (id) => users.filter((member) => member.discord_id === id)[0],
+      },
     },
     roles: {
       cache: [{ name: 'club-40' }],
@@ -39,15 +43,14 @@ jest.mock('discord.js', () => ({
   })),
 
   User: jest.fn().mockImplementation((roles, id, points) => ({
-
     roles: {
+      add: () => {
+        roles.push('club-40');
+      },
       cache: roles,
     },
     id: `<@${id}>`,
     points,
-    addRole: () => {
-      roles.push('club-40');
-    },
     toString: () => `<@${id}>`,
   })),
 }));
@@ -177,7 +180,7 @@ describe('award points', () => {
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     });
 
-    xit('returns correct output for a single user entering club-40', async () => {
+    it('returns correct output for a single user entering club-40', async () => {
       const mentionedUser = User([], 2, 39);
       const client = Client([author, mentionedUser], channel);
       const data = {
@@ -201,7 +204,7 @@ describe('award points', () => {
       expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
     });
 
-    xit('returns correct output for up to five mentioned users', async () => {
+    it('returns correct output for up to five mentioned users', async () => {
       const mentionedUser1 = User([], 2, 33);
       const mentionedUser2 = User([], 2, 21);
       const mentionedUser3 = User([], 2, 2);
@@ -265,7 +268,7 @@ describe('award points', () => {
       expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
     });
 
-    xit('returns correct output for more than five mentioned users', async () => {
+    it('returns correct output for more than five mentioned users', async () => {
       const mentionedUser1 = User([], 2, 10);
       const mentionedUser2 = User([], 2, 3);
       const mentionedUser3 = User([], 2, 1);
