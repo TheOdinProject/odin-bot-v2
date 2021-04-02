@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
@@ -24,9 +25,17 @@ const command = {
     } else if (mentionedUsers.length === 1) {
       users = ` ${mentionedUsers[0]}`;
     }
-    return !users
-      ? '**The definition of insanity is answering the same question over and over again when we have an FAQ!  Help us stay sane by giving this a read: https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992**'
-      : `**The definition of insanity is answering the same question over and over again when we have an FAQ!${users}, help us stay sane by giving this a read: <https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992>**`;
+
+    const faqCommandEmbed = new Discord.MessageEmbed()
+      .setColor('#cc9543')
+      .setTitle('Frequently Asked Questions')
+      .setDescription(
+        !users
+          ? '**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>!  Help us stay sane by giving it a read.**'
+          : `**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>!${users}, help us stay sane by giving it a read.**`,
+      );
+
+    return faqCommandEmbed;
   },
 };
 
