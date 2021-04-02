@@ -33,7 +33,7 @@ const question = {
   cb: () => {
     const questionEmbed = new Discord.MessageEmbed()
       .setColor('#cc9543')
-      .setTitle('Asking Great Question')
+      .setTitle('Asking Great Questions')
       .setDescription('We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603');
 
     return questionEmbed;
