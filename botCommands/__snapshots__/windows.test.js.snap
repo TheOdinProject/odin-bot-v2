@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/windows callback returns correct output 1`] = `"The Odin Project does not support Windows, WSL, or any OS outside of our recommendations. We are happy to assist with any questions about installing a VM or dual booting Linux. <https://www.theodinproject.com/courses/foundations/lessons/installation-overview#os-options> "`;
+exports[`/windows callback returns correct output 1`] = `
+Object {
+  "author": null,
+  "color": 16729882,
+  "description": "**The Odin Project does not support Windows, WSL, or any OS outside of our recommendations**. We are happy to assist with any questions about installing a VM or dual booting Linux.",
+  "fields": Array [],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "Windows",
+  "type": "rich",
+  "url": "https://www.theodinproject.com/courses/foundations/lessons/installation-overview#os-options",
+}
+`;
