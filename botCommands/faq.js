@@ -1,10 +1,10 @@
-const Discord = require("discord.js");
-const { registerBotCommand } = require("../botEngine.js");
+const Discord = require('discord.js');
+const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
   regex: /(?<!\S)\/faq(?!\S)/,
   cb: async ({ mentions }) => {
-    let users = "";
+    let users = '';
     const mentionedUsers = mentions.users.array();
     if (mentionedUsers.length >= 3) {
       mentionedUsers.forEach((user, index) => {
@@ -32,7 +32,7 @@ const command = {
       .setDescription(
         !users
           ? '**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!  Help us stay sane by giving it a read.**'
-          : `**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!${users}, help us stay sane by giving it a read.**`
+          : `**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!${users}, help us stay sane by giving it a read.**`,
       );
 
     return faqCommandEmbed;
