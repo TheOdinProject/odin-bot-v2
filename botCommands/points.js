@@ -145,6 +145,7 @@ const points = {
         const userPoints = await lookUpUser(user.id);
         if (userPoints) {
           const username = guild.members
+            .cache
             .get(userPoints.discord_id)
             .displayName.replace(/\//g, '\\/');
           channel.send(`${username} has ${userPoints.points} points!`);
@@ -172,12 +173,12 @@ const leaderboard = {
       length = Math.max(length, 1);
 
       const users = await axios.get('https://www.theodinproject.com/api/points');
-      const data = users.data.filter((user) => guild.members.get(user.discord_id));
+      const data = users.data.filter((user) => guild.members.cache.get(user.discord_id));
       let usersList = '**leaderboard** \n';
       for (let i = start - 1; i < length + start - 1; i += 1) {
         const user = data[i];
         if (user) {
-          const member = guild.members.get(user.discord_id);
+          const member = guild.members.cache.get(user.discord_id);
           const username = member
             ? member.displayName.replace(/\//g, '\\/')
             : undefined;
