@@ -8,13 +8,6 @@ Thanks for your interest in The Odin Project's Odin Bot. In order to get PRs clo
 
 ... Your text here
 
-
-#### 2. If this PR modifies a command, please provide a screenshot of the passing tests below. NOTE: Your PR will not be merged if you have any failing test cases. 
-
-... Image here
-
-
-
-#### 3. If this PR is related to an open issue please reference it with the `#` operator and the issue number below:
+#### 2. If this PR is related to an open issue please reference it with the `#` operator and the issue number below:
 
 #XXXXX
