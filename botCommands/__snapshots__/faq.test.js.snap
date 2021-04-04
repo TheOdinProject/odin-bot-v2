@@ -4,7 +4,7 @@ exports[`callback should return the correct output 1`] = `
 Object {
   "author": null,
   "color": 13407555,
-  "description": "**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>!  Help us stay sane by giving it a read.**",
+  "description": "**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!  Help us stay sane by giving it a read.**",
   "fields": Array [],
   "footer": null,
   "image": null,
@@ -20,7 +20,7 @@ exports[`callback should return the correct output 2`] = `
 Object {
   "author": null,
   "color": 13407555,
-  "description": "**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>! <@1>, help us stay sane by giving it a read.**",
+  "description": "**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)! <@1>, help us stay sane by giving it a read.**",
   "fields": Array [],
   "footer": null,
   "image": null,
@@ -36,7 +36,7 @@ exports[`callback should return the correct output 3`] = `
 Object {
   "author": null,
   "color": 13407555,
-  "description": "**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>! <@1> and <@2>, help us stay sane by giving it a read.**",
+  "description": "**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)! <@1> and <@2>, help us stay sane by giving it a read.**",
   "fields": Array [],
   "footer": null,
   "image": null,
@@ -52,7 +52,7 @@ exports[`callback should return the correct output 4`] = `
 Object {
   "author": null,
   "color": 13407555,
-  "description": "**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>! <@1>, <@2>, and <@3>, help us stay sane by giving it a read.**",
+  "description": "**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)! <@1>, <@2>, and <@3>, help us stay sane by giving it a read.**",
   "fields": Array [],
   "footer": null,
   "image": null,

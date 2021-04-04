@@ -31,8 +31,8 @@ const command = {
       .setTitle('Frequently Asked Questions')
       .setDescription(
         !users
-          ? '**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>!  Help us stay sane by giving it a read.**'
-          : `**The definition of insanity is answering the same question over and over again when we have an <#823266307293839401>!${users}, help us stay sane by giving it a read.**`,
+          ? '**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!  Help us stay sane by giving it a read.**'
+          : `**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!${users}, help us stay sane by giving it a read.**`,
       );
 
     return faqCommandEmbed;
