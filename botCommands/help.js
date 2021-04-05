@@ -36,8 +36,8 @@ const code = {
       )
       // weird formating is needer to avoid identation on mobile
       .addField(
-'Sharing Code on Discord',
-`To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+          'Sharing Code on Discord',
+          `To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
 \\\`\\\`\\\`js
 [Put your JavaScript Code here!]
