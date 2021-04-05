@@ -45,8 +45,8 @@ const data = {
   regex: /(?<!\S)\/data(?!\S)/,
   cb: () => {
     const dataEmbeed = new Discord.MessageEmbed()
-      .setTitle("Don’t ask to ask!")
-      .setColor("#cc9543")
+      .setTitle('Don’t ask to ask!')
+      .setColor('#cc9543')
       .setDescription(`
 
         Instead of asking if anyone can help you, ask your question outright so people can help you!
@@ -63,8 +63,7 @@ const data = {
         \`Cannot set attribute 'style' of null\` "
 
         **https://www.dontasktoask.com/**
-        `
-      )
+        `);
 
     return dataEmbeed;
   },
