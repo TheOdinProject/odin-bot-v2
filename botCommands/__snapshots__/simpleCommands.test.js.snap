@@ -20,8 +20,6 @@ exports[`/lenny callback returns correct output 1`] = `"( ͡° ͜ʖ ͡°)"`;
 
 exports[`/motivate callback returns correct output 1`] = `"Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE"`;
 
-exports[`/peen callback returns correct output 1`] = `"https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif"`;
-
 exports[`/question callback returns correct output 1`] = `
 Object {
   "author": null,
@@ -37,8 +35,6 @@ Object {
   "url": null,
 }
 `;
-
-exports[`/sexpresso callback returns correct output 1`] = `"https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590"`;
 
 exports[`/smart callback returns correct output 1`] = `"f(ಠ‿↼)z"`;
 

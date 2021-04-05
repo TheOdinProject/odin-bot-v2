@@ -47,25 +47,6 @@ const data = {
 };
 registerBotCommand(data.regex, data.cb);
 
-// registerBotCommand(/\/sexpresso/, () => `https://i.gifer.com/8EC5.gif`);
-
-const sexpresso = {
-  regex: /(?<!\S)\/sexpresso(?!\S)/,
-  cb: () => 'https://tenor.com/view/mac-spilling-coffee-starbucks-gif-6241590',
-};
-registerBotCommand(sexpresso.regex, sexpresso.cb);
-
-const peen = {
-  regex: /(?<!\S)\/peen(?!\S)/,
-  cb: ({ author }) => {
-    if (author.id === 418918922507780096) {
-      return 'https://media.giphy.com/media/K5IEMtDZHxQZy/giphy.gif';
-    }
-    return null;
-  },
-};
-registerBotCommand(peen.regex, peen.cb);
-
 const google = {
   regex: /\B\/google\s+.+/,
   cb: ({ content }) => {
@@ -131,8 +112,6 @@ module.exports = {
   fu,
   question,
   data,
-  sexpresso,
-  peen,
   google,
   fg,
   dab,
