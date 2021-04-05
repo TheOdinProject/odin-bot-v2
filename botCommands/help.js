@@ -34,17 +34,18 @@ const code = {
       .setDescription(
         !users ? 'Hey, here\'s some helpful tips on sharing your code with others!' : `Hey, ${users.trim()}, here's some helpful tips on sharing your code with others!`,
       )
+      // weird formating is needer to avoid identation on mobile
       .addField(
-        'Sharing Code on Discord',
-        `To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+'Sharing Code on Discord',
+`To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
-      \\\`\\\`\\\`js
-      [Put your JavaScript Code here!]
-      \\\`\\\`\\\`
+\\\`\\\`\\\`js
+[Put your JavaScript Code here!]
+\\\`\\\`\\\`
 
-      For \`inline code\` use one backtick (no syntax highlighting):
+For \`inline code\` use one backtick (no syntax highlighting):
 
-      \\\`Code here!\\\`
+\\\`Code here!\\\`
       `,
       )
       .addField(
