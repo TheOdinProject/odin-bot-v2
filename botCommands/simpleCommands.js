@@ -47,6 +47,7 @@ const data = {
     const dataEmbeed = new Discord.MessageEmbed()
       .setTitle('Don’t ask to ask!')
       .setColor('#cc9543')
+      .setURL('https://www.dontasktoask.com/')
       .setDescription(`
 
         Instead of asking if anyone can help you, ask your question outright so people can help you!
