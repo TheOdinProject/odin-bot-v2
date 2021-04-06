@@ -2,7 +2,35 @@
 
 exports[`/dab callback returns correct output 1`] = `"https://tenor.com/view/bettywhite-dab-gif-5044603"`;
 
-exports[`/data callback returns correct output 1`] = `"**Please state your question in the form of a question! https://www.dontasktoask.com/**"`;
+exports[`/data callback returns correct output 1`] = `
+Object {
+  "author": null,
+  "color": 13407555,
+  "description": "
+Instead of asking if anyone can help you, ask your question outright so people can help you!
+      
+**Bad**: Hey, does anyone know how to set CSS styles with Javascript?\\"
+    
+**Good**: 
+\\"Hey, I'm having trouble setting CSS styles via Javascript.
+  
+Here's my code: 
+\`\`\`Code snippet\`\`\`  
+And here is the error I'm receiving:
+\`Cannot set attribute 'style' of null\` \\"
+  
+**https://www.dontasktoask.com/**
+        ",
+  "fields": Array [],
+  "footer": null,
+  "image": null,
+  "thumbnail": null,
+  "timestamp": null,
+  "title": "Don’t ask to ask!",
+  "type": "rich",
+  "url": "https://www.dontasktoask.com/",
+}
+`;
 
 exports[`/fg callback returns correct output 1`] = `"**This is what you should have typed into Google >** <https://google.com/search?q=The+Odin+Project>"`;
 
