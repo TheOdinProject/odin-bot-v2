@@ -44,7 +44,7 @@ registerBotCommand(question.regex, question.cb);
 const data = {
   regex: /(?<!\S)\/data(?!\S)/,
   cb: () => {
-    const dataEmbeed = new Discord.MessageEmbed()
+    const dataEmbed = new Discord.MessageEmbed()
       .setTitle('Don’t ask to ask!')
       .setColor('#cc9543')
       .setURL('https://www.dontasktoask.com/')
@@ -66,7 +66,7 @@ And here is the error I'm receiving:
 **https://www.dontasktoask.com/**
         `);
 
-    return dataEmbeed;
+    return dataEmbed;
   },
 };
 registerBotCommand(data.regex, data.cb);
