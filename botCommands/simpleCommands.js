@@ -43,7 +43,31 @@ registerBotCommand(question.regex, question.cb);
 
 const data = {
   regex: /(?<!\S)\/data(?!\S)/,
-  cb: () => '**Please state your question in the form of a question! https://www.dontasktoask.com/**',
+  cb: () => {
+    const dataEmbed = new Discord.MessageEmbed()
+      .setTitle('Don’t ask to ask!')
+      .setColor('#cc9543')
+      .setURL('https://www.dontasktoask.com/')
+      // this weird formating is needed because of some indentation on mobile
+      .setDescription(`
+Instead of asking if anyone can help you, ask your question outright so people can help you!
+      
+**Bad**: "Hey, does anyone know how to set CSS styles with Javascript?"
+    
+**Good**: 
+"Hey, I'm having trouble setting CSS styles via Javascript.
+  
+Here's my code: 
+\`\`\`Code snippet\`\`\`\
+  
+And here is the error I'm receiving:
+\`Cannot set attribute 'style' of null\` "
+  
+**https://www.dontasktoask.com/**
+        `);
+
+    return dataEmbed;
+  },
 };
 registerBotCommand(data.regex, data.cb);
 
