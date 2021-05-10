@@ -114,7 +114,7 @@ const awardPoints = {
 
               if (clubChannel) {
                 clubChannel.send(
-                  `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40`,
+                  `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`,
                 );
               }
             }
