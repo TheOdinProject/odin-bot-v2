@@ -57,7 +57,7 @@ exports[`/leaderboard callback returns correct output 8`] = `
 
 exports[`@user -- callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;
 
-exports[`award points callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40"`;
+exports[`award points callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
 exports[`award points callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
 
