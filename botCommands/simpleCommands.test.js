@@ -798,3 +798,59 @@ describe('/xy', () => {
     });
   });
 });
+
+describe('/tryit', () => {
+  describe('regex', () => {
+    it.each([['/tryit'], [' /tryit'], ['/tryit @odin-bot'], ['@odin-bot /tryit']])(
+      'correct strings trigger the callback',
+      (string) => {
+        expect(commands.tryit.regex.test(string)).toBeTruthy();
+      },
+    );
+
+    it.each([
+      ['/tyrit'],
+      ['tryit'],
+      ['/try'],
+      ['```function("/tryit", () => {}```'],
+      ['/d'],
+      [''],
+      [' '],
+      [' /'],
+      ['@odin-bot / tryit'],
+      ['/try it'],
+      ['/try^it'],
+      ['/tryit!'],
+      ['@odin-bot/ tryit'],
+      ['https://tryit .com'],
+    ])("'%s' does not trigger the callback", (string) => {
+      expect(commands.tryit.regex.test(string)).toBeFalsy();
+    });
+
+    it.each([
+      ['Check this out! /tryit'],
+      ["Don't worry about /tryit"],
+      ['Hey @odin-bot, /tryit'],
+      ['/@odin-bot ^ /me /tryit /tests$*'],
+    ])("'%s' - command can be anywhere in the string", (string) => {
+      expect(commands.tryit.regex.test(string)).toBeTruthy();
+    });
+
+    it.each([
+      ['@user/tryit'],
+      ["it's about/tryit"],
+      ['/tryisanillusion'],
+      ['/tryit/'],
+      ['/tryit*'],
+      ['/tryit...'],
+    ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
+      expect(commands.tryit.regex.test(string)).toBeFalsy();
+    });
+  });
+
+  describe('callback', () => {
+    it('returns correct output', () => {
+      expect(commands.tryit.cb()).toMatchSnapshot();
+    });
+  });
+});

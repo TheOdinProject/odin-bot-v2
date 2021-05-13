@@ -129,6 +129,12 @@ const xy = {
 };
 registerBotCommand(xy.regex, xy.cb);
 
+const tryit = {
+  regex: /(?<!\S)\/tryit(?!\S)/,
+  cb: () => 'https://media1.tenor.com/images/bfa3e1618a8a12ab300e0db98868ed48/tenor.gif',
+};
+registerBotCommand(tryit.regex, tryit.cb);
+
 module.exports = {
   hug,
   smart,
@@ -143,4 +149,5 @@ module.exports = {
   motivate,
   justDoIt,
   xy,
+  tryit,
 };
