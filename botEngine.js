@@ -60,10 +60,10 @@ async function listenToMessages(client) {
     }
 
     if (message.channel.id === '690618925494566912') { // introductions
-      if (isAdminMessage) return;
       if (
         currentIntroductionsMessage
         && currentIntroductionsMessage.content === introductionsWelcomeMessage
+        && !isAdminMessage
       ) {
         currentIntroductionsMessage.delete();
       }
