@@ -3,7 +3,11 @@ const botCommands = [];
 let authorBuffer = [];
 
 let creationsMessage = null;
-let introductionMessage = null;
+
+const adminRoles = ['core', 'maintainer', 'admin'];
+
+let currentIntroductionsMessage = null;
+const introductionsWelcomeMessage = 'Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!';
 
 const createAuthorEntry = function (message) {
   const entry = {
@@ -32,6 +36,7 @@ async function listenToMessages(client) {
     if (message.author === client.user) {
       return;
     }
+    const isAdminMessage = message.member.roles.cache.some((r) => adminRoles.includes(r.name));
 
     const NOBOT_ROLE_ID = '783764176178774036';
 
@@ -54,11 +59,16 @@ async function listenToMessages(client) {
       return;
     }
 
-    if (message.channel.id === '690618925494566912') { // introductions-and-checkins
-      if (introductionMessage) {
-        introductionMessage.delete();
+    if (message.channel.id === '690618925494566912') { // introductions
+      if (isAdminMessage) return;
+      if (
+        currentIntroductionsMessage
+        && currentIntroductionsMessage.content === introductionsWelcomeMessage
+      ) {
+        currentIntroductionsMessage.delete();
       }
-      introductionMessage = await message.channel.send('Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!');
+
+      currentIntroductionsMessage = await message.channel.send(introductionsWelcomeMessage);
       return;
     }
 
