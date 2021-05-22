@@ -96,14 +96,13 @@ async function listenToMessages(client) {
     });
 
     if (message.channel.id === '690618925494566912') { // introductions
-      if (
-        currentIntroductionsMessage
-        && currentIntroductionsMessage.content === introductionsWelcomeMessage
-      ) {
-        currentIntroductionsMessage.delete();
-      }
-
       if (!isAdminMessage) {
+        if (
+          currentIntroductionsMessage
+          && currentIntroductionsMessage.content === introductionsWelcomeMessage
+        ) {
+          currentIntroductionsMessage.delete();
+        }
         currentIntroductionsMessage = await message.channel.send(introductionsWelcomeMessage);
       }
     }
