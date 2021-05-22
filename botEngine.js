@@ -59,19 +59,6 @@ async function listenToMessages(client) {
       return;
     }
 
-    if (message.channel.id === '690618925494566912') { // introductions
-      if (
-        currentIntroductionsMessage
-        && currentIntroductionsMessage.content === introductionsWelcomeMessage
-        && !isAdminMessage
-      ) {
-        currentIntroductionsMessage.delete();
-      }
-
-      currentIntroductionsMessage = await message.channel.send(introductionsWelcomeMessage);
-      return;
-    }
-
     const authorEntryCount = authorBuffer.reduce((count, current) => {
       if (current.author === message.author.id) {
         return count + 1;
@@ -107,6 +94,19 @@ async function listenToMessages(client) {
         }
       }
     });
+
+    if (message.channel.id === '690618925494566912') { // introductions
+      if (
+        currentIntroductionsMessage
+        && currentIntroductionsMessage.content === introductionsWelcomeMessage
+      ) {
+        currentIntroductionsMessage.delete();
+      }
+
+      if (!isAdminMessage) {
+        currentIntroductionsMessage = await message.channel.send(introductionsWelcomeMessage);
+      }
+    }
   });
 }
 
