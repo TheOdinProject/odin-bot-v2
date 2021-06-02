@@ -383,7 +383,7 @@ describe('award points', () => {
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     });
 
-    it('returns correct output for a user awarding points in channles listed in the config file', async () => {
+    it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
       jest.mock(
         '../config',
         () => ({
