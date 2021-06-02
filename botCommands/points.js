@@ -46,15 +46,20 @@ async function lookUpUser(discordId) {
 function exclamation(points) {
   if (points < 5) {
     return 'Nice!';
-  } if (points < 25) {
+  }
+  if (points < 25) {
     return 'Sweet!';
-  } if (points < 99) {
+  }
+  if (points < 99) {
     return 'Woot!';
-  } if (points < 105) {
+  }
+  if (points < 105) {
     return 'HOLY CRAP!!';
-  } if (points > 199 && points < 206) {
+  }
+  if (points > 199 && points < 206) {
     return 'DAM SON:';
-  } if (points > 299 && points < 306) {
+  }
+  if (points > 299 && points < 306) {
     return 'OK YOU CAN STOP NOW:';
   }
   return 'Woot!';
@@ -72,7 +77,10 @@ const plusRegex = '(\\+){2,}';
 const awardPoints = {
   // uses a negative lookback to isolate the command
   // followed by the Discord User, a whitespace character and either the star or plus incrementer
-  regex: new RegExp(`(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`, 'gu'),
+  regex: new RegExp(
+    `(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`,
+    'gu',
+  ),
   cb: async function pointsBotCommand({
     author,
     content,
@@ -80,9 +88,20 @@ const awardPoints = {
     client,
     guild,
   }) {
-    const userIds = getUserIdsFromMessage(content, new RegExp(`(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`, 'gu'));
+    const userIds = getUserIdsFromMessage(
+      content,
+      new RegExp(
+        `(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`,
+        'gu',
+      ),
+    );
+
     return Promise.all(
       userIds.map(async (userId, i) => {
+        if (config.noPointsChannels.includes(channel.id)) {
+          channel.send("You can't do that here!");
+          return;
+        }
         // this limits the number of calls per message to 5 to avoid abuse
         if (i > 4) {
           return;
@@ -95,7 +114,8 @@ const awardPoints = {
           channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
           channel.send("You can't do that!");
           return;
-        } if (user === client.user) {
+        }
+        if (user === client.user) {
           channel.send('awwwww shucks... :heart_eyes:');
           return;
         }
@@ -108,9 +128,13 @@ const awardPoints = {
               && !member.roles.cache.find((r) => r.name === 'club-40')
               && pointsUser.points > 39
             ) {
-              const pointsRole = guild.roles.cache.find((r) => r.name === 'club-40');
+              const pointsRole = guild.roles.cache.find(
+                (r) => r.name === 'club-40',
+              );
               member.roles.add(pointsRole);
-              const clubChannel = client.channels.cache.get('707225752608964628');
+              const clubChannel = client.channels.cache.get(
+                '707225752608964628',
+              );
 
               if (clubChannel) {
                 clubChannel.send(
@@ -119,7 +143,8 @@ const awardPoints = {
               }
             }
             channel.send(
-              `${exclamation(pointsUser.points)} ${user} now has ${pointsUser.points
+              `${exclamation(pointsUser.points)} ${user} now has ${
+                pointsUser.points
               } ${plural(pointsUser.points)}`,
             );
           }
@@ -144,8 +169,7 @@ const points = {
       try {
         const userPoints = await lookUpUser(user.id);
         if (userPoints) {
-          const username = guild.members
-            .cache
+          const username = guild.members.cache
             .get(userPoints.discord_id)
             .displayName.replace(/\//g, '\\/');
           channel.send(`${username} has ${userPoints.points} points!`);
@@ -163,7 +187,9 @@ const leaderboard = {
   regex: /(?<!\S)\/leaderboard(?!\S)/,
   async cb({ guild, content }) {
     try {
-      const sEquals = content.split(' ').find((word) => word.includes('start='));
+      const sEquals = content
+        .split(' ')
+        .find((word) => word.includes('start='));
       let start = sEquals ? sEquals.replace('start=', '') : 1;
       start = Math.max(start, 1);
 
@@ -172,7 +198,9 @@ const leaderboard = {
       length = Math.min(length, 25);
       length = Math.max(length, 1);
 
-      const users = await axios.get('https://www.theodinproject.com/api/points');
+      const users = await axios.get(
+        'https://www.theodinproject.com/api/points',
+      );
       const data = users.data.filter((user) => guild.members.cache.get(user.discord_id));
       let usersList = '**leaderboard** \n';
       for (let i = start - 1; i < length + start - 1; i += 1) {
@@ -184,7 +212,9 @@ const leaderboard = {
             : undefined;
           if (username) {
             if (i === 0) {
-              usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
+              usersList += `${i + 1} - ${username} [${
+                user.points
+              } points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }

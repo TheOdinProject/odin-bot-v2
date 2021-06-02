@@ -63,6 +63,10 @@ exports[`award points callback returns correct output for a single user entering
 
 exports[`award points callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 
+exports[`award points callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
+
+exports[`award points callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
+
 exports[`award points callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 
 exports[`award points callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;

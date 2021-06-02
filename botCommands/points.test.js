@@ -38,7 +38,8 @@ jest.mock('discord.js', () => ({
     member: (user) => users.filter((member) => member === user)[0],
   })),
 
-  Channel: jest.fn().mockImplementation(() => ({
+  Channel: jest.fn().mockImplementation((id) => ({
+    id,
     send: mockSend,
   })),
 
@@ -109,12 +110,12 @@ describe('award points', () => {
   });
 
   describe('regex ⭐', () => {
-    it.each([
-      ['<@!123456789> ⭐'],
-      ['thanks <@!123456789> ⭐'],
-    ])("'%s' - correct strings trigger the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
-    });
+    it.each([['<@!123456789> ⭐'], ['thanks <@!123456789> ⭐']])(
+      "'%s' - correct strings trigger the callback",
+      (string) => {
+        expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['⭐'],
@@ -380,6 +381,46 @@ describe('award points', () => {
       await commands.awardPoints.cb(data);
       expect(data.channel.send).toHaveBeenCalled();
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    });
+
+    it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
+      jest.mock(
+        '../config',
+        () => ({
+          noPointsChannels: ['513125912070455296', '123456789'],
+        }),
+        { virtual: true },
+      );
+      const mentionedUser = User([], 2, 20);
+      const botSpamChannel = Channel('513125912070455296');
+      const bannedChannel = Channel('123456789');
+      const client = Client([author, mentionedUser], botSpamChannel);
+
+      const botSpamChannelData = {
+        author,
+        content: `${mentionedUser.id} ++`,
+        channel: botSpamChannel,
+        client,
+        guild: Guild([author, mentionedUser]),
+      };
+
+      const bannedChannelData = {
+        author,
+        content: `${mentionedUser.id} ++`,
+        channel: bannedChannel,
+        client,
+        guild: Guild([author, mentionedUser]),
+      };
+
+      await commands.awardPoints.cb(botSpamChannelData);
+      expect(botSpamChannelData.channel.send).toHaveBeenCalled();
+      expect(
+        botSpamChannelData.channel.send.mock.calls[0][0],
+      ).toMatchSnapshot();
+
+      await commands.awardPoints.cb(bannedChannelData);
+      expect(bannedChannelData.channel.send).toHaveBeenCalled();
+      expect(bannedChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
     });
   });
 });
