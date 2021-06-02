@@ -383,11 +383,20 @@ describe('award points', () => {
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     });
 
-    it('returns correct output for a user awarding points in #bot-spam-playground', async () => {
+    it('returns correct output for a user awarding points in channles listed in the config file', async () => {
+      jest.mock(
+        '../config',
+        () => ({
+          noPointsChannels: ['513125912070455296', '123456789'],
+        }),
+        { virtual: true },
+      );
       const mentionedUser = User([], 2, 20);
       const botSpamChannel = Channel('513125912070455296');
+      const bannedChannel = Channel('123456789');
       const client = Client([author, mentionedUser], botSpamChannel);
-      const data = {
+
+      const botSpamChannelData = {
         author,
         content: `${mentionedUser.id} ++`,
         channel: botSpamChannel,
@@ -395,9 +404,23 @@ describe('award points', () => {
         guild: Guild([author, mentionedUser]),
       };
 
-      await commands.awardPoints.cb(data);
-      expect(data.channel.send).toHaveBeenCalled();
-      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      const bannedChannelData = {
+        author,
+        content: `${mentionedUser.id} ++`,
+        channel: bannedChannel,
+        client,
+        guild: Guild([author, mentionedUser]),
+      };
+
+      await commands.awardPoints.cb(botSpamChannelData);
+      expect(botSpamChannelData.channel.send).toHaveBeenCalled();
+      expect(
+        botSpamChannelData.channel.send.mock.calls[0][0],
+      ).toMatchSnapshot();
+
+      await commands.awardPoints.cb(bannedChannelData);
+      expect(bannedChannelData.channel.send).toHaveBeenCalled();
+      expect(bannedChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
     });
   });
 });
