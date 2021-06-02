@@ -38,7 +38,8 @@ jest.mock('discord.js', () => ({
     member: (user) => users.filter((member) => member === user)[0],
   })),
 
-  Channel: jest.fn().mockImplementation(() => ({
+  Channel: jest.fn().mockImplementation((id) => ({
+    id,
     send: mockSend,
   })),
 
@@ -109,12 +110,12 @@ describe('award points', () => {
   });
 
   describe('regex ⭐', () => {
-    it.each([
-      ['<@!123456789> ⭐'],
-      ['thanks <@!123456789> ⭐'],
-    ])("'%s' - correct strings trigger the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
-    });
+    it.each([['<@!123456789> ⭐'], ['thanks <@!123456789> ⭐']])(
+      "'%s' - correct strings trigger the callback",
+      (string) => {
+        expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      },
+    );
 
     it.each([
       ['⭐'],
@@ -375,6 +376,23 @@ describe('award points', () => {
         channel,
         client,
         guild: Guild([author]),
+      };
+
+      await commands.awardPoints.cb(data);
+      expect(data.channel.send).toHaveBeenCalled();
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    });
+
+    it('returns correct output for a user awarding points in #bot-spam-playground', async () => {
+      const mentionedUser = User([], 2, 20);
+      const botSpamChannel = Channel('513125912070455296');
+      const client = Client([author, mentionedUser], botSpamChannel);
+      const data = {
+        author,
+        content: `${mentionedUser.id} ++`,
+        channel: botSpamChannel,
+        client,
+        guild: Guild([author, mentionedUser]),
       };
 
       await commands.awardPoints.cb(data);
