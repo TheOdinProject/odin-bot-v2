@@ -70,7 +70,7 @@ describe('partyparrot snapshot', () => {
   it('when randomInt is mocked, the output remains the same', () => {
     // NOTE: if the length of the parrot array changes,
     // this for loop will need to be updated to reflect that change
-    for (let i = 0; i < 13; i += 1) {
+    for (let i = 0; i < 8; i += 1) {
       randomInt.mockReturnValueOnce(i);
 
       expect(command.cb({ content: '' })).toMatchSnapshot();
