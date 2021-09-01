@@ -90,7 +90,10 @@ const awardPoints = {
   }) {
     const userIds = getUserIdsFromMessage(
       content,
-      new RegExp(`(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`, 'gu'),
+      new RegExp(
+        `(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`,
+        'gu',
+      ),
     );
 
     return Promise.all(
@@ -125,9 +128,13 @@ const awardPoints = {
               && !member.roles.cache.find((r) => r.name === 'club-40')
               && pointsUser.points > 39
             ) {
-              const pointsRole = guild.roles.cache.find((r) => r.name === 'club-40');
+              const pointsRole = guild.roles.cache.find(
+                (r) => r.name === 'club-40',
+              );
               member.roles.add(pointsRole);
-              const clubChannel = client.channels.cache.get('707225752608964628');
+              const clubChannel = client.channels.cache.get(
+                '707225752608964628',
+              );
 
               if (clubChannel) {
                 clubChannel.send(
@@ -158,18 +165,7 @@ const points = {
   }) {
     const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
     if (userIds.length === 0) {
-      const user = await client.users.cache.get(author.id);
-      try {
-        const userPoints = await lookUpUser(user.id);
-        if (userPoints) {
-          const username = guild.members.cache
-            .get(userPoints.discord_id)
-            .displayName.replace(/\//g, '\\/');
-          channel.send(`${username} has ${userPoints.points} points!`);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      userIds.push(author.id);
     }
     userIds.forEach(async (userId) => {
       const user = await client.users.cache.get(userId);
@@ -194,7 +190,9 @@ const leaderboard = {
   regex: /(?<!\S)\/leaderboard(?!\S)/,
   async cb({ guild, content }) {
     try {
-      const sEquals = content.split(' ').find((word) => word.includes('start='));
+      const sEquals = content
+        .split(' ')
+        .find((word) => word.includes('start='));
       let start = sEquals ? sEquals.replace('start=', '') : 1;
       start = Math.max(start, 1);
 
@@ -203,14 +201,18 @@ const leaderboard = {
       length = Math.min(length, 25);
       length = Math.max(length, 1);
 
-      const users = await axios.get('https://www.theodinproject.com/api/points');
+      const users = await axios.get(
+        'https://www.theodinproject.com/api/points',
+      );
       const data = users.data.filter((user) => guild.members.cache.get(user.discord_id));
       let usersList = '**leaderboard** \n';
       for (let i = start - 1; i < length + start - 1; i += 1) {
         const user = data[i];
         if (user) {
           const member = guild.members.cache.get(user.discord_id);
-          const username = member ? member.displayName.replace(/\//g, '\\/') : undefined;
+          const username = member
+            ? member.displayName.replace(/\//g, '\\/')
+            : undefined;
           if (username) {
             if (i === 0) {
               usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
