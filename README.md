@@ -9,7 +9,7 @@ Follow [this link](https://discord.gg/fbFCkYabZB) to join our Discord server!
 ## Contributing
 [![Build Status](https://circleci.com/gh/TheOdinProject/theodinproject.svg?style=svg)](https://app.circleci.com/pipelines/github/TheOdinProject/odin-bot-v2)
 
-Thank you for your interesting contributing to the Odin Bot. The Odin Project depends on open source contributions to grow, improve, and thrive. We welcome contributions from beginners and experienced developers alike.
+Thank you for your interest in contributing to the Odin Bot. The Odin Project depends on open source contributions to grow, improve, and thrive. We welcome contributions from beginners and experienced developers alike.
 
 To find out more about how you can contribute, please read our [getting started](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and [contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
 

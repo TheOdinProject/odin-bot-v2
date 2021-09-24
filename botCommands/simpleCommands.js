@@ -90,7 +90,7 @@ const fg = {
   cb: ({ content }) => {
     const transform = (transformContent) => {
       const query = transformContent.split(' ').map(encodeURIComponent).join('+');
-      return `**This is what you should have typed into Google >** <https://google.com/search?q=${query}>`;
+      return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
     };
 
     const query = content.match(/\B\/fg\s+(.+)/)[1];

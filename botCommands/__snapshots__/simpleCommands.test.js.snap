@@ -32,7 +32,7 @@ And here is the error I'm receiving:
 }
 `;
 
-exports[`/fg callback returns correct output 1`] = `"**This is what you should have typed into Google >** <https://google.com/search?q=The+Odin+Project>"`;
+exports[`/fg callback returns correct output 1`] = `"**This query might help you find what you're looking for >** <https://google.com/search?q=The+Odin+Project>"`;
 
 exports[`/fu callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;
 

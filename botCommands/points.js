@@ -189,9 +189,12 @@ registerBotCommand(awardPoints.regex, awardPoints.cb);
 const points = {
   regex: /(?<!\S)\/points(?!\S)/,
   async cb({
-    content, client, channel, guild,
+    content, author, client, channel, guild,
   }) {
     const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
+    if (userIds.length === 0) {
+      userIds.push(author.id);
+    }
     userIds.forEach(async (userId) => {
       const user = await client.users.cache.get(userId);
       try {
@@ -240,9 +243,7 @@ const leaderboard = {
             : undefined;
           if (username) {
             if (i === 0) {
-              usersList += `${i + 1} - ${username} [${
-                user.points
-              } points] :tada: \n`;
+              usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
             } else {
               usersList += `${i + 1} - ${username} [${user.points} points] \n`;
             }
