@@ -39,10 +39,9 @@ const deductPoints = {
 registerBotCommand(deductPoints.regex, deductPoints.cb);
 
 async function addPointsToUser(discordId, numPoints) {
-  console.log(numPoints);
   try {
     const pointsBotResponse = await axios.post(
-      `https://www.theodinproject.com/api/points?discord_id=${discordId}`,
+      `https://www.theodinproject.com/api/points?discord_id=${discordId}&value=${numPoints}`,
     );
     return pointsBotResponse.data;
   } catch (err) {
