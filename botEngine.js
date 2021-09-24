@@ -81,8 +81,14 @@ async function listenToMessages(client) {
         authorBuffer.push(createAuthorEntry(message));
         try {
           const response = await fn(message);
+          const isUndefined = response.every((value) => {
+            if (value === undefined) {
+              return true;
+            }
+            return false;
+          });
 
-          if (response) {
+          if (response && !isUndefined) {
             try {
               message.channel.send(response);
             } catch (e) {
