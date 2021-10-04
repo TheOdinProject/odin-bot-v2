@@ -315,6 +315,7 @@ describe('callback', () => {
       });
 
     await commands.awardPoints.cb(data);
+
     expect(data.channel.send).toHaveBeenCalledTimes(4);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -386,7 +387,6 @@ describe('callback', () => {
           points: (mentionedUser5.points += 1),
         },
       });
-
     await commands.awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalledTimes(6);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();

@@ -20,7 +20,7 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
       if (isAdmin) {
         matches.push([match[1].replace('!', ''), 2]);
       } else {
-        channel.send('Only admin users can give double points!');
+        channel.send('Only maintainers or core members can give double points!');
       }
       match = regex.exec(text);
     } else {
@@ -119,10 +119,6 @@ const awardPoints = {
       member,
       channel,
     );
-
-    if (userIds.length === 0) {
-      return Promise.resolve();
-    }
 
     return Promise.all(
       userIds.map(async (userId, i) => {

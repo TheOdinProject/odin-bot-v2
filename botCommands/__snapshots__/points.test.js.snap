@@ -71,7 +71,7 @@ exports[`?++ callback returns correct output for a user mentioning themselves 1`
 
 exports[`?++ callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
 
-exports[`?++ callback returns correct output for a user who does not have an admin role 1`] = `"Only admin users can give double points!"`;
+exports[`?++ callback returns correct output for a user who does not have an admin role 1`] = `"Only maintainers or core members can give double points!"`;
 
 exports[`?++ callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
 
