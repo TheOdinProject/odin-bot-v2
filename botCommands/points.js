@@ -4,29 +4,12 @@ const { registerBotCommand } = require('../botEngine.js');
 
 axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
-function getUserIdsFromMessage(client, author, guild, text, regex, authorMember, channel) {
+function getUserIdsFromMessage(text, regex) {
   const matches = [];
   let match = regex.exec(text);
-
   while (match !== null) {
-    if (match[2] === '?++') {
-      let isAdmin = false;
-      authorMember.roles.cache.forEach((value) => {
-        if (['core', 'maintainer', 'admin'].includes(value.name)) {
-          isAdmin = true;
-        }
-      });
-
-      if (isAdmin) {
-        matches.push([match[1].replace('!', ''), 2]);
-      } else {
-        channel.send('Only maintainers or core members can give double points!');
-      }
-      match = regex.exec(text);
-    } else {
-      matches.push([match[1].replace('!', ''), 1]);
-      match = regex.exec(text);
-    }
+    matches.push(match[1].replace('!', ''));
+    match = regex.exec(text);
   }
   return matches;
 }
@@ -38,10 +21,10 @@ const deductPoints = {
 
 registerBotCommand(deductPoints.regex, deductPoints.cb);
 
-async function addPointsToUser(discordId, numPoints) {
+async function addPointsToUser(discordId) {
   try {
     const pointsBotResponse = await axios.post(
-      `https://www.theodinproject.com/api/points?discord_id=${discordId}&value=${numPoints}`,
+      `https://www.theodinproject.com/api/points?discord_id=${discordId}`,
     );
     return pointsBotResponse.data;
   } catch (err) {
@@ -90,13 +73,12 @@ const userRegex = '<@!?(\\d+)>';
 const starRegex = '\u{2b50}';
 // matches at least two plus signs
 const plusRegex = '(\\+){2,}';
-const doublePointsPlusRegex = '\\?(\\+){2,}';
 
 const awardPoints = {
   // uses a negative lookback to isolate the command
   // followed by the Discord User, a whitespace character and either the star or plus incrementer
   regex: new RegExp(
-    `(?<!\\S)${userRegex}\\s?(${doublePointsPlusRegex}|${plusRegex}|${starRegex})(?!\\S)`,
+    `(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`,
     'gu',
   ),
   cb: async function pointsBotCommand({
@@ -105,19 +87,13 @@ const awardPoints = {
     channel,
     client,
     guild,
-    member,
   }) {
     const userIds = getUserIdsFromMessage(
-      client,
-      author,
-      guild,
       content,
       new RegExp(
-        `(?<!\\S)${userRegex}\\s?(${doublePointsPlusRegex}|${plusRegex}|${starRegex})(?!\\S)`,
+        `(?<!\\S)${userRegex}\\s?(${plusRegex}|${starRegex})(?!\\S)`,
         'gu',
       ),
-      member,
-      channel,
     );
 
     return Promise.all(
@@ -133,7 +109,7 @@ const awardPoints = {
         if (i === 4) {
           channel.send('you can only do 5 at a time..... ');
         }
-        const user = await client.users.cache.get(userId[0]);
+        const user = await client.users.cache.get(userId);
         if (user === author) {
           channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
           channel.send("You can't do that!");
@@ -144,18 +120,18 @@ const awardPoints = {
           return;
         }
         try {
-          const pointsUser = await addPointsToUser(user.id, userId[1]);
+          const pointsUser = await addPointsToUser(user.id);
           if (user) {
-            const recipientMember = await guild.member(user);
+            const member = await guild.member(user);
             if (
-              recipientMember
-              && !recipientMember.roles.cache.find((r) => r.name === 'club-40')
+              member
+              && !member.roles.cache.find((r) => r.name === 'club-40')
               && pointsUser.points > 39
             ) {
               const pointsRole = guild.roles.cache.find(
                 (r) => r.name === 'club-40',
               );
-              recipientMember.roles.add(pointsRole);
+              member.roles.add(pointsRole);
               const clubChannel = client.channels.cache.get(
                 '707225752608964628',
               );
