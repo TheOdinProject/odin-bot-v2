@@ -55,40 +55,78 @@ exports[`/leaderboard callback returns correct output 8`] = `
 "
 `;
 
+exports[`?++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
+
+exports[`?++ callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 41 points"`;
+
+exports[`?++ callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 22 points"`;
+
+exports[`?++ callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
+
+exports[`?++ callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
+
+exports[`?++ callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
+
+exports[`?++ callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
+
+exports[`?++ callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
+
+exports[`?++ callback returns correct output for a user who does not have an admin role 1`] = `"Only maintainers or core members can give double points!"`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 2`] = `"Sweet! <@2> now has 12 points"`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 3`] = `"Sweet! <@2> now has 5 points"`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 4`] = `"Nice! <@2> now has 3 points"`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 5`] = `"Nice! <@2> now has 2 points"`;
+
+exports[`?++ callback returns correct output for more than five mentioned users 6`] = `"Sweet! <@2> now has 23 points"`;
+
+exports[`?++ callback returns correct output for up to five mentioned users 1`] = `"Woot! <@2> now has 35 points"`;
+
+exports[`?++ callback returns correct output for up to five mentioned users 2`] = `"Sweet! <@2> now has 23 points"`;
+
+exports[`?++ callback returns correct output for up to five mentioned users 3`] = `"Nice! <@2> now has 4 points"`;
+
+exports[`?++ callback returns correct output for up to five mentioned users 4`] = `"Nice! <@2> now has 2 points"`;
+
 exports[`@user -- callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;
 
-exports[`award points callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
+exports[`callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
-exports[`award points callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
+exports[`callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
 
-exports[`award points callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
+exports[`callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 
-exports[`award points callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
+exports[`callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
 
-exports[`award points callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
+exports[`callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
 
-exports[`award points callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
+exports[`callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 
-exports[`award points callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
+exports[`callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
 
-exports[`award points callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
+exports[`callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
 
-exports[`award points callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
+exports[`callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
 
-exports[`award points callback returns correct output for more than five mentioned users 2`] = `"Sweet! <@2> now has 11 points"`;
+exports[`callback returns correct output for more than five mentioned users 2`] = `"Sweet! <@2> now has 11 points"`;
 
-exports[`award points callback returns correct output for more than five mentioned users 3`] = `"Nice! <@2> now has 4 points"`;
+exports[`callback returns correct output for more than five mentioned users 3`] = `"Nice! <@2> now has 4 points"`;
 
-exports[`award points callback returns correct output for more than five mentioned users 4`] = `"Nice! <@2> now has 2 points"`;
+exports[`callback returns correct output for more than five mentioned users 4`] = `"Nice! <@2> now has 2 points"`;
 
-exports[`award points callback returns correct output for more than five mentioned users 5`] = `"Nice! <@2> now has 1 point"`;
+exports[`callback returns correct output for more than five mentioned users 5`] = `"Nice! <@2> now has 1 point"`;
 
-exports[`award points callback returns correct output for more than five mentioned users 6`] = `"Sweet! <@2> now has 22 points"`;
+exports[`callback returns correct output for more than five mentioned users 6`] = `"Sweet! <@2> now has 22 points"`;
 
-exports[`award points callback returns correct output for up to five mentioned users 1`] = `"Woot! <@2> now has 34 points"`;
+exports[`callback returns correct output for up to five mentioned users 1`] = `"Woot! <@2> now has 34 points"`;
 
-exports[`award points callback returns correct output for up to five mentioned users 2`] = `"Sweet! <@2> now has 22 points"`;
+exports[`callback returns correct output for up to five mentioned users 2`] = `"Sweet! <@2> now has 22 points"`;
 
-exports[`award points callback returns correct output for up to five mentioned users 3`] = `"Nice! <@2> now has 3 points"`;
+exports[`callback returns correct output for up to five mentioned users 3`] = `"Nice! <@2> now has 3 points"`;
 
-exports[`award points callback returns correct output for up to five mentioned users 4`] = `"Nice! <@2> now has 1 point"`;
+exports[`callback returns correct output for up to five mentioned users 4`] = `"Nice! <@2> now has 1 point"`;
