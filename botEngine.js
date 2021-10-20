@@ -81,17 +81,10 @@ async function listenToMessages(client) {
         authorBuffer.push(createAuthorEntry(message));
         try {
           const response = await fn(message);
+
           if (response) {
             try {
-              if (Array.isArray(response)) {
-                response.forEach((element) => {
-                  if (element !== undefined) {
-                    message.channel.send(element);
-                  }
-                });
-              } else {
-                message.channel.send(response);
-              }
+              message.channel.send(response);
             } catch (e) {
               console.log(e);
             }
