@@ -60,7 +60,10 @@ async function lookUpUser(discordId) {
   }
 }
 
-function exclamation(points) {
+function exclamation(points, isGoodQuestion) {
+  if (isGoodQuestion) {
+    return 'Thanks for the great question!';
+  }
   if (points < 5) {
     return 'Nice!';
   }
