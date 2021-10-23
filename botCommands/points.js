@@ -123,6 +123,8 @@ const awardPoints = {
       channel,
     );
 
+    const isGoodQuestion = new RegExp(doublePointsPlusRegex).test(content);
+
     return Promise.all(
       userIds.map(async (userId, i) => {
         if (config.noPointsChannels.includes(channel.id)) {
@@ -170,7 +172,7 @@ const awardPoints = {
               }
             }
             channel.send(
-              `${exclamation(pointsUser.points)} ${user} now has ${
+              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${
                 pointsUser.points
               } ${plural(pointsUser.points)}`,
             );
