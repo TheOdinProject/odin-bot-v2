@@ -36,8 +36,6 @@ exports[`/fg callback returns correct output 1`] = `"**This query might help you
 
 exports[`/fu callback returns correct output 1`] = `"http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif"`;
 
-exports[`/gandalf callback returns correct output 1`] = `"http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif"`;
-
 exports[`/google callback returns correct output 1`] = `"**HERE YOU GO BABY >** <https://lmgtfy.com/?q=The+Odin+Project>"`;
 
 exports[`/hug callback returns correct output 1`] = `"⊂(´・ω・｀⊂)"`;
