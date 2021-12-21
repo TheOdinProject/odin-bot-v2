@@ -133,7 +133,6 @@ module.exports = {
   google,
   fg,
   dab,
-  gandalf,
   motivate,
   justDoIt,
   xy,
