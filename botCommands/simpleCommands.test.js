@@ -556,68 +556,6 @@ describe('/dab', () => {
   });
 });
 
-describe('/gandalf', () => {
-  describe('regex', () => {
-    it.each([
-      ['/gandalf'],
-      [' /gandalf'],
-      ['/gandalf @odin-bot'],
-      ['@odin-bot /gandalf'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.gandalf.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['/gand'],
-      ['gandalf'],
-      ['/gandal'],
-      ['/gandalfs'],
-      ['```function("/gandalf", () => {}```'],
-      ['/gandlf'],
-      [''],
-      [' '],
-      [' /'],
-      ['@odin-bot / gandalf'],
-      ['/gan&dalf'],
-      ['/gand^alf'],
-      ['/gandalf!'],
-      ['@odin-bot/ gandalf'],
-      ['https://gandalf.com'],
-    ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.gandalf.regex.test(string)).toBeFalsy();
-    });
-
-    it.each([
-      ['Check this out! /gandalf'],
-      ["Don't worry about /gandalf"],
-      ['Hey @odin-bot, /gandalf'],
-      ['/@odin-bot ^ /me /gandalf /tests$*'],
-    ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.gandalf.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['@user/gandalf'],
-      ["it's about/gandalf"],
-      ['/gandalfisanillusion'],
-      ['/gandalf/'],
-      ['/gandalf*'],
-      ['/gandalf...'],
-    ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
-      (string) => {
-        expect(commands.gandalf.regex.test(string)).toBeFalsy();
-      },
-    );
-  });
-
-  describe('callback', () => {
-    it('returns correct output', () => {
-      expect(commands.gandalf.cb()).toMatchSnapshot();
-    });
-  });
-});
-
 describe('/motivate', () => {
   describe('regex', () => {
     it.each([
