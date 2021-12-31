@@ -105,12 +105,6 @@ const dab = {
 };
 registerBotCommand(dab.regex, dab.cb);
 
-const gandalf = {
-  regex: /(?<!\S)\/gandalf(?!\S)/,
-  cb: () => 'http://emojis.slackmojis.com/emojis/images/1450458362/181/gandalf.gif',
-};
-registerBotCommand(gandalf.regex, gandalf.cb);
-
 const motivate = {
   regex: /(?<!\S)\/motivate(?!\S)/,
   cb: () => 'Don\'t give up! https://www.youtube.com/watch?v=KxGRhd_iWuE',
@@ -139,7 +133,6 @@ module.exports = {
   google,
   fg,
   dab,
-  gandalf,
   motivate,
   justDoIt,
   xy,
