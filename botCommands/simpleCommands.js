@@ -117,7 +117,6 @@ module.exports = {
   question,
   data,
   google,
-  fg,
   dab,
   motivate,
   justDoIt,
