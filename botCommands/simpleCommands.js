@@ -79,7 +79,7 @@ const google = {
       return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
     };
 
-    const query = content.match(/\B\/fg\s+(.+)/)[1];
+    const query = content.match(/\B\/google\s+(.+)/)[1];
     return `${transform(query)}`;
   },
 };
