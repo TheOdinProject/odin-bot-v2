@@ -36,7 +36,18 @@ async function listenToMessages(client) {
     if (message.author === client.user) {
       return;
     }
-    const isAdminMessage = message.member.roles.cache.some((r) => adminRoles.includes(r.name));
+
+    /**
+     * Some bot behavior (such as responding to #introductions messages) executes
+     * based on the admin (core, maintainer) status of the member in the Discord.
+     * Sets the flag for later use.
+     */
+    let isAdminMessage = false;
+    try {
+      isAdminMessage = message.member.roles.cache.some((r) => adminRoles.includes(r.name));
+    } catch (e) {
+      //  The only 'con' is a command or message gets ignored.
+    }
 
     const NOBOT_ROLE_ID = '783764176178774036';
 
