@@ -76,7 +76,7 @@ const google = {
   cb: ({ content }) => {
     const transform = (transformContent) => {
       const query = transformContent.split(' ').map(encodeURIComponent).join('+');
-      return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
+      return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
     };
 
     const query = content.match(/\B\/google\s+(.+)/)[1];
@@ -84,20 +84,6 @@ const google = {
   },
 };
 registerBotCommand(google.regex, google.cb);
-
-const fg = {
-  regex: /\B\/fg\s+.+/,
-  cb: ({ content }) => {
-    const transform = (transformContent) => {
-      const query = transformContent.split(' ').map(encodeURIComponent).join('+');
-      return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
-    };
-
-    const query = content.match(/\B\/fg\s+(.+)/)[1];
-    return `${transform(query)}`;
-  },
-};
-registerBotCommand(fg.regex, fg.cb);
 
 const dab = {
   regex: /(?<!\S)\/dab(?!\S)/,
@@ -131,7 +117,6 @@ module.exports = {
   question,
   data,
   google,
-  fg,
   dab,
   motivate,
   justDoIt,
