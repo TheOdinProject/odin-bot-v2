@@ -433,69 +433,6 @@ describe('/google', () => {
   });
 });
 
-describe('/fg', () => {
-  describe('regex', () => {
-    it.each([
-      ['/fg query'],
-      [' /fg query'],
-      ['/fg query @odin-bot'],
-      ['@odin-bot /fg query'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.fg.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['/g'],
-      ['fg'],
-      ['/f'],
-      ['```function("/fg", () => {}```'],
-      ['/fgs'],
-      [''],
-      [' '],
-      [' /'],
-      ['@odin-bot / fg'],
-      ['/f&g'],
-      ['/f^g'],
-      ['/fg!'],
-      ['@odin-bot/ fg'],
-      ['https://fg.com'],
-    ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.fg.regex.test(string)).toBeFalsy();
-    });
-
-    it.each([
-      ['Check this out! /fg query'],
-      ["Don't worry about /fg query"],
-      ['Hey @odin-bot, /fg query'],
-      ['/@odin-bot ^ /me /fg /tests$*'],
-    ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.fg.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['@user/fg'],
-      ["it's about/fg"],
-      ['/fgisanillusion'],
-      ['/fg/'],
-      ['/fg*'],
-      ['/fg...'],
-    ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
-      (string) => {
-        expect(commands.fg.regex.test(string)).toBeFalsy();
-      },
-    );
-  });
-
-  describe('callback', () => {
-    it('returns correct output', () => {
-      expect(
-        commands.fg.cb({ content: '/fg The Odin Project' }),
-      ).toMatchSnapshot();
-    });
-  });
-});
-
 describe('/dab', () => {
   describe('regex', () => {
     it.each([['/dab'], [' /dab'], ['/dab @odin-bot'], ['@odin-bot /dab']])(
