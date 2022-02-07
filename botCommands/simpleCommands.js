@@ -76,20 +76,6 @@ const google = {
   cb: ({ content }) => {
     const transform = (transformContent) => {
       const query = transformContent.split(' ').map(encodeURIComponent).join('+');
-      return `**HERE YOU GO BABY >** <https://lmgtfy.com/?q=${query}>`;
-    };
-
-    const query = content.match(/\B\/google\s+(.+)/)[1];
-    return `${transform(query)}`;
-  },
-};
-registerBotCommand(google.regex, google.cb);
-
-const fg = {
-  regex: /\B\/fg\s+.+/,
-  cb: ({ content }) => {
-    const transform = (transformContent) => {
-      const query = transformContent.split(' ').map(encodeURIComponent).join('+');
       return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
     };
 
@@ -97,7 +83,7 @@ const fg = {
     return `${transform(query)}`;
   },
 };
-registerBotCommand(fg.regex, fg.cb);
+registerBotCommand(google.regex, google.cb);
 
 const dab = {
   regex: /(?<!\S)\/dab(?!\S)/,
