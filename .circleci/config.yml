@@ -4,6 +4,13 @@ orbs:
   node: circleci/node@5.0.0
 
 jobs:
+  build:
+    docker:
+      - image: cimg/node:16.4
+    steps:
+      - checkout
+      - run: node --version
+          
   tests-and-linters:
     executor: node/default
     steps:
