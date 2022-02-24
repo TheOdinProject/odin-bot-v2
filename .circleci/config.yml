@@ -24,4 +24,5 @@ jobs:
 workflows:
   build:
     jobs:
+      - build
       - tests-and-linters
