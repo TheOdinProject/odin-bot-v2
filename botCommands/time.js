@@ -4,7 +4,7 @@ const command = {
   regex: /(?<!\S)\/time(?!\S)/,
   cb: async ({ mentions }) => {
     let users = '';
-    const mentionedUsers = mentions.users.array();
+    const mentionedUsers = Array.from(mentions.users.values());
     if (mentionedUsers.length >= 3) {
       mentionedUsers.forEach((user, index) => {
         if (index < mentionedUsers.length - 1) {

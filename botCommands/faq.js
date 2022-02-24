@@ -5,7 +5,7 @@ const command = {
   regex: /(?<!\S)\/faq(?!\S)/,
   cb: async ({ mentions }) => {
     let users = '';
-    const mentionedUsers = mentions.users.array();
+    const mentionedUsers = Array.from(mentions.users.values());
     if (mentionedUsers.length >= 3) {
       mentionedUsers.forEach((user, index) => {
         if (index < mentionedUsers.length - 1) {
@@ -35,7 +35,7 @@ const command = {
           : `**The definition of insanity is answering the same question over and over again when we have an [#faq](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!${users}, help us stay sane by giving it a read.**`,
       );
 
-    return faqCommandEmbed;
+    return { embeds: [faqCommandEmbed] };
   },
 };
 

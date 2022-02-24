@@ -24,7 +24,7 @@ const help = {
         true,
       );
 
-    return helpEmbed;
+    return { embeds: [helpEmbed] };
   },
 };
 
@@ -74,7 +74,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
         true,
       );
 
-    return codeCommandEmbed;
+    return { embeds: [codeCommandEmbed] };
   },
 };
 

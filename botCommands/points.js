@@ -151,7 +151,7 @@ const awardPoints = {
         try {
           const pointsUser = await addPointsToUser(user.id, userId[1]);
           if (user) {
-            const recipientMember = await guild.member(user);
+            const recipientMember = await guild.members.fetch(user);
             if (
               recipientMember
               && !recipientMember.roles.cache.find((r) => r.name === 'club-40')
@@ -172,8 +172,7 @@ const awardPoints = {
               }
             }
             channel.send(
-              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${
-                pointsUser.points
+              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${pointsUser.points
               } ${plural(pointsUser.points)}`,
             );
           }

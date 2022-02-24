@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 
 const glob = require('glob');
 const path = require('path');
@@ -9,14 +9,12 @@ glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).for
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
 });
 
-const client = new Discord.Client();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-let listening = false;
-client.on('ready', () => {
-  if (!listening) {
-    listenToMessages(client);
-    listening = true;
-  }
+client.once('ready', () => {
+  console.log('Bot session started:', new Date());
 });
+
+listenToMessages(client);
 
 client.login(process.env.DISCORD_API_KEY);

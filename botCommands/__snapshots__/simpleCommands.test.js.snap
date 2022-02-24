@@ -4,9 +4,11 @@ exports[`/dab callback returns correct output 1`] = `"https://tenor.com/view/bet
 
 exports[`/data callback returns correct output 1`] = `
 Object {
-  "author": null,
-  "color": 13407555,
-  "description": "
+  "embeds": Array [
+    Object {
+      "author": null,
+      "color": 13407555,
+      "description": "
 Instead of asking if anyone can help you, ask your question outright so people can help you!
       
 **Bad**: \\"Hey, does anyone know how to set CSS styles with Javascript?\\"
@@ -21,14 +23,16 @@ And here is the error I'm receiving:
   
 **https://www.dontasktoask.com/**
         ",
-  "fields": Array [],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "Don’t ask to ask!",
-  "type": "rich",
-  "url": "https://www.dontasktoask.com/",
+      "fields": Array [],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "Don’t ask to ask!",
+      "type": "rich",
+      "url": "https://www.dontasktoask.com/",
+    },
+  ],
 }
 `;
 
@@ -46,17 +50,21 @@ exports[`/motivate callback returns correct output 1`] = `"Don't give up! https:
 
 exports[`/question callback returns correct output 1`] = `
 Object {
-  "author": null,
-  "color": 13407555,
-  "description": "We'd love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603",
-  "fields": Array [],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "Asking Great Questions",
-  "type": "rich",
-  "url": null,
+  "embeds": Array [
+    Object {
+      "author": null,
+      "color": 13407555,
+      "description": "We'd love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603",
+      "fields": Array [],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "Asking Great Questions",
+      "type": "rich",
+      "url": null,
+    },
+  ],
 }
 `;
 
