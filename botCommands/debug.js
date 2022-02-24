@@ -20,7 +20,7 @@ const command = {
         'https://www.theodinproject.com/courses/ruby-programming/lessons/debugging#debugging-with-pry-byebug',
       );
 
-    return template;
+    return { embeds: [template] };
   },
 };
 

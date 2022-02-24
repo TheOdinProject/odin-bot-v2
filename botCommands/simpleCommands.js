@@ -36,7 +36,7 @@ const question = {
       .setTitle('Asking Great Questions')
       .setDescription('We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603');
 
-    return questionEmbed;
+    return { embeds: [questionEmbed] };
   },
 };
 registerBotCommand(question.regex, question.cb);
@@ -66,7 +66,7 @@ And here is the error I'm receiving:
 **https://www.dontasktoask.com/**
         `);
 
-    return dataEmbed;
+    return { embeds: [dataEmbed] };
   },
 };
 registerBotCommand(data.regex, data.cb);
