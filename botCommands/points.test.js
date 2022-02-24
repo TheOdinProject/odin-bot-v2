@@ -31,6 +31,7 @@ jest.mock('discord.js', () => ({
       cache: {
         get: (id) => users.filter((member) => member.discord_id === id)[0],
       },
+      fetch: jest.fn().mockImplementation((user) => user),
     },
     roles: {
       cache: [{ name: 'club-40' }],
