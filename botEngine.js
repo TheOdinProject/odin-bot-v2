@@ -9,7 +9,7 @@ const adminRoles = ['core', 'maintainer', 'admin'];
 let currentIntroductionsMessage = null;
 const introductionsWelcomeMessage = 'Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!';
 
-const createAuthorEntry = function (message) {
+function createAuthorEntry(message) {
   const entry = {
     author: message.author.id,
     timeOut: false,
@@ -20,18 +20,18 @@ const createAuthorEntry = function (message) {
   }, 60000);
 
   return entry;
-};
+}
 
-const flushAuthorEntries = function () {
+function flushAuthorEntries() {
   authorBuffer = authorBuffer.filter((entry) => entry.timeOut === false);
-};
+}
 
 function registerBotCommand(regex, fn) {
   botCommands.push({ regex, fn });
 }
 
 async function listenToMessages(client) {
-  client.on('message', async (message) => {
+  client.on('messageCreate', async (message) => {
     // Prevent bot from responding to its own messages
     if (message.author === client.user) {
       return;
