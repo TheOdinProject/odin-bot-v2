@@ -2,14 +2,16 @@
 
 exports[`/code snapshot returns correct output 1`] = `
 Object {
-  "author": null,
-  "color": 39423,
-  "description": "Hey, here's some helpful tips on sharing your code with others!",
-  "fields": Array [
+  "embeds": Array [
     Object {
-      "inline": false,
-      "name": "Sharing Code on Discord",
-      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      "author": null,
+      "color": 39423,
+      "description": "Hey, here's some helpful tips on sharing your code with others!",
+      "fields": Array [
+        Object {
+          "inline": false,
+          "name": "Sharing Code on Discord",
+          "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
@@ -19,43 +21,47 @@ For \`inline code\` use one backtick (no syntax highlighting):
 
 \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Code Sandbox to share Webpack/React examples",
-      "value": "https://codesandbox.io/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Repl.it to share Javascript/Ruby examples",
-      "value": "https://replit.com/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
-      "value": "https://codepen.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Code Sandbox to share Webpack/React examples",
+          "value": "https://codesandbox.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Repl.it to share Javascript/Ruby examples",
+          "value": "https://replit.com/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+          "value": "https://codepen.io/",
+        },
+      ],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "HOW TO EMBED CODE SNIPPETS",
+      "type": "rich",
+      "url": null,
     },
   ],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "HOW TO EMBED CODE SNIPPETS",
-  "type": "rich",
-  "url": null,
 }
 `;
 
 exports[`/code snapshot returns correct output 2`] = `
 Object {
-  "author": null,
-  "color": 39423,
-  "description": "Hey, <@1>, here's some helpful tips on sharing your code with others!",
-  "fields": Array [
+  "embeds": Array [
     Object {
-      "inline": false,
-      "name": "Sharing Code on Discord",
-      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      "author": null,
+      "color": 39423,
+      "description": "Hey, <@1>, here's some helpful tips on sharing your code with others!",
+      "fields": Array [
+        Object {
+          "inline": false,
+          "name": "Sharing Code on Discord",
+          "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
@@ -65,43 +71,47 @@ For \`inline code\` use one backtick (no syntax highlighting):
 
 \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Code Sandbox to share Webpack/React examples",
-      "value": "https://codesandbox.io/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Repl.it to share Javascript/Ruby examples",
-      "value": "https://replit.com/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
-      "value": "https://codepen.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Code Sandbox to share Webpack/React examples",
+          "value": "https://codesandbox.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Repl.it to share Javascript/Ruby examples",
+          "value": "https://replit.com/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+          "value": "https://codepen.io/",
+        },
+      ],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "HOW TO EMBED CODE SNIPPETS",
+      "type": "rich",
+      "url": null,
     },
   ],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "HOW TO EMBED CODE SNIPPETS",
-  "type": "rich",
-  "url": null,
 }
 `;
 
 exports[`/code snapshot returns correct output 3`] = `
 Object {
-  "author": null,
-  "color": 39423,
-  "description": "Hey, <@1> <@2>, here's some helpful tips on sharing your code with others!",
-  "fields": Array [
+  "embeds": Array [
     Object {
-      "inline": false,
-      "name": "Sharing Code on Discord",
-      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      "author": null,
+      "color": 39423,
+      "description": "Hey, <@1> <@2>, here's some helpful tips on sharing your code with others!",
+      "fields": Array [
+        Object {
+          "inline": false,
+          "name": "Sharing Code on Discord",
+          "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
@@ -111,43 +121,47 @@ For \`inline code\` use one backtick (no syntax highlighting):
 
 \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Code Sandbox to share Webpack/React examples",
-      "value": "https://codesandbox.io/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Repl.it to share Javascript/Ruby examples",
-      "value": "https://replit.com/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
-      "value": "https://codepen.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Code Sandbox to share Webpack/React examples",
+          "value": "https://codesandbox.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Repl.it to share Javascript/Ruby examples",
+          "value": "https://replit.com/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+          "value": "https://codepen.io/",
+        },
+      ],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "HOW TO EMBED CODE SNIPPETS",
+      "type": "rich",
+      "url": null,
     },
   ],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "HOW TO EMBED CODE SNIPPETS",
-  "type": "rich",
-  "url": null,
 }
 `;
 
 exports[`/code snapshot returns correct output 4`] = `
 Object {
-  "author": null,
-  "color": 39423,
-  "description": "Hey, <@1> <@2> <@3>, here's some helpful tips on sharing your code with others!",
-  "fields": Array [
+  "embeds": Array [
     Object {
-      "inline": false,
-      "name": "Sharing Code on Discord",
-      "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
+      "author": null,
+      "color": 39423,
+      "description": "Hey, <@1> <@2> <@3>, here's some helpful tips on sharing your code with others!",
+      "fields": Array [
+        Object {
+          "inline": false,
+          "name": "Sharing Code on Discord",
+          "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
       
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
@@ -157,66 +171,72 @@ For \`inline code\` use one backtick (no syntax highlighting):
 
 \\\\\`Code here!\\\\\`
       ",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Code Sandbox to share Webpack/React examples",
-      "value": "https://codesandbox.io/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Repl.it to share Javascript/Ruby examples",
-      "value": "https://replit.com/",
-    },
-    Object {
-      "inline": true,
-      "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
-      "value": "https://codepen.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Code Sandbox to share Webpack/React examples",
+          "value": "https://codesandbox.io/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Repl.it to share Javascript/Ruby examples",
+          "value": "https://replit.com/",
+        },
+        Object {
+          "inline": true,
+          "name": "Link a Codepen to share basic HTML/CSS/Javascript examples",
+          "value": "https://codepen.io/",
+        },
+      ],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "HOW TO EMBED CODE SNIPPETS",
+      "type": "rich",
+      "url": null,
     },
   ],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "HOW TO EMBED CODE SNIPPETS",
-  "type": "rich",
-  "url": null,
 }
 `;
 
 exports[`/help snapshot should return the correct output 1`] = `
 Object {
-  "author": null,
-  "color": 13407555,
-  "description": "**By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md).**",
-  "fields": Array [
+  "embeds": Array [
     Object {
-      "inline": true,
-      "name": "Add Points",
-      "value": "Give points to someone who has been helpful by mentioning their name 
+      "author": null,
+      "color": 13407555,
+      "description": "**By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md).**",
+      "fields": Array [
+        Object {
+          "inline": true,
+          "name": "Add Points",
+          "value": "Give points to someone who has been helpful by mentioning their name 
  and adding ++ : 
  \`@username ++\` or by 
  giving them a star : \`@username :star:\`.",
-    },
-    Object {
-      "inline": true,
-      "name": "Leaderboard",
-      "value": "View the points leaderboard with \`/leaderboard\`. 
+        },
+        Object {
+          "inline": true,
+          "name": "Leaderboard",
+          "value": "View the points leaderboard with \`/leaderboard\`. 
 
  Modify it with \`n=\` and \`start=\` i.e. \`/leaderboard n=25 start=30\`.",
-    },
-    Object {
-      "inline": true,
-      "name": "Contribute to the bot",
-      "value": "<https://github.com/TheOdinProject/odin-bot-v2>",
+        },
+        Object {
+          "inline": true,
+          "name": "Contribute to the bot",
+          "value": "<https://github.com/TheOdinProject/odin-bot-v2>",
+        },
+      ],
+      "footer": null,
+      "image": null,
+      "thumbnail": null,
+      "timestamp": null,
+      "title": "Help",
+      "type": "rich",
+      "url": null,
     },
   ],
-  "footer": null,
-  "image": null,
-  "thumbnail": null,
-  "timestamp": null,
-  "title": "Help",
-  "type": "rich",
-  "url": null,
 }
 `;
