@@ -166,8 +166,12 @@ const awardPoints = {
               );
 
               if (clubChannel) {
+                const jsonData= require('./club_40_gifs.json')
+                const choice = Math.floor(Math.random() * jsonData.length);
                 clubChannel.send(
                   `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`,
+                  `${jsonData[choice].gif}`,
+                  `Gif by ${jsonData[choice].author}`
                 );
               }
             }
