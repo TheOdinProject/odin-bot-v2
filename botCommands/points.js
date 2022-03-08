@@ -5,6 +5,12 @@ const club40Gifs = require('./club_40_gifs.json');
 
 axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
+function gifPicker(gifContainer, clubChannel) {
+  const choice = Math.floor(Math.random() * gifContainer.length);
+  clubChannel.send(`${gifContainer[choice].gif}`);
+  clubChannel.send(`Gif by ${gifContainer[choice].author}`);
+}
+
 function getUserIdsFromMessage(client, author, guild, text, regex, authorMember, channel) {
   const matches = [];
   let match = regex.exec(text);
@@ -167,10 +173,8 @@ const awardPoints = {
               );
 
               if (clubChannel) {
-                const choice = Math.floor(Math.random() * club40Gifs.length);
                 clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`);
-                clubChannel.send(`${club40Gifs[choice].gif}`);
-                clubChannel.send(`Gif by ${club40Gifs[choice].author}`);
+                gifPicker(club40Gifs, clubChannel);
               }
             }
             channel.send(
