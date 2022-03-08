@@ -57,7 +57,11 @@ exports[`/leaderboard callback returns correct output 8`] = `
 
 exports[`?++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
-exports[`?++ callback returns correct output for a single user entering club-40 2`] = `"Thanks for the great question! <@2> now has 41 points"`;
+exports[`?++ callback returns correct output for a single user entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
+
+exports[`?++ callback returns correct output for a single user entering club-40 3`] = `"Gif by Sully"`;
+
+exports[`?++ callback returns correct output for a single user entering club-40 4`] = `"Thanks for the great question! <@2> now has 41 points"`;
 
 exports[`?++ callback returns correct output for a single user w/o club-40 1`] = `"Thanks for the great question! <@2> now has 22 points"`;
 
@@ -97,7 +101,11 @@ exports[`@user -- callback returns correct output 1`] = `"http://media.riffsy.co
 
 exports[`callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
-exports[`callback returns correct output for a single user entering club-40 2`] = `"Woot! <@2> now has 40 points"`;
+exports[`callback returns correct output for a single user entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
+
+exports[`callback returns correct output for a single user entering club-40 3`] = `"Gif by Sully"`;
+
+exports[`callback returns correct output for a single user entering club-40 4`] = `"Woot! <@2> now has 40 points"`;
 
 exports[`callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 

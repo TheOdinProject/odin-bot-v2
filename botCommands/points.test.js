@@ -10,6 +10,15 @@ axios.post = jest.fn();
 const mockSend = jest.fn();
 mockSend.mockImplementation((message) => message);
 
+const gifContainer = [
+  {
+    gif: 'https://i.imgur.com/ofDEfYs.gif',
+    author: 'Sully',
+  },
+];
+
+jest.mock('./club_40_gifs.json', () => gifContainer);
+
 jest.mock('discord.js', () => ({
   Client: jest.fn().mockImplementation((users, channel, user) => ({
     channels: {
@@ -256,6 +265,8 @@ describe('callback', () => {
     await commands.awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
@@ -563,6 +574,8 @@ describe('?++ callback', () => {
     await commands.awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
