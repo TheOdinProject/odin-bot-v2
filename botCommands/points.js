@@ -1,6 +1,7 @@
 const axios = require('axios');
 const config = require('../config.js');
 const { registerBotCommand } = require('../botEngine.js');
+const club40Gifs = require('./club_40_gifs.json');
 
 axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
@@ -166,13 +167,10 @@ const awardPoints = {
               );
 
               if (clubChannel) {
-                const jsonData= require('./club_40_gifs.json')
-                const choice = Math.floor(Math.random() * jsonData.length);
-                clubChannel.send(
-                  `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`,
-                  `${jsonData[choice].gif}`,
-                  `Gif by ${jsonData[choice].author}`
-                );
+                const choice = Math.floor(Math.random() * club40Gifs.length);
+                clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`);
+                clubChannel.send(`${club40Gifs[choice].gif}`);
+                clubChannel.send(`Gif by ${club40Gifs[choice].author}`);
               }
             }
             channel.send(

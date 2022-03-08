@@ -256,7 +256,7 @@ describe('callback', () => {
     await commands.awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
-    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
   it('returns correct output for up to five mentioned users', async () => {
@@ -563,7 +563,7 @@ describe('?++ callback', () => {
     await commands.awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
-    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
   it('returns correct output for up to five mentioned users', async () => {
