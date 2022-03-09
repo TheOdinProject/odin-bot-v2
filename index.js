@@ -9,10 +9,16 @@ glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).for
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
 });
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
+});
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log('Bot session started:', new Date());
+
+  // Fetch Guild members on startup to ensure the integrity of the cache
+  const guild = await client.guilds.fetch('480223680803110924');
+  await guild.members.fetch();
 });
 
 listenToMessages(client);
