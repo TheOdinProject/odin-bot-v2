@@ -1,10 +1,10 @@
+const adminRoles = require('./constants/admin-roles.const.js');
+
 const botCommands = [];
 
 let authorBuffer = [];
 
 let creationsMessage = null;
-
-const adminRoles = ['core', 'maintainer', 'admin', 'moderator'];
 
 let currentIntroductionsMessage = null;
 const introductionsWelcomeMessage = 'Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!';
