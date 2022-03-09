@@ -1,3 +1,5 @@
+const adminRoles = require('./constants/admin-roles.const.js');
+
 const botCommands = [];
 
 let authorBuffer = [];
