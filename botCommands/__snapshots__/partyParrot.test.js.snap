@@ -24,8 +24,8 @@ exports[`partyparrot snapshot when randomInt is mocked, the output remains the s
 
 exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 7`] = `"http://cultofthepartyparrot.com/parrots/tripletsparrot.gif"`;
 
-exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 8`] = `"https://i.imgur.com/Q1K4Wzx.gif"`;
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 8`] = `"https://emoji.gg/assets/emoji/6379_vikingparrot.gif"`;
 
-exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 9`] = `"https://i.imgur.com/rcNgsYF.gif"`;
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 9`] = `"https://emoji.gg/assets/emoji/8201-mr-parrot.gif"`;
 
-exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 10`] = `"https://i.imgur.com/RWZuxIa.gif"`;
+exports[`partyparrot snapshot when randomInt is mocked, the output remains the same 10`] = `"https://emoji.gg/assets/emoji/6433_wineparrot.gif"`;
