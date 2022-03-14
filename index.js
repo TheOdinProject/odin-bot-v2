@@ -17,7 +17,7 @@ client.once('ready', async () => {
   console.log('Bot session started:', new Date());
 
   // Fetch Guild members on startup to ensure the integrity of the cache
-  const guild = await client.guilds.fetch('505093832157691914');
+  const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID);
   await guild.members.fetch();
 });
 
