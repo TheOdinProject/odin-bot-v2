@@ -12,7 +12,9 @@ const command = {
       'http://cultofthepartyparrot.com/parrots/slomoparrot.gif',
       'http://cultofthepartyparrot.com/parrots/hd/dealwithitparrot.gif',
       'http://cultofthepartyparrot.com/parrots/tripletsparrot.gif',
-      'http://emojis.slackmojis.com/emojis/images/1450738632/246/leftshark.png',
+      'https://i.imgur.com/Q1K4Wzx.gif', // Viking Parrot - Manon
+      'https://i.imgur.com/rcNgsYF.gif', // Stache Parrot - Manon
+      'https://i.imgur.com/RWZuxIa.gif', // Wine Parrot - Manon
     ];
 
     if (content.match('!')) {
