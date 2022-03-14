@@ -15,6 +15,10 @@ const command = {
       'https://emoji.gg/assets/emoji/6379_vikingparrot.gif',
       'https://emoji.gg/assets/emoji/8201-mr-parrot.gif',
       'https://emoji.gg/assets/emoji/6433_wineparrot.gif',
+      'https://emoji.gg/assets/emoji/1085_sleepingparrot.gif',
+      'https://emoji.gg/assets/emoji/2282_scienceparrot.gif',
+      'https://emoji.gg/assets/emoji/3147_thefastestparrot.gif',
+      'https://emoji.gg/assets/emoji/9386_thumbsupparrot.gif',
     ];
 
     if (content.match('!')) {

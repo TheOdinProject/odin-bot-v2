@@ -71,7 +71,7 @@ describe('partyparrot snapshot', () => {
     // NOTE: if the length of the parrot array changes,
     // this for loop will need to be updated to reflect that change
     // TODO: Automatically grab length of Parrots array
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 14; i += 1) {
       randomInt.mockReturnValueOnce(i);
 
       expect(command.cb({ content: '' })).toMatchSnapshot();
