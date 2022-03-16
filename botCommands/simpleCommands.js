@@ -2,25 +2,25 @@ const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const hug = {
-  regex: /(?<!\S)\/hug(?!\S)/,
+  regex: /(?<!\S)\?hug(?!\S)/,
   cb: () => '⊂(´・ω・｀⊂)',
 };
 registerBotCommand(hug.regex, hug.cb);
 
 const smart = {
-  regex: /(?<!\S)\/smart(?!\S)/,
+  regex: /(?<!\S)\?smart(?!\S)/,
   cb: () => String.raw`f(ಠ‿↼)z`,
 };
 registerBotCommand(smart.regex, smart.cb);
 
 const lenny = {
-  regex: /(?<!\S)\/lenny(?!\S)/,
+  regex: /(?<!\S)\?lenny(?!\S)/,
   cb: () => String.raw`( ͡° ͜ʖ ͡°)`,
 };
 registerBotCommand(lenny.regex, lenny.cb);
 
 const fu = {
-  regex: /(?<!\S)\/fu(?!\S)/,
+  regex: /(?<!\S)\?fu(?!\S)/,
   cb: async (message) => {
     await message.reply('http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif');
     return null;
@@ -29,7 +29,7 @@ const fu = {
 registerBotCommand(fu.regex, fu.cb);
 
 const question = {
-  regex: /(?<!\S)\/question(?!\S)/,
+  regex: /(?<!\S)\?question(?!\S)/,
   cb: () => {
     const questionEmbed = new Discord.MessageEmbed()
       .setColor('#cc9543')
@@ -42,7 +42,7 @@ const question = {
 registerBotCommand(question.regex, question.cb);
 
 const data = {
-  regex: /(?<!\S)\/data(?!\S)/,
+  regex: /(?<!\S)\?data(?!\S)/,
   cb: () => {
     const dataEmbed = new Discord.MessageEmbed()
       .setTitle('Don’t ask to ask!')
@@ -51,18 +51,18 @@ const data = {
       // this weird formating is needed because of some indentation on mobile
       .setDescription(`
 Instead of asking if anyone can help you, ask your question outright so people can help you!
-      
+
 **Bad**: "Hey, does anyone know how to set CSS styles with Javascript?"
-    
-**Good**: 
+
+**Good**:
 "Hey, I'm having trouble setting CSS styles via Javascript.
-  
-Here's my code: 
+
+Here's my code:
 \`\`\`Code snippet\`\`\`\
-  
+
 And here is the error I'm receiving:
 \`Cannot set attribute 'style' of null\` "
-  
+
 **https://www.dontasktoask.com/**
         `);
 
@@ -72,39 +72,39 @@ And here is the error I'm receiving:
 registerBotCommand(data.regex, data.cb);
 
 const google = {
-  regex: /\B\/google\s+.+/,
+  regex: /\B\?google\s+.+/,
   cb: ({ content }) => {
     const transform = (transformContent) => {
       const query = transformContent.split(' ').map(encodeURIComponent).join('+');
       return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
     };
 
-    const query = content.match(/\B\/google\s+(.+)/)[1];
+    const query = content.match(/\B\?google\s+(.+)/)[1];
     return `${transform(query)}`;
   },
 };
 registerBotCommand(google.regex, google.cb);
 
 const dab = {
-  regex: /(?<!\S)\/dab(?!\S)/,
+  regex: /(?<!\S)\?dab(?!\S)/,
   cb: () => 'https://tenor.com/view/bettywhite-dab-gif-5044603',
 };
 registerBotCommand(dab.regex, dab.cb);
 
 const motivate = {
-  regex: /(?<!\S)\/motivate(?!\S)/,
+  regex: /(?<!\S)\?motivate(?!\S)/,
   cb: () => 'Don\'t give up! https://www.youtube.com/watch?v=KxGRhd_iWuE',
 };
 registerBotCommand(motivate.regex, motivate.cb);
 
 const justDoIt = {
-  regex: /(?<!\S)\/justdoit(?!\S)/,
+  regex: /(?<!\S)\?justdoit(?!\S)/,
   cb: () => 'What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0',
 };
 registerBotCommand(justDoIt.regex, justDoIt.cb);
 
 const xy = {
-  regex: /(?<!\S)\/xy(?!\S)/,
+  regex: /(?<!\S)\?xy(?!\S)/,
   cb: () => 'What problem are you *really* trying to solve? Check out this article to help others better understand your question: <https://xyproblem.info/>',
 };
 registerBotCommand(xy.regex, xy.cb);

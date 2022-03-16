@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/debug callback should return the correct output 1`] = `
+exports[`?debug callback should return the correct output 1`] = `
 Object {
   "embeds": Array [
     Object {

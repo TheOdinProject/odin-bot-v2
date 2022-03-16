@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/debug(?!\S)/,
+  regex: /(?<!\S)\?debug(?!\S)/,
   cb: () => {
     const template = new Discord.MessageEmbed()
       .setColor('#cc9543')

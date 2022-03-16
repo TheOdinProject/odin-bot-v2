@@ -222,7 +222,7 @@ const points = {
 registerBotCommand(points.regex, points.cb);
 
 const leaderboard = {
-  regex: /(?<!\S)\/leaderboard(?!\S)/,
+  regex: /(?<!\S)\?leaderboard(?!\S)/,
   async cb({ guild, content }) {
     try {
       const sEquals = content

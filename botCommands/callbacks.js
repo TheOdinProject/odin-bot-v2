@@ -1,7 +1,7 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/callbacks(?!\S)/,
+  regex: /(?<!\S)\?callbacks(?!\S)/,
   cb: () => '**DID SOMEONE SAY CALLBACKS?: https://briggs.dev/blog/understanding-callbacks**',
 };
 

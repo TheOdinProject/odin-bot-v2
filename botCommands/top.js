@@ -1,7 +1,7 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/top(?!\S)/,
+  regex: /(?<!\S)\?top(?!\S)/,
   cb: () => 'The Odin Project. Your Career in Web Development Starts Here. <https://www.theodinproject.com> ',
 };
 

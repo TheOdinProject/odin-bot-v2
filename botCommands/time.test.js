@@ -1,53 +1,53 @@
 const command = require('./time');
 const { generateMentions } = require('./mockData');
 
-describe('/time', () => {
+describe('?time', () => {
   describe('regex', () => {
     it.each([
-      ['/time'],
-      [' /time'],
-      ['/time @odin-bot'],
-      ['@odin-bot /time'],
+      ['?time'],
+      [' ?time'],
+      ['?time @odin-bot'],
+      ['@odin-bot ?time'],
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy();
     });
 
     it.each([
-      ['/tim'],
+      ['?tim'],
       ['tie'],
-      ['/ti'],
-      ['/times'],
-      ['```function("/time", () => {}```'],
-      ['/timea'],
+      ['?ti'],
+      ['?times'],
+      ['```function("?time", () => {}```'],
+      ['?timea'],
       [''],
       [' '],
-      [' /'],
-      ['@odin-bot / time'],
-      ['/tim&e'],
-      ['/tim^e'],
-      ['/time!'],
-      ['@odin-bot/ time'],
-      ['https://time.com'],
+      [' ?'],
+      ['@odin-bot ? time'],
+      ['?tim&e'],
+      ['?tim^e'],
+      ['?time!'],
+      ['@odin-bot? time'],
+      ['https:??time.com'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(command.regex.test(string)).toBeFalsy();
     });
 
     it.each([
-      ['Check this out! /time'],
-      ['Don\'t worry about /time'],
-      ['Hey @odin-bot, /time'],
-      ['/@odin-bot ^ /me /time /tests$*'],
+      ['Check this out! ?time'],
+      ['Don\'t worry about ?time'],
+      ['Hey @odin-bot, ?time'],
+      ['?@odin-bot ^ ?me ?time ?tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
       expect(command.regex.test(string)).toBeTruthy();
     });
 
     it.each([
-      ['@user/time'],
-      ['it\'s about/time'],
-      ['/timeisanillusion'],
-      ['/time/'],
-      ['/time*'],
-      ['/time...'],
+      ['@user?time'],
+      ['it\'s about?time'],
+      ['?timeisanillusion'],
+      ['?time?'],
+      ['?time*'],
+      ['?time...'],
     ])("'%s' - command should be its own word/group - no leading or trailing characters", (string) => {
       expect(command.regex.test(string)).toBeFalsy();
     });

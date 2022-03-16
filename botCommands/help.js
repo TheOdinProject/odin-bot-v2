@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const help = {
-  regex: /(?<!\S)\/help(?!\S)/,
+  regex: /(?<!\S)\?help(?!\S)/,
   cb: () => {
     const helpEmbed = new Discord.MessageEmbed()
       .setColor('#cc9543')
@@ -29,7 +29,7 @@ const help = {
 };
 
 const code = {
-  regex: /(?<!\S)\/code(?!\S)/,
+  regex: /(?<!\S)\?code(?!\S)/,
   cb: ({ mentions }) => {
     let users = '';
     if (mentions.users) {
@@ -48,7 +48,7 @@ const code = {
       .addField(
         'Sharing Code on Discord',
         `To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
-      
+
 \\\`\\\`\\\`js
 [Put your JavaScript Code here!]
 \\\`\\\`\\\`

@@ -1,7 +1,7 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/cqg(?!\S)/,
+  regex: /(?<!\S)\?cqg(?!\S)/,
   cb: () => `**Here is a great quote about "Asking Questions in the TOP Discord"**
     "Here's my take on asking questions here:
     Naturally, we welcome them. But we will hold you accountable when you ask a question that is easily researched. Not because we think you're a jerk. But because independent research is so critical to your continued learning.
