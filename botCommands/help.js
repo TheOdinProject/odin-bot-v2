@@ -15,7 +15,7 @@ const help = {
       )
       .addField(
         'Leaderboard',
-        'View the points leaderboard with `/leaderboard`. \n\n Modify it with `n=` and `start=` i.e. `/leaderboard n=25 start=30`.',
+        'View the points leaderboard with `!leaderboard`. \n\n Modify it with `n=` and `start=` i.e. `!leaderboard n=25 start=30`.',
         true,
       )
       .addField(

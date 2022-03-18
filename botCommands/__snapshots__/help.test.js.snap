@@ -219,9 +219,9 @@ Object {
         Object {
           "inline": true,
           "name": "Leaderboard",
-          "value": "View the points leaderboard with \`/leaderboard\`. 
+          "value": "View the points leaderboard with \`!leaderboard\`. 
 
- Modify it with \`n=\` and \`start=\` i.e. \`/leaderboard n=25 start=30\`.",
+ Modify it with \`n=\` and \`start=\` i.e. \`!leaderboard n=25 start=30\`.",
         },
         Object {
           "inline": true,
