@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/windows callback returns correct output 1`] = `
+exports[`!windows callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {

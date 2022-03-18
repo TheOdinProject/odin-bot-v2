@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/leaderboard callback returns correct output 1`] = `
+exports[`!leaderboard callback returns correct output 1`] = `
 "**leaderboard** 
 1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -10,7 +10,7 @@ exports[`/leaderboard callback returns correct output 1`] = `
 "
 `;
 
-exports[`/leaderboard callback returns correct output 2`] = `
+exports[`!leaderboard callback returns correct output 2`] = `
 "**leaderboard** 
 1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -18,14 +18,14 @@ exports[`/leaderboard callback returns correct output 2`] = `
 "
 `;
 
-exports[`/leaderboard callback returns correct output 3`] = `
+exports[`!leaderboard callback returns correct output 3`] = `
 "**leaderboard** 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 "
 `;
 
-exports[`/leaderboard callback returns correct output 4`] = `
+exports[`!leaderboard callback returns correct output 4`] = `
 "**leaderboard** 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -33,24 +33,24 @@ exports[`/leaderboard callback returns correct output 4`] = `
 "
 `;
 
-exports[`/leaderboard callback returns correct output 5`] = `
+exports[`!leaderboard callback returns correct output 5`] = `
 "**leaderboard** 
 1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 "
 `;
 
-exports[`/leaderboard callback returns correct output 6`] = `
+exports[`!leaderboard callback returns correct output 6`] = `
 "**leaderboard** 
 "
 `;
 
-exports[`/leaderboard callback returns correct output 7`] = `
+exports[`!leaderboard callback returns correct output 7`] = `
 "**leaderboard** 
 "
 `;
 
-exports[`/leaderboard callback returns correct output 8`] = `
+exports[`!leaderboard callback returns correct output 8`] = `
 "**leaderboard** 
 "
 `;

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/windows(?!\S)/,
+  regex: /(?<!\S)!windows(?!\S)/,
   cb: () => {
     const windowsEmbed = new Discord.MessageEmbed()
       .setColor('#cc9543')

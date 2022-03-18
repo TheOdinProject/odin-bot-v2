@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/faq(?!\S)/,
+  regex: /(?<!\S)!faq(?!\S)/,
   cb: async ({ mentions }) => {
     let users = '';
     const mentionedUsers = Array.from(mentions.users.values());

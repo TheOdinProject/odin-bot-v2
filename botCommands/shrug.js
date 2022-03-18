@@ -1,7 +1,7 @@
 const { registerBotCommand } = require('../botEngine.js');
 
 const command = {
-  regex: /(?<!\S)\/[shurg]{5}(?!\S)/,
+  regex: /(?<!\S)![shurg]{5}(?!\S)/,
   cb: ({ content }) => {
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;

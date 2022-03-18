@@ -194,7 +194,7 @@ const awardPoints = {
 registerBotCommand(awardPoints.regex, awardPoints.cb);
 
 const points = {
-  regex: /(?<!\S)\/points(?!\S)/,
+  regex: /(?<!\S)!points(?!\S)/,
   async cb({
     content, author, client, channel, guild,
   }) {
@@ -209,7 +209,7 @@ const points = {
         if (userPoints) {
           const username = guild.members.cache
             .get(userPoints.discord_id)
-            .displayName.replace(/\//g, '\\/');
+            .displayName.replace(/!/g, '!');
           channel.send(`${username} has ${userPoints.points} points!`);
         }
       } catch (err) {
@@ -222,7 +222,7 @@ const points = {
 registerBotCommand(points.regex, points.cb);
 
 const leaderboard = {
-  regex: /(?<!\S)\/leaderboard(?!\S)/,
+  regex: /(?<!\S)!leaderboard(?!\S)/,
   async cb({ guild, content }) {
     try {
       const sEquals = content
@@ -246,7 +246,7 @@ const leaderboard = {
         if (user) {
           const member = guild.members.cache.get(user.discord_id);
           const username = member
-            ? member.displayName.replace(/\//g, '\\/')
+            ? member.displayName.replace(/!/g, '!')
             : undefined;
           if (username) {
             if (i === 0) {
