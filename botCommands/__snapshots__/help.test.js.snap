@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/code snapshot returns correct output 1`] = `
+exports[`!code snapshot returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
@@ -12,7 +12,7 @@ Object {
           "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
-      
+
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
 \\\\\`\\\\\`\\\\\`
@@ -50,7 +50,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
 }
 `;
 
-exports[`/code snapshot returns correct output 2`] = `
+exports[`!code snapshot returns correct output 2`] = `
 Object {
   "embeds": Array [
     Object {
@@ -62,7 +62,7 @@ Object {
           "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
-      
+
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
 \\\\\`\\\\\`\\\\\`
@@ -100,7 +100,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
 }
 `;
 
-exports[`/code snapshot returns correct output 3`] = `
+exports[`!code snapshot returns correct output 3`] = `
 Object {
   "embeds": Array [
     Object {
@@ -112,7 +112,7 @@ Object {
           "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
-      
+
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
 \\\\\`\\\\\`\\\\\`
@@ -150,7 +150,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
 }
 `;
 
-exports[`/code snapshot returns correct output 4`] = `
+exports[`!code snapshot returns correct output 4`] = `
 Object {
   "embeds": Array [
     Object {
@@ -162,7 +162,7 @@ Object {
           "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
-      
+
 \\\\\`\\\\\`\\\\\`js
 [Put your JavaScript Code here!]
 \\\\\`\\\\\`\\\\\`
@@ -200,7 +200,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
 }
 `;
 
-exports[`/help snapshot should return the correct output 1`] = `
+exports[`!help snapshot should return the correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
@@ -219,9 +219,9 @@ Object {
         Object {
           "inline": true,
           "name": "Leaderboard",
-          "value": "View the points leaderboard with \`/leaderboard\`. 
+          "value": "View the points leaderboard with \`!leaderboard\`. 
 
- Modify it with \`n=\` and \`start=\` i.e. \`/leaderboard n=25 start=30\`.",
+ Modify it with \`n=\` and \`start=\` i.e. \`!leaderboard n=25 start=30\`.",
         },
         Object {
           "inline": true,

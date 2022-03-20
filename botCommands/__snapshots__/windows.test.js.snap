@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`/windows callback returns correct output 1`] = `
+exports[`!windows callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
@@ -14,7 +14,7 @@ Object {
       "timestamp": null,
       "title": "Windows",
       "type": "rich",
-      "url": "https://www.theodinproject.com/courses/foundations/lessons/installation-overview#os-options",
+      "url": "https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options",
     },
   ],
 }
