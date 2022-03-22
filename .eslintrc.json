@@ -6,8 +6,10 @@
     "jest": true
   },
   "extends": ["airbnb-base"],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 12
+    "ecmaVersion": 12,
+    "requireConfigFile": false
   },
   "rules": {
     "no-console": 0
