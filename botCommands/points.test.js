@@ -3,7 +3,6 @@ const {
   Guild, Channel, Client, User, Member,
 } = require('discord.js');
 const commands = require('./points');
-const { generateLeaderData } = require('./mockData');
 
 axios.post = jest.fn();
 
@@ -880,122 +879,6 @@ describe('!points', () => {
       ['!points'],
     ])('correct strings trigger the callback', (string) => {
       expect(commands.points.regex.test(string)).toBeTruthy();
-    });
-  });
-});
-
-describe('!leaderboard', () => {
-  describe('regex', () => {
-    it.each([
-      ['!leaderboard'],
-      ['<@!123456789> !leaderboard'],
-      ['!leaderboard n=10 start=30'],
-      ['!leaderboard n=20 start=50'],
-      ['!leaderboard n=10'],
-      ['!leaderboard start=30'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['!leaderboad'],
-      [''],
-      [' '],
-      [' !'],
-      ['!lead'],
-      ['leaderboard'],
-      ['!le'],
-      ['!leaderboards'],
-      ['```function("!leaderboard", () => {}```'],
-      ['!leader'],
-      ['<@!123456789> ! leaderboard'],
-      ['<@!123456789> !leaderbard'],
-      ['!leaderbord n=10 start=30'],
-    ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeFalsy();
-    });
-
-    it.each([
-      ['Check this out! !leaderboard'],
-      ["Don't worry about !leaderboard"],
-      ['Hey <@!123456789>, !leaderboard'],
-      ['!<@!123456789> ^ !me !leaderboard !tests$*'],
-    ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.leaderboard.regex.test(string)).toBeTruthy();
-    });
-
-    it.each([
-      ['@user!leaderboard'],
-      ["it's about!leaderboard"],
-      ['!leaderboardisanillusion'],
-      ['!leaderboard!'],
-      ['!leaderboard*'],
-      ['!leaderboard...'],
-    ])(
-      "'%s' - command should be its own word!group - no leading or trailing characters",
-      (string) => {
-        expect(commands.leaderboard.regex.test(string)).toBeFalsy();
-      },
-    );
-  });
-
-  describe('callback', () => {
-    it('returns correct output', async () => {
-      const members = generateLeaderData(5);
-
-      axios.get = jest.fn();
-      axios.get.mockResolvedValue({
-        data: members,
-      });
-
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=5 start=1',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=3 start=1',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=2 start=3',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard start=3',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=2',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=2 start=wtf',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=wtf start=3',
-        }),
-      ).toMatchSnapshot();
-      expect(
-        await commands.leaderboard.cb({
-          guild: Guild(members),
-          content: '!leaderboard n=25 start=9999',
-        }),
-      ).toMatchSnapshot();
     });
   });
 });
