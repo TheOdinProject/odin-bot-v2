@@ -56,7 +56,7 @@ Instead of asking if anyone can help you, ask your question outright so people c
 "Hey, does anyone know how to set CSS styles with Javascript?"
 
 **Good**:
-"Hey, I'm having trouble setting CSS styles via Javascript."
+"Hey, I'm having trouble setting CSS styles via Javascript.
 
 Here's my code:
 \`\`\`Code snippet\`\`\`\
