@@ -17,7 +17,7 @@ const command = {
       )
       .addField(
         'Ruby',
-        'https://www.theodinproject.com/courses/ruby-programming/lessons/debugging#debugging-with-pry-byebug',
+        'https://www.theodinproject.com/lessons/ruby-debugging#debugging-with-pry-byebug',
       );
 
     return { embeds: [template] };

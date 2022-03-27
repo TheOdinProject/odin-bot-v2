@@ -16,7 +16,7 @@ Object {
         Object {
           "inline": false,
           "name": "Ruby",
-          "value": "https://www.theodinproject.com/courses/ruby-programming/lessons/debugging#debugging-with-pry-byebug",
+          "value": "https://www.theodinproject.com/lessons/ruby-debugging#debugging-with-pry-byebug",
         },
       ],
       "footer": null,
