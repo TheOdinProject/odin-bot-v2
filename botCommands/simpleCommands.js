@@ -34,7 +34,18 @@ const question = {
     const questionEmbed = new Discord.MessageEmbed()
       .setColor('#cc9543')
       .setTitle('Asking Great Questions')
-      .setDescription('We\'d love to help you out! Check out this article to help others better understand your question: https://medium.com/@gordon_zhu/how-to-be-great-at-asking-questions-e37be04d0603');
+      .setDescription(`
+Asking context-rich questions makes it easy to receive help, and makes it easy for others to you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace. 
+
+Project/Exercise:
+Lesson link:
+Code: [code sandbox like replit or codepen]
+Issue/Problem: [screenshots if applicable]
+What I expected: 
+What I've tried: 
+
+For even more context around on how to hone your question-asking skills, give this a read: https://www.theodinproject.com/how_to_ask
+              `);
 
     return { embeds: [questionEmbed] };
   },
