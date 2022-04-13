@@ -73,7 +73,7 @@ async function listenToMessages(client) {
 
     if (message.channel.id === process.env.DISCORD_GETTING_HIRED_CHANNEL_ID) {
       const gettingHiredMessageService = new GettingHiredMessageService();
-      await gettingHiredMessageService.handleMessage(message);
+      await gettingHiredMessageService.handleMessage(message, isAdminMessage);
 
       return;
     }

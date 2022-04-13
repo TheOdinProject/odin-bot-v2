@@ -5,7 +5,9 @@ class GettingHiredMessageService {
     this.redis = new Redis(process.env.REDIS_URL);
   }
 
-  async handleMessage(message) {
+  async handleMessage(message, isAdminMessage) {
+    if (isAdminMessage) return;
+
     const userId = message.member.id;
 
     try {
@@ -13,28 +15,21 @@ class GettingHiredMessageService {
 
       if (!userIsCached) {
         await this.redis.set(userId, true);
-        await GettingHiredMessageService.sendAuthorMessage(message);
-      } else {
-        // TODO: (REMOVE block) toggle the user's existence in the cache for testing purposes.
-        await this.redis.del(userId);
+        await GettingHiredMessageService.sendIntroMessage(message);
       }
     } catch (error) {
       console.log('Error:', error);
     }
   }
 
-  static async sendAuthorMessage(message) {
-    /* TODO: Construct the message embed to send to the user, either via DM or in the channel
-    * If message cannot be DM'd it is sent in the channel. The message will need to mention or reply
-    * to the user.
-    */
-    const welcomeMessage = 'Test message';
+  static async sendIntroMessage(message) {
+    const welcomeMessage = 'Welcome to the channel for the **Getting Hired** part of the curriculum. Please ensure you have **completed the Getting Hired course** and **read all of the pins** prior to engaging in this channel for resume review, interview help, or anything else covered in that section!';
 
     try {
       await message.author.send(welcomeMessage);
     } catch (error) {
       if (error.name === 'DiscordAPIError') {
-        await message.channel.send(welcomeMessage);
+        await message.reply(welcomeMessage);
       } else {
         console.log(error);
       }
