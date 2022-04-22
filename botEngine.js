@@ -32,6 +32,8 @@ function registerBotCommand(regex, fn) {
 }
 
 async function listenToMessages(client) {
+  const gettingHiredMessageService = new GettingHiredMessageService();
+
   client.on('messageCreate', async (message) => {
     // Prevent bot from responding to its own messages
     if (message.author === client.user) {
@@ -72,7 +74,6 @@ async function listenToMessages(client) {
     }
 
     if (message.channel.id === process.env.DISCORD_GETTING_HIRED_CHANNEL_ID) {
-      const gettingHiredMessageService = new GettingHiredMessageService();
       await gettingHiredMessageService.handleMessage(message, isAdminMessage);
 
       return;
