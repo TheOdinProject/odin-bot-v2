@@ -73,12 +73,6 @@ async function listenToMessages(client) {
       return;
     }
 
-    if (message.channel.id === process.env.DISCORD_GETTING_HIRED_CHANNEL_ID) {
-      await gettingHiredMessageService.handleMessage(message, isAdminMessage);
-
-      return;
-    }
-
     const authorEntryCount = authorBuffer.reduce((count, current) => {
       if (current.author === message.author.id) {
         return count + 1;
@@ -121,6 +115,12 @@ async function listenToMessages(client) {
         }
       }
     });
+
+    if (message.channel.id === process.env.DISCORD_GETTING_HIRED_CHANNEL_ID) {
+      await gettingHiredMessageService.handleMessage(message, isAdminMessage);
+
+      return;
+    }
 
     if (message.channel.id === '690618925494566912') { // introductions
       if (!isAdminMessage) {
