@@ -35,7 +35,7 @@ const question = {
       .setColor('#cc9543')
       .setTitle('Asking Great Questions')
       .setDescription(`
-Asking context-rich questions makes it easy to receive help, and makes it easy for others to you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace. 
+Asking context-rich questions makes it easy to receive help, and makes it easy for others to help you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace. 
 
 **Project/Exercise:**
 **Lesson link:**
