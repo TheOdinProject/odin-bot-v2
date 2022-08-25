@@ -1,4 +1,5 @@
 const adminRoles = require('./constants/admin-roles.const.js');
+const BookmarkMessageService = require('./services/bookmark-message.service.js');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
 
 const botCommands = [];
@@ -136,4 +137,36 @@ async function listenToMessages(client) {
   });
 }
 
-module.exports = { listenToMessages, registerBotCommand };
+async function listenToReactions(client) {
+  client.on('messageReactionAdd', async (reaction, user) => {
+    // When a reaction is received, check if the structure is partial
+    if (reaction.partial) {
+    // If the message this reaction belongs to was removed,
+    // the fetching might result in an API error which should be handled
+      try {
+        await reaction.fetch();
+      } catch (error) {
+        console.error('Something went wrong when fetching the message:', error);
+        // Return as `reaction.message.author` may be undefined/null
+        return;
+      }
+    }
+
+    const NOBOT_ROLE_ID = '78376417617877403';
+
+    // since user argument doesn't have guild roles,
+    // we need to get user from guild to check their roles
+    const reactionUserAsGuildMember = reaction.message.guild.members.cache.get(user.id);
+    const isReactionUserNobot = reactionUserAsGuildMember.roles.cache.has(NOBOT_ROLE_ID);
+
+    if (isReactionUserNobot) {
+      return;
+    }
+
+    if (reaction.emoji.name === '🔖') {
+      await BookmarkMessageService.sendBookmarkedMessage(reaction.message, user);
+    }
+  });
+}
+
+module.exports = { listenToMessages, listenToReactions, registerBotCommand };
