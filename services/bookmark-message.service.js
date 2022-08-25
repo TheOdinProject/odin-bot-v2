@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 
 class BookmarkMessageService {
   static async sendBookmarkedMessage(message, user) {
-    const messageEmbed = BookmarkMessageService.#createMessageEmbed(message, user);
+    const messageEmbed = BookmarkMessageService.#createMessageEmbed(message);
 
     try {
       await BookmarkMessageService.#sendToUser(user, { embeds: [messageEmbed] });
@@ -17,13 +17,18 @@ class BookmarkMessageService {
     }
   }
 
-  static #createMessageEmbed(message, user) {
+  static #createMessageEmbed(message) {
+    const { author, content, url } = message;
+
     return new MessageEmbed().setColor('#cc9543')
-      .setAuthor({ name: user.username + user.discriminator, iconURL: user.displayAvatarURL() })
+      .setAuthor({
+        name: author.username + author.discriminator,
+        iconURL: author.displayAvatarURL(),
+      })
       .setDescription(`
-    ${message.content}
+    ${content}
     
-    ${message.url}
+    ${url}
     `);
   }
 
