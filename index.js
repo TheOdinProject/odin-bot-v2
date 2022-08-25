@@ -2,7 +2,7 @@ const { Client, Intents } = require('discord.js');
 
 const glob = require('glob');
 const path = require('path');
-const { listenToMessages } = require('./botEngine.js');
+const { listenToMessages, listenToReactions } = require('./botEngine.js');
 require('dotenv').config();
 
 glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).forEach((file) => {
@@ -10,7 +10,8 @@ glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).for
 });
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], // eslint-disable-line max-len
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 
 client.once('ready', async () => {
@@ -22,5 +23,6 @@ client.once('ready', async () => {
 });
 
 listenToMessages(client);
+listenToReactions(client);
 
 client.login(process.env.DISCORD_API_KEY);
