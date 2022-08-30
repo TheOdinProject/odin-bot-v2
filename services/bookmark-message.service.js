@@ -28,7 +28,7 @@ class BookmarkMessageService {
       .setDescription(`
     ${content}
     
-    ${url}
+    [Original Message](${url})
     `);
   }
 
