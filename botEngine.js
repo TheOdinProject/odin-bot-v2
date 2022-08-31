@@ -152,7 +152,7 @@ async function listenToReactions(client) {
       }
     }
 
-    const NOBOT_ROLE_ID = '78376417617877403';
+    const NOBOT_ROLE_ID = '783764176178774036';
 
     // since user argument doesn't have guild roles,
     // we need to get user from guild to check their roles
