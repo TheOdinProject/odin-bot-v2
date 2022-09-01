@@ -54,15 +54,10 @@ async function listenToMessages(client) {
     }
 
     const NOBOT_ROLE_ID = '783764176178774036';
+    const isMessageAuthorNobot = message.member.roles.cache.has(NOBOT_ROLE_ID);
 
     // can't bot if user is NOBOT
-    if (
-      message.author
-      && message.author.lastMessage
-      && message.author.lastMessage.member
-      && message.author.lastMessage.member.roles.cache
-      && message.author.lastMessage.member.roles.cache.has(NOBOT_ROLE_ID)
-    ) {
+    if (isMessageAuthorNobot) {
       return;
     }
 
