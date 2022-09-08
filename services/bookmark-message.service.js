@@ -29,7 +29,8 @@ class BookmarkMessageService {
     ${content}
     
     [Original Message](${url})
-    `);
+    `)
+      .setFooter({ text: 'React with ❌ to delete Odin bot messages.' });
   }
 
   static async #sendToUser(user, message) {
