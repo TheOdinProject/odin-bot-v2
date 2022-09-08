@@ -152,6 +152,22 @@ async function listenToReactions(client) {
       }
     }
 
+    // handle DM message reactions
+    if (reaction.message.channel.type === 'DM') {
+      // ignore Odin bot's reactions
+      if (user.id === client.user.id) return;
+
+      // ignore non Odin bot messages
+      if (reaction.message.author.id !== client.user.id) return;
+
+      // delete message
+      if (reaction.emoji.name === '❌') {
+        reaction.message.delete();
+      }
+
+      return;
+    }
+
     const NOBOT_ROLE_ID = '783764176178774036';
 
     // since user argument doesn't have guild roles,
