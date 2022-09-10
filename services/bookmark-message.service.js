@@ -10,7 +10,7 @@ class BookmarkMessageService {
       if (error.name === 'DiscordAPIError') {
         const botSpamPlaygroundChannelId = '513125912070455296';
         const botSpamChannel = message.guild.channels.cache.get(botSpamPlaygroundChannelId);
-        await BookmarkMessageService.#sendToChannel(botSpamChannel, { content: `${user}, turn on replies from server members in Discord settings to receive bookmarks in your DM.`, embeds: [messageEmbed] });
+        await BookmarkMessageService.#sendToChannel(botSpamChannel, { content: `${user}, turn on replies from server members in Discord settings to receive bookmarks in your DM.` });
       } else {
         console.log(error);
       }
