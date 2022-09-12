@@ -1,3 +1,4 @@
+const { ChannelType } = require('discord-api-types/v10');
 const adminRoles = require('./constants/admin-roles.const.js');
 const BookmarkMessageService = require('./services/bookmark-message.service.js');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
@@ -153,7 +154,7 @@ async function listenToReactions(client) {
     }
 
     // handle DM message reactions
-    if (reaction.message.channel.type === 'DM') {
+    if (reaction.message.channel.type === ChannelType.DM) {
       // ignore Odin bot's reactions
       if (user.id === client.user.id) return;
 

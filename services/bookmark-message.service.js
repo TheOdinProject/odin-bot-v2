@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class BookmarkMessageService {
   static async sendBookmarkedMessage(message, user) {
@@ -20,7 +20,7 @@ class BookmarkMessageService {
   static #createMessageEmbed(message) {
     const { author, content, url } = message;
 
-    return new MessageEmbed().setColor('#cc9543')
+    return new EmbedBuilder().setColor('#cc9543')
       .setAuthor({
         name: author.username + author.discriminator,
         iconURL: author.displayAvatarURL(),

@@ -26,7 +26,7 @@ const command = {
       users = ` ${mentionedUsers[0]}`;
     }
 
-    const faqCommandEmbed = new Discord.MessageEmbed()
+    const faqCommandEmbed = new Discord.EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Frequently Asked Questions')
       .setDescription(

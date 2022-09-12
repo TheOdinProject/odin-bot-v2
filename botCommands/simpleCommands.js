@@ -31,7 +31,7 @@ registerBotCommand(fu.regex, fu.cb);
 const question = {
   regex: /(?<!\S)!question(?!\S)/,
   cb: () => {
-    const questionEmbed = new Discord.MessageEmbed()
+    const questionEmbed = new Discord.EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Asking Great Questions')
       .setDescription(`
@@ -55,7 +55,7 @@ registerBotCommand(question.regex, question.cb);
 const data = {
   regex: /(?<!\S)!data(?!\S)/,
   cb: () => {
-    const dataEmbed = new Discord.MessageEmbed()
+    const dataEmbed = new Discord.EmbedBuilder()
       .setTitle('Don’t ask to ask!')
       .setColor('#cc9543')
       .setURL('https://www.dontasktoask.com/')

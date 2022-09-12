@@ -4,12 +4,10 @@ exports[`!code snapshot returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 39423,
       "description": "Hey, here's some helpful tips on sharing your code with others!",
       "fields": Array [
         Object {
-          "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
 
@@ -38,13 +36,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
           "value": "https://codepen.io/",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "HOW TO EMBED CODE SNIPPETS",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -54,12 +46,10 @@ exports[`!code snapshot returns correct output 2`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 39423,
       "description": "Hey, <@1>, here's some helpful tips on sharing your code with others!",
       "fields": Array [
         Object {
-          "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
 
@@ -88,13 +78,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
           "value": "https://codepen.io/",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "HOW TO EMBED CODE SNIPPETS",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -104,12 +88,10 @@ exports[`!code snapshot returns correct output 3`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 39423,
       "description": "Hey, <@1> <@2>, here's some helpful tips on sharing your code with others!",
       "fields": Array [
         Object {
-          "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
 
@@ -138,13 +120,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
           "value": "https://codepen.io/",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "HOW TO EMBED CODE SNIPPETS",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -154,12 +130,10 @@ exports[`!code snapshot returns correct output 4`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 39423,
       "description": "Hey, <@1> <@2> <@3>, here's some helpful tips on sharing your code with others!",
       "fields": Array [
         Object {
-          "inline": false,
           "name": "Sharing Code on Discord",
           "value": "To write multiple lines of code with language syntax highlighting, use three backticks (<https://i.stack.imgur.com/ETTnT.jpg>), followed by the language.
 
@@ -188,13 +162,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
           "value": "https://codepen.io/",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "HOW TO EMBED CODE SNIPPETS",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -204,7 +172,6 @@ exports[`!help snapshot should return the correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
       "description": "**By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md).**",
       "fields": Array [
@@ -229,13 +196,7 @@ Object {
           "value": "<https://github.com/TheOdinProject/odin-bot-v2>",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Help",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
