@@ -41,10 +41,10 @@ const leaderboard = {
         }
       }
 
-      const leaderboardEmbed = new Discord.MessageEmbed()
+      const leaderboardEmbed = new Discord.EmbedBuilder()
         .setColor('#cc9543')
         .setTitle('Leaderboard')
-        .addField('In Odin We Trust', usersList || 'Be the first to earn a point!');
+        .addFields([{ name: 'In Odin We Trust', value: usersList || 'Be the first to earn a point!' }]);
 
       return { embeds: [leaderboardEmbed] };
     } catch (err) {

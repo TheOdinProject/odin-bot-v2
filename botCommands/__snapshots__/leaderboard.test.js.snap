@@ -4,12 +4,9 @@ exports[`!leaderboard callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -19,13 +16,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -35,12 +26,9 @@ exports[`!leaderboard callback returns correct output 2`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -48,13 +36,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -64,25 +46,16 @@ exports[`!leaderboard callback returns correct output 3`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -92,12 +65,9 @@ exports[`!leaderboard callback returns correct output 4`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -105,13 +75,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -121,25 +85,16 @@ exports[`!leaderboard callback returns correct output 5`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -149,23 +104,14 @@ exports[`!leaderboard callback returns correct output 6`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -175,23 +121,14 @@ exports[`!leaderboard callback returns correct output 7`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -201,23 +138,14 @@ exports[`!leaderboard callback returns correct output 8`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -227,12 +155,9 @@ exports[`!leaderboard callback returns correct output 9`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -242,13 +167,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -258,12 +177,9 @@ exports[`!leaderboard callback returns correct output 10`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -271,13 +187,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -287,25 +197,16 @@ exports[`!leaderboard callback returns correct output 11`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -315,12 +216,9 @@ exports[`!leaderboard callback returns correct output 12`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -328,13 +226,7 @@ Object {
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -344,25 +236,16 @@ exports[`!leaderboard callback returns correct output 13`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 ",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -372,23 +255,14 @@ exports[`!leaderboard callback returns correct output 14`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -398,23 +272,14 @@ exports[`!leaderboard callback returns correct output 15`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }
@@ -424,23 +289,14 @@ exports[`!leaderboard callback returns correct output 16`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
-      "description": null,
       "fields": Array [
         Object {
-          "inline": false,
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
       ],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Leaderboard",
-      "type": "rich",
-      "url": null,
     },
   ],
 }

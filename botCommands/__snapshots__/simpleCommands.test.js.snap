@@ -6,7 +6,6 @@ exports[`!data callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
       "description": "
 Instead of asking if anyone can help you, ask your question outright so people can help you!
@@ -23,13 +22,7 @@ And here is the error I'm receiving:
 
 **https://www.dontasktoask.com/**
         ",
-      "fields": Array [],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Don’t ask to ask!",
-      "type": "rich",
       "url": "https://www.dontasktoask.com/",
     },
   ],
@@ -52,7 +45,6 @@ exports[`!question callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
       "description": "
 Asking context-rich questions makes it easy to receive help, and makes it easy for others to help you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace. 
@@ -66,14 +58,7 @@ Asking context-rich questions makes it easy to receive help, and makes it easy f
 
 For even more context around on how to hone your question-asking skills, give this a read: https://www.theodinproject.com/how_to_ask
               ",
-      "fields": Array [],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Asking Great Questions",
-      "type": "rich",
-      "url": null,
     },
   ],
 }

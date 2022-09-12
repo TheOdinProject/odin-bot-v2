@@ -1,4 +1,4 @@
-const { Client, Intents } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 const glob = require('glob');
 const path = require('path');
@@ -10,8 +10,8 @@ glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).for
 });
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS], // eslint-disable-line max-len
-  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+  intents: [GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.DirectMessageReactions], // eslint-disable-line max-len
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
 client.once('ready', async () => {

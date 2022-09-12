@@ -4,16 +4,9 @@ exports[`!windows callback returns correct output 1`] = `
 Object {
   "embeds": Array [
     Object {
-      "author": null,
       "color": 13407555,
       "description": "**The Odin Project does not support Windows, WSL, or any OS outside of our recommendations**. We are happy to assist with any questions about installing a VM or dual booting Linux. <https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options>",
-      "fields": Array [],
-      "footer": null,
-      "image": null,
-      "thumbnail": null,
-      "timestamp": null,
       "title": "Windows",
-      "type": "rich",
       "url": "https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options",
     },
   ],
