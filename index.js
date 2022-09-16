@@ -2,8 +2,9 @@ const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 const glob = require('glob');
 const path = require('path');
-const { listenToMessages, listenToReactions } = require('./botEngine.js');
-require('dotenv').config();
+const { listenToMessages, listenToReactions, listenToInteractions } = require('./botEngine.js');
+const { guildId, token } = require('./config.js');
+require('./bin/deploy-commands.js');
 
 glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).forEach((file) => {
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
@@ -18,11 +19,12 @@ client.once('ready', async () => {
   console.log('Bot session started:', new Date());
 
   // Fetch Guild members on startup to ensure the integrity of the cache
-  const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID);
+  const guild = await client.guilds.fetch(guildId);
   await guild.members.fetch();
 });
 
 listenToMessages(client);
 listenToReactions(client);
+listenToInteractions(client);
 
-client.login(process.env.DISCORD_API_KEY);
+client.login(token);

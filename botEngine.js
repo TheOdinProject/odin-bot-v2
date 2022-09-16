@@ -2,6 +2,7 @@ const { ChannelType } = require('discord-api-types/v10');
 const adminRoles = require('./constants/admin-roles.const.js');
 const BookmarkMessageService = require('./services/bookmark-message.service.js');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
+const newEraCommands = require('./new-era-commands');
 
 const botCommands = [];
 
@@ -186,4 +187,25 @@ async function listenToReactions(client) {
   });
 }
 
-module.exports = { listenToMessages, listenToReactions, registerBotCommand };
+async function listenToInteractions(client) {
+  client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isCommand()) return;
+
+    const command = newEraCommands.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply(
+        { content: 'There was an error while executing this command!', ephemeral: true },
+      );
+    }
+  });
+}
+
+module.exports = {
+  listenToMessages, listenToReactions, listenToInteractions, registerBotCommand,
+};

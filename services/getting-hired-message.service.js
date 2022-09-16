@@ -1,4 +1,5 @@
 const Redis = require('ioredis');
+const { RESTJSONErrorCodes } = require('discord-api-types/v9');
 
 class GettingHiredMessageService {
   constructor() {
@@ -28,7 +29,7 @@ class GettingHiredMessageService {
     try {
       await message.author.send(welcomeMessage);
     } catch (error) {
-      if (error.name === 'DiscordAPIError') {
+      if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
         await message.reply(welcomeMessage);
       } else {
         console.log(error);

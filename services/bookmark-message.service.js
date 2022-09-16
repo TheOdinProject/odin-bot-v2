@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
+const { RESTJSONErrorCodes } = require('discord-api-types/v10');
 
 class BookmarkMessageService {
   static async sendBookmarkedMessage(message, user) {
@@ -7,7 +8,7 @@ class BookmarkMessageService {
     try {
       await BookmarkMessageService.#sendToUser(user, { embeds: [messageEmbed] });
     } catch (error) {
-      if (error.name === 'DiscordAPIError') {
+      if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
         const botSpamPlaygroundChannelId = '513125912070455296';
         const botSpamChannel = message.guild.channels.cache.get(botSpamPlaygroundChannelId);
         await BookmarkMessageService.#sendToChannel(botSpamChannel, { content: `${user}, turn on replies from server members in Discord settings to receive bookmarks in your DM.` });
