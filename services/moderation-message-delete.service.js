@@ -47,7 +47,7 @@ class ModerationMessageDeleteService {
       threadCreator.new({
         channel: parentChannel,
         isPrivate: true,
-        name: `Message from ${author.username}`,
+        name: `Deleted Message - ${author.username}`,
         members: [author],
         messages: [messageToSend],
       });
@@ -57,7 +57,7 @@ class ModerationMessageDeleteService {
     threadCreator.new({
       channel,
       isPrivate: true,
-      name: `Message from ${author.username}`,
+      name: `Deleted Message - ${author.username}`,
       members: [author],
       messages: [messageToSend],
     });
@@ -66,7 +66,22 @@ class ModerationMessageDeleteService {
   static async #messageBuilder(message) {
     return new EmbedBuilder()
       .setTitle('Message Deleted')
-      .setDescription(`<@${message.author.id}>, your message was deleted in ${message.channel}`)
+      .setDescription(`
+      Hi <@${message.author.id}>, your message in <#${message.channel.id}> was deleted by a moderator. 
+
+Some common reasons for post removal include but isn't limited to;
+- the post was not in line with our discord rules, channel description or community expectations
+- the post didn't follow the specific forum channel guidelines (i.e. feedback trading)
+- the post had downloadable files attached
+- a link was shared without context
+- the post was shared in multiple channels within a short timeframe (cross-posting)
+
+If further action is deemed necessary, a moderator will follow up on this message in a private thread. 
+
+Please make sure to check the rules of the server and the description of the channel you’ve posted in. 
+You can find our rules including a link to the additional community expectations here <#693244715839127653>
+
+If after reading the rules, channel description or community expectations, you feel this deletion was made in error, feel free to send a dm to <@575252669443211264>`)
       .setFields([
         { name: 'Message:', value: message.content },
       ]);
