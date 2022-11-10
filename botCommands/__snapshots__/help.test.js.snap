@@ -173,7 +173,7 @@ Object {
   "embeds": Array [
     Object {
       "color": 13407555,
-      "description": "**By posting in this chatroom you agree to our [code of conduct](https://github.com/TheOdinProject/theodinproject/blob/master/doc/code_of_conduct.md).**",
+      "description": "**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/community_rules)** and our **[community expectations](https://www.theodinproject.com/community_expectations)**.",
       "fields": Array [
         Object {
           "inline": true,
