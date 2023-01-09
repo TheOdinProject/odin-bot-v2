@@ -108,7 +108,9 @@ Object {
       "fields": Array [
         Object {
           "name": "In Odin We Trust",
-          "value": "Be the first to earn a point!",
+          "value": "1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+",
         },
       ],
       "title": "Leaderboard",
@@ -125,7 +127,10 @@ Object {
       "fields": Array [
         Object {
           "name": "In Odin We Trust",
-          "value": "Be the first to earn a point!",
+          "value": "3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+",
         },
       ],
       "title": "Leaderboard",
@@ -259,7 +264,9 @@ Object {
       "fields": Array [
         Object {
           "name": "In Odin We Trust",
-          "value": "Be the first to earn a point!",
+          "value": "1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+",
         },
       ],
       "title": "Leaderboard",
@@ -276,7 +283,10 @@ Object {
       "fields": Array [
         Object {
           "name": "In Odin We Trust",
-          "value": "Be the first to earn a point!",
+          "value": "3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+",
         },
       ],
       "title": "Leaderboard",

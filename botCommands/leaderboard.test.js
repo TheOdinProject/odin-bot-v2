@@ -4,7 +4,6 @@ const { generateLeaderData } = require('./mockData');
 /* eslint-disable */
 /* eslint max-classes-per-file: ["error", 2] */
 
-
 class GuildMembersMock {
   members;
 
@@ -80,66 +79,119 @@ describe('!leaderboard', () => {
       "'%s' - command should be its own word!group - no leading or trailing characters",
       (string) => {
         expect(commands.leaderboard.regex.test(string)).toBeFalsy();
-      },
+      }
     );
   });
 
   describe('callback', () => {
-    it('returns correct output', async () => {
-      const members = generateLeaderData(5);
+    const members = generateLeaderData(5);
 
-      axios.get = jest.fn();
+    axios.get = jest.fn();
+    axios.get.mockResolvedValue({
+      data: members,
+    });
+
+    it('returns correct output', async () => {
       axios.get.mockResolvedValue({
-        data: members,
+        data: members.slice(0, 5),
       });
 
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=5 start=1',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 3),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=3 start=1',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2, 4),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2 start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2 start=wtf',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=wtf start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(9998, 25),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=25 start=9999',
-        }),
+        })
       ).toMatchSnapshot();
     });
   });
@@ -195,66 +247,119 @@ describe('!leaderboard', () => {
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
         expect(commands.leaderboard.regex.test(string)).toBeFalsy();
-      },
+      }
     );
   });
 
   describe('callback', () => {
-    it('returns correct output', async () => {
-      const members = generateLeaderData(5);
+    const members = generateLeaderData(5);
 
-      axios.get = jest.fn();
+    axios.get = jest.fn();
+    axios.get.mockResolvedValue({
+      data: members,
+    });
+
+    it('returns correct output', async () => {
       axios.get.mockResolvedValue({
-        data: members,
+        data: members.slice(0, 5),
       });
 
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=5 start=1',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 3),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=3 start=1',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2, 4),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2 start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(0, 2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=2 start=wtf',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(2),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=wtf start=3',
-        }),
+        })
       ).toMatchSnapshot();
+    });
+
+    it('returns correct output', async () => {
+      axios.get.mockResolvedValue({
+        data: members.slice(9998, 25),
+      });
+
       expect(
         await commands.leaderboard.cb({
           guild: new GuildMock(members),
           content: '!leaderboard n=25 start=9999',
-        }),
+        })
       ).toMatchSnapshot();
     });
   });

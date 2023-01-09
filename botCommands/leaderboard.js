@@ -10,30 +10,31 @@ const leaderboard = {
         .split(' ')
         .find((word) => word.includes('start='));
       let start = sEquals ? sEquals.replace('start=', '') : 1;
-      start = Math.max(start, 1);
+      start = Number.isNaN(Number(start)) ? 1 : Math.max(start, 1);
 
       const nEquals = content.split(' ').find((word) => word.includes('n='));
       let length = nEquals ? nEquals.replace('n=', '') : 5;
+      length = Number.isNaN(Number(length)) ? 5 : length;
       length = Math.min(length, 25);
       length = Math.max(length, 1);
 
-      const users = await axios.get(
-        'https://www.theodinproject.com/api/points',
+      const { data: users } = await axios.get(
+        `https://www.theodinproject.com/api/points?limit=${length}&offset=${start - 1}`,
       );
-      const data = users.data.filter((user) => guild.members.cache.get(user.discord_id));
       let usersList = '';
-      for (let i = start - 1; i < length + start - 1; i += 1) {
-        const user = data[i];
+      for (let i = 0; i < length; i += 1) {
+        const user = users[i];
         if (user) {
+          // on user leave guild: remove user from server?
           const member = guild.members.cache.get(user.discord_id);
           const username = member
             ? member.displayName.replace(/!/g, '!')
             : undefined;
           if (username) {
-            if (i === 0) {
-              usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
+            if (i === 0 && start - 1 === 0) {
+              usersList += `${start + i} - ${username} [${user.points} points] :tada: \n`;
             } else {
-              usersList += `${i + 1} - ${username} [${user.points} points] \n`;
+              usersList += `${start + i} - ${username} [${user.points} points] \n`;
             }
           } else {
             usersList += 'UNDEFINED \n';
