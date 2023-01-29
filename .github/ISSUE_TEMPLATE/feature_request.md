@@ -10,7 +10,7 @@ assignees: ""
 
 Complete the following REQUIRED checkboxes:
 -   [ ] I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/theodinproject/blob/main/CONTRIBUTING.md)
--   [ ] The title of this issue follows the `location for request: brief description of request` format, e.g. `NodeJS course: Add lessons on XYZ`
+-   [ ] The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`
 
 The following checkbox is OPTIONAL:
 <!-- Completing this checkbox does not guarantee you will be assigned this issue, but rather lets us know you are interested in working on it. -->
