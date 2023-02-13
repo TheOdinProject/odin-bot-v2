@@ -11,6 +11,13 @@ module.exports = {
     .setType(ApplicationCommandType.Message)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   execute: async (interaction) => {
-    await FormatCodeService.handleContextMenuInteraction(interaction);
+    try {
+      await FormatCodeService.handleContextMenuInteraction(interaction);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply(
+        { content: 'There was an error while executing this command!', ephemeral: true },
+      );
+    }
   },
 };
