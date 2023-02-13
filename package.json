@@ -14,7 +14,7 @@
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
     "axios": "^0.21.2",
-    "discord-api-types": "^0.37.8",
+    "discord-api-types": "^0.37.33",
     "discord.js": "^14.7.1",
     "dotenv": "^5.0.1",
     "glob": "^7.1.2",
