@@ -3,6 +3,7 @@ const adminRoles = require('./constants/admin-roles.const.js');
 const BookmarkMessageService = require('./services/bookmark-message.service.js');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
 const newEraCommands = require('./new-era-commands');
+const FormatCodeService = require('./services/format-code');
 
 const botCommands = [];
 
@@ -206,6 +207,28 @@ async function listenToInteractions(client) {
   });
 }
 
+async function listenToModalSubmits(client) {
+  client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isModalSubmit()) return;
+    try {
+      if (interaction.customId === FormatCodeService.modalId) {
+        await FormatCodeService.handleModalSubmit(interaction);
+        return;
+      }
+      interaction.reply({ content: 'Unknown modal submit', ephemeral: true });
+    } catch (error) {
+      console.error(error);
+      await interaction.reply(
+        { content: 'There was an error while executing this command!', ephemeral: true },
+      );
+    }
+  });
+}
+
 module.exports = {
-  listenToMessages, listenToReactions, listenToInteractions, registerBotCommand,
+  listenToMessages,
+  listenToReactions,
+  listenToInteractions,
+  listenToModalSubmits,
+  registerBotCommand,
 };
