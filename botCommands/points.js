@@ -14,9 +14,11 @@ function gifPicker(gifContainer, clubChannel) {
 
 function getUserIdsFromMessage(client, author, guild, text, regex, authorMember, channel) {
   const matches = [];
+  const processedIDs = [];
   let match = regex.exec(text);
 
   while (match !== null) {
+    const userID = match[1].replace('!', '');
     if (match[2] === '?++') {
       let isAdmin = false;
       authorMember.roles.cache.forEach((value) => {
@@ -26,13 +28,18 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
       });
 
       if (isAdmin) {
-        matches.push([match[1].replace('!', ''), 2]);
+        matches.push([userID, 2]);
       } else {
         channel.send('Only maintainers or core members can give double points!');
       }
       match = regex.exec(text);
     } else {
-      matches.push([match[1].replace('!', ''), 1]);
+      if (processedIDs.includes(userID)) {
+        channel.send('Only maintainers or core members can give double points!');
+      } else {
+        processedIDs.push(userID);
+        matches.push([userID, 1]);
+      }
       match = regex.exec(text);
     }
   }
