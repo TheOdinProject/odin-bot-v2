@@ -7,7 +7,7 @@ const help = {
     const helpEmbed = new Discord.EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Help')
-      .setDescription('**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/community_rules)** and our **[community expectations](https://www.theodinproject.com/community_expectations)**.')
+      .setDescription('**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/community_rules) and our [community expectations](https://www.theodinproject.com/community_expectations)**.')
       .addFields([
         {
           name: 'Add Points',

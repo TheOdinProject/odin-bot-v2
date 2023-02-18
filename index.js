@@ -2,7 +2,9 @@ const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 const glob = require('glob');
 const path = require('path');
-const { listenToMessages, listenToReactions, listenToInteractions } = require('./botEngine.js');
+const {
+  listenToMessages, listenToReactions, listenToInteractions, listenToModalSubmits,
+} = require('./botEngine.js');
 const { guildId, token } = require('./config.js');
 require('./bin/deploy-commands.js');
 
@@ -26,5 +28,6 @@ client.once('ready', async () => {
 listenToMessages(client);
 listenToReactions(client);
 listenToInteractions(client);
+listenToModalSubmits(client);
 
 client.login(token);

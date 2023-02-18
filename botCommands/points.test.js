@@ -275,9 +275,9 @@ describe('callback', () => {
 
   it('returns correct output for up to five mentioned users', async () => {
     const mentionedUser1 = User([], 2, 33);
-    const mentionedUser2 = User([], 2, 21);
-    const mentionedUser3 = User([], 2, 2);
-    const mentionedUser4 = User([], 2, 0);
+    const mentionedUser2 = User([], 3, 21);
+    const mentionedUser3 = User([], 4, 2);
+    const mentionedUser4 = User([], 5, 0);
     const client = Client(
       [
         author,
@@ -338,12 +338,133 @@ describe('callback', () => {
     expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
+  describe('where one user is mentioned more than once', () => {
+    it('returns correct output for only 1 user mentioned twice', async () => {
+      const mentionedUser1 = User([], 2, 5);
+      const client = Client(
+        [
+          author,
+          mentionedUser1,
+        ],
+        channel,
+      );
+      const data = {
+        author,
+        content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
+        channel,
+        client,
+        guild: Guild([
+          author,
+          mentionedUser1,
+        ]),
+      };
+
+      axios.post
+        .mockResolvedValueOnce({
+          data: {
+            ...mentionedUser1,
+            points: (mentionedUser1.points += 1),
+          },
+        });
+
+      await commands.awardPoints.cb(data);
+
+      expect(data.channel.send).toHaveBeenCalledTimes(2);
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    });
+
+    it('returns correct output for only 1 user mentioned more than 5 times', async () => {
+      const mentionedUser1 = User([], 2, 5);
+      const client = Client(
+        [
+          author,
+          mentionedUser1,
+        ],
+        channel,
+      );
+
+      const data = {
+        author,
+        content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
+        channel,
+        client,
+        guild: Guild([
+          author,
+          mentionedUser1,
+        ]),
+      };
+
+      axios.post
+        .mockResolvedValueOnce({
+          data: {
+            ...mentionedUser1,
+            points: (mentionedUser1.points += 1),
+          },
+        });
+
+      await commands.awardPoints.cb(data);
+
+      expect(data.channel.send).toHaveBeenCalledTimes(6);
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[4][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[5][0]).toMatchSnapshot();
+    });
+
+    it('returns correct output for 1 user mentioned more than once with another user', async () => {
+      const mentionedUser1 = User([], 2, 21);
+      const mentionedUser2 = User([], 3, 23);
+      const client = Client(
+        [
+          author,
+          mentionedUser1,
+        ],
+        channel,
+      );
+
+      const data = {
+        author,
+        content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser2.id} ++`,
+        channel,
+        client,
+        guild: Guild([
+          author,
+          mentionedUser1,
+        ]),
+      };
+
+      axios.post
+        .mockResolvedValueOnce({
+          data: {
+            ...mentionedUser1,
+            points: (mentionedUser1.points += 1),
+          },
+        })
+        .mockResolvedValueOnce({
+          data: {
+            ...mentionedUser2,
+            points: (mentionedUser2.points += 1),
+          },
+        });
+
+      await commands.awardPoints.cb(data);
+
+      expect(data.channel.send).toHaveBeenCalledTimes(3);
+      expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+      expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+    });
+  });
+
   it('returns correct output for more than five mentioned users', async () => {
     const mentionedUser1 = User([], 2, 10);
-    const mentionedUser2 = User([], 2, 3);
-    const mentionedUser3 = User([], 2, 1);
-    const mentionedUser4 = User([], 2, 0);
-    const mentionedUser5 = User([], 2, 21);
+    const mentionedUser2 = User([], 3, 3);
+    const mentionedUser3 = User([], 4, 1);
+    const mentionedUser4 = User([], 5, 0);
+    const mentionedUser5 = User([], 6, 21);
     const client = Client(
       [
         author,
@@ -584,9 +705,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for up to five mentioned users', async () => {
     const mentionedUser1 = User([], 2, 33);
-    const mentionedUser2 = User([], 2, 21);
-    const mentionedUser3 = User([], 2, 2);
-    const mentionedUser4 = User([], 2, 0);
+    const mentionedUser2 = User([], 3, 21);
+    const mentionedUser3 = User([], 4, 2);
+    const mentionedUser4 = User([], 5, 0);
     const memberMap = new Map();
     memberMap.set('role-1', { name: 'core' });
     const member = Member(memberMap);
@@ -652,10 +773,10 @@ describe('?++ callback', () => {
 
   it('returns correct output for more than five mentioned users', async () => {
     const mentionedUser1 = User([], 2, 10);
-    const mentionedUser2 = User([], 2, 3);
-    const mentionedUser3 = User([], 2, 1);
-    const mentionedUser4 = User([], 2, 0);
-    const mentionedUser5 = User([], 2, 21);
+    const mentionedUser2 = User([], 3, 3);
+    const mentionedUser3 = User([], 4, 1);
+    const mentionedUser4 = User([], 5, 0);
+    const mentionedUser5 = User([], 6, 21);
     const memberMap = new Map();
     memberMap.set('role-1', { name: 'core' });
     const member = Member(memberMap);
