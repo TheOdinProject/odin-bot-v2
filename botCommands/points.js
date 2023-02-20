@@ -97,11 +97,11 @@ function exclamation(points, isGoodQuestion) {
   if (points > 299 && points < 306) {
     return 'OK YOU CAN STOP NOW:';
   }
-  if(points === 1000) {
+  if (points === 1000) {
     return 'ONE THOUSAND POINTS';
   }
-  if(points === 4000) {
-    return '\`//TODO: Implement Club 4000\`'
+  if (points === 4000) {
+    return '`//TODO: Implement Club 4000`';
   }
   return 'Woot!';
 }
