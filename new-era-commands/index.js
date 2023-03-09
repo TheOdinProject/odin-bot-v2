@@ -1,4 +1,4 @@
-const { glob } = require('glob');
+const glob = require('glob');
 const path = require('path');
 
 const commandFiles = glob.sync('./new-era-commands/**/*.js', { ignore: './new-era-commands/*' });
