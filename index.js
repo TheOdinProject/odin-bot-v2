@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
-const glob = require('glob');
+const { globSync } = require('glob');
 const path = require('path');
 const {
   listenToMessages, listenToReactions, listenToInteractions, listenToModalSubmits,
@@ -8,7 +8,7 @@ const {
 const { guildId, token } = require('./config.js');
 require('./bin/deploy-commands.js');
 
-glob.sync('./botCommands/**/*.js', { ignore: './botCommands/**/*.test.js' }).forEach((file) => {
+globSync('./botCommands/**/*.js', { ignore: 'botCommands/**/*.test.js' }).forEach((file) => {
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
 });
 
