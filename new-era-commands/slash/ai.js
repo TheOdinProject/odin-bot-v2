@@ -9,7 +9,7 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('Generative AI and Learning Code')
       .setDescription(
-        'Learners should be aware of how generative AI tools can impact their learning.'
+        'Learners should be aware of how generative AI tools can impact their learning.',
       )
       .addFields(
         [
@@ -22,8 +22,8 @@ module.exports = {
             name: 'Chat about AI',
             value: 'There is a [thread for discussions about AI tools](https://discord.com/channels/505093832157691914/1050497328915697664), so please chat there about these types of tools.',
             inline: true,
-          }
-        ]
+          },
+        ],
       );
 
     await interaction.reply({ embeds: [aiEmbed] });
