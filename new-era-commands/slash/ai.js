@@ -14,8 +14,8 @@ module.exports = {
       .addFields(
         [
           {
-            name: 'Odin Recommendation',
-            value: 'The curriculum recommends that learners avoid using generative AI while learning. [You can learn more about this recommendation here.](https://www.theodinproject.com/lessons/foundations-motivation-and-mindset#a-note-on-ai-code-generation)',
+            name: 'Using AI while learning',
+            value: 'The Odin Project recommends that learners avoid using generative AI while learning. [You can learn more about this recommendation here.](https://www.theodinproject.com/lessons/foundations-motivation-and-mindset#a-note-on-ai-code-generation)',
             inline: true,
           },
           {
