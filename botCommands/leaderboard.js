@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const axios = require('axios');
-const { registerBotCommand } = require('../botEngine.js');
+const { registerBotCommand } = require('../botEngine');
 
 const leaderboard = {
   regex: /(?<!\S)!leaderboard(?!\S)/,

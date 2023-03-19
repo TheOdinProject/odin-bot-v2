@@ -1,4 +1,4 @@
-const { registerBotCommand } = require('../botEngine.js');
+const { registerBotCommand } = require('../botEngine');
 
 const command = {
   regex: /(?<!\S)!freelance(?!\S)/,

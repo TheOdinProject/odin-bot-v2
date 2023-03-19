@@ -1,6 +1,6 @@
 const { ChannelType } = require('discord-api-types/v10');
-const adminRoles = require('./constants/admin-roles.const.js');
-const BookmarkMessageService = require('./services/bookmark-message.service.js');
+const adminRoles = require('./constants/admin-roles.const');
+const BookmarkMessageService = require('./services/bookmark-message.service');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
 const newEraCommands = require('./new-era-commands');
 const FormatCodeService = require('./services/format-code');

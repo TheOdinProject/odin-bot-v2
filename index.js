@@ -4,9 +4,9 @@ const { globSync } = require('glob');
 const path = require('path');
 const {
   listenToMessages, listenToReactions, listenToInteractions, listenToModalSubmits,
-} = require('./botEngine.js');
-const { guildId, token } = require('./config.js');
-require('./bin/deploy-commands.js');
+} = require('./botEngine');
+const { guildId, token } = require('./config');
+require('./bin/deploy-commands');
 
 globSync('./botCommands/**/*.js', { ignore: 'botCommands/**/*.test.js' }).forEach((file) => {
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
