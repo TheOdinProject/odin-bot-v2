@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { registerBotCommand } = require('../botEngine.js');
+const { registerBotCommand } = require('../botEngine');
 
 const help = {
   regex: /(?<!\S)!help(?!\S)/,
