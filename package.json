@@ -19,7 +19,7 @@
     "dotenv": "^5.0.1",
     "glob": "^9.2.1",
     "ioredis": "^5.0.4",
-    "prettier": "^1.13.4"
+    "prettier": "^2.8.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
