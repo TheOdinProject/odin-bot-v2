@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 
-const PATHS = [{ name: 'Full Stack JavaScript', emoji: ':node:' }, { name: 'Ruby on Rails', emoji: ':ruby:' }];
+const PATHS = [{ name: 'Full Stack JavaScript', emoji: '<:node:936642975268749313>' }, { name: 'Ruby on Rails', emoji: '<:ruby:517023177386491911>' }];
 
 const QUOTES = [
   (path) => `Thou shalt follow the ${path.name} path. May the force be with thee. :crossed_swords:`,
