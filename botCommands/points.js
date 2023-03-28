@@ -1,10 +1,10 @@
 const axios = require('axios');
-const config = require('../config.js');
-const { registerBotCommand } = require('../botEngine.js');
+const config = require('../config');
+const { registerBotCommand } = require('../botEngine');
 const club40Gifs = require('./club_40_gifs.json');
-const adminRoles = require('../constants/admin-roles.const.js');
+const adminRoles = require('../constants/admin-roles.const');
 
-axios.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
+axios.default.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
 function gifPicker(gifContainer, clubChannel) {
   const choice = Math.floor(Math.random() * gifContainer.length);

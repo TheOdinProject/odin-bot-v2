@@ -3,22 +3,22 @@
 exports[`!dab callback returns correct output 1`] = `"https://tenor.com/view/bettywhite-dab-gif-5044603"`;
 
 exports[`!data callback returns correct output 1`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
       "description": "
 Instead of asking if anyone can help you, ask your question outright so people can help you!
 
-**Bad**: \\"Hey, does anyone know how to set CSS styles with Javascript?\\"
+**Bad**: "Hey, does anyone know how to set CSS styles with Javascript?"
 
 **Good**:
-\\"Hey, I'm having trouble setting CSS styles via Javascript.
+"Hey, I'm having trouble setting CSS styles via Javascript.
 
 Here's my code:
 \`\`\`Code snippet\`\`\`
 And here is the error I'm receiving:
-\`Cannot set attribute 'style' of null\` \\"
+\`Cannot set attribute 'style' of null\` "
 
 **https://www.dontasktoask.com/**
         ",
@@ -42,9 +42,9 @@ exports[`!lenny callback returns correct output 1`] = `"( ͡° ͜ʖ ͡°)"`;
 exports[`!motivate callback returns correct output 1`] = `"Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE"`;
 
 exports[`!question callback returns correct output 1`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
       "description": "
 Asking context-rich questions makes it easy to receive help, and makes it easy for others to help you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace. 

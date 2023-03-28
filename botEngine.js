@@ -1,6 +1,6 @@
 const { ChannelType } = require('discord-api-types/v10');
-const adminRoles = require('./constants/admin-roles.const.js');
-const BookmarkMessageService = require('./services/bookmark-message.service.js');
+const adminRoles = require('./constants/admin-roles.const');
+const BookmarkMessageService = require('./services/bookmark-message.service');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
 const newEraCommands = require('./new-era-commands');
 const FormatCodeService = require('./services/format-code');
@@ -8,8 +8,6 @@ const FormatCodeService = require('./services/format-code');
 const botCommands = [];
 
 let authorBuffer = [];
-
-let creationsMessage = null;
 
 let currentIntroductionsMessage = null;
 const introductionsWelcomeMessage = 'Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!';
@@ -66,14 +64,6 @@ async function listenToMessages(client) {
 
     // can't bot if user is NOBOT
     if (isMessageAuthorNobot) {
-      return;
-    }
-
-    if (message.channel.id === '627445384297316352') { // creations-showcase
-      if (creationsMessage) {
-        creationsMessage.delete();
-      }
-      creationsMessage = await message.channel.send('Reminder: This channel is for posting links to your creations only. You can discuss the projects posted here in the sibling channel <#634025871614803968>. Please do not post your projects in <#634025871614803968>.\n \nReact to a project you\'ve reviewed with :white_check_mark:. Try to review projects that haven\'t been reviewed yet!');
       return;
     }
 

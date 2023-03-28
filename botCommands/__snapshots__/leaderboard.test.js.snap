@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`!leaderboard callback returns correct output 1`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -23,12 +23,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 2`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -43,12 +43,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 3`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -62,12 +62,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 4`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -82,12 +82,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 5`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -101,12 +101,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 6`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
@@ -118,12 +118,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 7`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
@@ -135,12 +135,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 8`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
@@ -152,12 +152,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 9`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -174,12 +174,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 10`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -194,12 +194,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 11`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -213,12 +213,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 12`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -233,12 +233,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 13`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
@@ -252,12 +252,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 14`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
@@ -269,12 +269,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 15`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
@@ -286,12 +286,12 @@ Object {
 `;
 
 exports[`!leaderboard callback returns correct output 16`] = `
-Object {
-  "embeds": Array [
-    Object {
+{
+  "embeds": [
+    {
       "color": 13407555,
-      "fields": Array [
-        Object {
+      "fields": [
+        {
           "name": "In Odin We Trust",
           "value": "Be the first to earn a point!",
         },
