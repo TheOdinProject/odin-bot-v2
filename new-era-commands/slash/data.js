@@ -17,12 +17,12 @@ Instead of asking if anyone can help you, ask your question outright with as muc
 **Good**:
 "Hey, I'm having trouble setting CSS styles via Javascript."
 
-Project/Exercise: 
-Lesson link:
-Code: [code sandbox like replit or codepen]
-Issue/Problem: [screenshots if applicable]
-What I expected:
-What I've tried:
+**Project/Exercise:**
+**Lesson link:**
+**Code:** [code sandbox like replit or codepen]
+**Issue/Problem:** [screenshots if applicable]
+**What I expected:** 
+**What I've tried:** 
 
 **https://www.dontasktoask.com/**
         `);
