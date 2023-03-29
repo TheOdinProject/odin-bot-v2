@@ -8,17 +8,19 @@ exports[`!data callback returns correct output 1`] = `
     {
       "color": 13407555,
       "description": "
-Instead of asking if anyone can help you, ask your question outright so people can help you!
+Instead of asking if anyone can help you, ask your question outright with as much information as possible so people will know if they can help you.
 
-**Bad**: "Hey, does anyone know how to set CSS styles with Javascript?"
+**Bad**: "Hey, anyone around that is really good with CSS?"
 
 **Good**:
-"Hey, I'm having trouble setting CSS styles via Javascript.
+"Hey, I'm having trouble setting CSS styles via Javascript."
 
-Here's my code:
-\`\`\`Code snippet\`\`\`
-And here is the error I'm receiving:
-\`Cannot set attribute 'style' of null\` "
+**Project/Exercise:**
+**Lesson link:**
+**Code:** [code sandbox like replit or codepen]
+**Issue/Problem:** [screenshots if applicable]
+**What I expected:** 
+**What I've tried:** 
 
 **https://www.dontasktoask.com/**
         ",
