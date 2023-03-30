@@ -15,7 +15,8 @@ class ModerationMessageDeleteService {
 
     try {
       await ModerationMessageDeleteService.#sendMessageToUser(
-        message.author, { embeds: [messageEmbed] },
+        message.author,
+        { embeds: [messageEmbed] },
       );
     } catch (error) {
       if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
