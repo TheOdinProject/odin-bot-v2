@@ -8,6 +8,14 @@ exports[`?++ callback returns correct output for a single user entering club-40 
 
 exports[`?++ callback returns correct output for a single user entering club-40 4`] = `"Thanks for the great question! <@2> now has 41 points"`;
 
+exports[`?++ callback returns correct output for a single user re-entering club-40 1`] = `"WELCOME BACK TO CLUB 40 <@2>!! Please review the pins at the top right!"`;
+
+exports[`?++ callback returns correct output for a single user re-entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
+
+exports[`?++ callback returns correct output for a single user re-entering club-40 3`] = `"Gif by Sully"`;
+
+exports[`?++ callback returns correct output for a single user re-entering club-40 4`] = `"Thanks for the great question! <@2> now has 42 points"`;
+
 exports[`?++ callback returns correct output for a single user w/o club-40 1`] = `"Thanks for the great question! <@2> now has 22 points"`;
 
 exports[`?++ callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
@@ -51,6 +59,14 @@ exports[`callback returns correct output for a single user entering club-40 2`] 
 exports[`callback returns correct output for a single user entering club-40 3`] = `"Gif by Sully"`;
 
 exports[`callback returns correct output for a single user entering club-40 4`] = `"Woot! <@2> now has 40 points"`;
+
+exports[`callback returns correct output for a single user re-entering club-40 1`] = `"WELCOME BACK TO CLUB 40 <@2>!! Please review the pins at the top right!"`;
+
+exports[`callback returns correct output for a single user re-entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
+
+exports[`callback returns correct output for a single user re-entering club-40 3`] = `"Gif by Sully"`;
+
+exports[`callback returns correct output for a single user re-entering club-40 4`] = `"Woot! <@2> now has 41 points"`;
 
 exports[`callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 

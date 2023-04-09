@@ -273,6 +273,32 @@ describe('callback', () => {
     expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
   });
 
+  it('returns correct output for a single user re-entering club-40', async () => {
+    const mentionedUser = User([], 2, 40);
+    const client = Client([author, mentionedUser], channel);
+    const data = {
+      author,
+      content: `${mentionedUser.id} ++`,
+      channel,
+      client,
+      guild: Guild([author, mentionedUser]),
+    };
+
+    axios.post.mockResolvedValue({
+      data: {
+        ...mentionedUser,
+        points: (mentionedUser.points += 1),
+      },
+    });
+
+    await commands.awardPoints.cb(data);
+    expect(data.channel.send).toHaveBeenCalled();
+    expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
+  });
+
   it('returns correct output for up to five mentioned users', async () => {
     const mentionedUser1 = User([], 2, 33);
     const mentionedUser2 = User([], 3, 21);
@@ -675,6 +701,36 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user entering club-40', async () => {
     const mentionedUser = User([], 2, 39);
+    const memberMap = new Map();
+    memberMap.set('role-1', { name: 'core' });
+    const member = Member(memberMap);
+    const client = Client([author, mentionedUser], channel);
+    const data = {
+      author,
+      content: `${mentionedUser.id} ?++`,
+      channel,
+      client,
+      guild: Guild([author, mentionedUser]),
+      member,
+    };
+
+    axios.post.mockResolvedValue({
+      data: {
+        ...mentionedUser,
+        points: (mentionedUser.points += 2),
+      },
+    });
+
+    await commands.awardPoints.cb(data);
+    expect(data.channel.send).toHaveBeenCalled();
+    expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[2][0]).toMatchSnapshot();
+    expect(data.channel.send.mock.calls[3][0]).toMatchSnapshot();
+  });
+
+  it('returns correct output for a single user re-entering club-40', async () => {
+    const mentionedUser = User([], 2, 40);
     const memberMap = new Map();
     memberMap.set('role-1', { name: 'core' });
     const member = Member(memberMap);
