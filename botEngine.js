@@ -1,9 +1,9 @@
 const { ChannelType } = require('discord-api-types/v10');
-const adminRoles = require('./constants/admin-roles.const');
 const BookmarkMessageService = require('./services/bookmark-message.service');
 const GettingHiredMessageService = require('./services/getting-hired-message.service');
 const newEraCommands = require('./new-era-commands');
 const FormatCodeService = require('./services/format-code');
+const config = require('./config');
 
 const botCommands = [];
 
@@ -49,15 +49,15 @@ async function listenToMessages(client) {
      */
     let isAdminMessage = false;
     try {
-      isAdminMessage = message.member.roles.cache.some((r) => adminRoles.includes(r.name));
+      isAdminMessage = message.member.roles.cache
+        .some((r) => config.roles.adminRolesName.includes(r.name));
     } catch (e) {
       //  The only 'con' is a command or message gets ignored.
     }
 
-    const NOBOT_ROLE_ID = '783764176178774036';
     let isMessageAuthorNobot = false;
     try {
-      isMessageAuthorNobot = message.member.roles.cache.has(NOBOT_ROLE_ID);
+      isMessageAuthorNobot = message.member.roles.cache.has(config.roles.NOBOTRoleId);
     } catch (err) {
       // message.member can be null
     }
@@ -110,13 +110,13 @@ async function listenToMessages(client) {
       }
     });
 
-    if (message.channel.id === process.env.DISCORD_GETTING_HIRED_CHANNEL_ID) {
+    if (message.channel.id === config.channels.gettingHiredChannelId) {
       await gettingHiredMessageService.handleMessage(message, isAdminMessage);
 
       return;
     }
 
-    if (message.channel.id === '690618925494566912') { // introductions
+    if (message.channel.id === config.channels.introductionsChannelId) { // introductions
       if (!isAdminMessage) {
         if (
           currentIntroductionsMessage
@@ -161,12 +161,10 @@ async function listenToReactions(client) {
       return;
     }
 
-    const NOBOT_ROLE_ID = '783764176178774036';
-
     // since user argument doesn't have guild roles,
     // we need to get user from guild to check their roles
     const reactionUserAsGuildMember = reaction.message.guild.members.cache.get(user.id);
-    const isReactionUserNobot = reactionUserAsGuildMember.roles.cache.has(NOBOT_ROLE_ID);
+    const isReactionUserNobot = reactionUserAsGuildMember.roles.cache.has(config.roles.NOBOTRoleId);
 
     if (isReactionUserNobot) {
       return;

@@ -2,7 +2,6 @@ const axios = require('axios');
 const config = require('../config');
 const { registerBotCommand } = require('../botEngine');
 const club40Gifs = require('./club_40_gifs.json');
-const adminRoles = require('../constants/admin-roles.const');
 
 axios.default.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
 
@@ -22,7 +21,7 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
     if (match[2] === '?++') {
       let isAdmin = false;
       authorMember.roles.cache.forEach((value) => {
-        if (adminRoles.includes(value.name)) {
+        if (config.roles.adminRolesName.includes(value.name)) {
           isAdmin = true;
         }
       });
@@ -148,7 +147,7 @@ const awardPoints = {
 
     return Promise.all(
       userIds.map(async (userId, i) => {
-        if (config.noPointsChannels.includes(channel.id)) {
+        if (config.channels.noPointsChannelIds.includes(channel.id)) {
           channel.send("You can't do that here!");
           return;
         }
