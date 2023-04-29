@@ -21,7 +21,7 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
     if (match[2] === '?++') {
       let isAdmin = false;
       authorMember.roles.cache.forEach((value) => {
-        if (config.roles.adminRolesName.includes(value.name)) {
+        if (config.roles.adminRoles.includes(value.name)) {
           isAdmin = true;
         }
       });

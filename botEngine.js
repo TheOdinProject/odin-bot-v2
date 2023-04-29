@@ -50,7 +50,7 @@ async function listenToMessages(client) {
     let isAdminMessage = false;
     try {
       isAdminMessage = message.member.roles.cache
-        .some((r) => config.roles.adminRolesName.includes(r.name));
+        .some((r) => config.roles.adminRoles.includes(r.name));
     } catch (e) {
       //  The only 'con' is a command or message gets ignored.
     }
