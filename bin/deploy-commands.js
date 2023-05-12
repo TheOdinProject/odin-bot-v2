@@ -1,5 +1,5 @@
 // SCRIPT TO REGISTER THE NEW DISCORD COMMANDS
-// Commands can be deployed directly from terminal with: node bin/deploy.js
+// Commands can be deployed directly from terminal with: node bin/deploy-commands.js
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
