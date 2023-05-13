@@ -15,7 +15,7 @@ const config = {
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
-    adminRolesNames: ['core', 'maintainer', 'admin', 'moderator'],
+    adminRolesName: ['core', 'maintainer', 'admin', 'moderator'],
   },
 };
 
