@@ -1,4 +1,3 @@
-const adminRoles = require('./constants/admin-roles.const');
 require('dotenv').config();
 
 const config = {
@@ -16,7 +15,7 @@ const config = {
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
-    adminRolesName: adminRoles,
+    adminRolesName: ['core', 'maintainer', 'admin', 'moderator'],
   },
 };
 
