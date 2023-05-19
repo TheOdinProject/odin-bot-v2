@@ -170,6 +170,7 @@ const awardPoints = {
         }
         try {
           const pointsUser = await addPointsToUser(user.id, userId[1]);
+          const previousPoints = pointsUser.points - userId[1];
           if (user) {
             const recipientMember = await guild.members.fetch(user);
             if (
@@ -186,7 +187,8 @@ const awardPoints = {
               );
 
               if (clubChannel) {
-                clubChannel.send(`HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`);
+                const welcomeMessage = (previousPoints < 40) ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!` : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
+                clubChannel.send(welcomeMessage);
                 gifPicker(club40Gifs, clubChannel);
               }
             }
