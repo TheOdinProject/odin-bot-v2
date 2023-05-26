@@ -12,6 +12,7 @@ const config = {
     introductionsChannelId: '690618925494566912',
     gettingHiredChannelId: process.env.DISCORD_GETTING_HIRED_CHANNEL_ID,
     botSpamPlaygroundChannelId: '513125912070455296',
+    FAQChannelId: '823266307293839401',
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
