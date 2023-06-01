@@ -173,7 +173,7 @@ exports[`!help snapshot should return the correct output 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "description": "**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/community_rules) and our [community expectations](https://www.theodinproject.com/community_expectations)**.",
+      "description": "**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/guides/community/rules)** and our **[community expectations](https://www.theodinproject.com/guides/community/expectations)**.",
       "fields": [
         {
           "inline": true,

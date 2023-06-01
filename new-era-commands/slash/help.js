@@ -8,7 +8,7 @@ module.exports = {
     const helpEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Help')
-      .setDescription('**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/community_rules)** and our **[community expectations](https://www.theodinproject.com/community_expectations)**.')
+      .setDescription('**By posting in this chatroom you agree to our [rules](https://www.theodinproject.com/guides/community/rules)** and our **[community expectations](https://www.theodinproject.com/guides/community/expectations)**.')
       .addFields([
         {
           name: 'Add Points',
