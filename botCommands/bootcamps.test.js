@@ -7,6 +7,10 @@ describe('!bootcamps', () => {
       [' !bootcamps'],
       ['!bootcamps @odin-bot'],
       ['@odin-bot !bootcamps'],
+      ['!bootcamp'],
+      [' !bootcamp'],
+      ['!bootcamp @odin-bot'],
+      ['@odin-bot !bootcamp'],
     ])('correct strings trigger the callback', (string) => {
       expect(command.regex.test(string)).toBeTruthy();
     });
@@ -14,8 +18,6 @@ describe('!bootcamps', () => {
     it.each([
       ['botcamps'],
       ['bootcamps'],
-      ['bootcamp'],
-      ['!bootcamp'],
       ['!bootcmp'],
       ['! bootcamps'],
       ['!abootcamps'],
