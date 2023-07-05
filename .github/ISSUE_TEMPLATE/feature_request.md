@@ -9,7 +9,8 @@ assignees: ""
 <!-- Thank you for taking the time to submit a new feature request to The Odin Project. In order to get issues closed in a reasonable amount of time, you must include a baseline of information about the feature/enhancement you are proposing. Please read this template in its entirety before filling it out to ensure that it is filled out correctly. -->
 
 Complete the following REQUIRED checkboxes:
--   [ ] I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/theodinproject/blob/main/CONTRIBUTING.md)
+-   [ ] I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md)
+
 -   [ ] The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`
 
 The following checkbox is OPTIONAL:
@@ -19,9 +20,9 @@ The following checkbox is OPTIONAL:
 <hr>
 
 **1. Description of the Feature Request:**
-<!-- 
+<!--
 A clear and concise description of what the feature or enhancement is, including how it would be useful/beneficial or what problem(s) it would solve.
- 
+
 When suggesting an entirely new command, it can be helpful to include what text you believe should trigger the command, e.g. `/commandName` or `/commandName @user`.
 -->
 
