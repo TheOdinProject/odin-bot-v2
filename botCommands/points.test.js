@@ -1080,7 +1080,8 @@ describe('!points', () => {
       data.content = '!points';
       const axiosData = {
         data: {
-          points: 5
+          points: 5,
+          rank: 1,
         }
       };
 
@@ -1095,7 +1096,8 @@ describe('!points', () => {
       data.content = '!points <@222444>';
       const axiosData = {
         data: {
-          points: 20
+          points: 20,
+          rank: 1,
         }
       };
 
@@ -1135,7 +1137,8 @@ describe('!points', () => {
       data.content = '!points';
       const axiosData = {
         data: {
-          points: 1
+          points: 1,
+          rank: 1,
         }
       }
 
@@ -1145,5 +1148,21 @@ describe('!points', () => {
       expect(reply).toMatchSnapshot();
       expect(axios.get).toHaveBeenCalled();
     });
+
+    it('show correct user rank', async () => {
+      data.content = '!points <@222444>';
+      const axiosData = {
+        data: {
+          points: 20,
+          rank: 50
+        }
+      };
+
+      axios.get = jest.fn(() => axiosData);
+      const reply = await commands.points.cb(data);
+
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalled();
+    })
   });
 });
