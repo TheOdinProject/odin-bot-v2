@@ -41,7 +41,7 @@ jest.mock('discord.js', () => ({
     members: {
       members: users,
       cache: {
-        get: (id) => users.filter((member) => member.discord_id === id)[0],
+        get: (id) => users.filter((member) => member.id === id)[0],
       },
       fetch: jest.fn().mockImplementation((user) => user),
     },
@@ -1052,6 +1052,12 @@ describe('@user --', () => {
 });
 
 describe('!points', () => {
+  const author = {
+    id: '111333',
+    points: 5,
+    displayName: 'odin'
+  }
+
   describe('regex', () => {
     it.each([
       ['!points <@!123456789>'],
@@ -1060,6 +1066,92 @@ describe('!points', () => {
       ['!points'],
     ])('correct strings trigger the callback', (string) => {
       expect(commands.points.regex.test(string)).toBeTruthy();
+    });
+
+    it('returns author points information if no other user were provided', async () => {
+      const data = {
+        author,
+        content: '!points',
+        guild: Guild([author])
+      };
+      const axiosData = {
+        data: {
+          id: 1,
+          discord_id: '111333',
+          points: 5,
+        }
+      };
+
+      axios.get = jest.fn(() => axiosData);
+
+      const reply = await commands.points.cb(data);
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalled();
+    });
+
+    it('return correct user points information if specified', async () => {
+      const mentionedUser = {
+        id: '222444',
+        displayName: 'NotOdin'
+      };
+
+      const data = {
+        author,
+        content: '!points <@222444>',
+        guild: Guild([author, mentionedUser])
+      };
+
+      const axiosData = {
+        data: {
+          id: 2,
+          discord_id: '222444',
+          points: 20,
+        }
+      };
+
+      axios.get = jest.fn(() => axiosData);
+
+      const reply = await commands.points.cb(data);
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalled();
+    });
+
+    it('returns correct msg when user has no points', async () => {
+      const mentionedUser = {
+        id: '222444',
+        displayName: "NotOdin"
+      };
+
+      const data = {
+        author,
+        content: '!points <@222444>',
+        guild: Guild([author, mentionedUser])
+      };
+
+      const axiosData = {
+        data: {
+          message: "unable to find that user",
+        }
+      };
+
+      axios.get = jest.fn(() => axiosData);
+
+      const reply = await commands.points.cb(data);
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalled();
+    });
+
+    it('GET request not called if user not on disord', async () => {
+      const data = {
+        author,
+        content: '!points <@11111111>',
+        guild: Guild([author])
+      }
+
+      axios.get = jest.fn();
+      const reply = await commands.points.cb(data);
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).not.toHaveBeenCalled();
     });
   });
 });
