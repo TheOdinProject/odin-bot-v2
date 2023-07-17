@@ -63,17 +63,6 @@ async function addPointsToUser(discordId, numPoints) {
   }
 }
 
-async function lookUpUser(discordId) {
-  try {
-    const pointsBotResponse = await axios.get(
-      `https://www.theodinproject.com/api/points/${discordId}`,
-    );
-    return pointsBotResponse.data;
-  } catch (err) {
-    return false;
-  }
-}
-
 function exclamation(points, isGoodQuestion) {
   if (isGoodQuestion) {
     return 'Thanks for the great question!';
@@ -210,26 +199,28 @@ registerBotCommand(awardPoints.regex, awardPoints.cb);
 const points = {
   regex: /(?<!\S)!points(?!\S)/,
   async cb({
-    content, author, client, channel, guild,
+    content, author, guild,
   }) {
-    const userIds = getUserIdsFromMessage(content, /<@!?(\d+)>/g);
-    if (userIds.length === 0) {
-      userIds.push(author.id);
+    const idRegex = /<@(\d+)>/;
+    const idMatch = idRegex.exec(content);
+    const discordId = idMatch !== null ? idMatch[1] : author.id;
+
+    const member = guild.members.cache.get(discordId);
+    if (member === undefined) {
+      return "Unknown member, or user has left discord";
     }
-    userIds.forEach(async (userId) => {
-      const user = await client.users.cache.get(userId);
-      try {
-        const userPoints = await lookUpUser(user.id);
-        if (userPoints) {
-          const username = guild.members.cache
-            .get(userPoints.discord_id)
-            .displayName.replace(/!/g, '!');
-          channel.send(`${username} has ${userPoints.points} points!`);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    });
+
+    try {
+      const user = await axios.get(
+        `https://www.theodinproject.com/api/points/${discordId}`,
+      );
+
+      const points = user.data.points;
+      return points != undefined ? `${member.displayName} has ${points} points!` : `${member.displayName} currently has no points!`;
+    } catch (err) {
+      console.log(err);
+    }
+
   },
 };
 
