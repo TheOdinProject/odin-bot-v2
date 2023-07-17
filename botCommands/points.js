@@ -216,7 +216,7 @@ const points = {
       );
 
       const points = user.data.points != undefined ? user.data.points : 0;
-      return `${member.displayName} has ${points} points!`;
+      return `${member.displayName} has ${points} point${points == 1 ? '' : 's'}!`;
     } catch (err) {
       console.log(err);
     }
