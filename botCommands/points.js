@@ -211,12 +211,10 @@ const points = {
     }
 
     try {
-      const user = await axios.get(
-        `https://www.theodinproject.com/api/points/${discordId}`,
-      );
+      const response = await axios.get(`https://www.theodinproject.com/api/points/${discordId}`);
 
-      const points = user.data.points != undefined ? user.data.points : 0;
-      const rank = user.data.rank != undefined ? `${user.data.rank} - ` : "";
+      const points = response.data.points != undefined ? response.data.points : 0;
+      const rank = response.data.rank != undefined ? `${response.data.rank} - ` : "";
 
       return `${rank}${member.displayName} has ${points} point${points == 1 ? '' : 's'}!`;
     } catch (err) {
