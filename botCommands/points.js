@@ -215,8 +215,8 @@ const points = {
         `https://www.theodinproject.com/api/points/${discordId}`,
       );
 
-      const points = user.data.points;
-      return points != undefined ? `${member.displayName} has ${points} points!` : `${member.displayName} currently has no points!`;
+      const points = user.data.points != undefined ? user.data.points : 0;
+      return `${member.displayName} has ${points} points!`;
     } catch (err) {
       console.log(err);
     }
