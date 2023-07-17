@@ -2,6 +2,8 @@
 
 exports[`!points regex GET request not called if user not on disord 1`] = `"Unknown member, or user has left discord"`;
 
+exports[`!points regex format the points word properly for 1 point 1`] = `"odin has 1 point!"`;
+
 exports[`!points regex return correct user points information if specified 1`] = `"NotOdin has 20 points!"`;
 
 exports[`!points regex returns author points information if no other user were provided 1`] = `"odin has 5 points!"`;
