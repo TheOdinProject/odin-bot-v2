@@ -1054,8 +1054,16 @@ describe('@user --', () => {
 describe('!points', () => {
   const author = {
     id: '111333',
-    points: 5,
     displayName: 'odin'
+  }
+  const mentionedUser = {
+    id: '222444',
+    displayName: "NotOdin"
+  };
+
+  const data = {
+    author,
+    guild: Guild([author, mentionedUser])
   }
 
   describe('regex', () => {
@@ -1069,65 +1077,37 @@ describe('!points', () => {
     });
 
     it('returns author points information if no other user were provided', async () => {
-      const data = {
-        author,
-        content: '!points',
-        guild: Guild([author])
-      };
+      data.content = '!points';
       const axiosData = {
         data: {
-          id: 1,
-          discord_id: '111333',
-          points: 5,
+          points: 5
         }
       };
 
       axios.get = jest.fn(() => axiosData);
-
       const reply = await commands.points.cb(data);
+
       expect(reply).toMatchSnapshot();
       expect(axios.get).toHaveBeenCalled();
     });
 
     it('return correct user points information if specified', async () => {
-      const mentionedUser = {
-        id: '222444',
-        displayName: 'NotOdin'
-      };
-
-      const data = {
-        author,
-        content: '!points <@222444>',
-        guild: Guild([author, mentionedUser])
-      };
-
+      data.content = '!points <@222444>';
       const axiosData = {
         data: {
-          id: 2,
-          discord_id: '222444',
-          points: 20,
+          points: 20
         }
       };
 
       axios.get = jest.fn(() => axiosData);
-
       const reply = await commands.points.cb(data);
+
       expect(reply).toMatchSnapshot();
       expect(axios.get).toHaveBeenCalled();
     });
 
     it('returns correct msg when user has no points', async () => {
-      const mentionedUser = {
-        id: '222444',
-        displayName: "NotOdin"
-      };
-
-      const data = {
-        author,
-        content: '!points <@222444>',
-        guild: Guild([author, mentionedUser])
-      };
-
+      data.content = '!points <@222444>';
       const axiosData = {
         data: {
           message: "unable to find that user",
@@ -1142,16 +1122,28 @@ describe('!points', () => {
     });
 
     it('GET request not called if user not on disord', async () => {
-      const data = {
-        author,
-        content: '!points <@11111111>',
-        guild: Guild([author])
-      }
+      data.content = '!points <@11111111>';
 
       axios.get = jest.fn();
       const reply = await commands.points.cb(data);
+
       expect(reply).toMatchSnapshot();
       expect(axios.get).not.toHaveBeenCalled();
+    });
+
+    it('format the points word properly for 1 point', async () => {
+      data.content = '!points';
+      const axiosData = {
+        data: {
+          points: 1
+        }
+      }
+
+      axios.get = jest.fn(() => axiosData);
+      const reply = await commands.points.cb(data);
+
+      expect(reply).toMatchSnapshot();
+      expect(axios.get).toHaveBeenCalled();
     });
   });
 });
