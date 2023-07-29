@@ -1,9 +1,9 @@
-const Redis = require('ioredis');
 const { RESTJSONErrorCodes } = require('discord-api-types/v9');
+const RedisService = require('./redis');
 
 class GettingHiredMessageService {
   constructor() {
-    this.redis = new Redis(process.env.REDIS_URL);
+    this.redis = RedisService.getInstance();
   }
 
   async handleMessage(message, isAdminMessage) {

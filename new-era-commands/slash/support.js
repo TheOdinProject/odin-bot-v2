@@ -1,11 +1,13 @@
 const {
   SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder,
+  PermissionFlagsBits,
 } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('support')
-    .setDescription('Support The Odin Project'),
+    .setDescription('Support The Odin Project')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   execute: async (interaction) => {
     const learnMoreButton = new ButtonBuilder()
       .setLabel('Learn More')
