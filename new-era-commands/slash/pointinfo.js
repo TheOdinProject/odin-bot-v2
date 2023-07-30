@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('points')
-    .setDescription('Points'),
+    .setDescription('A guide to points in the TOP Discord server'),
   execute: async (interaction) => {
     const pointsEmbed = new EmbedBuilder()
       .setColor('#cc9543')
