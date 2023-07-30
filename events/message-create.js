@@ -30,8 +30,6 @@ function registerBotCommand(regex, fn) {
   botCommands.push({ regex, fn });
 }
 
-const gettingHiredMessageService = new GettingHiredMessageService();
-
 module.exports = {
   name: Events.MessageCreate,
   registerBotCommand,
@@ -113,6 +111,7 @@ module.exports = {
     });
 
     if (message.channel.id === config.channels.gettingHiredChannelId) {
+      const gettingHiredMessageService = new GettingHiredMessageService();
       await gettingHiredMessageService.handleMessage(message, isAdminMessage);
 
       return;
