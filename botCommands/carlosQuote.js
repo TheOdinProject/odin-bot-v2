@@ -7,9 +7,6 @@ const command = {
     const template = new Discord.EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Asking Questions in the TOP Discord')
-      .setDescription(
-        'Here is a quote from Carlos about "Asking Questions in the TOP Discord"',
-      )
       .addFields([
         {
           name: '\u200B',

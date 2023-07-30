@@ -5,7 +5,6 @@ exports[`!cqg snapshot should return the correct output 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "description": "Here is a quote from Carlos about "Asking Questions in the TOP Discord"",
       "fields": [
         {
           "name": "​",
