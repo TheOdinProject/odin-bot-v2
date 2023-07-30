@@ -24,7 +24,8 @@ module.exports = {
         **Point Inflation:**
 
         Please don't beg for points or abuse the point system.
-        We will have a strict moderation policy in place which will include losing access to the bot or participation in the points system. 
+        We will have a strict moderation policy in place which will include losing access to the bot or participation in the points system.
+         
         Our goal is to maintain a positive and supportive community, where help and contributions are valued.
       `);
 
