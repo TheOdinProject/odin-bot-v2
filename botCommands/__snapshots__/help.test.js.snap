@@ -4,7 +4,7 @@ exports[`!code snapshot returns correct output 1`] = `
 {
   "embeds": [
     {
-      "color": 39423,
+      "color": 13407555,
       "description": "Hey, here's some helpful tips on sharing your code with others!",
       "fields": [
         {
@@ -46,7 +46,7 @@ exports[`!code snapshot returns correct output 2`] = `
 {
   "embeds": [
     {
-      "color": 39423,
+      "color": 13407555,
       "description": "Hey, <@1>, here's some helpful tips on sharing your code with others!",
       "fields": [
         {
@@ -88,7 +88,7 @@ exports[`!code snapshot returns correct output 3`] = `
 {
   "embeds": [
     {
-      "color": 39423,
+      "color": 13407555,
       "description": "Hey, <@1> <@2>, here's some helpful tips on sharing your code with others!",
       "fields": [
         {
@@ -130,7 +130,7 @@ exports[`!code snapshot returns correct output 4`] = `
 {
   "embeds": [
     {
-      "color": 39423,
+      "color": 13407555,
       "description": "Hey, <@1> <@2> <@3>, here's some helpful tips on sharing your code with others!",
       "fields": [
         {
