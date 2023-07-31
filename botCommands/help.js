@@ -41,7 +41,7 @@ const code = {
     }
 
     const codeCommandEmbed = new Discord.EmbedBuilder()
-      .setColor('#0099ff')
+      .setColor('#cc9543')
       .setTitle('HOW TO EMBED CODE SNIPPETS')
       .setDescription(
         !users ? 'Hey, here\'s some helpful tips on sharing your code with others!' : `Hey, ${users.trim()}, here's some helpful tips on sharing your code with others!`,
