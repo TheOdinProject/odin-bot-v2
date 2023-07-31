@@ -1,13 +1,11 @@
 const {
   SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder,
-  PermissionFlagsBits,
 } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('support')
-    .setDescription('Support The Odin Project')
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+    .setDescription('Support The Odin Project'),
   execute: async (interaction) => {
     const learnMoreButton = new ButtonBuilder()
       .setLabel('Learn More')
@@ -16,7 +14,7 @@ module.exports = {
       .setEmoji('📖');
     const donateNowButton = new ButtonBuilder()
       .setLabel('Donate Now')
-      .setURL('https://opencollective.com/theodinproject/donate')
+      .setURL('https://opencollective.com/theodinproject/donate?amount=5')
       .setStyle(ButtonStyle.Link)
       .setEmoji('💰');
 
