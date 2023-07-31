@@ -1,15 +1,20 @@
-# ODIN BOTTTTTTTTTTTTTTTTTT
+# Odin Bot - Discord Bot for The Odin Project
 
-here lies the code that runs Odin's right hand bot... 
+Welcome to the Odin Bot repository! This is the codebase that powers Odin's right-hand bot, which is used by the tens of thousands of dedicated Odinites in the [Discord community of The Odin Project](https://discord.gg/fbFCkYabZB). 
 
-This bot is used in a Discord server for [theodinproject.com](https://www.theodinproject.com), an open source web development bootcamp, and is used by tens of thousands of Odinites. This bot has been built with NodeJS and [DiscordJS](https://discord.js.org/#/docs/main/stable/general/welcome).
+[The Odin Project](https://www.theodinproject.com) is an open-source curriculum for learning full-stack web development. This bot plays a crucial role in our Discord server by displaying helpful information, driving positive engagement through the points system, and incorporating various other nifty features.
 
-Follow [this link](https://discord.gg/fbFCkYabZB) to join our Discord server!
+## Tech Stack
 
-## Contributing
 [![Build Status](https://circleci.com/gh/TheOdinProject/theodinproject.svg?style=svg)](https://app.circleci.com/pipelines/github/TheOdinProject/odin-bot-v2)
 
-Thank you for your interest in contributing to the Odin Bot. The Odin Project depends on open source contributions to grow, improve, and thrive. We welcome contributions from beginners and experienced developers alike.
+This bot has been built with NodeJS and [the DiscordJS module](https://discord.js.org/#/docs/main/stable/general/welcome).
 
-To find out more about how you can contribute, please read our [getting started](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and [contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
 
+## Contributing
+
+We're thrilled that you're interested in contributing to the Odin Bot! Our bot depends on open source contributions to grow, improve, and thrive. Whether you're a seasoned pro or just starting out, we welcome all kinds of contributions!
+
+For more information on how to get started, we have a really helpful [wiki guide for setting up the Odin Bot](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and please also refer to [our TOP contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
+
+Let's have a blast building and improving the Odin Bot together! We can't wait to see your awesome contributions!
