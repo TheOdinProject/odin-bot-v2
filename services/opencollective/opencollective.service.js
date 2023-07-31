@@ -6,13 +6,20 @@ class OpenCollectiveService {
 
   static successMessage = 'You have been given the Backer role, thanks for contributing!';
 
-  static errorMessage = `Oops, something went wrong. Contact us through <@${config.modmailUserId}> so we can assign the role manually.`;
+  static failureMessage = `Oops! Something went wrong. Try again, or contact us through <@${config.modmailUserId}> with a link to your Open Collective profile (https://opencollective.com/YOURUSERNAME) so we can assign the role manually.`;
 
   static ourOpenCollectiveUsername = 'theodinproject';
 
   static redisKeyForVerifiedOpenCollectiveUsernames = 'verified_oc_usernames';
 
   static async handleInteraction(interaction) {
+    if (interaction.member.roles.cache.has(config.roles.backer)) {
+      return interaction.reply({
+        content: 'You already have the Backer role!',
+        ephemeral: true,
+      });
+    }
+
     const username = interaction.options.getString('username');
     const redis = RedisService.getInstance();
 
@@ -20,7 +27,7 @@ class OpenCollectiveService {
       await OpenCollectiveService.isUsernameCached(username, redis)
     ) {
       return interaction.reply({
-        content: OpenCollectiveService.errorMessage,
+        content: OpenCollectiveService.failureMessage,
         ephemeral: true,
       });
     }
@@ -29,7 +36,7 @@ class OpenCollectiveService {
 
     if (data.errors) {
       return interaction.reply({
-        content: OpenCollectiveService.errorMessage,
+        content: OpenCollectiveService.failureMessage,
         ephemeral: true,
       });
     }
@@ -49,7 +56,7 @@ class OpenCollectiveService {
     }
 
     return interaction.reply({
-      content: OpenCollectiveService.errorMessage,
+      content: OpenCollectiveService.failureMessage,
       ephemeral: true,
     });
   }

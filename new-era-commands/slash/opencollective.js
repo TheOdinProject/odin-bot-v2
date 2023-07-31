@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const OpenCollectiveService = require('../../services/opencollective');
 
 module.exports = {
@@ -8,8 +8,7 @@ module.exports = {
     .addStringOption((option) => option
       .setName('username')
       .setDescription('Your open collective username')
-      .setRequired(true))
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+      .setRequired(true)),
   execute: async (interaction) => {
     try {
       await OpenCollectiveService.handleInteraction(interaction);
