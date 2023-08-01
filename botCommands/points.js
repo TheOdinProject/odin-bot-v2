@@ -3,7 +3,7 @@ const config = require('../config');
 const { registerBotCommand } = require('../botEngine');
 const club40Gifs = require('./club_40_gifs.json');
 
-axios.default.defaults.headers.post.Authorization = `Token ${config.pointsbot.token}`;
+axios.default.defaults.headers.common.Authorization = `Token ${config.pointsbot.token}`;
 
 function gifPicker(gifContainer, clubChannel) {
   const choice = Math.floor(Math.random() * gifContainer.length);
