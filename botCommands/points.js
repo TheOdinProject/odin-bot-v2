@@ -196,40 +196,9 @@ const awardPoints = {
 
 registerBotCommand(awardPoints.regex, awardPoints.cb);
 
-const points = {
-  regex: /(?<!\S)!points(?!\S)/,
-  async cb({
-    content, author, guild,
-  }) {
-    const idRegex = /<@(\d+)>/;
-    const idMatch = idRegex.exec(content);
-    const discordId = idMatch !== null ? idMatch[1] : author.id;
-
-    const member = guild.members.cache.get(discordId);
-    if (member === undefined) {
-      return "Unknown member, or user has left discord";
-    }
-
-    try {
-      const response = await axios.get(`https://www.theodinproject.com/api/points/${discordId}`);
-
-      const points = response.data.points != undefined ? response.data.points : 0;
-      const rank = response.data.rank != undefined ? `${response.data.rank} - ` : "";
-
-      return `${rank}${member.displayName} has ${points} point${points == 1 ? '' : 's'}!`;
-    } catch (err) {
-      console.log(err);
-    }
-
-  },
-};
-
-registerBotCommand(points.regex, points.cb);
-
 module.exports = {
   addPointsToUser,
   awardPoints,
   deductPoints,
   getUserIdsFromMessage,
-  points,
 };
