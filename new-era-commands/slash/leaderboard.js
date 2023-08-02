@@ -19,7 +19,8 @@ async function displayUserRank(interaction) {
     const rank = response.data.rank !== undefined ? `${response.data.rank} - ` : '';
     interaction.reply(`${rank}${user.username} has ${userPoints} point${userPoints === 1 ? '' : 's'}!`);
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
+    console.log('@ new-era-commands/slash/leaderboard.js function displayUserRank()');
   }
 }
 
