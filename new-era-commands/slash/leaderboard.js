@@ -48,13 +48,17 @@ async function displayServerRanking(interaction) {
   const limit = limitOption <= 25 && limitOption > 0 ? limitOption : 25;
 
   const offsetOption = interaction.options.getInteger('offset');
-  const offset = offsetOption != null ? offsetOption : 0;
+  let offset = offsetOption != null ? offsetOption : 0;
 
   try {
     const response = await axios.get('https://www.theodinproject.com/api/points');
 
     // eslint-disable-next-line max-len
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
+    if (offset >= users.length) {
+      offset = users.length - limit;
+    }
+
     const usersList = getUsersList(users, limit, offset, interaction);
 
     const leaderboardReply = new EmbedBuilder()
