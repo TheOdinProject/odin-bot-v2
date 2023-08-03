@@ -168,6 +168,28 @@ exports[`ranking subcommand Limit defaults to 25 if limit provided lower than 1 
 }
 `;
 
+exports[`ranking subcommand Limit does not exceed users length 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Server Ranking",
+          "value": "1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
 exports[`ranking subcommand Offset cannot exceed max users length 1`] = `
 {
   "embeds": [

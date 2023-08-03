@@ -64,6 +64,7 @@ describe('ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
+
   it("Returned users length matches limit", async () => {
     limit = 8;
     const members = generateLeaderData(30);
@@ -117,6 +118,18 @@ describe('ranking subcommand', () => {
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
+
+  it('Limit does not exceed users length', async () => {
+    limit = 10;
+    const members = generateLeaderData(5);
+    interactionMock.guild = new GuildMock(members);
+    setUpAxiosMock(members);
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  })
+
 
   it("Returns users starting from offset", async () => {
     offset = 5;
