@@ -84,7 +84,7 @@ exports[`ranking subcommand Limit defaults to 25 if limit not provided 1`] = `
 }
 `;
 
-exports[`ranking subcommand Limit defaults to 25 used if limit provided lower than 1 1`] = `
+exports[`ranking subcommand Limit defaults to 25 if limit provided is higher than 25 1`] = `
 {
   "embeds": [
     {
@@ -126,7 +126,7 @@ exports[`ranking subcommand Limit defaults to 25 used if limit provided lower th
 }
 `;
 
-exports[`ranking subcommand Limit defaults to 25 when limit provided is higher than 25 1`] = `
+exports[`ranking subcommand Limit defaults to 25 if limit provided lower than 1 1`] = `
 {
   "embeds": [
     {
