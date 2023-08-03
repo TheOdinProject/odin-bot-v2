@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reply with the correct information for ranking subcommand Limit defaults to 25 used if limit provided lower than 1 1`] = `
+exports[`ranking subcommand Limit defaults to 25 if invalid characters provided 1`] = `
 {
   "embeds": [
     {
@@ -42,7 +42,7 @@ exports[`Reply with the correct information for ranking subcommand Limit default
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Limit defaults to 25 when limit provided is higher than 25 1`] = `
+exports[`ranking subcommand Limit defaults to 25 if limit not provided 1`] = `
 {
   "embeds": [
     {
@@ -84,7 +84,7 @@ exports[`Reply with the correct information for ranking subcommand Limit default
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Limits results defaults to 25 if invalid characters provided 1`] = `
+exports[`ranking subcommand Limit defaults to 25 used if limit provided lower than 1 1`] = `
 {
   "embeds": [
     {
@@ -126,7 +126,7 @@ exports[`Reply with the correct information for ranking subcommand Limits result
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Limits results defaults to 25 if limit not provided 1`] = `
+exports[`ranking subcommand Limit defaults to 25 when limit provided is higher than 25 1`] = `
 {
   "embeds": [
     {
@@ -142,6 +142,23 @@ exports[`Reply with the correct information for ranking subcommand Limits result
 6 - user105 [995 points] 
 7 - user106 [994 points] 
 8 - user107 [993 points] 
+9 - user108 [992 points] 
+10 - user109 [991 points] 
+11 - user110 [990 points] 
+12 - user111 [989 points] 
+13 - user112 [988 points] 
+14 - user113 [987 points] 
+15 - user114 [986 points] 
+16 - user115 [985 points] 
+17 - user116 [984 points] 
+18 - user117 [983 points] 
+19 - user118 [982 points] 
+20 - user119 [981 points] 
+21 - user120 [980 points] 
+22 - user121 [979 points] 
+23 - user122 [978 points] 
+24 - user123 [977 points] 
+25 - user124 [976 points] 
 ",
         },
       ],
@@ -151,7 +168,7 @@ exports[`Reply with the correct information for ranking subcommand Limits result
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Offset cannot exceed max users length 1`] = `
+exports[`ranking subcommand Offset cannot exceed max users length 1`] = `
 {
   "embeds": [
     {
@@ -193,7 +210,7 @@ exports[`Reply with the correct information for ranking subcommand Offset cannot
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Offset defaults to 0 if invalid characters provided 1`] = `
+exports[`ranking subcommand Offset defaults to 0 if invalid characters provided 1`] = `
 {
   "embeds": [
     {
@@ -235,7 +252,7 @@ exports[`Reply with the correct information for ranking subcommand Offset defaul
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Offset defaults to 0 if not provided 1`] = `
+exports[`ranking subcommand Offset defaults to 0 if negative value provided 1`] = `
 {
   "embeds": [
     {
@@ -277,7 +294,49 @@ exports[`Reply with the correct information for ranking subcommand Offset defaul
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Offset show the last users depending on limit if offset too high 1`] = `
+exports[`ranking subcommand Offset defaults to 0 if not provided 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Server Ranking",
+          "value": "1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
+6 - user105 [995 points] 
+7 - user106 [994 points] 
+8 - user107 [993 points] 
+9 - user108 [992 points] 
+10 - user109 [991 points] 
+11 - user110 [990 points] 
+12 - user111 [989 points] 
+13 - user112 [988 points] 
+14 - user113 [987 points] 
+15 - user114 [986 points] 
+16 - user115 [985 points] 
+17 - user116 [984 points] 
+18 - user117 [983 points] 
+19 - user118 [982 points] 
+20 - user119 [981 points] 
+21 - user120 [980 points] 
+22 - user121 [979 points] 
+23 - user122 [978 points] 
+24 - user123 [977 points] 
+25 - user124 [976 points] 
+",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`ranking subcommand Offset show the last users depending on limit if offset is too high 1`] = `
 {
   "embeds": [
     {
@@ -299,49 +358,7 @@ exports[`Reply with the correct information for ranking subcommand Offset show t
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Offset to defaults to 0 if negative value provided 1`] = `
-{
-  "embeds": [
-    {
-      "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
-2 - user101 [999 points] 
-3 - user102 [998 points] 
-4 - user103 [997 points] 
-5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
-",
-        },
-      ],
-      "title": "Leaderboard",
-    },
-  ],
-}
-`;
-
-exports[`Reply with the correct information for ranking subcommand Return the correct limit, moving offset backward if necessary 1`] = `
+exports[`ranking subcommand Return the correct limit, moving offset backward if necessary 1`] = `
 {
   "embeds": [
     {
@@ -368,7 +385,7 @@ exports[`Reply with the correct information for ranking subcommand Return the co
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Returned users matches limit 1`] = `
+exports[`ranking subcommand Returned users length matches limit 1`] = `
 {
   "embeds": [
     {
@@ -393,7 +410,7 @@ exports[`Reply with the correct information for ranking subcommand Returned user
 }
 `;
 
-exports[`Reply with the correct information for ranking subcommand Returns users starting from offset 1`] = `
+exports[`ranking subcommand Returns users starting from offset 1`] = `
 {
   "embeds": [
     {

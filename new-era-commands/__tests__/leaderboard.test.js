@@ -29,7 +29,7 @@ class GuildMock {
   }
 }
 
-describe('Reply with the correct information for ranking subcommand', () => {
+describe('ranking subcommand', () => {
   let limit = null;
   let offset = null;
   let reply = '';
@@ -48,9 +48,14 @@ describe('Reply with the correct information for ranking subcommand', () => {
   }
 
   const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
-  afterEach(() => axios.get.mockReset());
 
-  it("Returned users matches limit", async () => {
+  afterEach(() => {
+    limit = null;
+    offset = null;
+    axios.get.mockReset();
+  })
+
+  it("Returned users length matches limit", async () => {
     limit = 8;
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
@@ -60,7 +65,7 @@ describe('Reply with the correct information for ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
-  it('Limits results defaults to 25 if limit not provided', async () => {
+  it('Limit defaults to 25 if limit not provided', async () => {
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
@@ -69,7 +74,7 @@ describe('Reply with the correct information for ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it('Limits results defaults to 25 if invalid characters provided', async () => {
+  it('Limit defaults to 25 if invalid characters provided', async () => {
     limit = 'sdfsdf';
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
@@ -128,7 +133,7 @@ describe('Reply with the correct information for ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
-  it("Offset to defaults to 0 if negative value provided", async () => {
+  it("Offset defaults to 0 if negative value provided", async () => {
     offset = -5;
     const members = generateLeaderData(25);
     setUpAxiosMock(members);
@@ -148,7 +153,7 @@ describe('Reply with the correct information for ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
-  it("Offset show the last users depending on limit if offset too high", async () => {
+  it("Offset show the last users depending on limit if offset is too high", async () => {
     offset = 56;
     limit = 5;
     const members = generateLeaderData(50);
@@ -169,47 +174,28 @@ describe('Reply with the correct information for ranking subcommand', () => {
     await execute(interactionMock);
     expect(reply).toMatchSnapshot();
   })
+});
 
 
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard n=2 start=3',
-  //         }),
-  //       ).toMatchSnapshot();
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard start=3',
-  //         }),
-  //       ).toMatchSnapshot();
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard n=2',
-  //         }),
-  //       ).toMatchSnapshot();
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard n=2 start=wtf',
-  //         }),
-  //       ).toMatchSnapshot();
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard n=wtf start=3',
-  //         }),
-  //       ).toMatchSnapshot();
-  //       expect(
-  //         await commands.leaderboard.cb({
-  //           guild: new GuildMock(members),
-  //           content: '!leaderboard n=25 start=9999',
-  //         }),
-  //       ).toMatchSnapshot();
-  //     });
-  //   });
-  // });
+describe('user subcommand', () => {
+  let limit = null;
+  let offset = null;
+  let reply = '';
+
+  const interactionMock = {
+    options: {
+      getSubcommand: () => 'ranking',
+      getInteger: (string) => {
+        if (string === 'limit') {
+          return limit;
+        } else if (string === "offset") {
+          return offset;
+        }
+      }
+    },
+    reply: jest.fn((message) => reply = message)
+  }
+
 
   // describe('!points', () => {
   //   const author = {
