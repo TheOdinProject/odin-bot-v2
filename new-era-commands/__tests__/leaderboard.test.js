@@ -54,6 +54,16 @@ describe('ranking subcommand', () => {
     axios.get.mockReset();
   })
 
+  it("Returns be the first to earn points message if no user in database", async () => {
+    const members = generateLeaderData(0);
+    interactionMock.guild = new GuildMock(members);
+    setUpAxiosMock(members);
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  })
+
   it("Returned users length matches limit", async () => {
     limit = 8;
     const members = generateLeaderData(30);

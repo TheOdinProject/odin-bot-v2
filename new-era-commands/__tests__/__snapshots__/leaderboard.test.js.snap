@@ -410,6 +410,23 @@ exports[`ranking subcommand Returned users length matches limit 1`] = `
 }
 `;
 
+exports[`ranking subcommand Returns be the first to earn points message if no user in database 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Server Ranking",
+          "value": "Be the first to earn a point!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
 exports[`ranking subcommand Returns users starting from offset 1`] = `
 {
   "embeds": [
