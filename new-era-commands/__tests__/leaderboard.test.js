@@ -61,6 +61,7 @@ describe('ranking subcommand', () => {
     setUpAxiosMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -70,6 +71,7 @@ describe('ranking subcommand', () => {
     setUpAxiosMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   });
 
@@ -80,6 +82,7 @@ describe('ranking subcommand', () => {
     setUpAxiosMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   });
 
@@ -90,6 +93,7 @@ describe('ranking subcommand', () => {
     setUpAxiosMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -100,6 +104,7 @@ describe('ranking subcommand', () => {
     setUpAxiosMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -110,6 +115,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -119,6 +125,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -129,6 +136,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -139,6 +147,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -149,6 +158,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -160,6 +170,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 
@@ -171,6 +182,7 @@ describe('ranking subcommand', () => {
     interactionMock.guild = new GuildMock(members);
 
     await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
 });
@@ -195,7 +207,7 @@ describe('user subcommand', () => {
     axios.get.mockReset();
   })
 
-  it('Return correct reply when user has no points', async () => {
+  it('Return correct reply when user is not in database', async () => {
     setUpAxiosMock({ message: 'unable to find that user' })
     user = { id: '222444', username: 'NotOdin' };
 

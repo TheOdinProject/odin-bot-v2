@@ -520,7 +520,7 @@ exports[`user subcommand Return correct rank if user rank recieved 1`] = `
 }
 `;
 
-exports[`user subcommand Return correct reply when user has no points 1`] = `
+exports[`user subcommand Return correct reply when user is not in database 1`] = `
 {
   "embeds": [
     {
