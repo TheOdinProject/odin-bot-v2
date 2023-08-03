@@ -54,10 +54,13 @@ async function displayServerRanking(interaction) {
     // eslint-disable-next-line max-len
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
 
+    if (limit > users.length) {
+      limit = users.length;
+    }
+
     // Always show the last members if offset too high
     if (offset + limit >= users.length) {
       offset = Math.max(0, users.length - limit);
-      limit = users.length - offset;
     }
 
     const usersList = getUsersList(users, limit, offset, interaction);
