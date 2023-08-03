@@ -46,7 +46,7 @@ async function displayServerRanking(interaction) {
   limit = limit <= 25 && limit > 0 ? limit : 25;
 
   let offset = interaction.options.getInteger('offset');
-  offset = Math.min(0, offset);
+  offset = offset > 0 ? offset : 0;
 
   try {
     const response = await axios.get('https://www.theodinproject.com/api/points');
@@ -57,7 +57,7 @@ async function displayServerRanking(interaction) {
     // Always show the last members if offset too high
     if (offset + limit >= users.length) {
       offset = Math.max(0, users.length - limit);
-      limit = users.length;
+      limit = users.length - offset;
     }
 
     const usersList = getUsersList(users, limit, offset, interaction);
