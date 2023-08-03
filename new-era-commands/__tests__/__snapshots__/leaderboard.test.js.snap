@@ -451,3 +451,88 @@ exports[`ranking subcommand Returns users starting from offset 1`] = `
   ],
 }
 `;
+
+exports[`user subcommand Format the points word properly for 1 point 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "User Rank",
+          "value": "Someone has 1 point!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Formats the points word properly for 0 or more than 1 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "User Rank",
+          "value": "Dog has 20 points!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Formats the points word properly for 0 or more than 1 2`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "User Rank",
+          "value": "Dog has 0 points!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Return correct rank if user rank recieved 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "User Rank",
+          "value": "5 - Cat has 20 points!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Return correct reply when user has no points 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "User Rank",
+          "value": "NotOdin has 0 points!",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;

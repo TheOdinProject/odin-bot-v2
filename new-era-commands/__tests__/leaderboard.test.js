@@ -7,7 +7,6 @@ const { generateLeaderData } = require('../../botCommands/mockData');
 
 class GuildMembersMock {
   members;
-
   cache;
 
   constructor(users) {
@@ -20,7 +19,6 @@ class GuildMembersMock {
 
 class GuildMock {
   members;
-
   member;
 
   constructor(users) {
@@ -52,6 +50,7 @@ describe('ranking subcommand', () => {
   afterEach(() => {
     limit = null;
     offset = null;
+    reply = '';
     axios.get.mockReset();
   })
 
@@ -84,7 +83,7 @@ describe('ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it("Limit defaults to 25 used if limit provided lower than 1", async () => {
+  it("Limit defaults to 25 if limit provided lower than 1", async () => {
     limit = 0;
     const members = generateLeaderData(25);
     interactionMock.guild = new GuildMock(members);
@@ -94,7 +93,7 @@ describe('ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
-  it("Limit defaults to 25 when limit provided is higher than 25", async () => {
+  it("Limit defaults to 25 if limit provided is higher than 25", async () => {
     limit = 50;
     const members = generateLeaderData(70);
     interactionMock.guild = new GuildMock(members);
@@ -178,138 +177,64 @@ describe('ranking subcommand', () => {
 
 
 describe('user subcommand', () => {
-  let limit = null;
-  let offset = null;
+  let user = {};
   let reply = '';
-
   const interactionMock = {
     options: {
-      getSubcommand: () => 'ranking',
-      getInteger: (string) => {
-        if (string === 'limit') {
-          return limit;
-        } else if (string === "offset") {
-          return offset;
-        }
-      }
+      getSubcommand: () => 'user',
+      getUser: () => user,
     },
     reply: jest.fn((message) => reply = message)
   }
 
+  const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
 
-  // describe('!points', () => {
-  //   const author = {
-  //     id: '111333',
-  //     displayName: 'odin'
-  //   }
-  //   const mentionedUser = {
-  //     id: '222444',
-  //     displayName: "NotOdin"
-  //   };
-  //
-  //   const data = {
-  //     author,
-  //     guild: Guild([author, mentionedUser])
-  //   }
-  //
-  //   describe('regex', () => {
-  //     it.each([
-  //       ['!points <@!123456789>'],
-  //       ['let me check out my !points <@!123456789>'],
-  //       ['!points <@!123456789> <@!123456789>-v2'],
-  //       ['!points'],
-  //     ])('correct strings trigger the callback', (string) => {
-  //       expect(commands.points.regex.test(string)).toBeTruthy();
-  //     });
-  //
-  //     it('returns author points information if no other user were provided', async () => {
-  //       data.content = '!points';
-  //       const axiosData = {
-  //         data: {
-  //           points: 5,
-  //           rank: 1,
-  //         }
-  //       };
-  //
-  //       axios.get = jest.fn(() => axiosData);
-  //       const reply = await commands.points.cb(data);
-  //
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).toHaveBeenCalled();
-  //     });
-  //
-  //     it('return correct user points information if specified', async () => {
-  //       data.content = '!points <@222444>';
-  //       const axiosData = {
-  //         data: {
-  //           points: 20,
-  //           rank: 1,
-  //         }
-  //       };
-  //
-  //       axios.get = jest.fn(() => axiosData);
-  //       const reply = await commands.points.cb(data);
-  //
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).toHaveBeenCalled();
-  //     });
-  //
-  //     it('returns correct msg when user has no points', async () => {
-  //       data.content = '!points <@222444>';
-  //       const axiosData = {
-  //         data: {
-  //           message: "unable to find that user",
-  //         }
-  //       };
-  //
-  //       axios.get = jest.fn(() => axiosData);
-  //
-  //       const reply = await commands.points.cb(data);
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).toHaveBeenCalled();
-  //     });
-  //
-  //     it('GET request not called if user not on disord', async () => {
-  //       data.content = '!points <@11111111>';
-  //
-  //       axios.get = jest.fn();
-  //       const reply = await commands.points.cb(data);
-  //
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).not.toHaveBeenCalled();
-  //     });
-  //
-  //     it('format the points word properly for 1 point', async () => {
-  //       data.content = '!points';
-  //       const axiosData = {
-  //         data: {
-  //           points: 1,
-  //           rank: 1,
-  //         }
-  //       }
-  //
-  //       axios.get = jest.fn(() => axiosData);
-  //       const reply = await commands.points.cb(data);
-  //
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).toHaveBeenCalled();
-  //     });
-  //
-  //     it('show correct user rank', async () => {
-  //       data.content = '!points <@222444>';
-  //       const axiosData = {
-  //         data: {
-  //           points: 20,
-  //           rank: 50
-  //         }
-  //       };
-  //
-  //       axios.get = jest.fn(() => axiosData);
-  //       const reply = await commands.points.cb(data);
-  //
-  //       expect(reply).toMatchSnapshot();
-  //       expect(axios.get).toHaveBeenCalled();
-  //     })
-  //   });
-  // });
+  afterEach(() => {
+    reply = '';
+    user = {};
+    axios.get.mockReset();
+  })
+
+  it('Return correct reply when user has no points', async () => {
+    setUpAxiosMock({ message: 'unable to find that user' })
+    user = { id: '222444', username: 'NotOdin' };
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it('Format the points word properly for 1 point', async () => {
+    setUpAxiosMock({ points: 1 })
+    user = { id: '235234', username: 'Someone' };
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it("Formats the points word properly for 0 or more than 1", async () => {
+    setUpAxiosMock({ points: 20 })
+    user = { id: '62323', username: 'Dog' };
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+
+
+    setUpAxiosMock({ points: 0 })
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  })
+
+
+  it('Return correct rank if user rank recieved', async () => {
+    setUpAxiosMock({ points: 20, rank: 5 })
+    user = { id: '55324', username: 'Cat' };
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  })
 });
