@@ -42,19 +42,22 @@ function getUsersList(users, limit, offset, interaction) {
 }
 
 async function displayServerRanking(interaction) {
-  const limitOption = interaction.options.getInteger('limit');
-  const limit = limitOption <= 25 && limitOption > 0 ? limitOption : 25;
+  let limit = interaction.options.getInteger('limit');
+  limit = limit <= 25 && limit > 0 ? limit : 25;
 
-  const offsetOption = interaction.options.getInteger('offset');
-  let offset = offsetOption != null ? offsetOption : 0;
+  let offset = interaction.options.getInteger('offset');
+  offset = Math.min(0, offset);
 
   try {
     const response = await axios.get('https://www.theodinproject.com/api/points');
 
     // eslint-disable-next-line max-len
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
-    if (offset >= users.length) {
-      offset = users.length - limit;
+
+    // Always show the last members if offset too high
+    if (offset + limit >= users.length) {
+      offset = Math.max(0, users.length - limit);
+      limit = users.length;
     }
 
     const usersList = getUsersList(users, limit, offset, interaction);
