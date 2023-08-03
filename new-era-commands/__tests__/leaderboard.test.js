@@ -1,5 +1,5 @@
-const { execute } = require('../slash/leaderboard');
 const axios = require('axios');
+const { execute } = require('../slash/leaderboard');
 const { generateLeaderData } = require('../../botCommands/mockData');
 
 /* eslint-disable */
@@ -29,9 +29,10 @@ class GuildMock {
   }
 }
 
-describe('Reply the correct information for Server leaderboard', () => {
+describe('Reply with the correct information for ranking subcommand', () => {
   let limit = null;
   let offset = null;
+  let reply = '';
   const interactionMock = {
     options: {
       getSubcommand: () => 'ranking',
@@ -43,64 +44,132 @@ describe('Reply the correct information for Server leaderboard', () => {
         }
       }
     },
-    reply: jest.fn((message) => expect(message).toMatchSnapshot())
+    reply: jest.fn((message) => reply = message)
   }
 
+  const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
   afterEach(() => axios.get.mockReset());
 
-  const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
-
-  it.skip('Returns correct output if provided no options', () => {
-    const members = generateLeaderData(5);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members)
-
-    execute(interactionMock);
-  });
-
-  it.skip('Returns limits results to 25 if limit not provided', () => {
-    const members = generateLeaderData(30);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
-
-    execute(interactionMock);
-  });
-
-  it.skip("Returned users matches limit", () => {
+  it("Returned users matches limit", async () => {
     limit = 8;
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
 
-    execute(interactionMock);
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
   })
 
-  it.skip("Limit defaulst to 25 used if limit provided lower than 1", () => {
-    limit = 0;
-    const members = generateLeaderData(5);
+  it('Limits results defaults to 25 if limit not provided', async () => {
+    const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
-    execute(interactionMock);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  });
+
+  it('Limits results defaults to 25 if invalid characters provided', async () => {
+    limit = 'sdfsdf';
+    const members = generateLeaderData(30);
+    interactionMock.guild = new GuildMock(members);
+    setUpAxiosMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  });
+
+  it("Limit defaults to 25 used if limit provided lower than 1", async () => {
+    limit = 0;
+    const members = generateLeaderData(25);
+    interactionMock.guild = new GuildMock(members);
+    setUpAxiosMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
   })
 
-  it.skip("Limit defaults to 25 when limit provided is higher than 25", () => {
+  it("Limit defaults to 25 when limit provided is higher than 25", async () => {
     limit = 50;
     const members = generateLeaderData(70);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
 
-    execute(interactionMock);
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
   })
 
-  it.skip("Retruns users starting from offset", () => {
+  it("Returns users starting from offset", async () => {
     offset = 5;
+    const members = generateLeaderData(50);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
+  it("Offset defaults to 0 if not provided", async () => {
+    const members = generateLeaderData(25);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
+  it("Offset defaults to 0 if invalid characters provided", async () => {
+    offset = 'sdfs';
+    const members = generateLeaderData(25);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
+  it("Offset to defaults to 0 if negative value provided", async () => {
+    offset = -5;
+    const members = generateLeaderData(25);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
+  it("Offset cannot exceed max users length", async () => {
+    offset = 70;
+    const members = generateLeaderData(50);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
+  it("Offset show the last users depending on limit if offset too high", async () => {
+    offset = 56;
     limit = 5;
     const members = generateLeaderData(50);
-    interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
 
-    execute(interactionMock);
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
   })
+
+  it("Return the correct limit, moving offset backward if necessary", async () => {
+    offset = 56;
+    limit = 10;
+    const members = generateLeaderData(60);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await execute(interactionMock);
+    expect(reply).toMatchSnapshot();
+  })
+
 
   //       expect(
   //         await commands.leaderboard.cb({
