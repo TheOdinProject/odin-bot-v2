@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`!points regex GET request not called if user not on disord 1`] = `"Unknown member, or user has left discord"`;
-
-exports[`!points regex format the points word properly for 1 point 1`] = `"1 - odin has 1 point!"`;
-
-exports[`!points regex return correct user points information if specified 1`] = `"1 - NotOdin has 20 points!"`;
-
-exports[`!points regex returns author points information if no other user were provided 1`] = `"1 - odin has 5 points!"`;
-
-exports[`!points regex returns correct msg when user has no points 1`] = `"NotOdin has 0 points!"`;
-
-exports[`!points regex show correct user rank 1`] = `"50 - NotOdin has 20 points!"`;
-
 exports[`?++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
 exports[`?++ callback returns correct output for a single user entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
