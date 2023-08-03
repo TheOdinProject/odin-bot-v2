@@ -84,7 +84,7 @@ function getLeaderboardInformation(interaction) {
 
 function userRanking(command) {
   command.setName('user')
-    .setDescription('User Ranking')
+    .setDescription('User Leaderboard Rank')
     .addUserOption((option) => {
       option.setName('name')
         .setDescription("Display user's rank in the leaderboard")
@@ -97,7 +97,7 @@ function userRanking(command) {
 
 function serverRanking(command) {
   command.setName('ranking')
-    .setDescription('Odin Leaderboard Ranking')
+    .setDescription('Server Leaderboard Ranking')
     .addIntegerOption((option) => {
       option.setName('limit')
         .setDescription('Limit the result. Max is 25')
@@ -117,7 +117,7 @@ function serverRanking(command) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('leaderboard')
-    .setDescription('Placehodler')
+    .setDescription('Leaderboard Ranking provides a fun way for users to see the points ranking on the server!')
     .addSubcommand(userRanking)
     .addSubcommand(serverRanking),
   execute: getLeaderboardInformation,
