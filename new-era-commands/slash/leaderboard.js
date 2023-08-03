@@ -24,6 +24,25 @@ async function displayUserRank(interaction) {
   }
 }
 
+function getUsersList(users, limit, offset, interaction) {
+  let usersList = '';
+
+  for (let i = offset; i < limit + offset; i += 1) {
+    const user = users[i];
+    if (user) {
+      const member = interaction.guild.members.cache.get(user.discord_id);
+      const username = member ? member.displayName.replace(/!/g, '!') : 'Unknown';
+      if (i === 0) {
+        usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
+      } else {
+        usersList += `${i + 1} - ${username} [${user.points} points] \n`;
+      }
+    }
+  }
+
+  return usersList;
+}
+
 async function displayServerRanking(interaction) {
   const limitOption = interaction.options.getInteger('limit');
   const limit = limitOption <= 25 && limitOption > 0 ? limitOption : 25;
@@ -32,27 +51,11 @@ async function displayServerRanking(interaction) {
   const offset = offsetOption != null ? offsetOption : 0;
 
   try {
-    const users = await axios.get('https://www.theodinproject.com/api/points');
-    const data = users.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
-    let usersList = '';
+    const response = await axios.get('https://www.theodinproject.com/api/points');
 
-    for (let i = offset; i < limit + offset; i += 1) {
-      const user = data[i];
-      if (user) {
-        const member = interaction.guild.members.cache.get(user.discord_id);
-        const username = member ? member.displayName.replace(/!/g, '!') : '';
-
-        if (username.length !== 0) {
-          if (i === 0) {
-            usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
-          } else {
-            usersList += `${i + 1} - ${username} [${user.points} points] \n`;
-          }
-        } else {
-          usersList += 'User has left the server. \n';
-        }
-      }
-    }
+    // eslint-disable-next-line max-len
+    const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
+    const usersList = getUsersList(users, limit, offset, interaction);
 
     const leaderboardReply = new EmbedBuilder()
       .setColor('#cc9543')
