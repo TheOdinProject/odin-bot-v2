@@ -29,14 +29,12 @@ function getUsersList(users, limit, offset, interaction) {
 
   for (let i = offset; i < limit + offset; i += 1) {
     const user = users[i];
-    if (user) {
-      const member = interaction.guild.members.cache.get(user.discord_id);
-      const username = member ? member.displayName.replace(/!/g, '!') : 'Unknown';
-      if (i === 0) {
-        usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
-      } else {
-        usersList += `${i + 1} - ${username} [${user.points} points] \n`;
-      }
+    const member = interaction.guild.members.cache.get(user.discord_id);
+    const username = member ? member.displayName.replace(/!/g, '!') : 'Unknown';
+    if (i === 0) {
+      usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
+    } else {
+      usersList += `${i + 1} - ${username} [${user.points} points] \n`;
     }
   }
 
