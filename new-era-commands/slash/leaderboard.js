@@ -5,9 +5,8 @@ const config = require('../../config');
 axios.default.defaults.headers.get.Authorization = `Token ${config.pointsbot.token}`;
 
 async function displayUserRank(interaction) {
-  const user = interaction.options.getUser('name');
-
   try {
+    const user = interaction.options.getUser('name');
     const response = await axios.get(`https://www.theodinproject.com/api/points/${user.id}`);
     const userPoints = response.data.points !== undefined ? response.data.points : 0;
     const rank = response.data.rank !== undefined ? `${response.data.rank} - ` : '';
@@ -42,26 +41,19 @@ function getUsersList(users, limit, offset, interaction) {
 }
 
 async function displayServerRanking(interaction) {
-  let limit = interaction.options.getInteger('limit');
-  limit = limit <= 25 && limit > 0 ? limit : 25;
-
-  let offset = interaction.options.getInteger('offset');
-  offset = offset > 0 ? offset : 0;
-
   try {
     const response = await axios.get('https://www.theodinproject.com/api/points');
-
     // eslint-disable-next-line max-len
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
 
-    if (limit > users.length) {
-      limit = users.length;
-    }
+    let limit = interaction.options.getInteger('limit');
+    limit = limit <= 25 && limit > 0 ? limit : 25;
+    limit = limit <= users.length ? limit : users.length;
 
+    let offset = interaction.options.getInteger('offset');
+    offset = offset > 0 ? offset : 0;
     // Always show the last members if offset too high
-    if (offset + limit >= users.length) {
-      offset = Math.max(0, users.length - limit);
-    }
+    offset = offset + limit < users.length ? offset : Math.max(0, users.length - limit);
 
     const usersList = getUsersList(users, limit, offset, interaction);
 
