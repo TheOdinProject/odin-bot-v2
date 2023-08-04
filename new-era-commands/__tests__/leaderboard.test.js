@@ -130,6 +130,16 @@ describe('ranking subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
+  it("Members who left are filtered out", async () => {
+    const members = generateLeaderData(50);
+    const limitMembers = members.slice(20, 40);
+    interactionMock.guild = new GuildMock(limitMembers);
+    setUpAxiosMock(members);
+
+    await execute(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  })
 
   it("Returns users starting from offset", async () => {
     offset = 5;

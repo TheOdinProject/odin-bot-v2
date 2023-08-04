@@ -190,6 +190,43 @@ exports[`ranking subcommand Limit does not exceed users length 1`] = `
 }
 `;
 
+exports[`ranking subcommand Members who left are filtered out 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Server Ranking",
+          "value": "1 - user120 [980 points] :tada: 
+2 - user121 [979 points] 
+3 - user122 [978 points] 
+4 - user123 [977 points] 
+5 - user124 [976 points] 
+6 - user125 [975 points] 
+7 - user126 [974 points] 
+8 - user127 [973 points] 
+9 - user128 [972 points] 
+10 - user129 [971 points] 
+11 - user130 [970 points] 
+12 - user131 [969 points] 
+13 - user132 [968 points] 
+14 - user133 [967 points] 
+15 - user134 [966 points] 
+16 - user135 [965 points] 
+17 - user136 [964 points] 
+18 - user137 [963 points] 
+19 - user138 [962 points] 
+20 - user139 [961 points] 
+",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
 exports[`ranking subcommand Offset cannot exceed max users length 1`] = `
 {
   "embeds": [
