@@ -15,6 +15,6 @@ This bot has been built with NodeJS and [the DiscordJS module](https://discord.j
 
 We're thrilled that you're interested in contributing to the Odin Bot! Our bot depends on open source contributions to grow, improve, and thrive. Whether you're a seasoned pro or just starting out, we welcome all kinds of contributions!
 
-For more information on how to get started, we have a really helpful [wiki guide for setting up the Odin Bot](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and please also refer to [our TOP contributing guide](https://github.com/TheOdinProject/odin-bot-v2/wiki/Contributing-Guide).
+For more information on how to get started, we have a really helpful [wiki guide for setting up the Odin Bot](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and please also refer to [our TOP contributing guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md).
 
 Let's have a blast building and improving the Odin Bot together! We can't wait to see your awesome contributions!
