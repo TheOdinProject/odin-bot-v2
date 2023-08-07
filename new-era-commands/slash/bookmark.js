@@ -7,7 +7,7 @@ module.exports = {
   execute: async (interaction) => {
     const bookmarkEmbed = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle('Bookmark messages 🔖')
+      .setTitle('Bookmark messages in this server')
       .setDescription(`
 To bookmark a message, react with the bookmark icon 🔖 on the message you wish to save for later. 
 
