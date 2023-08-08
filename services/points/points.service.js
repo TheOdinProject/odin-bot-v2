@@ -50,15 +50,16 @@ Our goal is to maintain a positive and supportive community, where help and cont
     const response = await axios.get(PointsService.API_URL);
 
     // eslint-disable-next-line
-    const members = response.data.filter((member) => interaction.guild.members.cache.get(member.discord_id));
-    console.log(members);
+    const data = response.data.filter((member) => interaction.guild.members.cache.get(member.discord_id));
 
     let points = 0;
     let rank = 0;
+    let name = user.username;
 
-    for (let i = 0; i < members.length; i += 1) {
-      if (members[i].discord_id === user.id) {
-        points = members[i].points;
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i].discord_id === user.id) {
+        points = data[i].points;
+        name = interaction.guild.members.cache.get(user.id).displayName;
         rank = i + 1;
         break;
       }
@@ -66,13 +67,13 @@ Our goal is to maintain a positive and supportive community, where help and cont
 
     const userRankReply = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle(`${user.username} Leaderboard!`)
-      .addFields([{ name: 'Points', value: `${user.username} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}!` }]);
+      .setTitle(`${name} Leaderboard!`)
+      .addFields([{ name: 'Points', value: `${name} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}!` }]);
 
     if (rank >= 1) {
-      userRankReply.addFields([{ name: 'Rank', value: `${user.username} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}!` }]);
+      userRankReply.addFields([{ name: 'Rank', value: `${name} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}!` }]);
     } else {
-      userRankReply.addFields([{ name: 'Rank', value: `${user.username} currently has no rank in the leaderboard!` }]);
+      userRankReply.addFields([{ name: 'Rank', value: `${name} currently has no rank in the leaderboard!` }]);
     }
 
     await interaction.reply({ embeds: [userRankReply] });
