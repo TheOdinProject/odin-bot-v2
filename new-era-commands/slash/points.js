@@ -1,4 +1,4 @@
-const SlashCommandBuilder = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const PointsService = require('../../services/points');
 
 function userPoints(command) {
