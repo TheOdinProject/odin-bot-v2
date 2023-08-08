@@ -17,13 +17,21 @@ class PointsService {
     try {
       const user = interaction.options.getUser('name');
       const response = await axios.get(`https://www.theodinproject.com/api/points/${user.id}`);
-      const userPoints = response.data.points !== undefined ? response.data.points : 0;
-      const rank = response.data.rank !== undefined ? `${response.data.rank} - ` : '';
+      const { rank } = response.data;
+
+      let { points } = response.data;
+      points = points !== undefined ? points : 0;
 
       const userRankReply = new EmbedBuilder()
         .setColor('#cc9543')
-        .setTitle('Leaderboard')
-        .addFields([{ name: 'User Rank', value: `${rank}${user.username} has ${userPoints} point${userPoints === 1 ? '' : 's'}!` }]);
+        .setTitle(`${user.username} Leaderboard!`)
+        .addFields([{ name: 'Points', value: `${user.username} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}!` }]);
+
+      if (rank === undefined) {
+        userRankReply.addFields([{ name: 'Rank', value: `${user.username} currently has no rank in the leaderboard!` }]);
+      } else {
+        userRankReply.addFields([{ name: 'Rank', value: `${user.username} is ranked number ${rank}!` }]);
+      }
 
       await interaction.reply({ embeds: [userRankReply] });
     } catch (err) {

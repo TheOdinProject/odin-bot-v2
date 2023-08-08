@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ranking subcommand Limit defaults to 25 if invalid characters provided 1`] = `
+exports[`leaderboard subcommand Limit defaults to 25 if invalid characters provided 1`] = `
 {
   "embeds": [
     {
@@ -42,7 +42,7 @@ exports[`ranking subcommand Limit defaults to 25 if invalid characters provided 
 }
 `;
 
-exports[`ranking subcommand Limit defaults to 25 if limit not provided 1`] = `
+exports[`leaderboard subcommand Limit defaults to 25 if limit not provided 1`] = `
 {
   "embeds": [
     {
@@ -84,7 +84,7 @@ exports[`ranking subcommand Limit defaults to 25 if limit not provided 1`] = `
 }
 `;
 
-exports[`ranking subcommand Limit defaults to 25 if limit provided is higher than 25 1`] = `
+exports[`leaderboard subcommand Limit defaults to 25 if limit provided is higher than 25 1`] = `
 {
   "embeds": [
     {
@@ -126,7 +126,7 @@ exports[`ranking subcommand Limit defaults to 25 if limit provided is higher tha
 }
 `;
 
-exports[`ranking subcommand Limit defaults to 25 if limit provided lower than 1 1`] = `
+exports[`leaderboard subcommand Limit defaults to 25 if limit provided lower than 1 1`] = `
 {
   "embeds": [
     {
@@ -168,7 +168,7 @@ exports[`ranking subcommand Limit defaults to 25 if limit provided lower than 1 
 }
 `;
 
-exports[`ranking subcommand Limit does not exceed users length 1`] = `
+exports[`leaderboard subcommand Limit does not exceed users length 1`] = `
 {
   "embeds": [
     {
@@ -190,7 +190,7 @@ exports[`ranking subcommand Limit does not exceed users length 1`] = `
 }
 `;
 
-exports[`ranking subcommand Members who left are filtered out 1`] = `
+exports[`leaderboard subcommand Members who left are filtered out 1`] = `
 {
   "embeds": [
     {
@@ -227,7 +227,7 @@ exports[`ranking subcommand Members who left are filtered out 1`] = `
 }
 `;
 
-exports[`ranking subcommand Offset cannot exceed max users length 1`] = `
+exports[`leaderboard subcommand Offset cannot exceed max users length 1`] = `
 {
   "embeds": [
     {
@@ -269,7 +269,7 @@ exports[`ranking subcommand Offset cannot exceed max users length 1`] = `
 }
 `;
 
-exports[`ranking subcommand Offset defaults to 0 if invalid characters provided 1`] = `
+exports[`leaderboard subcommand Offset defaults to 0 if invalid characters provided 1`] = `
 {
   "embeds": [
     {
@@ -311,7 +311,7 @@ exports[`ranking subcommand Offset defaults to 0 if invalid characters provided 
 }
 `;
 
-exports[`ranking subcommand Offset defaults to 0 if negative value provided 1`] = `
+exports[`leaderboard subcommand Offset defaults to 0 if negative value provided 1`] = `
 {
   "embeds": [
     {
@@ -353,7 +353,7 @@ exports[`ranking subcommand Offset defaults to 0 if negative value provided 1`] 
 }
 `;
 
-exports[`ranking subcommand Offset defaults to 0 if not provided 1`] = `
+exports[`leaderboard subcommand Offset defaults to 0 if not provided 1`] = `
 {
   "embeds": [
     {
@@ -395,7 +395,7 @@ exports[`ranking subcommand Offset defaults to 0 if not provided 1`] = `
 }
 `;
 
-exports[`ranking subcommand Offset show the last users depending on limit if offset is too high 1`] = `
+exports[`leaderboard subcommand Offset show the last users depending on limit if offset is too high 1`] = `
 {
   "embeds": [
     {
@@ -417,7 +417,7 @@ exports[`ranking subcommand Offset show the last users depending on limit if off
 }
 `;
 
-exports[`ranking subcommand Return the correct limit, moving offset backward if necessary 1`] = `
+exports[`leaderboard subcommand Return the correct limit, moving offset backward if necessary 1`] = `
 {
   "embeds": [
     {
@@ -444,7 +444,7 @@ exports[`ranking subcommand Return the correct limit, moving offset backward if 
 }
 `;
 
-exports[`ranking subcommand Returned users length matches limit 1`] = `
+exports[`leaderboard subcommand Returned users length matches limit 1`] = `
 {
   "embeds": [
     {
@@ -469,7 +469,7 @@ exports[`ranking subcommand Returned users length matches limit 1`] = `
 }
 `;
 
-exports[`ranking subcommand Returns be the first to earn points message if no user in database 1`] = `
+exports[`leaderboard subcommand Returns be the first to earn points message if no user in database 1`] = `
 {
   "embeds": [
     {
@@ -486,7 +486,7 @@ exports[`ranking subcommand Returns be the first to earn points message if no us
 }
 `;
 
-exports[`ranking subcommand Returns users starting from offset 1`] = `
+exports[`leaderboard subcommand Returns users starting from offset 1`] = `
 {
   "embeds": [
     {
@@ -535,11 +535,15 @@ exports[`user subcommand Format the points word properly for 1 point 1`] = `
       "color": 13407555,
       "fields": [
         {
-          "name": "User Rank",
+          "name": "Points",
           "value": "Someone has 1 point!",
         },
+        {
+          "name": "Rank",
+          "value": "Someone currently has no rank in the leaderboard!",
+        },
       ],
-      "title": "Leaderboard",
+      "title": "Someone Leaderboard!",
     },
   ],
 }
@@ -552,11 +556,15 @@ exports[`user subcommand Formats the points word properly for 0 or more than 1 1
       "color": 13407555,
       "fields": [
         {
-          "name": "User Rank",
+          "name": "Points",
           "value": "Dog has 20 points!",
         },
+        {
+          "name": "Rank",
+          "value": "Dog currently has no rank in the leaderboard!",
+        },
       ],
-      "title": "Leaderboard",
+      "title": "Dog Leaderboard!",
     },
   ],
 }
@@ -569,11 +577,15 @@ exports[`user subcommand Formats the points word properly for 0 or more than 1 2
       "color": 13407555,
       "fields": [
         {
-          "name": "User Rank",
+          "name": "Points",
           "value": "Dog has 0 points!",
         },
+        {
+          "name": "Rank",
+          "value": "Dog currently has no rank in the leaderboard!",
+        },
       ],
-      "title": "Leaderboard",
+      "title": "Dog Leaderboard!",
     },
   ],
 }
@@ -586,11 +598,15 @@ exports[`user subcommand Return correct rank if user rank recieved 1`] = `
       "color": 13407555,
       "fields": [
         {
-          "name": "User Rank",
-          "value": "5 - Cat has 20 points!",
+          "name": "Points",
+          "value": "Cat has 20 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "Cat is ranked number 5!",
         },
       ],
-      "title": "Leaderboard",
+      "title": "Cat Leaderboard!",
     },
   ],
 }
@@ -603,11 +619,15 @@ exports[`user subcommand Return correct reply when user is not in database 1`] =
       "color": 13407555,
       "fields": [
         {
-          "name": "User Rank",
+          "name": "Points",
           "value": "NotOdin has 0 points!",
         },
+        {
+          "name": "Rank",
+          "value": "NotOdin currently has no rank in the leaderboard!",
+        },
       ],
-      "title": "Leaderboard",
+      "title": "NotOdin Leaderboard!",
     },
   ],
 }

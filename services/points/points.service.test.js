@@ -27,13 +27,13 @@ class GuildMock {
   }
 }
 
-describe('ranking subcommand', () => {
+describe('leaderboard subcommand', () => {
   let limit = null;
   let offset = null;
   let reply = '';
   const interactionMock = {
     options: {
-      getSubcommand: () => 'ranking',
+      getSubcommand: () => 'leaderboard',
       getInteger: (string) => {
         if (string === 'limit') {
           return limit;
