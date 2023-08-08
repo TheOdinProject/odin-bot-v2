@@ -102,7 +102,8 @@ Our goal is to maintain a positive and supportive community, where help and cont
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
 
     let limit = interaction.options.getInteger('limit');
-    limit = limit <= 25 && limit > 0 ? limit : 25;
+    limit = limit > 0 ? limit : 5;
+    limit = limit <= 25 ? limit : 25;
     limit = limit <= users.length ? limit : users.length;
 
     let offset = interaction.options.getInteger('offset');
