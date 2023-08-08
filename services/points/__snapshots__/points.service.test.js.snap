@@ -5,18 +5,13 @@ exports[`leaderboard subcommand Limit defaults to 5 if invalid characters provid
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -27,18 +22,13 @@ exports[`leaderboard subcommand Limit defaults to 5 if limit not provided 1`] = 
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -49,18 +39,13 @@ exports[`leaderboard subcommand Limit defaults to 5 if limit provided lower than
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -71,10 +56,7 @@ exports[`leaderboard subcommand Limit defaults to 25 if limit provided is higher
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -100,9 +82,7 @@ exports[`leaderboard subcommand Limit defaults to 25 if limit provided is higher
 24 - user123 [977 points] 
 25 - user124 [976 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -113,18 +93,13 @@ exports[`leaderboard subcommand Limit does not exceed users length 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -135,18 +110,13 @@ exports[`leaderboard subcommand Members who left are filtered out 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user120 [980 points] :tada: 
+      "description": "1 - user120 [980 points] :tada: 
 2 - user121 [979 points] 
 3 - user122 [978 points] 
 4 - user123 [977 points] 
 5 - user124 [976 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -157,18 +127,13 @@ exports[`leaderboard subcommand Offset cannot exceed max users length 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "46 - user145 [955 points] 
+      "description": "46 - user145 [955 points] 
 47 - user146 [954 points] 
 48 - user147 [953 points] 
 49 - user148 [952 points] 
 50 - user149 [951 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -179,18 +144,13 @@ exports[`leaderboard subcommand Offset defaults to 0 if invalid characters provi
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -201,18 +161,13 @@ exports[`leaderboard subcommand Offset defaults to 0 if negative value provided 
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -223,18 +178,13 @@ exports[`leaderboard subcommand Offset defaults to 0 if not provided 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -245,18 +195,13 @@ exports[`leaderboard subcommand Offset show the last users depending on limit if
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "46 - user145 [955 points] 
+      "description": "46 - user145 [955 points] 
 47 - user146 [954 points] 
 48 - user147 [953 points] 
 49 - user148 [952 points] 
 50 - user149 [951 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -267,10 +212,7 @@ exports[`leaderboard subcommand Return the correct limit, moving offset backward
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "51 - user150 [950 points] 
+      "description": "51 - user150 [950 points] 
 52 - user151 [949 points] 
 53 - user152 [948 points] 
 54 - user153 [947 points] 
@@ -281,9 +223,7 @@ exports[`leaderboard subcommand Return the correct limit, moving offset backward
 59 - user158 [942 points] 
 60 - user159 [941 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -294,10 +234,7 @@ exports[`leaderboard subcommand Returned users length matches limit 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
+      "description": "1 - user100 [1000 points] :tada: 
 2 - user101 [999 points] 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
@@ -306,9 +243,7 @@ exports[`leaderboard subcommand Returned users length matches limit 1`] = `
 7 - user106 [994 points] 
 8 - user107 [993 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -319,13 +254,8 @@ exports[`leaderboard subcommand Returns be the first to earn points message if n
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "Be the first to earn a point!",
-        },
-      ],
-      "title": "Leaderboard",
+      "description": "Be the first to earn a point!",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -336,18 +266,13 @@ exports[`leaderboard subcommand Returns users starting from offset 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "6 - user105 [995 points] 
+      "description": "6 - user105 [995 points] 
 7 - user106 [994 points] 
 8 - user107 [993 points] 
 9 - user108 [992 points] 
 10 - user109 [991 points] 
 ",
-        },
-      ],
-      "title": "Leaderboard",
+      "title": "TOP Discord points leaderboard",
     },
   ],
 }
@@ -361,14 +286,14 @@ exports[`user subcommand Format the points word properly for 1 point 1`] = `
       "fields": [
         {
           "name": "Points",
-          "value": "NotOdin has 1 point!",
+          "value": "NotOdin has 1 point",
         },
         {
           "name": "Rank",
-          "value": "NotOdin is ranked number 5!",
+          "value": "NotOdin is ranked number 5",
         },
       ],
-      "title": "NotOdin Leaderboard!",
+      "title": "TOP Discord points for NotOdin",
     },
   ],
 }
@@ -382,14 +307,14 @@ exports[`user subcommand Formats the points word correctly for more than 1 point
       "fields": [
         {
           "name": "Points",
-          "value": "Dog has 1000 points!",
+          "value": "Dog has 1000 points",
         },
         {
           "name": "Rank",
-          "value": "Dog is ranked number 2!",
+          "value": "Dog is ranked number 2",
         },
       ],
-      "title": "Dog Leaderboard!",
+      "title": "TOP Discord points for Dog",
     },
   ],
 }
@@ -403,14 +328,14 @@ exports[`user subcommand Formats the points word properly for 0 points 1`] = `
       "fields": [
         {
           "name": "Points",
-          "value": "OldestUser has 0 points!",
+          "value": "OldestUser has 0 points",
         },
         {
           "name": "Rank",
-          "value": "OldestUser currently has no rank in the leaderboard!",
+          "value": "OldestUser currently has no rank in the leaderboard",
         },
       ],
-      "title": "OldestUser Leaderboard!",
+      "title": "TOP Discord points for OldestUser",
     },
   ],
 }
@@ -424,14 +349,14 @@ exports[`user subcommand Rank append emoji to first ranked user 1`] = `
       "fields": [
         {
           "name": "Points",
-          "value": "Cat has 3000 points!",
+          "value": "Cat has 3000 points",
         },
         {
           "name": "Rank",
-          "value": "Cat is ranked number 1 :tada:!",
+          "value": "Cat is ranked number 1 :tada:",
         },
       ],
-      "title": "Cat Leaderboard!",
+      "title": "TOP Discord points for Cat",
     },
   ],
 }
@@ -445,14 +370,14 @@ exports[`user subcommand Return correct rank for user ignoring members that has 
       "fields": [
         {
           "name": "Points",
-          "value": "Dog has 1000 points!",
+          "value": "Dog has 1000 points",
         },
         {
           "name": "Rank",
-          "value": "Dog is ranked number 2!",
+          "value": "Dog is ranked number 2",
         },
       ],
-      "title": "Dog Leaderboard!",
+      "title": "TOP Discord points for Dog",
     },
   ],
 }
@@ -466,14 +391,14 @@ exports[`user subcommand Return correct rank for user ignoring members that has 
       "fields": [
         {
           "name": "Points",
-          "value": "Someone has 20 points!",
+          "value": "Someone has 20 points",
         },
         {
           "name": "Rank",
-          "value": "Someone is ranked number 3!",
+          "value": "Someone is ranked number 3",
         },
       ],
-      "title": "Someone Leaderboard!",
+      "title": "TOP Discord points for Someone",
     },
   ],
 }
@@ -487,14 +412,14 @@ exports[`user subcommand Return correct rank for user ignoring members that has 
       "fields": [
         {
           "name": "Points",
-          "value": "Tree has 15 points!",
+          "value": "Tree has 15 points",
         },
         {
           "name": "Rank",
-          "value": "Tree is ranked number 4!",
+          "value": "Tree is ranked number 4",
         },
       ],
-      "title": "Tree Leaderboard!",
+      "title": "TOP Discord points for Tree",
     },
   ],
 }
@@ -508,14 +433,14 @@ exports[`user subcommand Return correct reply when user is not in database 1`] =
       "fields": [
         {
           "name": "Points",
-          "value": "OldUser has 0 points!",
+          "value": "OldUser has 0 points",
         },
         {
           "name": "Rank",
-          "value": "OldUser currently has no rank in the leaderboard!",
+          "value": "OldUser currently has no rank in the leaderboard",
         },
       ],
-      "title": "OldUser Leaderboard!",
+      "title": "TOP Discord points for OldUser",
     },
   ],
 }
