@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`leaderboard subcommand Limit defaults to 25 if invalid characters provided 1`] = `
+exports[`leaderboard subcommand Limit defaults to 5 if invalid characters provided 1`] = `
 {
   "embeds": [
     {
@@ -13,26 +13,6 @@ exports[`leaderboard subcommand Limit defaults to 25 if invalid characters provi
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
 ",
         },
       ],
@@ -42,7 +22,7 @@ exports[`leaderboard subcommand Limit defaults to 25 if invalid characters provi
 }
 `;
 
-exports[`leaderboard subcommand Limit defaults to 25 if limit not provided 1`] = `
+exports[`leaderboard subcommand Limit defaults to 5 if limit not provided 1`] = `
 {
   "embeds": [
     {
@@ -55,26 +35,28 @@ exports[`leaderboard subcommand Limit defaults to 25 if limit not provided 1`] =
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
+",
+        },
+      ],
+      "title": "Leaderboard",
+    },
+  ],
+}
+`;
+
+exports[`leaderboard subcommand Limit defaults to 5 if limit provided lower than 1 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Server Ranking",
+          "value": "1 - user100 [1000 points] :tada: 
+2 - user101 [999 points] 
+3 - user102 [998 points] 
+4 - user103 [997 points] 
+5 - user104 [996 points] 
 ",
         },
       ],
@@ -85,48 +67,6 @@ exports[`leaderboard subcommand Limit defaults to 25 if limit not provided 1`] =
 `;
 
 exports[`leaderboard subcommand Limit defaults to 25 if limit provided is higher than 25 1`] = `
-{
-  "embeds": [
-    {
-      "color": 13407555,
-      "fields": [
-        {
-          "name": "Server Ranking",
-          "value": "1 - user100 [1000 points] :tada: 
-2 - user101 [999 points] 
-3 - user102 [998 points] 
-4 - user103 [997 points] 
-5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
-",
-        },
-      ],
-      "title": "Leaderboard",
-    },
-  ],
-}
-`;
-
-exports[`leaderboard subcommand Limit defaults to 25 if limit provided lower than 1 1`] = `
 {
   "embeds": [
     {
@@ -203,21 +143,6 @@ exports[`leaderboard subcommand Members who left are filtered out 1`] = `
 3 - user122 [978 points] 
 4 - user123 [977 points] 
 5 - user124 [976 points] 
-6 - user125 [975 points] 
-7 - user126 [974 points] 
-8 - user127 [973 points] 
-9 - user128 [972 points] 
-10 - user129 [971 points] 
-11 - user130 [970 points] 
-12 - user131 [969 points] 
-13 - user132 [968 points] 
-14 - user133 [967 points] 
-15 - user134 [966 points] 
-16 - user135 [965 points] 
-17 - user136 [964 points] 
-18 - user137 [963 points] 
-19 - user138 [962 points] 
-20 - user139 [961 points] 
 ",
         },
       ],
@@ -235,27 +160,7 @@ exports[`leaderboard subcommand Offset cannot exceed max users length 1`] = `
       "fields": [
         {
           "name": "Server Ranking",
-          "value": "26 - user125 [975 points] 
-27 - user126 [974 points] 
-28 - user127 [973 points] 
-29 - user128 [972 points] 
-30 - user129 [971 points] 
-31 - user130 [970 points] 
-32 - user131 [969 points] 
-33 - user132 [968 points] 
-34 - user133 [967 points] 
-35 - user134 [966 points] 
-36 - user135 [965 points] 
-37 - user136 [964 points] 
-38 - user137 [963 points] 
-39 - user138 [962 points] 
-40 - user139 [961 points] 
-41 - user140 [960 points] 
-42 - user141 [959 points] 
-43 - user142 [958 points] 
-44 - user143 [957 points] 
-45 - user144 [956 points] 
-46 - user145 [955 points] 
+          "value": "46 - user145 [955 points] 
 47 - user146 [954 points] 
 48 - user147 [953 points] 
 49 - user148 [952 points] 
@@ -282,26 +187,6 @@ exports[`leaderboard subcommand Offset defaults to 0 if invalid characters provi
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
 ",
         },
       ],
@@ -324,26 +209,6 @@ exports[`leaderboard subcommand Offset defaults to 0 if negative value provided 
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
 ",
         },
       ],
@@ -366,26 +231,6 @@ exports[`leaderboard subcommand Offset defaults to 0 if not provided 1`] = `
 3 - user102 [998 points] 
 4 - user103 [997 points] 
 5 - user104 [996 points] 
-6 - user105 [995 points] 
-7 - user106 [994 points] 
-8 - user107 [993 points] 
-9 - user108 [992 points] 
-10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
 ",
         },
       ],
@@ -499,26 +344,6 @@ exports[`leaderboard subcommand Returns users starting from offset 1`] = `
 8 - user107 [993 points] 
 9 - user108 [992 points] 
 10 - user109 [991 points] 
-11 - user110 [990 points] 
-12 - user111 [989 points] 
-13 - user112 [988 points] 
-14 - user113 [987 points] 
-15 - user114 [986 points] 
-16 - user115 [985 points] 
-17 - user116 [984 points] 
-18 - user117 [983 points] 
-19 - user118 [982 points] 
-20 - user119 [981 points] 
-21 - user120 [980 points] 
-22 - user121 [979 points] 
-23 - user122 [978 points] 
-24 - user123 [977 points] 
-25 - user124 [976 points] 
-26 - user125 [975 points] 
-27 - user126 [974 points] 
-28 - user127 [973 points] 
-29 - user128 [972 points] 
-30 - user129 [971 points] 
 ",
         },
       ],

@@ -76,7 +76,7 @@ describe('leaderboard subcommand', () => {
     expect(reply).toMatchSnapshot();
   })
 
-  it('Limit defaults to 25 if limit not provided', async () => {
+  it('Limit defaults to 5 if limit not provided', async () => {
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
@@ -86,7 +86,7 @@ describe('leaderboard subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it('Limit defaults to 25 if invalid characters provided', async () => {
+  it('Limit defaults to 5 if invalid characters provided', async () => {
     limit = 'sdfsdf';
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
@@ -97,7 +97,7 @@ describe('leaderboard subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it("Limit defaults to 25 if limit provided lower than 1", async () => {
+  it("Limit defaults to 5 if limit provided lower than 1", async () => {
     limit = 0;
     const members = generateLeaderData(25);
     interactionMock.guild = new GuildMock(members);
