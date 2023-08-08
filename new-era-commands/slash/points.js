@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const PointsService = require('../../services/points');
 
-function userPoints(command) {
+function user(command) {
   command.setName('user')
     .setDescription('User Leaderboard Rank')
     .addUserOption((option) => {
@@ -33,12 +33,19 @@ function leaderboard(command) {
   return command;
 }
 
+function info(command) {
+  command.setName('info')
+    .setDescription('A guide to points in the TOP Discord server');
+  return command;
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('leaderboard')
+    .setName('points')
     .setDescription('Leaderboard Ranking provides a fun way for users to see the points ranking on the server!')
-    .addSubcommand(userPoints)
-    .addSubcommand(leaderboard),
+    .addSubcommand(user)
+    .addSubcommand(leaderboard)
+    .addSubcommand(info),
   execute: async (interaction) => {
     try {
       PointsService.handleInteraction(interaction);
