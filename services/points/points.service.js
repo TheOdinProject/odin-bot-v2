@@ -67,13 +67,13 @@ Our goal is to maintain a positive and supportive community, where help and cont
 
     const userRankReply = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle(`${name} Leaderboard!`)
-      .addFields([{ name: 'Points', value: `${name} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}!` }]);
+      .setTitle(`TOP Discord points for ${name}`)
+      .addFields([{ name: 'Points', value: `${name} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}` }]);
 
     if (rank >= 1) {
-      userRankReply.addFields([{ name: 'Rank', value: `${name} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}!` }]);
+      userRankReply.addFields([{ name: 'Rank', value: `${name} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}` }]);
     } else {
-      userRankReply.addFields([{ name: 'Rank', value: `${name} currently has no rank in the leaderboard!` }]);
+      userRankReply.addFields([{ name: 'Rank', value: `${name} currently has no rank in the leaderboard` }]);
     }
 
     await interaction.reply({ embeds: [userRankReply] });
@@ -115,8 +115,8 @@ Our goal is to maintain a positive and supportive community, where help and cont
 
     const leaderboardReply = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle('Leaderboard')
-      .addFields([{ name: 'Server Ranking', value: usersList || 'Be the first to earn a point!' }]);
+      .setTitle('TOP Discord points leaderboard')
+      .setDescription(usersList || 'Be the first to earn a point!');
 
     await interaction.reply({ embeds: [leaderboardReply] });
   }
