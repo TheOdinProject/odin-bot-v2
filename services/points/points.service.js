@@ -5,6 +5,8 @@ const config = require('../../config');
 axios.default.defaults.headers.get.Authorization = `Token ${config.pointsbot.token}`;
 
 class PointsService {
+  static API_URL = 'https://www.theodinproject.com/api/points';
+
   static async handleInteraction(interaction) {
     if (interaction.options.getSubcommand() === 'user') {
       PointsService.displayUserPoints(interaction);
@@ -45,7 +47,7 @@ Our goal is to maintain a positive and supportive community, where help and cont
 
   static async displayUserPoints(interaction) {
     const user = interaction.options.getUser('name');
-    const response = await axios.get(`https://www.theodinproject.com/api/points/${user.id}`);
+    const response = await axios.get(`${PointsService.API_URL}/${user.id}`);
     const { rank } = response.data;
 
     let { points } = response.data;
@@ -83,7 +85,7 @@ Our goal is to maintain a positive and supportive community, where help and cont
   }
 
   static async displayLeaderboard(interaction) {
-    const response = await axios.get('https://www.theodinproject.com/api/points');
+    const response = await axios.get(PointsService.API_URL);
     // eslint-disable-next-line max-len
     const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
 
