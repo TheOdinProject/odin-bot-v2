@@ -222,9 +222,32 @@ describe('leaderboard subcommand', () => {
 
 
 describe('user subcommand', () => {
-  let user = {};
+  const apiData = [
+    { id: 7, discord_id: '7777', points: 4000 }, // Left Server
+    { id: 6, discord_id: '6666', points: 3000 }, // Cat
+    { id: 5, discord_id: '5555', points: 2000 }, // Left Server
+    { id: 3, discord_id: '3333', points: 1000 }, // Dog
+    { id: 2, discord_id: '2222', points: 20 }, // Someone
+    { id: 4, discord_id: '4444', points: 15 }, // Tree
+    { id: 1, discord_id: '1111', points: 1 }, // NotOdin
+  ]
+
+  const guildMock = new GuildMock([
+    { displayName: 'NotOdin', discord_id: '1111' },
+    { displayName: 'Someone', discord_id: '2222' },
+    { displayName: 'Dog', discord_id: '3333' },
+    { displayName: 'Tree', discord_id: '4444' },
+    { displayName: 'Cat', discord_id: '6666' }
+  ])
+
+  beforeEach(() => {
+    axios.get = jest.fn().mockResolvedValue({ data: apiData });
+  })
+
+  let user = {}; // created for each test each test
   let reply = '';
   const interactionMock = {
+    guild: guildMock,
     options: {
       getSubcommand: () => 'user',
       getUser: () => user,
@@ -232,17 +255,41 @@ describe('user subcommand', () => {
     reply: jest.fn((message) => reply = message)
   }
 
-  const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
-
   afterEach(() => {
     reply = '';
     user = {};
-    axios.get.mockReset();
-  })
+  });
 
   it('Return correct reply when user is not in database', async () => {
-    setUpAxiosMock({ message: 'unable to find that user' })
-    user = { id: '222444', username: 'NotOdin' };
+    user = { id: '200', username: 'OldUser' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it('Return correct rank for user ignoring members that has left', async () => {
+    user = { id: '3333', username: 'Dog' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+
+    user = { id: '2222', username: 'Someone' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+
+    user = { id: '4444', username: 'Tree' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it('Rank append emoji to first ranked user', async () => {
+    user = { id: '6666', username: 'Cat' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
@@ -250,36 +297,26 @@ describe('user subcommand', () => {
   });
 
   it('Format the points word properly for 1 point', async () => {
-    setUpAxiosMock({ points: 1 })
-    user = { id: '235234', username: 'Someone' };
+    user = { id: '1111', username: 'NotOdin' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   });
 
-  it("Formats the points word properly for 0 or more than 1", async () => {
-    setUpAxiosMock({ points: 20 })
-    user = { id: '62323', username: 'Dog' };
+  it("Formats the points word properly for 0 points", async () => {
+    user = { id: '9292', username: 'OldestUser' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
+  });
 
-
-    setUpAxiosMock({ points: 0 })
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  })
-
-
-  it('Return correct rank if user rank recieved', async () => {
-    setUpAxiosMock({ points: 20, rank: 5 })
-    user = { id: '55324', username: 'Cat' };
+  it("Formats the points word correctly for more than 1 points", async () => {
+    user = { id: '3333', username: 'Dog' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 });

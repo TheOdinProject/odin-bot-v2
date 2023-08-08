@@ -536,11 +536,116 @@ exports[`user subcommand Format the points word properly for 1 point 1`] = `
       "fields": [
         {
           "name": "Points",
-          "value": "Someone has 1 point!",
+          "value": "NotOdin has 1 point!",
         },
         {
           "name": "Rank",
-          "value": "Someone currently has no rank in the leaderboard!",
+          "value": "NotOdin is ranked number 5!",
+        },
+      ],
+      "title": "NotOdin Leaderboard!",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Formats the points word correctly for more than 1 points 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "Dog has 1000 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "Dog is ranked number 2!",
+        },
+      ],
+      "title": "Dog Leaderboard!",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Formats the points word properly for 0 points 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "OldestUser has 0 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "OldestUser currently has no rank in the leaderboard!",
+        },
+      ],
+      "title": "OldestUser Leaderboard!",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Rank append emoji to first ranked user 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "Cat has 3000 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "Cat is ranked number 1 :tada:!",
+        },
+      ],
+      "title": "Cat Leaderboard!",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Return correct rank for user ignoring members that has left 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "Dog has 1000 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "Dog is ranked number 2!",
+        },
+      ],
+      "title": "Dog Leaderboard!",
+    },
+  ],
+}
+`;
+
+exports[`user subcommand Return correct rank for user ignoring members that has left 2`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "Someone has 20 points!",
+        },
+        {
+          "name": "Rank",
+          "value": "Someone is ranked number 3!",
         },
       ],
       "title": "Someone Leaderboard!",
@@ -549,7 +654,7 @@ exports[`user subcommand Format the points word properly for 1 point 1`] = `
 }
 `;
 
-exports[`user subcommand Formats the points word properly for 0 or more than 1 1`] = `
+exports[`user subcommand Return correct rank for user ignoring members that has left 3`] = `
 {
   "embeds": [
     {
@@ -557,56 +662,14 @@ exports[`user subcommand Formats the points word properly for 0 or more than 1 1
       "fields": [
         {
           "name": "Points",
-          "value": "Dog has 20 points!",
+          "value": "Tree has 15 points!",
         },
         {
           "name": "Rank",
-          "value": "Dog currently has no rank in the leaderboard!",
+          "value": "Tree is ranked number 4!",
         },
       ],
-      "title": "Dog Leaderboard!",
-    },
-  ],
-}
-`;
-
-exports[`user subcommand Formats the points word properly for 0 or more than 1 2`] = `
-{
-  "embeds": [
-    {
-      "color": 13407555,
-      "fields": [
-        {
-          "name": "Points",
-          "value": "Dog has 0 points!",
-        },
-        {
-          "name": "Rank",
-          "value": "Dog currently has no rank in the leaderboard!",
-        },
-      ],
-      "title": "Dog Leaderboard!",
-    },
-  ],
-}
-`;
-
-exports[`user subcommand Return correct rank if user rank recieved 1`] = `
-{
-  "embeds": [
-    {
-      "color": 13407555,
-      "fields": [
-        {
-          "name": "Points",
-          "value": "Cat has 20 points!",
-        },
-        {
-          "name": "Rank",
-          "value": "Cat is ranked number 5!",
-        },
-      ],
-      "title": "Cat Leaderboard!",
+      "title": "Tree Leaderboard!",
     },
   ],
 }
@@ -620,14 +683,14 @@ exports[`user subcommand Return correct reply when user is not in database 1`] =
       "fields": [
         {
           "name": "Points",
-          "value": "NotOdin has 0 points!",
+          "value": "OldUser has 0 points!",
         },
         {
           "name": "Rank",
-          "value": "NotOdin currently has no rank in the leaderboard!",
+          "value": "OldUser currently has no rank in the leaderboard!",
         },
       ],
-      "title": "NotOdin Leaderboard!",
+      "title": "OldUser Leaderboard!",
     },
   ],
 }
