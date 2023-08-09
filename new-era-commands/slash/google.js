@@ -14,13 +14,13 @@ module.exports = {
     const prompt = interaction.options.getString('prompt');
     const searchUrl = `https://www.google.com/search?q=${prompt.replaceAll(' ', '+')}`;
 
-    const searchEmbed = new EmbedBuilder()
+    const googleEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Search Google')
       .setDescription(`This [Google query for "${prompt}"](${searchUrl}) might help you find what you're looking for.`);
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',
-      embeds: [searchEmbed],
+      embeds: [googleEmbed],
     });
   },
 };
