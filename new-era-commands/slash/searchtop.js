@@ -18,7 +18,7 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('Search TOP')
       .setDescription(
-        `Here are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`
+        `Here are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`,
       );
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',
