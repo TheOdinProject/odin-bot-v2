@@ -12,7 +12,7 @@ module.exports = {
     const searchUrl = `https://www.google.com/search?q=site:theodinproject.com+${prompt.replaceAll(' ', '+')}`;
 
     await interaction.reply(
-      userId ? `<@${userId}>\nSearching The Odin Project for \`${prompt}\`: ${searchUrl}` : `Searching The Odin Project for \`${prompt}\`: ${searchUrl}`,
+      userId ? `<@${userId}>\nSearching The Odin Project for \`${prompt}\`: <${searchUrl}>` : `Searching The Odin Project for \`${prompt}\`: <${searchUrl}>`,
     );
   },
 };
