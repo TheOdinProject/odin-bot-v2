@@ -18,10 +18,11 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('Search TOP')
       .setDescription(
-        userId
-          ? `<@${userId}>\nHere are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`
-          : `Here are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`,
+        `Here are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`
       );
-    await interaction.reply({ embeds: [searchEmbed] });
+    await interaction.reply({
+      content: userId ? `<@${userId}>` : '',
+      embeds: [searchEmbed],
+    });
   },
 };
