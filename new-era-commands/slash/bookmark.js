@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const config = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
       .setDescription(`
 To bookmark a message, react with the bookmark icon 🔖 on the message you wish to save for later. 
 
-Our bot will then deliver the message to your DMs in an embedded format with a link to the original message in the server. 
+<@${config.clientId}> will then deliver the message to your DMs in an embedded format with a link to the original message in the server. 
 
 You can delete a bookmarked message at any time from your DMs by reacting on it with the ❌ emoji.
       `);
