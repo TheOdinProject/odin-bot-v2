@@ -85,7 +85,7 @@ Our goal is to maintain a positive and supportive community, where help and cont
     for (let i = offset; i < limit + offset; i += 1) {
       const user = users[i];
       const member = interaction.guild.members.cache.get(user.discord_id);
-      const username = member ? member.displayName.replace(/!/g, '!') : 'Unknown';
+      const username = member ? member.displayName : 'Unknown';
       if (i === 0) {
         usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
       } else {
