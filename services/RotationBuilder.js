@@ -91,6 +91,17 @@ function rotationBuilder(rotationName, redisKeyName) {
         )
     )
     .addSubcommand((subcommand) =>
+      subcommand
+        .setName("remove")
+        .setDescription("remove a member from the queue")
+        .addUserOption((option) =>
+          option
+            .setName("user0")
+            .setDescription("user to remove")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand) =>
       subcommand.setName("read").setDescription("report the current value")
     )
     .addSubcommand((subcommand) =>
