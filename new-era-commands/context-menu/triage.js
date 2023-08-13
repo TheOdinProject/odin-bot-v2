@@ -22,16 +22,15 @@ class TriageService {
     return members.reverse();
   }
 
-  static async swapMembers(memberListInput, redisInstance) {
-    const [firstMember, secondMember] = memberListInput.split(",");
+  static async swapMembers(firstMember, secondMember, redisInstance) {
     const members = await this.getMemberList(redisInstance);
 
     const firstMemberIndex = members.indexOf(firstMember);
     const secondMemberIndex = members.indexOf(secondMember);
-    
+
     members[firstMemberIndex] = secondMember;
     members[secondMemberIndex] = firstMember;
-    console.log(members);
+
     await this.createNewMemberList(members, redisInstance);
   }
 
@@ -43,34 +42,40 @@ class TriageService {
     );
     if (formattedMemberList) {
       return formattedMemberList;
-    } 
-      return "No members";
+    }
+    return "No members";
   }
 
   static async handleInteraction(interaction) {
     const redis = RedisService.getInstance();
 
-    const isCreateCall = interaction.options.getString("create");
-    const isAddCall = interaction.options.getString("add");
-    const isSwapCall = interaction.options.getString("swap");
+    const actionType = interaction.options.getSubcommand();
+    const names = interaction.options.getString("names");
 
-    if (isCreateCall) {
-      await this.createNewMemberList(isCreateCall, redis);
-      const memberList = await this.getFormattedMemberList(redis);
-      await interaction.reply(`member list set to: ${memberList}`);
-    } else if (isAddCall) {
-      await this.addMembers(isAddCall, redis);
-      const memberList = await this.getFormattedMemberList(redis);
-      await interaction.reply(`member list updated to: ${memberList}`);
-    } else if (isSwapCall) {
-      await this.swapMembers(isSwapCall, redis);
-      const memberList = await this.getFormattedMemberList(redis);
-      await interaction.reply(`member list updated to: ${memberList}`);
-    } else {
-      const memberList = await this.getFormattedMemberList(redis);
-      await interaction.reply(memberList);
+    const firstMember = interaction.options.getString("first");
+    const secondMember = interaction.options.getString("second");
+
+    let replyModifier;
+
+    switch (actionType) {
+      case "create":
+        await this.createNewMemberList(names, redis);
+        replyModifier = 'initalized as'
+        break;
+      case "add":
+        await this.addMembers(names, redis);
+        replyModifier = 'updated to'
+        break;
+      case "swap":
+        await this.swapMembers(firstMember, secondMember, redis);
+        replyModifier = 'updated to'
+        break;
+      default:
+        replyModifier = 'is'
     }
-    // console.log(interaction)
+
+    const memberList = await this.getFormattedMemberList(redis);
+    await interaction.reply(`member list ${replyModifier}: ${memberList}`);
   }
 }
 
@@ -78,18 +83,47 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("triage")
     .setDescription("list triage info")
-    .addStringOption((option) =>
-      option.setName("create").setDescription("create a new triage member list")
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("create")
+        .setDescription("names to initialize the list with")
+        .addStringOption((option) =>
+          option
+            .setName("names")
+            .setDescription("names to initialize the list with")
+            .setRequired(true)
+        )
     )
-    .addStringOption((option) =>
-      option
+    .addSubcommand((subcommand) =>
+      subcommand
         .setName("add")
         .setDescription("add people to the triage member list")
+        .addStringOption((option) =>
+          option
+            .setName("names")
+            .setDescription("names to add to the list")
+            .setRequired(true)
+        )
     )
-    .addStringOption((option) =>
-      option
+    .addSubcommand((subcommand) =>
+      subcommand
         .setName("swap")
         .setDescription("swap the position of two members in the queue")
+        .addStringOption((option) =>
+          option
+            .setName("first")
+            .setDescription("names to add to the list")
+            .setRequired(true)
+        )
+        .addStringOption((secondOption) =>
+          secondOption
+            .setName("second")
+            .setDescription("names to add to the list")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("read").setDescription("report the current value")
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   execute: async (interaction) => {
