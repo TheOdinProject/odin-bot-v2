@@ -1,28 +1,30 @@
 const RedisService = require("../redis");
 
 class RotationService {
-  constructor(keyName) {
+  constructor(keyName, rotationName) {
     this.keyName = keyName;
+    this.rotationName = rotationName;
+    this.redis = RedisService.getInstance();
   }
 
-  async #addMembers(memberList, redisInstance) {
-    const userIds = memberList.map((member) => member?.id || member);
-    await redisInstance.lpush(this.keyName, userIds);
+  async #addMembers(memberList) {
+    const memberIds = memberList.map((member) => member?.id || member);
+    await this.redis.lpush(this.keyName, memberIds);
   }
 
-  async #createNewMemberList(memberList, redisInstance) {
-    await redisInstance.del(this.keyName);
-    await this.#addMembers(memberList, redisInstance);
+  async #createNewMemberList(memberList) {
+    await this.redis.del(this.keyName);
+    await this.#addMembers(memberList);
   }
 
-  async #getMemberList(redisInstance) {
-    const members = await redisInstance.lrange(this.keyName, 0, -1);
+  async #getMemberList() {
+    const members = await this.redis.lrange(this.keyName, 0, -1);
     return members.reverse();
   }
 
-  async #swapMembers(users, redisInstance) {
-    const [firstMember, secondMember] = users.map((user) => user.id);
-    const currentList = await this.#getMemberList(redisInstance);
+  async #swapMembers(members) {
+    const [firstMember, secondMember] = members.map((member) => member.id);
+    const currentList = await this.#getMemberList();
 
     const firstMemberIndex = currentList.indexOf(firstMember);
     const secondMemberIndex = currentList.indexOf(secondMember);
@@ -30,7 +32,7 @@ class RotationService {
     currentList[firstMemberIndex] = secondMember;
     currentList[secondMemberIndex] = firstMember;
 
-    await this.#createNewMemberList(currentList, redisInstance);
+    await this.#createNewMemberList(currentList);
   }
 
   async #getDisplayNames(members, server) {
@@ -45,11 +47,11 @@ class RotationService {
     return Promise.all(this.displayNames);
   }
 
-  async #getFormattedMemberList(server, redisInstance) {
-    const members = await this.#getMemberList(redisInstance);
+  async #getFormattedMemberList(server) {
+    const members = await this.#getMemberList();
     const membersDisplayNames = await this.#getDisplayNames(members, server);
     const formattedMemberList = membersDisplayNames.reduce(
-      (acc, displayname) => `${acc} ${displayname}`,
+      (acc, displayname) => `${acc} ${displayname} >`,
       ""
     );
     if (formattedMemberList) {
@@ -58,70 +60,66 @@ class RotationService {
     return "No members";
   }
 
-  async #rotateMemberList(interaction, redisInstance) {
-    const members = await this.#getMemberList(redisInstance);
+  async #rotateMemberList(interaction) {
+    const members = await this.#getMemberList();
     const memberToPing = members[0];
+
     members.push(members.shift());
-    await this.#createNewMemberList(members, redisInstance);
+
+    await this.#createNewMemberList(members);
+
     const formattedMembers = await this.#getFormattedMemberList(
-      interaction.guild,
-      redisInstance
+      interaction.guild
     );
-    const reply = `<@${memberToPing}> it's your turn for the rotation.\nThe rotation order is now ${formattedMembers}.`;
+    const reply = `<@${memberToPing}> it's your turn for the rotation.\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
     interaction.reply(reply);
   }
 
-  async #removeMembers(members, redisInstance) {
+  async #removeMembers(members) {
     const memberId = members[0].id;
-    await redisInstance.lrem(this.keyName, 0, memberId);
+    await this.redis.lrem(this.keyName, 0, memberId);
   }
 
-  #getUsers(interactionOptions) {
-    this.users = [];
+  #getMembers(interactionOptions) {
+    this.members = [];
     for (let i = 0; i < 10; i += 1) {
-      this.users.push(interactionOptions.getUser(`user${i}`));
+      this.members.push(interactionOptions.getUser(`user${i}`));
     }
-    return this.users.filter((user) => !!user);
+    return this.members.filter((member) => !!member);
   }
 
   async handleInteraction(interaction) {
-    const redis = RedisService.getInstance();
-
     const actionType = interaction.options.getSubcommand();
 
-    const users = this.#getUsers(interaction.options);
+    const members = this.#getMembers(interaction.options);
 
-    let replyModifier;
+    let replyModifier = "updated to";
 
     switch (actionType) {
       case "create":
-        await this.#createNewMemberList(users, redis);
+        await this.#createNewMemberList(members);
         replyModifier = "initalized as";
         break;
       case "add":
-        await this.#addMembers(users, redis);
-        replyModifier = "updated to";
+        await this.#addMembers(members);
         break;
       case "swap":
-        await this.#swapMembers(users, redis);
-        replyModifier = "updated to";
+        await this.#swapMembers(members);
         break;
       case "remove":
-        await this.#removeMembers(users, redis);
-        replyModifier = "updated to";
+        await this.#removeMembers(members);
         break;
       case "rotate":
-        await this.#rotateMemberList(interaction, redis);
+        await this.#rotateMemberList(interaction);
         return;
       default:
         replyModifier = "is";
     }
 
-    const memberList = await this.#getFormattedMemberList(
-      interaction.guild,
-      redis
+    const memberList = await this.#getFormattedMemberList(interaction.guild);
+    await interaction.reply(
+      `${this.rotationName} rotation queue order ${replyModifier}: ${memberList}`
     );
-    await interaction.reply(`member list ${replyModifier}: ${memberList}`);
   }
 }
 
