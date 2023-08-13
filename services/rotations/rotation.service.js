@@ -71,7 +71,7 @@ class RotationService {
     const formattedMembers = await this.#getFormattedMemberList(
       interaction.guild
     );
-    const reply = `<@${memberToPing}> it's your turn for the rotation.\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
+    const reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
     interaction.reply(reply);
   }
 
