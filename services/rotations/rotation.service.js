@@ -6,7 +6,7 @@ class RotationService {
   }
 
   async addMembers(memberList, redisInstance) {
-    const userIds = memberList.map((member) => member.id);
+    const userIds = memberList.map((member) => member?.id || member);
     await redisInstance.lpush(this.keyName, userIds);
   }
 
@@ -20,16 +20,17 @@ class RotationService {
     return members.reverse();
   }
 
-  async swapMembers(firstMember, secondMember, redisInstance) {
-    const members = await this.getMemberList(redisInstance);
+  async swapMembers(users, redisInstance) {
+    const [firstMember, secondMember] = users.map((user) => user.id);
+    const currentList = await this.getMemberList(redisInstance);
 
-    const firstMemberIndex = members.indexOf(firstMember);
-    const secondMemberIndex = members.indexOf(secondMember);
+    const firstMemberIndex = currentList.indexOf(firstMember);
+    const secondMemberIndex = currentList.indexOf(secondMember);
 
-    members[firstMemberIndex] = secondMember;
-    members[secondMemberIndex] = firstMember;
+    currentList[firstMemberIndex] = secondMember;
+    currentList[secondMemberIndex] = firstMember;
 
-    await this.createNewMemberList(members, redisInstance);
+    await this.createNewMemberList(currentList, redisInstance);
   }
 
   async getDisplayNames(members, server) {
@@ -38,7 +39,6 @@ class RotationService {
       if (member.nickname) {
         return member.nickname;
       }
-
       return member.user.username;
     });
 
@@ -71,16 +71,20 @@ class RotationService {
     interaction.reply(reply);
   }
 
+  getUsers(interactionOptions) {
+    this.users = [];
+    for (let i = 0; i < 10; i += 1) {
+      this.users.push(interactionOptions.getUser(`user${i}`));
+    }
+    return this.users.filter((user) => !!user);
+  }
+
   async handleInteraction(interaction) {
     const redis = RedisService.getInstance();
 
     const actionType = interaction.options.getSubcommand();
-    const names = interaction.options.getString("names");
 
-    const firstMember = interaction.options.getUser("user1");
-    const secondMember = interaction.options.getUser("user2");
-    const thirdMember = interaction.options.getUser("user3");
-    const users = [firstMember, secondMember, thirdMember];
+    const users = this.getUsers(interaction.options);
 
     let replyModifier;
 
@@ -90,11 +94,11 @@ class RotationService {
         replyModifier = "initalized as";
         break;
       case "add":
-        await this.addMembers(names, redis);
+        await this.addMembers(users, redis);
         replyModifier = "updated to";
         break;
       case "swap":
-        await this.swapMembers(firstMember, secondMember, redis);
+        await this.swapMembers(users, redis);
         replyModifier = "updated to";
         break;
       case "rotate":

@@ -1,8 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const { RotationService } = require("./rotations/rotation.service");
 
-// function addUpToTenUsers
-
 function rotationBuilder(rotationName, redisKeyName) {
   const data = new SlashCommandBuilder()
     .setName(rotationName)
@@ -10,34 +8,68 @@ function rotationBuilder(rotationName, redisKeyName) {
     .addSubcommand((subcommand) =>
       subcommand
         .setName("create")
-        .setDescription("names to initialize the list with")
+        .setDescription("user to initalize the rotation with")
+        .addUserOption((option) =>
+          option
+            .setName("user0")
+            .setDescription("user to initalize the rotation with")
+            .setRequired(true)
+        )
         .addUserOption((option) =>
           option
             .setName("user1")
-            .setDescription("names to initialize the list with")
+            .setDescription("user to initalize the rotation with")
             .setRequired(true)
         )
         .addUserOption((option) =>
           option
             .setName("user2")
-            .setDescription("names to initialize the list with")
-            .setRequired(true)
+            .setDescription("user to initalize the rotation with")
         )
         .addUserOption((option) =>
           option
             .setName("user3")
-            .setDescription("names to initialize the list with")
-            .setRequired(true)
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user4")
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user5")
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user6")
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user7")
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user8")
+            .setDescription("user to initalize the rotation with")
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user9")
+            .setDescription("user to initalize the rotation with")
         )
     )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("add")
         .setDescription(`add people to the ${rotationName} member list`)
-        .addStringOption((option) =>
+        .addUserOption((option) =>
           option
-            .setName("names")
-            .setDescription("names to add to the list")
+            .setName("user0")
+            .setDescription("user to add to the rotation")
             .setRequired(true)
         )
     )
@@ -45,16 +77,16 @@ function rotationBuilder(rotationName, redisKeyName) {
       subcommand
         .setName("swap")
         .setDescription("swap the position of two members in the queue")
-        .addStringOption((option) =>
+        .addUserOption((option) =>
           option
-            .setName("first")
-            .setDescription("names to add to the list")
+            .setName("user0")
+            .setDescription("first user to swap")
             .setRequired(true)
         )
-        .addStringOption((secondOption) =>
-          secondOption
-            .setName("second")
-            .setDescription("names to add to the list")
+        .addUserOption((option) =>
+          option
+            .setName("user1")
+            .setDescription("second user to swap")
             .setRequired(true)
         )
     )
