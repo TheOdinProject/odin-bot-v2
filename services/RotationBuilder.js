@@ -1,7 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const {
-  RotationService,
-} = require("./rotations/rotation.service");
+const { RotationService } = require("./rotations/rotation.service");
 
 function rotationBuilder(rotationName, redisKeyName) {
   const data = new SlashCommandBuilder()
@@ -49,13 +47,16 @@ function rotationBuilder(rotationName, redisKeyName) {
     .addSubcommand((subcommand) =>
       subcommand.setName("read").setDescription("report the current value")
     )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("rotate").setDescription(`rotate the queue`)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages);
 
-   async function execute(interaction) {
+  async function execute(interaction) {
     const triageService = new RotationService(redisKeyName);
     await triageService.handleInteraction(interaction);
   }
 
-  return { data, execute }
+  return { data, execute };
 }
 module.exports = { rotationBuilder };

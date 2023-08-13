@@ -2,7 +2,7 @@ const RedisService = require("../redis");
 
 class RotationService {
   constructor(keyName) {
-    this.keyName = keyName
+    this.keyName = keyName;
   }
 
   async addMembers(memberListInput, redisInstance) {
@@ -47,6 +47,16 @@ class RotationService {
     return "No members";
   }
 
+  async rotateMemberList(interaction, redisInstance) {
+    const members = await this.getMemberList(redisInstance);
+    const memberToPing = members[0];
+    members.push(members.shift());
+    await this.createNewMemberList(members, redisInstance);
+    const formattedMembers = await this.getFormattedMemberList(redisInstance);
+    const reply = `<@${memberToPing}> it's your turn for the rotation.\nThe rotation order is now ${formattedMembers}.`;
+    interaction.reply(reply);
+  }
+
   async handleInteraction(interaction) {
     const redis = RedisService.getInstance();
 
@@ -61,18 +71,21 @@ class RotationService {
     switch (actionType) {
       case "create":
         await this.createNewMemberList(names, redis);
-        replyModifier = 'initalized as'
+        replyModifier = "initalized as";
         break;
       case "add":
         await this.addMembers(names, redis);
-        replyModifier = 'updated to'
+        replyModifier = "updated to";
         break;
       case "swap":
         await this.swapMembers(firstMember, secondMember, redis);
-        replyModifier = 'updated to'
+        replyModifier = "updated to";
         break;
+      case "rotate":
+        await this.rotateMemberList(interaction, redis);
+        return;
       default:
-        replyModifier = 'is'
+        replyModifier = "is";
     }
 
     const memberList = await this.getFormattedMemberList(redis);
@@ -80,4 +93,4 @@ class RotationService {
   }
 }
 
-module.exports = { RotationService }
+module.exports = { RotationService };
