@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const { RotationService } = require("./rotations/rotation.service");
 
+// function addUpToTenUsers
+
 function rotationBuilder(rotationName, redisKeyName) {
   const data = new SlashCommandBuilder()
     .setName(rotationName)
@@ -9,9 +11,21 @@ function rotationBuilder(rotationName, redisKeyName) {
       subcommand
         .setName("create")
         .setDescription("names to initialize the list with")
-        .addStringOption((option) =>
+        .addUserOption((option) =>
           option
-            .setName("names")
+            .setName("user1")
+            .setDescription("names to initialize the list with")
+            .setRequired(true)
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user2")
+            .setDescription("names to initialize the list with")
+            .setRequired(true)
+        )
+        .addUserOption((option) =>
+          option
+            .setName("user3")
             .setDescription("names to initialize the list with")
             .setRequired(true)
         )

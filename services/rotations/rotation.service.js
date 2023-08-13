@@ -5,17 +5,14 @@ class RotationService {
     this.keyName = keyName;
   }
 
-  async addMembers(memberListInput, redisInstance) {
-    let memberList = memberListInput;
-    if (typeof memberListInput === "string") {
-      memberList = memberListInput.split(",");
-    }
-    await redisInstance.lpush(this.keyName, memberList);
+  async addMembers(memberList, redisInstance) {
+    const userIds = memberList.map((member) => member.id);
+    await redisInstance.lpush(this.keyName, userIds);
   }
 
-  async createNewMemberList(memberListInput, redisInstance) {
+  async createNewMemberList(memberList, redisInstance) {
     await redisInstance.del(this.keyName);
-    await this.addMembers(memberListInput, redisInstance);
+    await this.addMembers(memberList, redisInstance);
   }
 
   async getMemberList(redisInstance) {
@@ -35,10 +32,24 @@ class RotationService {
     await this.createNewMemberList(members, redisInstance);
   }
 
-  async getFormattedMemberList(redisInstance) {
+  async getDisplayNames(members, server) {
+    this.displayNames = members.map(async (memberId) => {
+      const member = await server.members.fetch(memberId);
+      if (member.nickname) {
+        return member.nickname;
+      }
+
+      return member.user.username;
+    });
+
+    return Promise.all(this.displayNames);
+  }
+
+  async getFormattedMemberList(server, redisInstance) {
     const members = await this.getMemberList(redisInstance);
-    const formattedMemberList = members.reduce(
-      (acc, member) => `${acc} ${member}`,
+    const membersDisplayNames = await this.getDisplayNames(members, server);
+    const formattedMemberList = membersDisplayNames.reduce(
+      (acc, displayname) => `${acc} ${displayname}`,
       ""
     );
     if (formattedMemberList) {
@@ -52,7 +63,10 @@ class RotationService {
     const memberToPing = members[0];
     members.push(members.shift());
     await this.createNewMemberList(members, redisInstance);
-    const formattedMembers = await this.getFormattedMemberList(redisInstance);
+    const formattedMembers = await this.getFormattedMemberList(
+      interaction.guild,
+      redisInstance
+    );
     const reply = `<@${memberToPing}> it's your turn for the rotation.\nThe rotation order is now ${formattedMembers}.`;
     interaction.reply(reply);
   }
@@ -63,14 +77,16 @@ class RotationService {
     const actionType = interaction.options.getSubcommand();
     const names = interaction.options.getString("names");
 
-    const firstMember = interaction.options.getString("first");
-    const secondMember = interaction.options.getString("second");
+    const firstMember = interaction.options.getUser("user1");
+    const secondMember = interaction.options.getUser("user2");
+    const thirdMember = interaction.options.getUser("user3");
+    const users = [firstMember, secondMember, thirdMember];
 
     let replyModifier;
 
     switch (actionType) {
       case "create":
-        await this.createNewMemberList(names, redis);
+        await this.createNewMemberList(users, redis);
         replyModifier = "initalized as";
         break;
       case "add":
@@ -88,7 +104,10 @@ class RotationService {
         replyModifier = "is";
     }
 
-    const memberList = await this.getFormattedMemberList(redis);
+    const memberList = await this.getFormattedMemberList(
+      interaction.guild,
+      redis
+    );
     await interaction.reply(`member list ${replyModifier}: ${memberList}`);
   }
 }
