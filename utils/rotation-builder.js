@@ -1,113 +1,43 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const { RotationService } = require("./rotations/rotation.service");
+const { RotationService } = require("../services/rotations/rotation.service");
+const { addSubcommands } = require("./slash-command-helpers/addUserOptions");
 
 function rotationBuilder(rotationName, redisKeyName) {
-  const data = new SlashCommandBuilder()
+  const subcommands = [
+    { name: "read", description: "report the current queue order" },
+    { name: "rotate", description: "rotate the queue" },
+    {
+      name: "create",
+      description: "initalize the rotation queue",
+      min: 2,
+      max: 10,
+    },
+    {
+      name: "add",
+      description: `add people to the ${rotationName} rotation queue`,
+      min: 1,
+      max: 10,
+    },
+    {
+      name: "swap",
+      description: "swap the position of two members in the queue",
+      min: 2,
+      max: 2,
+    },
+    {
+      name: "remove",
+      description: "remove members from the queue",
+      min: 1,
+      max: 1,
+    },
+  ];
+
+  const base = new SlashCommandBuilder()
     .setName(rotationName)
     .setDescription(`list ${rotationName} info`)
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("create")
-        .setDescription("user to initalize the rotation with")
-        .addUserOption((option) =>
-          option
-            .setName("user0")
-            .setDescription("user to initalize the rotation with")
-            .setRequired(true)
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user1")
-            .setDescription("user to initalize the rotation with")
-            .setRequired(true)
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user2")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user3")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user4")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user5")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user6")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user7")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user8")
-            .setDescription("user to initalize the rotation with")
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user9")
-            .setDescription("user to initalize the rotation with")
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("add")
-        .setDescription(`add people to the ${rotationName} member list`)
-        .addUserOption((option) =>
-          option
-            .setName("user0")
-            .setDescription("user to add to the rotation")
-            .setRequired(true)
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("swap")
-        .setDescription("swap the position of two members in the queue")
-        .addUserOption((option) =>
-          option
-            .setName("user0")
-            .setDescription("first user to swap")
-            .setRequired(true)
-        )
-        .addUserOption((option) =>
-          option
-            .setName("user1")
-            .setDescription("second user to swap")
-            .setRequired(true)
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("remove")
-        .setDescription("remove a member from the queue")
-        .addUserOption((option) =>
-          option
-            .setName("user0")
-            .setDescription("user to remove")
-            .setRequired(true)
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName("read").setDescription("report the current value")
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName("rotate").setDescription(`rotate the queue`)
-    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages);
+
+  const data = addSubcommands(base, subcommands);
 
   async function execute(interaction) {
     const triageService = new RotationService(redisKeyName);
@@ -116,4 +46,5 @@ function rotationBuilder(rotationName, redisKeyName) {
 
   return { data, execute };
 }
+
 module.exports = { rotationBuilder };
