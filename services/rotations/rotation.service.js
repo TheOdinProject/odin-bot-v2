@@ -118,7 +118,7 @@ class RotationService {
 
     const memberList = await this.#getFormattedMemberList(interaction.guild);
     await interaction.reply(
-      `${this.rotationName} rotation queue order ${replyModifier}: ${memberList}`
+      `${this.rotationName} rotation queue order ${replyModifier}:${memberList}`
     );
   }
 }
