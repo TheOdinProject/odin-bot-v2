@@ -15,9 +15,9 @@ class MockRedisInstance {
 
   async lrange(keyName, start, end) {
     if (end === -1) {
-      return this.store[keyName].slice(start);
+      return this.store[keyName].slice(start).reverse();
     }
-    return this.store[keyName].slice(start, end);
+    return this.store[keyName].slice(start, end).reverse();
   }
 
   async del(keyName) {

@@ -16,7 +16,7 @@
     {
       "type": "node-terminal",
       "request":"launch",
-      "name": "Launch Tests",
+      "name": "Run Tests",
       "skipFiles": [
         "<node_internals>/**"
       ],
