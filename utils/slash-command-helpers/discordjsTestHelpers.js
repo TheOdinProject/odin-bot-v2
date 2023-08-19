@@ -54,7 +54,6 @@ function initializeServer(usersArray) {
 }
 
 module.exports = {
-  buildInteractionUsers,
   buildInteraction,
   getUsers,
   initializeServer,
