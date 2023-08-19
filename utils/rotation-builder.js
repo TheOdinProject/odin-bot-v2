@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const { RotationService } = require("../services/rotations/rotation.service");
-const { addSubcommands } = require("./slash-command-helpers/addUserOptions");
+const { addSubcommands } = require("./slash-command-helpers");
 
 function rotationBuilder(rotationName, redisKeyName) {
   const subcommands = [
