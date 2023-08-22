@@ -11,7 +11,7 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('Time is an illusion')
       .setDescription(
-        'Please read this [discord message to learn more about time expectations](https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389)',
+        'Please read this [Discord message to learn more about time expectations](https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389)',
       );
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',
