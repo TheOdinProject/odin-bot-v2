@@ -71,8 +71,8 @@ class RotationService {
     interaction.reply(reply);
   }
 
-  async #removeMembers(members) {
-    const memberId = members[0].id;
+  async #removeMember(member) {
+    const memberId = member.id;
     await this.redis.lrem(this.keyName, 0, memberId);
   }
 
@@ -103,7 +103,7 @@ class RotationService {
         await this.#swapMembers(members);
         break;
       case "remove":
-        await this.#removeMembers(members);
+        await this.#removeMember(members[0]);
         break;
       case "rotate":
         await this.#rotateMemberList(interaction);
