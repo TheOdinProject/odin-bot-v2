@@ -7,12 +7,6 @@ function rotationBuilder(rotationName, redisKeyName) {
     { name: "read", description: "report the current queue order" },
     { name: "rotate", description: "rotate the queue" },
     {
-      name: "create",
-      description: "initalize the rotation queue",
-      min: 2,
-      max: 10,
-    },
-    {
       name: "add",
       description: `add people to the ${rotationName} rotation queue`,
       min: 1,

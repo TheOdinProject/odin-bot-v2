@@ -92,10 +92,6 @@ class RotationService {
     let replyModifier = "updated to";
 
     switch (actionType) {
-      case "create":
-        await this.#createNewMemberList(members);
-        replyModifier = "initalized as";
-        break;
       case "add":
         await this.#addMembers(members);
         break;

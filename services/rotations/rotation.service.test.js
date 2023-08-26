@@ -7,19 +7,19 @@ const {
 
 jest.mock("../redis");
 
-describe("creation", () => {
+describe("addition", () => {
   it("creates a rotation and reports the inital queue order", async () => {
     const rotation = new RotationService("test", "test");
 
     const reply = jest.fn();
     const users = getUsers(2);
     const server = initializeServer();
-    const interaction = buildInteraction("create", server, users, reply);
+    const interaction = buildInteraction("add", server, users, reply);
 
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order initalized as: Foo > Baz >"
+      "test rotation queue order updated to: Foo > Baz >"
     );
   });
 
@@ -30,12 +30,12 @@ describe("creation", () => {
     const users = getUsers(2);
     users[0].nickname = "Bar";
     const server = initializeServer(users);
-    const interaction = buildInteraction("create", server, users, reply);
+    const interaction = buildInteraction("add", server, users, reply);
 
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order initalized as: Bar > Baz >"
+      "test rotation queue order updated to: Bar > Baz >"
     );
   });
 
@@ -45,37 +45,22 @@ describe("creation", () => {
     const reply = jest.fn();
     const users = getUsers(6);
     const server = initializeServer();
-    const interaction = buildInteraction("create", server, users, reply);
+    const interaction = buildInteraction("add", server, users, reply);
 
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order initalized as: Foo > Baz > Bang > Bing > Bong > Ding >"
+      "test rotation queue order updated to: Foo > Baz > Bang > Bing > Bong > Ding >"
     );
   });
 
-  it("only replies once", async () => {
-    const rotation = new RotationService("test", "test");
-
-    const reply = jest.fn();
-    const users = getUsers(2);
-    const server = initializeServer();
-    const interaction = buildInteraction("create", server, users, reply);
-
-    await rotation.handleInteraction(interaction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("addition", () => {
   it("adds one person to the queue and reports the new queue order", async () => {
     const rotation = new RotationService("test", "test");
 
     const creationUsers = getUsers(2);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -105,7 +90,7 @@ describe("addition", () => {
     const creationUsers = getUsers(2);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -135,7 +120,7 @@ describe("addition", () => {
     const creationUsers = getUsers(2);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -165,7 +150,7 @@ describe("removal", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -195,7 +180,7 @@ describe("removal", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -225,7 +210,7 @@ describe("removal", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -255,7 +240,7 @@ describe("removal", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -285,7 +270,7 @@ describe("swapping", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -315,7 +300,7 @@ describe("swapping", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -345,7 +330,7 @@ describe("swapping", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -375,7 +360,7 @@ describe("swapping", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -405,7 +390,7 @@ describe("reading", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -429,7 +414,7 @@ describe("reading", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -453,7 +438,7 @@ describe("rotation", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
@@ -477,7 +462,7 @@ describe("rotation", () => {
     const creationUsers = getUsers(3);
     const server = initializeServer();
     const creationInteraction = buildInteraction(
-      "create",
+      "add",
       server,
       creationUsers,
       () => {}
