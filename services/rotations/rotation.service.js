@@ -9,7 +9,7 @@ class RotationService {
 
   async #addMembers(memberList) {
     const memberIds = memberList.map((member) => member?.id || member);
-    await this.redis.lpush(this.keyName, memberIds);
+    await this.redis.rpush(this.keyName, memberIds);
   }
 
   async #createNewMemberList(memberList) {
@@ -19,7 +19,7 @@ class RotationService {
 
   async #getMemberList() {
     const members = await this.redis.lrange(this.keyName, 0, -1);
-    return members.reverse();
+    return members;
   }
 
   async #swapMembers(members) {
@@ -61,12 +61,8 @@ class RotationService {
   }
 
   async #rotateMemberList(interaction) {
-    const members = await this.#getMemberList();
-    const memberToPing = members[0];
-
-    members.push(members.shift());
-
-    await this.#createNewMemberList(members);
+    const memberToPing = await this.redis.lpop(this.keyName)
+    await this.#addMembers([memberToPing])
 
     const formattedMembers = await this.#getFormattedMemberList(
       interaction.guild

@@ -3,7 +3,7 @@ class MockRedisInstance {
     this.store = {};
   }
   
-  async lpush(keyName, entry) {
+  async rpush(keyName, entry) {
     if (!this.store[keyName]) {
       this.store[keyName] = [];
     }
@@ -15,9 +15,9 @@ class MockRedisInstance {
 
   async lrange(keyName, start, end) {
     if (end === -1) {
-      return this.store[keyName].slice(start).reverse();
+      return this.store[keyName].slice(start);
     }
-    return this.store[keyName].slice(start, end).reverse();
+    return this.store[keyName].slice(start, end);
   }
 
   async del(keyName) {
@@ -26,6 +26,10 @@ class MockRedisInstance {
 
   async lrem(keyName, _count, element) {
     this.store[keyName] = this.store[keyName].filter((entry) => entry !== element);
+  }
+
+  async lpop(keyName) {
+    return this.store[keyName].shift()
   }
 }
 
