@@ -108,26 +108,41 @@ class RotationService {
     await this.#swapMembers(memberIds);
 
     const swappedMemberPings = RotationService.#getFormattedPings(memberIds);
-    let reply = `${swappedMemberPings} swapped position in the queue\n\n`
+    let reply = `${swappedMemberPings} swapped position in the queue\n\n`;
     reply += await this.#getFormattedListStatus(interaction);
 
     interaction.reply(reply.trim());
   }
 
-  async #rotateMemberList(interaction) {
+  async #rotateMemberList() {
     const memberToPing = await this.redis.lpop(this.keyName);
     await this.#addMembers([memberToPing]);
+
+    return memberToPing;
+  }
+
+  async #handleRotateMemberList(interaction) {
+    const memberToPing = await this.#rotateMemberList(interaction);
 
     const formattedMembers = await this.#getFormattedMemberList(
       interaction.guild
     );
-    const reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
+    const reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
     interaction.reply(reply);
   }
 
-  async #removeMember(member) {
-    const memberId = member.id;
+  async #removeMember(memberId) {
     await this.redis.lrem(this.keyName, 0, memberId);
+  }
+
+  async #handleRemoveMember(member, interaction) {
+    const memberId = member.id;
+    await this.#removeMember(memberId);
+
+    let reply = `<@${memberId}> removed from the queue\n\n`;
+    reply += await this.#getFormattedListStatus(interaction);
+
+    interaction.reply(reply.trim());
   }
 
   #getMembers(interactionOptions) {
@@ -153,10 +168,10 @@ class RotationService {
         await this.#handleSwapMembers(members, interaction);
         return;
       case "remove":
-        await this.#removeMember(members[0]);
-        break;
+        await this.#handleRemoveMember(members[0], interaction);
+        return;
       case "rotate":
-        await this.#rotateMemberList(interaction);
+        await this.#handleRotateMemberList(interaction);
         return;
       default:
         replyModifier = "is";

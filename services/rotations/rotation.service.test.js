@@ -202,7 +202,7 @@ describe("removal", () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Baz > Bang >"
+      "<@1234> removed from the queue\n\ntest rotation queue order: Baz > Bang >"
     );
   });
 
@@ -232,7 +232,7 @@ describe("removal", () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Bang >"
+      "<@5678> removed from the queue\n\ntest rotation queue order: Foo > Bang >"
     );
   });
 
@@ -262,7 +262,7 @@ describe("removal", () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz >"
+      "<@9101> removed from the queue\n\ntest rotation queue order: Foo > Baz >"
     );
   });
 
@@ -484,7 +484,7 @@ describe("rotation", () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\nThe test rotation order is now  Baz > Bang > Foo >."
+      "<@1234> it's your turn for the test rotation.\n\nThe test rotation order is now  Baz > Bang > Foo >."
     );
   });
 
