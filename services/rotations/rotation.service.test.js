@@ -322,7 +322,7 @@ describe("swapping", () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Bang > Baz > Foo >"
+      "<@1234> <@9101> swapped position in the queue\n\ntest rotation queue order: Bang > Baz > Foo >"
     );
   });
 
@@ -352,7 +352,7 @@ describe("swapping", () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Baz > Foo > Bang >"
+      "<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz > Foo > Bang >"
     );
   });
 
@@ -382,7 +382,7 @@ describe("swapping", () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Bang > Baz >"
+      "<@5678> <@9101> swapped position in the queue\n\ntest rotation queue order: Foo > Bang > Baz >"
     );
   });
 

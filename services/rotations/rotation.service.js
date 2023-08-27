@@ -53,6 +53,11 @@ class RotationService {
     return "No members";
   }
 
+  async #getFormattedListStatus(interaction) {
+    const newList = await this.#getFormattedMemberList(interaction.guild);
+    return `${this.rotationName} rotation queue order:${newList}`;
+  }
+
   async #handleAddMembers(memberList, interaction) {
     let reply = "";
     const memberIds = memberList.map((member) => member?.id || member);
@@ -75,8 +80,7 @@ class RotationService {
       reply += `${addedNotifications} successfully added to the queue\n\n`;
     }
 
-    const newList = await this.#getFormattedMemberList(interaction.guild);
-    reply += `${this.rotationName} rotation queue order:${newList}`;
+    reply += await this.#getFormattedListStatus(interaction);
 
     interaction.reply(reply.trim());
   }
@@ -86,8 +90,8 @@ class RotationService {
     await this.#addMembers(memberList);
   }
 
-  async #swapMembers(members) {
-    const [firstMember, secondMember] = members.map((member) => member.id);
+  async #swapMembers(memberIds) {
+    const [firstMember, secondMember] = memberIds;
     const currentList = await this.#getMemberList();
 
     const firstMemberIndex = currentList.indexOf(firstMember);
@@ -97,6 +101,17 @@ class RotationService {
     currentList[secondMemberIndex] = firstMember;
 
     await this.#createNewMemberList(currentList);
+  }
+
+  async #handleSwapMembers(members, interaction) {
+    const memberIds = members.map((member) => member.id);
+    await this.#swapMembers(memberIds);
+
+    const swappedMemberPings = RotationService.#getFormattedPings(memberIds);
+    let reply = `${swappedMemberPings} swapped position in the queue\n\n`
+    reply += await this.#getFormattedListStatus(interaction);
+
+    interaction.reply(reply.trim());
   }
 
   async #rotateMemberList(interaction) {
@@ -135,8 +150,8 @@ class RotationService {
         await this.#handleAddMembers(members, interaction);
         return;
       case "swap":
-        await this.#swapMembers(members);
-        break;
+        await this.#handleSwapMembers(members, interaction);
+        return;
       case "remove":
         await this.#removeMember(members[0]);
         break;
