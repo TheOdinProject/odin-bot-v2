@@ -436,7 +436,7 @@ describe("reading", () => {
     await rotation.handleInteraction(readInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order is: Foo > Baz > Bang >"
+      "test rotation queue order: Foo > Baz > Bang >"
     );
   });
 
@@ -484,7 +484,7 @@ describe("rotation", () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\n\nThe test rotation order is now  Baz > Bang > Foo >."
+      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz > Bang > Foo >"
     );
   });
 

@@ -7,15 +7,15 @@ class RotationService {
     this.redis = RedisService.getInstance();
   }
 
-  async #getMemberList() {
+  async #getQueue() {
     const members = await this.redis.lrange(this.keyName, 0, -1);
     return members;
   }
 
   async #addMembers(memberIds) {
-    const currentList = await this.#getMemberList();
+    const queue = await this.#getQueue();
 
-    const newMemberIds = memberIds.filter((id) => !currentList?.includes(id));
+    const newMemberIds = memberIds.filter((id) => !queue?.includes(id));
 
     if (newMemberIds.length > 0) {
       await this.redis.rpush(this.keyName, newMemberIds);
@@ -40,27 +40,25 @@ class RotationService {
     return Promise.all(this.displayNames);
   }
 
-  async #getFormattedMemberList(server) {
-    const members = await this.#getMemberList();
-    const membersDisplayNames = await this.#getDisplayNames(members, server);
-    const formattedMemberList = membersDisplayNames.reduce(
+  async #getFormattedQueue(interaction) {
+    const members = await this.#getQueue();
+    const membersDisplayNames = await this.#getDisplayNames(
+      members,
+      interaction.guild
+    );
+    const formattedQueue = membersDisplayNames.reduce(
       (acc, displayname) => `${acc} ${displayname} >`,
       ""
     );
-    if (formattedMemberList) {
-      return formattedMemberList;
+    if (formattedQueue) {
+      return `${this.rotationName} rotation queue order:${formattedQueue}`;
     }
     return "No members";
   }
 
-  async #getFormattedListStatus(interaction) {
-    const newList = await this.#getFormattedMemberList(interaction.guild);
-    return `${this.rotationName} rotation queue order:${newList}`;
-  }
-
-  async #handleAddMembers(memberList, interaction) {
+  async #handleAddMembers(members, interaction) {
     let reply = "";
-    const memberIds = memberList.map((member) => member?.id || member);
+    const memberIds = members.map((member) => member?.id || member);
     const addedIds = await this.#addMembers(memberIds);
 
     if (addedIds.length !== memberIds.length) {
@@ -80,27 +78,27 @@ class RotationService {
       reply += `${addedNotifications} successfully added to the queue\n\n`;
     }
 
-    reply += await this.#getFormattedListStatus(interaction);
+    reply += await this.#getFormattedQueue(interaction);
 
     interaction.reply(reply.trim());
   }
 
-  async #createNewMemberList(memberList) {
+  async #createQueue(members) {
     await this.redis.del(this.keyName);
-    await this.#addMembers(memberList);
+    await this.#addMembers(members);
   }
 
   async #swapMembers(memberIds) {
     const [firstMember, secondMember] = memberIds;
-    const currentList = await this.#getMemberList();
+    const queue = await this.#getQueue();
 
-    const firstMemberIndex = currentList.indexOf(firstMember);
-    const secondMemberIndex = currentList.indexOf(secondMember);
+    const firstMemberIndex = queue.indexOf(firstMember);
+    const secondMemberIndex = queue.indexOf(secondMember);
 
-    currentList[firstMemberIndex] = secondMember;
-    currentList[secondMemberIndex] = firstMember;
+    queue[firstMemberIndex] = secondMember;
+    queue[secondMemberIndex] = firstMember;
 
-    await this.#createNewMemberList(currentList);
+    await this.#createQueue(queue);
   }
 
   async #handleSwapMembers(members, interaction) {
@@ -109,26 +107,25 @@ class RotationService {
 
     const swappedMemberPings = RotationService.#getFormattedPings(memberIds);
     let reply = `${swappedMemberPings} swapped position in the queue\n\n`;
-    reply += await this.#getFormattedListStatus(interaction);
+    reply += await this.#getFormattedQueue(interaction);
 
     interaction.reply(reply.trim());
   }
 
-  async #rotateMemberList() {
+  async #rotateQueue() {
     const memberToPing = await this.redis.lpop(this.keyName);
     await this.#addMembers([memberToPing]);
 
     return memberToPing;
   }
 
-  async #handleRotateMemberList(interaction) {
-    const memberToPing = await this.#rotateMemberList(interaction);
+  async #handleRotateQueue(interaction) {
+    const memberToPing = await this.#rotateQueue(interaction);
 
-    const formattedMembers = await this.#getFormattedMemberList(
-      interaction.guild
-    );
-    const reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\nThe ${this.rotationName} rotation order is now ${formattedMembers}.`;
-    interaction.reply(reply);
+    let reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\n`;
+    reply += await this.#getFormattedQueue(interaction);
+
+    interaction.reply(reply.trim());
   }
 
   async #removeMember(memberId) {
@@ -140,7 +137,7 @@ class RotationService {
     await this.#removeMember(memberId);
 
     let reply = `<@${memberId}> removed from the queue\n\n`;
-    reply += await this.#getFormattedListStatus(interaction);
+    reply += await this.#getFormattedQueue(interaction);
 
     interaction.reply(reply.trim());
   }
@@ -158,8 +155,6 @@ class RotationService {
 
     const members = this.#getMembers(interaction.options);
 
-    let replyModifier = "updated to";
-
     switch (actionType) {
       case "add":
         await this.#handleAddMembers(members, interaction);
@@ -171,16 +166,13 @@ class RotationService {
         await this.#handleRemoveMember(members[0], interaction);
         return;
       case "rotate":
-        await this.#handleRotateMemberList(interaction);
+        await this.#handleRotateQueue(interaction);
         return;
       default:
-        replyModifier = "is";
     }
 
-    const memberList = await this.#getFormattedMemberList(interaction.guild);
-    await interaction.reply(
-      `${this.rotationName} rotation queue order ${replyModifier}:${memberList}`
-    );
+    const reply = await this.#getFormattedQueue(interaction);
+    await interaction.reply(reply.trim());
   }
 }
 
