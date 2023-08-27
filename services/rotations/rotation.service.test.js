@@ -114,6 +114,36 @@ describe("addition", () => {
     );
   });
 
+  it("does not add people to the queue multiple times", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const creationUsers = getUsers(2);
+    const server = initializeServer();
+    const creationInteraction = buildInteraction(
+      "add",
+      server,
+      creationUsers,
+      () => {}
+    );
+
+    const reply = jest.fn();
+    const additionUsers = getUsers(3, 1);
+    const additionInteraction = buildInteraction(
+      "add",
+      server,
+      additionUsers,
+      reply
+    );
+
+    await rotation.handleInteraction(creationInteraction);
+
+    await rotation.handleInteraction(additionInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "test rotation queue order updated to: Foo > Baz > Bang > Bing >"
+    );
+  });
+
   it("only replies once", async () => {
     const rotation = new RotationService("test", "test");
 

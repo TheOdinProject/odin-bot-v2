@@ -7,19 +7,25 @@ class RotationService {
     this.redis = RedisService.getInstance();
   }
 
+  async #getMemberList() {
+    const members = await this.redis.lrange(this.keyName, 0, -1);
+    return members;
+  }
+
   async #addMembers(memberList) {
     const memberIds = memberList.map((member) => member?.id || member);
-    await this.redis.rpush(this.keyName, memberIds);
+    const currentList = await this.#getMemberList();
+
+    const newMemberIds = memberIds.filter((id) => !currentList?.includes(id));
+
+    if (newMemberIds.length > 0) {
+      await this.redis.rpush(this.keyName, newMemberIds);
+    }
   }
 
   async #createNewMemberList(memberList) {
     await this.redis.del(this.keyName);
     await this.#addMembers(memberList);
-  }
-
-  async #getMemberList() {
-    const members = await this.redis.lrange(this.keyName, 0, -1);
-    return members;
   }
 
   async #swapMembers(members) {
@@ -61,8 +67,8 @@ class RotationService {
   }
 
   async #rotateMemberList(interaction) {
-    const memberToPing = await this.redis.lpop(this.keyName)
-    await this.#addMembers([memberToPing])
+    const memberToPing = await this.redis.lpop(this.keyName);
+    await this.#addMembers([memberToPing]);
 
     const formattedMembers = await this.#getFormattedMemberList(
       interaction.guild
