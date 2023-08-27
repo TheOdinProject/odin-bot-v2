@@ -19,38 +19,7 @@ describe("addition", () => {
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz >"
-    );
-  });
-
-  it("addresses users by nickname if they have one", async () => {
-    const rotation = new RotationService("test", "test");
-
-    const reply = jest.fn();
-    const users = getUsers(2);
-    users[0].nickname = "Bar";
-    const server = initializeServer(users);
-    const interaction = buildInteraction("add", server, users, reply);
-
-    await rotation.handleInteraction(interaction);
-
-    expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Bar > Baz >"
-    );
-  });
-
-  it("handles various numbers of users", async () => {
-    const rotation = new RotationService("test", "test");
-
-    const reply = jest.fn();
-    const users = getUsers(6);
-    const server = initializeServer();
-    const interaction = buildInteraction("add", server, users, reply);
-
-    await rotation.handleInteraction(interaction);
-
-    expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz > Bang > Bing > Bong > Ding >"
+      "<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo > Baz >"
     );
   });
 
@@ -80,7 +49,7 @@ describe("addition", () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz > Bang >"
+      "<@9101> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang >"
     );
   });
 
@@ -110,7 +79,7 @@ describe("addition", () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz > Bang > Bing >"
+      "<@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang > Bing >"
     );
   });
 
@@ -140,7 +109,40 @@ describe("addition", () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "test rotation queue order updated to: Foo > Baz > Bang > Bing >"
+      "Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang > Bing >"
+    );
+  });
+
+  it("addresses rejected users by nickname if they have one", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const creationUsers = getUsers(2);
+    const additionUsers = getUsers(1);
+    additionUsers[0].nickname = "Bar";
+    const server = initializeServer([...creationUsers, ...additionUsers]);
+
+    const creationInteraction = buildInteraction(
+      "add",
+      server,
+      creationUsers,
+      () => {}
+    );
+
+    const reply = jest.fn();
+
+    const additionInteraction = buildInteraction(
+      "add",
+      server,
+      additionUsers,
+      reply
+    );
+
+    await rotation.handleInteraction(creationInteraction);
+
+    await rotation.handleInteraction(additionInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "Bar not added as they are already in the queue\n\ntest rotation queue order: Bar > Baz >"
     );
   });
 

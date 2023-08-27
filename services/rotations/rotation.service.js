@@ -12,8 +12,7 @@ class RotationService {
     return members;
   }
 
-  async #addMembers(memberList) {
-    const memberIds = memberList.map((member) => member?.id || member);
+  async #addMembers(memberIds) {
     const currentList = await this.#getMemberList();
 
     const newMemberIds = memberIds.filter((id) => !currentList?.includes(id));
@@ -21,24 +20,12 @@ class RotationService {
     if (newMemberIds.length > 0) {
       await this.redis.rpush(this.keyName, newMemberIds);
     }
+
+    return newMemberIds;
   }
 
-  async #createNewMemberList(memberList) {
-    await this.redis.del(this.keyName);
-    await this.#addMembers(memberList);
-  }
-
-  async #swapMembers(members) {
-    const [firstMember, secondMember] = members.map((member) => member.id);
-    const currentList = await this.#getMemberList();
-
-    const firstMemberIndex = currentList.indexOf(firstMember);
-    const secondMemberIndex = currentList.indexOf(secondMember);
-
-    currentList[firstMemberIndex] = secondMember;
-    currentList[secondMemberIndex] = firstMember;
-
-    await this.#createNewMemberList(currentList);
+  static #getFormattedPings(memberIds) {
+    return memberIds.reduce((acc, id) => `${acc} <@${id}>`, "");
   }
 
   async #getDisplayNames(members, server) {
@@ -64,6 +51,52 @@ class RotationService {
       return formattedMemberList;
     }
     return "No members";
+  }
+
+  async #handleAddMembers(memberList, interaction) {
+    let reply = "";
+    const memberIds = memberList.map((member) => member?.id || member);
+    const addedIds = await this.#addMembers(memberIds);
+
+    if (addedIds.length !== memberIds.length) {
+      const nonAddedIds = memberIds.filter((id) => !addedIds.includes(id));
+      const nonAddedNames = await this.#getDisplayNames(
+        nonAddedIds,
+        interaction.guild
+      );
+      const formattedNonAddedNames = nonAddedNames
+        .reduce((acc, name) => `${acc} ${name},`, "")
+        .slice(0, -1);
+      reply += `${formattedNonAddedNames} not added as they are already in the queue\n\n`;
+    }
+
+    if (addedIds.length > 0) {
+      const addedNotifications = RotationService.#getFormattedPings(addedIds);
+      reply += `${addedNotifications} successfully added to the queue\n\n`;
+    }
+
+    const newList = await this.#getFormattedMemberList(interaction.guild);
+    reply += `${this.rotationName} rotation queue order:${newList}`;
+
+    interaction.reply(reply.trim());
+  }
+
+  async #createNewMemberList(memberList) {
+    await this.redis.del(this.keyName);
+    await this.#addMembers(memberList);
+  }
+
+  async #swapMembers(members) {
+    const [firstMember, secondMember] = members.map((member) => member.id);
+    const currentList = await this.#getMemberList();
+
+    const firstMemberIndex = currentList.indexOf(firstMember);
+    const secondMemberIndex = currentList.indexOf(secondMember);
+
+    currentList[firstMemberIndex] = secondMember;
+    currentList[secondMemberIndex] = firstMember;
+
+    await this.#createNewMemberList(currentList);
   }
 
   async #rotateMemberList(interaction) {
@@ -99,8 +132,8 @@ class RotationService {
 
     switch (actionType) {
       case "add":
-        await this.#addMembers(members);
-        break;
+        await this.#handleAddMembers(members, interaction);
+        return;
       case "swap":
         await this.#swapMembers(members);
         break;
