@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`!memory callback returns correct output 1`] = `"How important is memorization on your coding journey? Read a real-life case here: https://dev.to/theodinproject/memorization-and-learning-to-code-1b6h"`;
+
+exports[`!memory callback returns correct output 2`] = `"How important is memorization on your coding journey? Read a real-life case here: https://dev.to/theodinproject/memorization-and-learning-to-code-1b6h"`;
+
+exports[`!memory callback returns correct output 3`] = `"How important is memorization on your coding journey? Read a real-life case here: https://dev.to/theodinproject/memorization-and-learning-to-code-1b6h"`;
+
+exports[`!memory callback returns correct output 4`] = `"How important is memorization on your coding journey? Read a real-life case here: https://dev.to/theodinproject/memorization-and-learning-to-code-1b6h"`;
+
+exports[`!memory callback returns correct output 5`] = `"How important is memorization on your coding journey? Read a real-life case here: https://dev.to/theodinproject/memorization-and-learning-to-code-1b6h"`;
