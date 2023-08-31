@@ -3,7 +3,7 @@ const { generateMentions } = require('./mockData');
 
 describe('!memory', () => {
   describe('regex', () => {
-   it.each([
+    it.each([
       ['!memory'],
       [' !memory'],
       ['!memory @odin-bot'],
@@ -51,5 +51,5 @@ describe('!memory', () => {
       expect(await command.cb(generateMentions(2))).toMatchSnapshot();
       expect(await command.cb(generateMentions(3))).toMatchSnapshot();
     });
-  }); 
+  });
 });
