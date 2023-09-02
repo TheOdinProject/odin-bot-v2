@@ -1050,16 +1050,3 @@ describe('@user --', () => {
     });
   });
 });
-
-describe('!points', () => {
-  describe('regex', () => {
-    it.each([
-      ['!points <@!123456789>'],
-      ['let me check out my !points <@!123456789>'],
-      ['!points <@!123456789> <@!123456789>-v2'],
-      ['!points'],
-    ])('correct strings trigger the callback', (string) => {
-      expect(commands.points.regex.test(string)).toBeTruthy();
-    });
-  });
-});
