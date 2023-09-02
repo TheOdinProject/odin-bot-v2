@@ -1,6 +1,6 @@
 const prettier = require('prettier');
 
-const prettierFormatter = (codeBlock) => {
+const prettierFormatter = async (codeBlock) => {
   // source: https://prettier.io/docs/en/options.html#parser
   const langParser = {
     js: 'babel',
@@ -23,7 +23,8 @@ const prettierFormatter = (codeBlock) => {
   }
 
   try {
-    return prettier.format(content, { parser });
+    const formatted = await prettier.format(content, { parser });
+    return formatted;
   } catch (error) {
     if (error instanceof SyntaxError) {
       throw new SyntaxError(`Syntax Error: ${error.message.split('\n')[0]}`);

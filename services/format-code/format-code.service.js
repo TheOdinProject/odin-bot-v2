@@ -62,7 +62,7 @@ class FormatCodeService {
     try {
       formattedCodeBlock = {
         lang: codeBlock.lang,
-        content: FormatCodeService.formatCodeBlockContent(codeBlock),
+        content: await FormatCodeService.formatCodeBlockContent(codeBlock),
       };
     } catch (error) {
       await FormatCodeService.sendMessage(interaction, {
@@ -96,9 +96,10 @@ class FormatCodeService {
     return codeBlocks;
   }
 
-  static formatCodeBlockContent(codeBlock) {
+  static async formatCodeBlockContent(codeBlock) {
     try {
-      return prettierFormatter(codeBlock);
+      const formatted = await prettierFormatter(codeBlock);
+      return formatted;
     } catch (error) {
       if (error instanceof SyntaxError) {
         return error.message;

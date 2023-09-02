@@ -55,31 +55,31 @@ describe('FormatCodeService', () => {
   });
 
   describe('formatCodeBlockContent', () => {
-    it('calls prettierFormatter with correct arguments', () => {
+    it('calls prettierFormatter with correct arguments', async () => {
       const codeBlock = {
         lang: 'js',
         content: 'const a = 1;',
       };
 
-      FormatCodeService.formatCodeBlockContent(codeBlock);
+      await FormatCodeService.formatCodeBlockContent(codeBlock);
       expect(mockPrettierFormatter).toHaveBeenCalledWith(codeBlock);
     });
 
     describe('when prettierFormatter throws no error', () => {
-      it('returns formatted code', () => {
+      it('returns formatted code', async () => {
         const codeBlock = {
           lang: 'js',
           content: 'const a = 1;',
         };
 
-        mockPrettierFormatter.mockImplementationOnce(() => 'const a = 1;');
-        expect(FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('const a = 1;');
+        mockPrettierFormatter.mockImplementationOnce(async () => 'const a = 1;');
+        expect(await FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('const a = 1;');
       });
     });
 
     describe('when prettierFormatter throws error', () => {
       describe('when error is SyntaxError', () => {
-        it('returns syntax error message', () => {
+        it('returns syntax error message', async () => {
           const codeBlock = {
             lang: 'js',
             content: 'const a = 1;',
@@ -87,7 +87,7 @@ describe('FormatCodeService', () => {
           mockPrettierFormatter.mockImplementationOnce(() => {
             throw new SyntaxError('Syntax Error');
           });
-          expect(FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('Syntax Error');
+          expect(await FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('Syntax Error');
         });
       });
 
@@ -100,7 +100,7 @@ describe('FormatCodeService', () => {
           mockPrettierFormatter.mockImplementationOnce(() => {
             throw new Error('Error');
           });
-          expect(() => FormatCodeService.formatCodeBlockContent(codeBlock)).toThrow('Error');
+          expect(async () => FormatCodeService.formatCodeBlockContent(codeBlock)).rejects.toThrow('Error');
         });
       });
     });

@@ -10,17 +10,17 @@ describe('prettierFormatter', () => {
       content: 'const a = 1;',
     };
 
-    it('calls prettier.format method with correct arguments', () => {
-      prettier.format.mockImplementationOnce(() => 'const a = 1;');
-      prettierFormatter(codeBlock);
+    it('calls prettier.format method with correct arguments', async () => {
+      prettier.format.mockImplementationOnce(async () => 'const a = 1;');
+      await prettierFormatter(codeBlock);
       expect(prettier.format).toHaveBeenCalledWith('const a = 1;', {
         parser: 'babel',
       });
     });
 
-    it('returns formatted code', () => {
-      prettier.format.mockImplementationOnce(() => 'const a = 1;');
-      expect(prettierFormatter(codeBlock)).toEqual('const a = 1;');
+    it('returns formatted code', async () => {
+      prettier.format.mockImplementationOnce(async () => 'const a = 1;');
+      expect(await prettierFormatter(codeBlock)).toEqual('const a = 1;');
     });
   });
 
@@ -31,7 +31,7 @@ describe('prettierFormatter', () => {
     };
 
     it('throws error with expected message', () => {
-      expect(() => prettierFormatter(codeBlock)).toThrow(
+      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow(
         'Language not supported.',
       );
     });
@@ -47,7 +47,7 @@ describe('prettierFormatter', () => {
       prettier.format.mockImplementationOnce(() => {
         throw new SyntaxError('Syntax Error');
       });
-      expect(() => prettierFormatter(codeBlock)).toThrow('Syntax Error');
+      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow('Syntax Error');
     });
   });
 
@@ -61,7 +61,7 @@ describe('prettierFormatter', () => {
       prettier.format.mockImplementationOnce(() => {
         throw new Error('Other Error');
       });
-      expect(() => prettierFormatter(codeBlock)).toThrow('Error while formatting');
+      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow('Error while formatting');
     });
   });
 });
