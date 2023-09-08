@@ -3,8 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('data')
-    .setDescription("Don't ask to ask!"),
+    .setDescription("Don't ask to ask!")
+    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
+    const userId = interaction.options.getUser('user')?.id;
+
     const dataEmbed = new EmbedBuilder()
       .setTitle('Don’t ask to ask!')
       .setColor('#cc9543')
@@ -21,12 +24,15 @@ Instead of asking if anyone can help you, ask your question outright with as muc
 **Lesson link:**
 **Code:** [code sandbox like replit or codepen]
 **Issue/Problem:** [screenshots if applicable]
-**What I expected:** 
-**What I've tried:** 
+**What I expected:**
+**What I've tried:**
 
 **https://www.dontasktoask.com/**
         `);
 
-    await interaction.reply({ embeds: [dataEmbed] });
+    await interaction.reply({
+      content: userId ? `<@${userId}>` : '',
+      embeds: [dataEmbed],
+    });
   },
 };

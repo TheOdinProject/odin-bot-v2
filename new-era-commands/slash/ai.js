@@ -3,8 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ai')
-    .setDescription('Generative AI and Learning to Code'),
+    .setDescription('Generative AI and Learning to Code')
+    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
+    const userId = interaction.options.getUser('user')?.id;
+
     const aiEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Generative AI and Learning Code')
@@ -26,6 +29,9 @@ module.exports = {
         ],
       );
 
-    await interaction.reply({ embeds: [aiEmbed] });
+    await interaction.reply({
+      content: userId ? `<@${userId}>` : '',
+      embeds: [aiEmbed],
+    });
   },
 };

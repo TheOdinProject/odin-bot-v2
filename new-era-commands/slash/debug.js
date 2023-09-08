@@ -3,8 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('debug')
-    .setDescription('Debugging'),
+    .setDescription('Debugging')
+    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
+    const userId = interaction.options.getUser('user')?.id;
+
     const debugEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('DEBUGGING')
@@ -24,6 +27,9 @@ module.exports = {
         ],
       );
 
-    await interaction.reply({ embeds: [debugEmbed] });
+    await interaction.reply({
+      content: userId ? `<@${userId}>` : '',
+      embeds: [debugEmbed],
+    });
   },
 };
