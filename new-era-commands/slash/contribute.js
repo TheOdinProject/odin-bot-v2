@@ -3,8 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('contribute')
-    .setDescription('Information on how to contribute to TOP on GitHub'),
+    .setDescription('Information on how to contribute to TOP on GitHub')
+    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
+    const userId = interaction.options.getUser('user')?.id;
+
     const contributingEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Contributing to The Odin Project Repositories')
@@ -20,11 +23,11 @@ To contribute to The Odin Project, check out our repositories on GitHub:
 
 Make sure to read the [contributing guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md) before getting started.
 
-To find issues ready to be worked on, go to the \`issues\` tab in each repository. You can also create new issues or propose suggestions there. 
+To find issues ready to be worked on, go to the \`issues\` tab in each repository. You can also create new issues or propose suggestions there.
 
 **First time contributors**
 
-If you're a first-time contributor, you can look for issues labeled \`good first issue\`. 
+If you're a first-time contributor, you can look for issues labeled \`good first issue\`.
 These are beginner-friendly and perfect for getting started with open source contributions.
 
 **Top-contributors role**
@@ -34,6 +37,9 @@ You will recognize our TOP-Contributors by their special role which you can lear
 We hope to see you on GitHub!
       `);
 
-    await interaction.reply({ embeds: [contributingEmbed] });
+    await interaction.reply({
+      content: userId ? `<@${userId}>` : '',
+      embeds: [contributingEmbed],
+    });
   },
 };
