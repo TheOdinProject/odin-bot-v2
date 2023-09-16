@@ -18,3 +18,5 @@ We're thrilled that you're interested in contributing to the Odin Bot! Our bot d
 For more information on how to get started, we have a really helpful [wiki guide for setting up the Odin Bot](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and please also refer to [our TOP contributing guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md).
 
 Let's have a blast building and improving the Odin Bot together! We can't wait to see your awesome contributions!
+
+Testing
