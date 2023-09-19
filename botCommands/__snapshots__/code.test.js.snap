@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`!code snapshot returns correct output 1`] = `
+{
+  "content": "",
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "
+**Codeblocks:**        
+
+To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
+
+\\\`\\\`\\\`js
+// your JavaScript code goes here
+\\\`\\\`\\\`
+
+**Inline code:**
+
+For \`inline code\` use one backtick (no syntax highlighting):
+
+\\\`code here!\\\`
+
+**Websites:**
+
+- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
+- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
+- [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+      ",
+      "title": "How to share your code",
+    },
+  ],
+}
+`;
+
+exports[`!code snapshot returns correct output 2`] = `
+{
+  "content": "<@1>",
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "
+**Codeblocks:**        
+
+To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
+
+\\\`\\\`\\\`js
+// your JavaScript code goes here
+\\\`\\\`\\\`
+
+**Inline code:**
+
+For \`inline code\` use one backtick (no syntax highlighting):
+
+\\\`code here!\\\`
+
+**Websites:**
+
+- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
+- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
+- [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+      ",
+      "title": "How to share your code",
+    },
+  ],
+}
+`;
+
+exports[`!code snapshot returns correct output 3`] = `
+{
+  "content": "<@1> <@2>",
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "
+**Codeblocks:**        
+
+To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
+
+\\\`\\\`\\\`js
+// your JavaScript code goes here
+\\\`\\\`\\\`
+
+**Inline code:**
+
+For \`inline code\` use one backtick (no syntax highlighting):
+
+\\\`code here!\\\`
+
+**Websites:**
+
+- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
+- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
+- [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+      ",
+      "title": "How to share your code",
+    },
+  ],
+}
+`;
+
+exports[`!code snapshot returns correct output 4`] = `
+{
+  "content": "<@1> <@2> <@3>",
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "
+**Codeblocks:**        
+
+To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
+
+\\\`\\\`\\\`js
+// your JavaScript code goes here
+\\\`\\\`\\\`
+
+**Inline code:**
+
+For \`inline code\` use one backtick (no syntax highlighting):
+
+\\\`code here!\\\`
+
+**Websites:**
+
+- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
+- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
+- [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+      ",
+      "title": "How to share your code",
+    },
+  ],
+}
+`;
