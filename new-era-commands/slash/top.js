@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Information about The Odin Project')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const topEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -17,7 +17,7 @@ For more information about The Odin Project, visit our site:
     `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [topEmbed],
     });
   },
