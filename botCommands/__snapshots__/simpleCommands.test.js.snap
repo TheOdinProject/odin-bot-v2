@@ -44,5 +44,3 @@ exports[`!lenny callback returns correct output 1`] = `"( ͡° ͜ʖ ͡°)"`;
 exports[`!motivate callback returns correct output 1`] = `"Don't give up! https://www.youtube.com/watch?v=KxGRhd_iWuE"`;
 
 exports[`!smart callback returns correct output 1`] = `"f(ಠ‿↼)z"`;
-
-exports[`!xy callback returns correct output 1`] = `"What problem are you *really* trying to solve? Check out this article to help others better understand your question: <https://xyproblem.info/>"`;

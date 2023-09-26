@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`!xy callback returns correct output 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "What problem are you *really* trying to solve? Check out [this article about xy problems](https://xyproblem.info/) to help others better understand your question.",
+      "title": "This could very well be an xy problem",
+    },
+  ],
+}
+`;
