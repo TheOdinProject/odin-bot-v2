@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('How to share your code')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const codeEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -34,7 +34,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
       `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [codeEmbed],
     });
   },
