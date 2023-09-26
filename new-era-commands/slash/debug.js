@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Debugging')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const debugEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -28,7 +28,7 @@ module.exports = {
       );
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [debugEmbed],
     });
   },
