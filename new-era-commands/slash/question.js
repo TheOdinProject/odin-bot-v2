@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Asking Great Questions')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const questionEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -25,7 +25,7 @@ For even more context around on how to hone your question-asking skills, give th
               `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [questionEmbed],
      });
   },
