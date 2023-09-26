@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Information about portfolio-worthy projects')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const portfolioEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -18,7 +18,7 @@ Read more on which projects are worth your extra time in
 [this article about strategically building your portfolio](https://dev.to/theodinproject/strategically-building-your-portfolio-1km4)
 `);
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [portfolioEmbed],
     });
   },

@@ -6,7 +6,7 @@ module.exports = {
     .setDescription("Don't ask to ask!")
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const dataEmbed = new EmbedBuilder()
       .setTitle('Don’t ask to ask!')
@@ -31,7 +31,7 @@ Instead of asking if anyone can help you, ask your question outright with as muc
         `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [dataEmbed],
     });
   },

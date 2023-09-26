@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Windows')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const windowsEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -15,7 +15,7 @@ module.exports = {
       .setURL('https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options');
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [windowsEmbed],
     });
   },
