@@ -6,7 +6,7 @@ module.exports = {
     .setDescription('Information on how to contribute to TOP on GitHub')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const contributingEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -38,7 +38,7 @@ We hope to see you on GitHub!
       `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [contributingEmbed],
     });
   },
