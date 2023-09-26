@@ -91,12 +91,6 @@ const justDoIt = {
 };
 registerBotCommand(justDoIt.regex, justDoIt.cb);
 
-const xy = {
-  regex: /(?<!\S)!xy(?!\S)/,
-  cb: () => 'What problem are you *really* trying to solve? Check out this article to help others better understand your question: <https://xyproblem.info/>',
-};
-registerBotCommand(xy.regex, xy.cb);
-
 module.exports = {
   hug,
   smart,
@@ -107,5 +101,4 @@ module.exports = {
   dab,
   motivate,
   justDoIt,
-  xy,
 };
