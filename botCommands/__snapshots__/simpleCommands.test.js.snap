@@ -33,8 +33,6 @@ Instead of asking if anyone can help you, ask your question outright with as muc
 
 exports[`!fu callback returns correct output 1`] = `"http:!!media.riffsy.com!images!636a97aa416ad674eb2b72d4a6e9ad6c!tenor.gif"`;
 
-exports[`!google callback returns correct output 1`] = `"**This query might help you find what you're looking for >** <https://google.com/search?q=The+Odin+Project>"`;
-
 exports[`!hug callback returns correct output 1`] = `"⊂(´・ω・｀⊂)"`;
 
 exports[`!justdoit callback returns correct output 1`] = `"What are you waiting for?! https://www.youtube.com/watch?v=ZXsQAXx_ao0"`;
