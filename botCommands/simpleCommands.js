@@ -59,20 +59,6 @@ Instead of asking if anyone can help you, ask your question outright with as muc
 };
 registerBotCommand(data.regex, data.cb);
 
-const google = {
-  regex: /\B!google\s+.+/,
-  cb: ({ content }) => {
-    const transform = (transformContent) => {
-      const query = transformContent.split(' ').map(encodeURIComponent).join('+');
-      return `**This query might help you find what you're looking for >** <https://google.com/search?q=${query}>`;
-    };
-
-    const query = content.match(/\B!google\s+(.+)/)[1];
-    return `${transform(query)}`;
-  },
-};
-registerBotCommand(google.regex, google.cb);
-
 const dab = {
   regex: /(?<!\S)!dab(?!\S)/,
   cb: () => 'https://tenor.com/view/bettywhite-dab-gif-5044603',
@@ -97,7 +83,6 @@ module.exports = {
   lenny,
   fu,
   data,
-  google,
   dab,
   motivate,
   justDoIt,
