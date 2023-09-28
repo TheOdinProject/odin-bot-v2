@@ -1,4 +1,4 @@
-const command = require('./google');
+const command = require('./google-legacy');
 
 describe('!google', () => {
   describe('regex', () => {
