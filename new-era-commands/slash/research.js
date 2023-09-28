@@ -8,7 +8,7 @@ module.exports = {
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 
-    const dataEmbed = new EmbedBuilder()
+    const researchEmbed = new EmbedBuilder()
       .setTitle('Asking questions in the TOP Discord')
       .setColor('#cc9543')
       .setDescription(`
@@ -29,7 +29,7 @@ So yeah, feel free to continue to ask. But make sure you are doing your part by 
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
-      embeds: [dataEmbed],
+      embeds: [researchEmbed],
     });
   },
 };
