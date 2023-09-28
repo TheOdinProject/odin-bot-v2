@@ -12,7 +12,7 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('Our TOP Discord FAQ')
       .setDescription(`
-*The definition of insanity is answering the same question over and over again.*
+*"The definition of insanity is answering the same question over and over again"*
 
 We have a [channel with frequently asked questions](https://discord.com/channels/505093832157691914/823266307293839401/823266549912829992)!
 Help us stay sane by giving it a read.
