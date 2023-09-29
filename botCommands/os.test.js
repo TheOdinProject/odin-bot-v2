@@ -12,11 +12,9 @@ describe('!os', () => {
     });
 
     it.each([
-      ['wndows'],
+      ['so'],
       ['os'],
-      ['window'],
-      ['!wndows'],
-      ['!window'],
+      ['!so'],
       ['! os'],
       ['!aos'],
     ])("'%s' does not trigger the callback", (string) => {
