@@ -1,4 +1,4 @@
-const commands = require('./code');
+const commands = require('./code-legacy');
 const { generateMentions } = require('./mockData');
 
 describe('!code', () => {
