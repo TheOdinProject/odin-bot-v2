@@ -5,7 +5,7 @@ const command = {
   regex: /\B!searchtop\s+.+/,
   cb: ({ content }) => {
     const prompt = content.match(/\B!searchtop\s+(.+)/)[1];
-    const searchUrl = `https://www.google.com/search?q=site:theodinproject.com+${prompt.replaceAll(' ', '+')}}`;
+    const searchUrl = `https://www.google.com/search?q=site:theodinproject.com+${prompt.replaceAll(' ', '+')}`;
     const topEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Search TOP')
