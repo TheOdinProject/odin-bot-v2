@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`!searchtop callback returns correct output 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "Here are the [Google results for TOP lessons containing "The Odin Project"](https://www.google.com/search?q=site:theodinproject.com+The+Odin+Project})",
+      "title": "Search TOP",
+    },
+  ],
+}
+`;
