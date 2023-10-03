@@ -34,25 +34,19 @@ module.exports = {
           // remember to remove reference to windows when WSL2 is adopted
         },
       ])
-      .addFields([
-        {
-          name: "Community driven",
-          value:
-            "The Odin Project relies on open source contributions to our curriculum and is fully financially independent. Donate here: [Open Collective](https://opencollective.com/theodinproject).\n\nTo learn more about the ways you can help, use the `/contribute` or `/support` commands in the [bot channel](https://discord.com/channels/505093832157691914/513125912070455296). Thank you!",
-        },
-      ])
+
       .addFields([
         {
           name: "Find the right channel to ask your TOP-related question",
           value:
-            "Make sure you are asking your TOP related question in the best channel. If you are unsure, ask in [odin-general](https://discord.com/channels/505093832157691914/505093832157691916) for where to ask.\n\nIf your question is not about TOP's curriculum or the projects it contains, an appropriate server should be sought here: [Discord Server Search](https://disboard.org/servers/tag/coding).",
+            "Make sure you are asking your TOP related question in the best channel. If you are unsure, ask in [odin-general](https://discord.com/channels/505093832157691914/505093832157691916) for where to ask.\n\nIf your question is not about TOP's curriculum or the projects it contains, an appropriate server should be sought out here: [Discord Server Search](https://disboard.org/servers/tag/coding).",
         },
       ])
       .addFields([
         {
-          name: "Thank you!",
+          name: "TOP is community driven",
           value:
-            "We **truly** appreciate all those (past/present/future) who volunteer their time and expertise to help their fellow learners, as well as those able to make financial contributions to support The Odin Project!",
+            "The Odin Project relies on open source contributions to our curriculum and is fully financially independent. Donate here: [Open Collective](https://opencollective.com/theodinproject).\n\n We **truly** appreciate all those (past/present/future) who volunteer their time and expertise to help their fellow learners, as well as those able to make financial contributions to support The Odin Project!\n\nTo learn more about the ways you can help, use the `/contribute` or `/support` commands in the [bot channel](https://discord.com/channels/505093832157691914/513125912070455296). Thank you!",
         },
       ]);
 
