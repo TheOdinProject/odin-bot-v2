@@ -20,7 +20,7 @@ We also have these text-based commands which you can use in a sentence:
 \`!xy\`, \`!code\`, \`!question\`, \`!google\`, \`!searchtop\` and \`!top\`
 
 **Bot Playground** 
-Experiment with our bot in the [dedicated bot channel](https://discord.com/channels/505093832157691914/513125912070455296) to try out different commands and features. It's a safe space to explore without disturbing the main channels.
+Experiment with our bot in the <#513125912070455296> channel to try out different commands and features. It's a safe space to explore without disturbing the main channels.
 
 **Repository**
 Feel free to check out or contribute to the Odin bot's code in the [odin-bot Repository](https://github.com/TheOdinProject/odin-bot-v2)
