@@ -1,6 +1,7 @@
 // SCRIPT TO REGISTER THE NEW DISCORD COMMANDS
 // Commands can be deployed directly from terminal with: node bin/deploy-commands.js
 
+/* eslint import/no-unresolved: 2 */
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
