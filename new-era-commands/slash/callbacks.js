@@ -2,23 +2,22 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('top')
-    .setDescription('Information about The Odin Project')
+    .setName('callbacks')
+    .setDescription('Article about callbacks')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 
-    const topEmbed = new EmbedBuilder()
+    const cbEmbed = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle('The Odin Project')
+      .setTitle('Did someone say CALLBACKS?!')
       .setDescription(`
-For more information about The Odin Project, visit our site:
-[Your Career in Web Development Starts Here](https://www.theodinproject.com/)
-    `);
+[This article about callbacks](https://briggs.dev/blog/understanding-callbacks) has helped many people already. We suggest you give it a read!
+      `);
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
-      embeds: [topEmbed],
+      embeds: [cbEmbed],
     });
   },
 };

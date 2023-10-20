@@ -10,7 +10,7 @@ module.exports = {
       .setRequired(true))
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
     const prompt = interaction.options.getString('prompt');
     const searchUrl = `https://www.google.com/search?q=${prompt.replaceAll(' ', '+')}`;
 
@@ -19,7 +19,7 @@ module.exports = {
       .setTitle('Search Google')
       .setDescription(`This [Google query for "${prompt}"](${searchUrl}) might help you find what you're looking for.`);
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [googleEmbed],
     });
   },

@@ -1,18 +1,21 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const Discord = require("discord.js");
+const { registerBotCommand } = require("../botEngine");
 
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('code')
-    .setDescription('How to share your code')
-    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
-  execute: async (interaction) => {
-    const userId = interaction.options.getUser('user');
+const code = {
+  regex: /(?<!\S)!code(?!\S)/,
+  cb: ({ mentions }) => {
+    let users = "";
+    if (mentions.users) {
+      mentions.users.forEach((user) => {
+        users += `<@${user.id}> `;
+      });
+    }
 
-    const codeEmbed = new EmbedBuilder()
+    const codeCommandEmbed = new Discord.EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('How to share your code')
       .setDescription(`
-**Codeblocks:**
+**Codeblocks:**        
 
 To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
 
@@ -31,11 +34,18 @@ For \`inline code\` use one backtick (no syntax highlighting):
 - [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
 - [Repl.it](https://replit.com/) for JavaScript/Ruby projects
 - [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
-      `);
+      `
+      );
 
-    await interaction.reply({
-      content: userId ? `${userId}` : '',
-      embeds: [codeEmbed],
-    });
+    return { 
+      content: users ? `${users.trim()}` : '',
+      embeds: [codeCommandEmbed] 
+    };
   },
+};
+
+registerBotCommand(code.regex, code.cb);
+
+module.exports = {
+  code,
 };

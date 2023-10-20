@@ -10,7 +10,7 @@ module.exports = {
       .setRequired(true))
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
     const prompt = interaction.options.getString('prompt');
     const searchUrl = `https://www.google.com/search?q=site:theodinproject.com+${prompt.replaceAll(' ', '+')}`;
 
@@ -21,7 +21,7 @@ module.exports = {
         `Here are the [Google results for TOP lessons containing "${prompt}"](${searchUrl})`,
       );
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [searchEmbed],
     });
   },

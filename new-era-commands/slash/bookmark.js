@@ -7,7 +7,7 @@ module.exports = {
     .setDescription('Info about bookmarking messages in the TOP Discord server')
     .addUserOption((option) => option.setName('user').setDescription('user to ping')),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
+    const userId = interaction.options.getUser('user');
 
     const bookmarkEmbed = new EmbedBuilder()
       .setColor('#cc9543')
@@ -21,7 +21,7 @@ You can delete a bookmarked message at any time from your DMs by reacting on it 
       `);
 
     await interaction.reply({
-      content: userId ? `<@${userId}>` : '',
+      content: userId ? `${userId}` : '',
       embeds: [bookmarkEmbed],
     });
   },
