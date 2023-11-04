@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`!callbacks callback should return the correct output 1`] = `"**DID SOMEONE SAY CALLBACKS?: https://briggs.dev/blog/understanding-callbacks**"`;

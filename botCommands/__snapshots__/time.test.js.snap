@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`!time callback returns correct output 1`] = `"Time is an illusion. Please read this: https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389"`;
-
-exports[`!time callback returns correct output 2`] = `"Time is an illusion, <@1>. Please read this: https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389"`;
-
-exports[`!time callback returns correct output 3`] = `"Time is an illusion <@1> and <@2>. Please read this: https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389"`;
-
-exports[`!time callback returns correct output 4`] = `"Time is an illusion <@1>, <@2>, and <@3>. Please read this: https://discord.com/channels/505093832157691914/505093832157691916/765633002393829389"`;
