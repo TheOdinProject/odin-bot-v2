@@ -4,6 +4,8 @@ const config = require('../../config');
 class UpdateFAQsService {
   static EmbedDescriptionCharacterLimit = 4096;
 
+  static Delimiter = '###'
+
   static async handleInteraction(interaction) {
     let rawFAQs;
     try {
@@ -29,7 +31,7 @@ class UpdateFAQsService {
 
   static createFAQEmbeds(rawFAQs) {
     return UpdateFAQsService
-      .segments(rawFAQs, UpdateFAQsService.EmbedDescriptionCharacterLimit)
+      .segments(rawFAQs, UpdateFAQsService.EmbedDescriptionCharacterLimit, UpdateFAQsService.Delimiter)
       .map((chunk) => new EmbedBuilder().setColor('#cc9543').setDescription(chunk));
   }
 
@@ -44,11 +46,29 @@ class UpdateFAQsService {
     prev.forEach((message) => message.delete());
   }
 
-  static segments(string, length) {
-    const segments = [];
-    for (let i = 0; i < string.length; i += length) {
-      segments.push(string.substring(i, i + length));
+  static segments(string, length, delimiter, doNotPrependDelimiter) {
+    const segmentedString = string.split(delimiter)
+    const segments = []
+    let currentSection = ""
+
+    for (let i = 0; i < segmentedString.length; i += 1) {
+      let segment = segmentedString[i]
+
+      if (!doNotPrependDelimiter) {
+        segment = delimiter + segmentedString[i]
+      }
+      if (segmentedString[i] === '') {
+        // eslint-disable-next-line no-continue
+        continue
+      }
+      if ((currentSection.length + segment.length) >= length) {
+          segments.push(currentSection)
+          currentSection = segment
+      } else {
+        currentSection += segment
+      }
     }
+    segments.push(currentSection)
     return segments;
   }
 }
