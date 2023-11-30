@@ -8,7 +8,7 @@ const command = {
       .setColor("#cc9543")
       .setTitle("WSL")
       .setDescription(
-        "For help with using WSL please use the WSL channel: <#1077759838785904640>"
+        "For help with using WSL please use the WSL channel: <#1179839248803844117>"
       );
 
     return { embeds: [wslEmbed] };
