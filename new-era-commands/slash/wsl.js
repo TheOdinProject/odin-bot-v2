@@ -11,7 +11,7 @@ module.exports = {
     const wslEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('WSL')
-      .setDescription('For help with using WSL please use the WSL channel: <#1077759838785904640>')
+      .setDescription('For help with using WSL please use the WSL channel: <#1179839248803844117>')
 
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',
