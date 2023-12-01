@@ -5,7 +5,7 @@ exports[`!wsl callback returns correct output 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "description": "For help with using WSL please use the WSL channel: <#1077759838785904640>",
+      "description": "For help with using WSL please use the WSL channel: <#1179839248803844117>",
       "title": "WSL",
     },
   ],
