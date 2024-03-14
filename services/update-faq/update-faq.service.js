@@ -46,29 +46,28 @@ class UpdateFAQsService {
     prev.forEach((message) => message.delete());
   }
 
-  static segments(string, length, delimiter, doNotPrependDelimiter) {
+  static segments(string, length, delimiter, prependDelimiter = true) {
     const segmentedString = string.split(delimiter)
     const segments = []
     let currentSection = ""
 
     for (let i = 0; i < segmentedString.length; i += 1) {
-      let segment = segmentedString[i]
+      const segment = prependDelimiter ? delimiter + segmentedString[i] : segmentedString[i];
 
-      if (!doNotPrependDelimiter) {
-        segment = delimiter + segmentedString[i]
-      }
       if (segmentedString[i] === '') {
         // eslint-disable-next-line no-continue
-        continue
+        continue;
       }
+
       if ((currentSection.length + segment.length) >= length) {
-          segments.push(currentSection)
-          currentSection = segment
+        segments.push(currentSection);
+        currentSection = segment;
       } else {
-        currentSection += segment
+        currentSection += segment;
       }
     }
-    segments.push(currentSection)
+
+    segments.push(currentSection);
     return segments;
   }
 }
