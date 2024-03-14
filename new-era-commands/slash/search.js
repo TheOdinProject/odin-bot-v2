@@ -35,7 +35,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("site")
-        .setDescription("what site to search on")
+        .setDescription("site to search on")
         .setChoices(...searchSites)
         .setRequired(true),
     )
