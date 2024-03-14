@@ -17,52 +17,27 @@ const searchSites = {
   },
 };
 
+const createCommand = (site) => (command) =>
+  command
+    .setName(site.name.toLowerCase())
+    .setDescription(`search ${site.name}`)
+    .addStringOption((option) =>
+      option
+        .setName("prompt")
+        .setDescription("term to search")
+        .setRequired(true),
+    )
+    .addUserOption((option) =>
+      option.setName("user").setDescription("user to ping"),
+    );
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("search")
     .setDescription("Search in a specific site")
-    .addSubcommand((command) =>
-      command
-        .setName("google")
-        .setDescription("search Google")
-        .addStringOption((option) =>
-          option
-            .setName("prompt")
-            .setDescription("term to search")
-            .setRequired(true),
-        )
-        .addUserOption((option) =>
-          option.setName("user").setDescription("user to ping"),
-        ),
-    )
-    .addSubcommand((command) =>
-      command
-        .setName("top")
-        .setDescription("search TOP")
-        .addStringOption((option) =>
-          option
-            .setName("prompt")
-            .setDescription("term to search")
-            .setRequired(true),
-        )
-        .addUserOption((option) =>
-          option.setName("user").setDescription("user to ping"),
-        ),
-    )
-    .addSubcommand((command) =>
-      command
-        .setName("mdn")
-        .setDescription("search MDN")
-        .addStringOption((option) =>
-          option
-            .setName("prompt")
-            .setDescription("term to search")
-            .setRequired(true),
-        )
-        .addUserOption((option) =>
-          option.setName("user").setDescription("user to ping"),
-        ),
-    ),
+    .addSubcommand(createCommand(searchSites.google))
+    .addSubcommand(createCommand(searchSites.mdn))
+    .addSubcommand(createCommand(searchSites.top)),
   execute: async (interaction) => {
     const site = searchSites[interaction.options.getSubcommand()];
     const prompt = interaction.options.getString("prompt");
