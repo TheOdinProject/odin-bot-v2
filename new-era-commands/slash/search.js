@@ -1,6 +1,9 @@
-const { ActionRowBuilder } = require("discord.js");
-const { ButtonBuilder } = require("discord.js");
-const { ButtonStyle, SlashCommandBuilder } = require("discord.js");
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  SlashCommandBuilder,
+} = require("discord.js");
 
 const searchSites = {
   google: {
