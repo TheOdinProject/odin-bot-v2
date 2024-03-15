@@ -9,21 +9,24 @@ const searchSites = {
   google: {
     name: "Google",
     url: "https://www.google.com/search?q=",
+    description: "Search for terms in Google",
   },
   top: {
     name: "TOP",
     url: "https://www.google.com/search?q=site:theodinproject.com+",
+    description: "Search for terms in The Odin Project website with Google",
   },
   mdn: {
     name: "MDN",
     url: "https://developer.mozilla.org/en-US/search?q=",
+    description: "Search for terms in MDN",
   },
 };
 
 const createCommand = (site) => (command) =>
   command
     .setName(site.name.toLowerCase())
-    .setDescription(`search ${site.name}`)
+    .setDescription(site.description)
     .addStringOption((option) =>
       option
         .setName("prompt")
