@@ -45,9 +45,11 @@ module.exports = {
     .addSubcommand(createCommand(searchSites.mdn))
     .addSubcommand(createCommand(searchSites.top)),
   execute: async (interaction) => {
-    const site = searchSites[interaction.options.getSubcommand()];
+    const siteName = interaction.options.getSubcommand();
     const userId = interaction.options.getUser("user");
     const prompt = interaction.options.getString("prompt");
+
+    const site = searchSites[siteName];
 
     const linkButton = new ButtonBuilder()
       .setEmoji("🔍")
