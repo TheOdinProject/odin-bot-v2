@@ -43,6 +43,7 @@ module.exports = {
     .addSubcommand(createCommand(searchSites.top)),
   execute: async (interaction) => {
     const site = searchSites[interaction.options.getSubcommand()];
+    const userId = interaction.options.getUser("user");
     const prompt = interaction.options.getString("prompt");
 
     const linkButton = new ButtonBuilder()
@@ -54,6 +55,7 @@ module.exports = {
     const actionComponent = new ActionRowBuilder().setComponents(linkButton);
 
     await interaction.reply({
+      content: userId && `${userId}`,
       components: [actionComponent],
     });
   },
