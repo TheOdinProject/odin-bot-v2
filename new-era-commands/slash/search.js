@@ -5,32 +5,22 @@ const {
   SlashCommandBuilder,
 } = require("discord.js");
 
-const searchSites = new Map([
-  [
-    "google",
-    {
-      name: "Google",
-      url: "https://www.google.com/search?q=",
-      description: "Search for terms in Google",
-    },
-  ],
-  [
-    "top",
-    {
-      name: "TOP",
-      url: "https://www.google.com/search?q=site:theodinproject.com+",
-      description: "Search for terms in The Odin Project website with Google",
-    },
-  ],
-  [
-    "mdn",
-    {
-      name: "MDN",
-      url: "https://developer.mozilla.org/en-US/search?q=",
-      description: "Search for terms in MDN",
-    },
-  ],
-]);
+const searchSites = new Map()
+  .set("google", {
+    name: "Google",
+    url: "https://www.google.com/search?q=",
+    description: "Search for terms in Google",
+  })
+  .set("top", {
+    name: "TOP",
+    url: "https://www.google.com/search?q=site:theodinproject.com+",
+    description: "Search for terms in The Odin Project website with Google",
+  })
+  .set("mdn", {
+    name: "MDN",
+    url: "https://developer.mozilla.org/en-US/search?q=",
+    description: "Search for terms in MDN",
+  });
 
 const slashCommand = new SlashCommandBuilder()
   .setName("search")
