@@ -49,7 +49,7 @@ describe('UpdateFAQsService', () => {
         const string = '### The Odin Project.### Your Career in Web Development starts here';
         const delimiter = '###'
         const length = 25;
-        const result = UpdateFAQsService.segments(string, length, delimiter, true);
+        const result = UpdateFAQsService.segments(string, length, delimiter, false);
         expect(result).toEqual([' The Odin Project.', ' Your Career in Web Development starts here']);
       })
     })
@@ -69,7 +69,7 @@ describe('UpdateFAQsService', () => {
         const string = 'The Odin Project. Your Career in Web Development starts here';
         const delimiter = '###'
         const length = 75;
-        const result = UpdateFAQsService.segments(string, length, delimiter, true);
+        const result = UpdateFAQsService.segments(string, length, delimiter, false);
         expect(result).toEqual(['The Odin Project. Your Career in Web Development starts here']);
       })
     })
