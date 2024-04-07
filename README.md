@@ -15,6 +15,18 @@ This bot has been built with NodeJS and [the DiscordJS module](https://discord.j
 
 We're thrilled that you're interested in contributing to the Odin Bot! Our bot depends on open source contributions to grow, improve, and thrive. Whether you're a seasoned pro or just starting out, we welcome all kinds of contributions!
 
-For more information on how to get started, we have a really helpful [wiki guide for setting up the Odin Bot](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) and please also refer to [our TOP contributing guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md).
+Before continuing through this guide, be sure you've read our [general contributing guide](https://github.com/TheOdinProject/.github/blob/ac0adb6bd151dca53798776783c5604d31e3389e/CONTRIBUTING.md), as it contains information that is important for all of our repos.
 
 Let's have a blast building and improving the Odin Bot together! We can't wait to see your awesome contributions!
+
+### Commands
+
+The [Odin-bot command Wiki](https://github.com/TheOdinProject/odin-bot-v2/wiki/Commands) covers how to register a new command and how the callback function for a command works.
+
+### Testing
+
+The [Odin-bot testing Wiki](https://github.com/TheOdinProject/odin-bot-v2/wiki/Testing) covers how to add or edit tests for commands. Each command must have tests to ensure it works as expected.
+
+### Setting Up Odin-bot on Your Server
+
+The [Odin-bot getting started Wiki](https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started) covers how to setup Odin-bot on your own server.
