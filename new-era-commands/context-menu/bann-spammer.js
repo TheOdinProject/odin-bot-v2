@@ -3,7 +3,7 @@ const {
   ApplicationCommandType,
   PermissionFlagsBits,
 } = require("discord.js");
-const SpammerBanning = require("../../services/spammer-banning.service");
+const SpammerBanningService = require("../../services/spammer-banning.service");
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
@@ -11,6 +11,6 @@ module.exports = {
     .setType(ApplicationCommandType.Message)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
   execute: async (interaction) => {
-    await SpammerBanning.handleInteraction(interaction);
+    await SpammerBanningService.handleInteraction(interaction);
   },
 };
