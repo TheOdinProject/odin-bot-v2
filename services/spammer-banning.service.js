@@ -9,7 +9,7 @@ class SpammerBanningService {
       const reply = await SpammerBanningService.#handleBanning(message);
       interaction.reply(reply);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
