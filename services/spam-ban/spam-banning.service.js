@@ -1,12 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
 
-class SpammerBanningService {
+class SpamBanningService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage("message");
     if (message.author.bot) return;
 
     try {
-      const reply = await SpammerBanningService.#handleBanning(message);
+      const reply = await SpamBanningService.#handleBanning(message);
       interaction.reply(reply);
     } catch (error) {
       console.error(error);
@@ -15,7 +15,7 @@ class SpammerBanningService {
 
   static async #handleBanning(message) {
     if (message.member) {
-      return SpammerBanningService.#banUser(message);
+      return SpamBanningService.#banUser(message);
     }
 
     message.react("❌");
@@ -28,7 +28,7 @@ class SpammerBanningService {
     // Make sure to send the message before banning otherwise user will not be found
     let reply = `Banned <@${message.author.id}> for spam successfully.`;
     try {
-      await SpammerBanningService.#sendMessageToUser(message.author);
+      await SpamBanningService.#sendMessageToUser(message.author);
     } catch (error) {
       reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user.`;
     }
@@ -52,4 +52,4 @@ class SpammerBanningService {
   }
 }
 
-module.exports = SpammerBanningService;
+module.exports = SpamBanningService;
