@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Successfully bans user User is banned successfully on full ban 1`] = `
+{
+  "content": "Banned <@123> for spam successfully.",
+}
+`;
