@@ -6,14 +6,29 @@ class SpammerBanningService {
     if (message.author.bot) return;
 
     try {
-      await SpammerBanningService.#banUser(message.member, message.author);
+      await SpammerBanningService.#banUser(interaction, message);
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async #banUser(guildMember, author) {
-    await SpammerBanningService.#sendMessageToUser(author);
+  static async #banUser(interaction, message) {
+    if (message.member) {
+      // Make sure to send the message before banning otherwise user will not be found
+      await SpammerBanningService.#sendMessageToUser(message.author);
+      message.member.ban({ reason: "Account is compromised" });
+      await SpammerBanningService.#announceBanningUser(
+        interaction,
+        message.author,
+      );
+    } else {
+      await SpammerBanningService.#announceUserLeaving(
+        interaction,
+        message.author,
+      );
+    }
+
+    message.react("✅");
   }
 
   static async #sendMessageToUser(author) {
@@ -27,6 +42,18 @@ class SpammerBanningService {
       );
 
     await author.send({ embeds: [embedMessage] });
+  }
+
+  static async #announceBanningUser(interaction, author) {
+    interaction.reply({
+      content: `Banned <@${author.id}> for spam successfully.`,
+    });
+  }
+
+  static async #announceUserLeaving(interaction, author) {
+    interaction.reply({
+      content: `Couldn't bann <@${author.id}>. User is not on the server.`,
+    });
   }
 }
 
