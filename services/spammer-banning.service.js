@@ -13,7 +13,7 @@ class SpammerBanningService {
   }
 
   static async #sendMessageToUser(user) {
-    const embed = new EmbedBuilder()
+    const embedMessage = new EmbedBuilder()
       .setTitle("Banned: Compromised account / Spam")
       .setDescription(
         `Account is compromised and is used to spam phishing links.
@@ -22,7 +22,7 @@ class SpammerBanningService {
   After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com`,
       );
 
-    await user.send(embed);
+    await user.send({ embeds: [embedMessage] });
   }
 }
 
