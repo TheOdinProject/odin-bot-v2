@@ -26,6 +26,7 @@ class SpammerBanningService {
       .setDescription(
         `
       Hi <@${message.author.id}>, Your account has been banned because it is posting phishing links in our server.
+
 If you would still like to continue using our server, make sure to change your password and recover your account.
 After that send a detailed contact information to appeal the ban on theodinproject@gmail.com`,
       );
