@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Successfully bans user User has left the server 1`] = `
+{
+  "content": "Couldn't bann <@008>. User is not on the server.",
+}
+`;
+
 exports[`Successfully bans user User is banned but couldn't send a DM 1`] = `
 {
   "content": "Banned <@007> for spam but wasn't able to contact the user.",

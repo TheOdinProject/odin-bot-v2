@@ -39,4 +39,13 @@ describe("Successfully bans user", () => {
     expect(messageMock.react).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   });
+
+  it("User has left the server", async () => {
+    messageMock.author = { id: "008", send: jest.fn(() => {}) };
+    messageMock.member = null;
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.author.send).not.toHaveBeenCalled();
+    expect(messageMock.react).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
 });
