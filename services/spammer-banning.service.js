@@ -6,29 +6,36 @@ class SpammerBanningService {
     if (message.author.bot) return;
 
     try {
-      await SpammerBanningService.#banUser(interaction, message);
+      const reply = await SpammerBanningService.#handleBanning(message);
+      interaction.reply(reply);
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async #banUser(interaction, message) {
+  static async #handleBanning(message) {
     if (message.member) {
-      // Make sure to send the message before banning otherwise user will not be found
-      await SpammerBanningService.#sendMessageToUser(message.author);
-      message.member.ban({ reason: "Account is compromised" });
-      await SpammerBanningService.#announceBanningUser(
-        interaction,
-        message.author,
-      );
-    } else {
-      await SpammerBanningService.#announceUserLeaving(
-        interaction,
-        message.author,
-      );
+      return SpammerBanningService.#banUser(message);
     }
 
+    message.react("❌");
+    return {
+      content: `Couldn't bann <@${message.author.id}>. User is not on the server.`,
+    };
+  }
+
+  static async #banUser(message) {
+    // Make sure to send the message before banning otherwise user will not be found
+    let reply = `Banned <@${message.author.id}> for spam successfully.`;
+    try {
+      await SpammerBanningService.#sendMessageToUser(message.author);
+    } catch (error) {
+      reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user.`;
+    }
+
+    message.member.ban({ reason: "Account is compromised" });
     message.react("✅");
+    return { content: reply };
   }
 
   static async #sendMessageToUser(author) {
@@ -42,18 +49,6 @@ class SpammerBanningService {
       );
 
     await author.send({ embeds: [embedMessage] });
-  }
-
-  static async #announceBanningUser(interaction, author) {
-    interaction.reply({
-      content: `Banned <@${author.id}> for spam successfully.`,
-    });
-  }
-
-  static async #announceUserLeaving(interaction, author) {
-    interaction.reply({
-      content: `Couldn't bann <@${author.id}>. User is not on the server.`,
-    });
   }
 }
 
