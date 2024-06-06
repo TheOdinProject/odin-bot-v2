@@ -6,13 +6,17 @@ class SpammerBanningService {
     if (message.author.bot) return;
 
     try {
-      await SpammerBanningService.#sendMessageToUser(message.author);
+      await SpammerBanningService.#banUser(message.member, message.author);
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async #sendMessageToUser(user) {
+  static async #banUser(guildMember, author) {
+    await SpammerBanningService.#sendMessageToUser(author);
+  }
+
+  static async #sendMessageToUser(author) {
     const embedMessage = new EmbedBuilder()
       .setTitle("Banned: Compromised account / Spam")
       .setDescription(
@@ -22,7 +26,7 @@ class SpammerBanningService {
   After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com`,
       );
 
-    await user.send({ embeds: [embedMessage] });
+    await author.send({ embeds: [embedMessage] });
   }
 }
 
