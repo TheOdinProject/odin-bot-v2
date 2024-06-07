@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
+const config = require("../../config");
 
 class SpamBanningService {
   static async handleInteraction(interaction) {
@@ -6,8 +7,9 @@ class SpamBanningService {
     if (message.author.bot) return;
 
     try {
-      const reply = await SpamBanningService.#handleBanning(message);
-      interaction.reply(reply);
+      // const reply = await SpamBanningService.#handleBanning(message);
+      // interaction.reply(reply);
+      await SpamBanningService.#announceBan(interaction);
     } catch (error) {
       console.error(error);
     }
@@ -49,6 +51,15 @@ class SpamBanningService {
       );
 
     await author.send({ embeds: [embedMessage] });
+  }
+
+  static async #announceBan(interaction) {
+    const channelID = config.channels.moderationActions;
+    console.log("Getting channels");
+    const channel = interaction.guild.channels.cache.find(
+      (c) => c.id === channelID,
+    );
+    channel.send("Hello fred");
   }
 }
 
