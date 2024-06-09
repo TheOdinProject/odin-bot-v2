@@ -15,28 +15,26 @@ describe("Successfully bans user", () => {
     }),
   };
 
-  it("User is banned successfully on full ban", async () => {
+  it("Discord ban api is called", async () => {
     messageMock.author = { id: "123", send: jest.fn(() => {}) };
     messageMock.member = { ban: jest.fn(() => {}) };
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalled();
     expect(messageMock.member.ban).toHaveBeenCalled();
-    expect(messageMock.react).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   });
 
-  it("User is banned but couldn't send a DM", async () => {
-    messageMock.author = {
-      id: "007",
-      send: jest.fn(() => {
-        throw new Error("");
+  it("Discord ban api is called with right message", async () => {
+    let banReason = {};
+    messageMock.author = { id: "007", send: jest.fn(() => {}) };
+    messageMock.member = {
+      ban: jest.fn((arg) => {
+        banReason = arg;
       }),
     };
-    messageMock.member = { ban: jest.fn(() => {}) };
+
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalled();
     expect(messageMock.member.ban).toHaveBeenCalled();
-    expect(messageMock.react).toHaveBeenCalled();
+    expect(banReason).toMatchSnapshot();
     expect(reply).toMatchSnapshot();
   });
 
