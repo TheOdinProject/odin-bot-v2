@@ -20,6 +20,8 @@ exports[`Banning spammer that is still on the server Discord message api is call
 }
 `;
 
+exports[`Banning spammer that is still on the server Reacts with the correct emoji 1`] = `"✅"`;
+
 exports[`Banning spammer that is still on the server Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam successfully.",
@@ -32,7 +34,7 @@ exports[`Banning spammer who has DM set to private Discord ban api is called wit
 }
 `;
 
-exports[`Banning spammer who has DM set to private Reacts with the correct emoji 1`] = `"k"`;
+exports[`Banning spammer who has DM set to private Reacts with the correct emoji 1`] = `"✅"`;
 
 exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
 {

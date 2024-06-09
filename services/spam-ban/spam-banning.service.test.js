@@ -44,6 +44,12 @@ describe("Banning spammer that is still on the server", () => {
     expect(sendArg).toMatchSnapshot();
   });
 
+  it("Reacts with the correct emoji", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.react).toHaveBeenCalled();
+    expect(reactArg).toMatchSnapshot();
+  });
+
   it("Sends back correct interaction reply to calling moderator", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(reply).toMatchSnapshot();
