@@ -92,6 +92,12 @@ describe("Banning spammer who has DM set to private", () => {
     expect(messageMock.author.send).toHaveBeenCalled();
   });
 
+  it("Reacts with the correct emoji", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.react).toHaveBeenCalled();
+    expect(reactArg).toMatchSnapshot();
+  });
+
   it("Sends back correct interaction reply to calling moderator", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(reply).toMatchSnapshot();
