@@ -1,19 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Successfully bans user User has left the server 1`] = `
+exports[`Banning spammer that is still on the server Discord ban api is called with the correct reason 1`] = `
 {
-  "content": "Couldn't bann <@008>. User is not on the server.",
+  "reason": "Account is compromised",
 }
 `;
 
-exports[`Successfully bans user User is banned but couldn't send a DM 1`] = `
+exports[`Banning spammer that is still on the server Discord message api is called with the correct message 1`] = `
 {
-  "content": "Banned <@007> for spam but wasn't able to contact the user.",
+  "embeds": [
+    {
+      "description": "Account is compromised and is used to spam phishing links.
+
+  If you would still like to continue using our server, make sure to change your password and recover your account.
+  After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com",
+      "title": "Banned: Compromised account / Spam",
+    },
+  ],
 }
 `;
 
-exports[`Successfully bans user User is banned successfully on full ban 1`] = `
+exports[`Banning spammer that is still on the server Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam successfully.",
+}
+`;
+
+exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
+{
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Banned <@123> for spam but wasn't able to contact the user.",
 }
 `;

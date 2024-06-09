@@ -1,68 +1,99 @@
 const SpamBanningService = require("./spam-banning.service");
 
-describe("Successfully bans user", () => {
-  // Message from interaction, will be changed per test
-  const messageMock = { react: jest.fn(() => {}) };
-  // Reply will be replaced by the reply coming from interaction automaticly
-  let reply;
+describe("Banning spammer that is still on the server", () => {
+  let sendArg;
+  let banArg;
+  let reactArg;
 
-  const interactionMock = {
-    options: {
-      getMessage: () => messageMock,
+  const messageMock = {
+    author: {
+      id: "123",
+      send: jest.fn((arg) => {
+        sendArg = arg;
+      }),
     },
-    reply: jest.fn((message) => {
-      reply = message;
+    member: {
+      ban: jest.fn((arg) => {
+        banArg = arg;
+      }),
+    },
+    react: jest.fn((arg) => {
+      reactArg = arg;
     }),
   };
 
-  it("Discord ban api is called", async () => {
-    messageMock.author = { id: "123", send: jest.fn(() => {}) };
-    messageMock.member = { ban: jest.fn(() => {}) };
+  let reply;
+  const interactionMock = {
+    reply: jest.fn((message) => {
+      reply = message;
+    }),
+    options: {
+      getMessage: () => messageMock,
+    },
+  };
+
+  it("Discord ban api is called with the correct reason", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(messageMock.member.ban).toHaveBeenCalled();
+    expect(banArg).toMatchSnapshot();
   });
 
-  it("Discord ban api is called with right message", async () => {
-    let banReason = {};
-    messageMock.author = { id: "007", send: jest.fn(() => {}) };
-    messageMock.member = {
-      ban: jest.fn((arg) => {
-        banReason = arg;
-      }),
-    };
-
-    await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.member.ban).toHaveBeenCalled();
-    expect(banReason).toMatchSnapshot();
-  });
-
-  it("Discord message api is called", async () => {
-    messageMock.author = { id: "123", send: jest.fn(() => {}) };
-    messageMock.member = { ban: jest.fn(() => {}) };
+  it("Discord message api is called with the correct message", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(messageMock.author.send).toHaveBeenCalled();
+    expect(sendArg).toMatchSnapshot();
   });
 
-  it("Discord message api is called with correct message", async () => {
-    let userMessage = {};
-    messageMock.author = {
+  it("Sends back correct interaction reply to calling moderator", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(reply).toMatchSnapshot();
+  });
+});
+
+describe("Banning spammer who has DM set to private", () => {
+  let banArg;
+  let reactArg;
+
+  const messageMock = {
+    author: {
       id: "123",
-      send: jest.fn((arg) => {
-        userMessage = arg;
+      send: jest.fn(() => {
+        throw new Error("Cannot send DM to user");
       }),
-    };
-    messageMock.member = { ban: jest.fn(() => {}) };
+    },
+    member: {
+      ban: jest.fn((arg) => {
+        banArg = arg;
+      }),
+    },
+    react: jest.fn((arg) => {
+      reactArg = arg;
+    }),
+  };
+
+  let reply;
+  const interactionMock = {
+    reply: jest.fn((message) => {
+      reply = message;
+    }),
+    options: {
+      getMessage: () => messageMock,
+    },
+  };
+
+  it("Discord ban api is called with the correct reason", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalled();
-    expect(userMessage).toMatchSnapshot();
+    expect(messageMock.member.ban).toHaveBeenCalled();
+    expect(banArg).toMatchSnapshot();
   });
 
-  // it("User has left the server", async () => {
-  //   messageMock.author = { id: "008", send: jest.fn(() => {}) };
-  //   messageMock.member = null;
-  //   await SpamBanningService.handleInteraction(interactionMock);
-  //   expect(messageMock.author.send).not.toHaveBeenCalled();
-  //   expect(messageMock.react).toHaveBeenCalled();
-  //   expect(reply).toMatchSnapshot();
-  // });
+  it("Discord message api is called and error handled", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.author.send).toHaveBeenCalled();
+  });
+
+  it("Sends back correct interaction reply to calling moderator", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(reply).toMatchSnapshot();
+  });
 });
