@@ -28,6 +28,10 @@ exports[`Banning spammer that is still on the server Sends back correct interact
 }
 `;
 
+exports[`Banning spammer that is still on the server Sends message to the correct channel 1`] = `""`;
+
+exports[`Banning spammer that is still on the server Sends message to the correct channel 2`] = `undefined`;
+
 exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
 {
   "reason": "Account is compromised",
