@@ -32,6 +32,8 @@ exports[`Banning spammer who has DM set to private Discord ban api is called wit
 }
 `;
 
+exports[`Banning spammer who has DM set to private Reacts with the correct emoji 1`] = `"k"`;
+
 exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam but wasn't able to contact the user.",
