@@ -1,37 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Banning spammer that is still on the server Discord ban api is called with the correct reason 1`] = `
-{
-  "reason": "Account is compromised",
-}
-`;
-
-exports[`Banning spammer that is still on the server Discord message api is called with the correct message 1`] = `
-{
-  "embeds": [
-    {
-      "description": "Account is compromised and is used to spam phishing links.
-
-  If you would still like to continue using our server, make sure to change your password and recover your account.
-  After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com",
-      "title": "Banned: Compromised account / Spam",
-    },
-  ],
-}
-`;
-
-exports[`Banning spammer that is still on the server Reacts with the correct emoji 1`] = `"✅"`;
-
-exports[`Banning spammer that is still on the server Sends back correct interaction reply to calling moderator 1`] = `
-{
-  "content": "Banned <@123> for spam successfully.",
-}
-`;
-
-exports[`Banning spammer that is still on the server Sends message to the correct channel 1`] = `""`;
-
-exports[`Banning spammer that is still on the server Sends message to the correct channel 2`] = `undefined`;
-
 exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
 {
   "reason": "Account is compromised",
@@ -45,3 +13,35 @@ exports[`Banning spammer who has DM set to private Sends back correct interactio
   "content": "Banned <@123> for spam but wasn't able to contact the user.",
 }
 `;
+
+exports[`Banning spammer who has DM set to private Sends log to the correct channel 1`] = `"Hello fred"`;
+
+exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 1`] = `
+{
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer with DM enabled Discord message api is called with the correct message 1`] = `
+{
+  "embeds": [
+    {
+      "description": "Account is compromised and is used to spam phishing links.
+
+  If you would still like to continue using our server, make sure to change your password and recover your account.
+  After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com",
+      "title": "Banned: Compromised account / Spam",
+    },
+  ],
+}
+`;
+
+exports[`Banning spammer with DM enabled Reacts with the correct emoji 1`] = `"✅"`;
+
+exports[`Banning spammer with DM enabled Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Banned <@123> for spam successfully.",
+}
+`;
+
+exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = `"Hello fred"`;
