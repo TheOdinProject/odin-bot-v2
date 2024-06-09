@@ -1,4 +1,27 @@
 const SpamBanningService = require("./spam-banning.service");
+const config = require("../../config");
+
+class Channel {
+  constructor(id) {
+    this.id = id;
+    this.send = jest.fn((arg) => {
+      this.arg = arg;
+    });
+  }
+}
+
+const guild = {
+  channels: {
+    cache: [
+      new Channel("2342314"),
+      new Channel("101010"),
+      new Channel("22223333"),
+      new Channel(config.channels.moderationLog),
+      new Channel("2302382"),
+      new Channel("000000"),
+    ],
+  },
+};
 
 describe("Banning spammer that is still on the server", () => {
   let sendArg;
@@ -30,6 +53,7 @@ describe("Banning spammer that is still on the server", () => {
     options: {
       getMessage: () => messageMock,
     },
+    guild,
   };
 
   it("Discord ban api is called with the correct reason", async () => {
@@ -48,6 +72,19 @@ describe("Banning spammer that is still on the server", () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(messageMock.react).toHaveBeenCalled();
     expect(reactArg).toMatchSnapshot();
+  });
+
+  it("Sends message to the correct channel", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    guild.channels.cache.forEach((channel) => {
+      if (channel.id === config.channels.moderationLog) {
+        expect(channel.send).toHaveBeenCalled();
+        expect(channel.arg).toMatchSnapshot();
+      } else {
+        expect(channel.send).not.toHaveBeenCalled();
+      }
+    });
+    expect().toMatchSnapshot();
   });
 
   it("Sends back correct interaction reply to calling moderator", async () => {
@@ -85,6 +122,7 @@ describe("Banning spammer who has DM set to private", () => {
     options: {
       getMessage: () => messageMock,
     },
+    guild,
   };
 
   it("Discord ban api is called with the correct reason", async () => {
