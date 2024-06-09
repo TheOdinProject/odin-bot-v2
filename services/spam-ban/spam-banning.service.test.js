@@ -23,7 +23,7 @@ const guild = {
   },
 };
 
-describe("Banning spammer that is still on the server", () => {
+describe("Banning spammer with DM enabled", () => {
   let sendArg;
   let banArg;
   let reactArg;
@@ -74,7 +74,7 @@ describe("Banning spammer that is still on the server", () => {
     expect(reactArg).toMatchSnapshot();
   });
 
-  it("Sends message to the correct channel", async () => {
+  it("Sends log to the correct channel", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLog) {
@@ -84,7 +84,6 @@ describe("Banning spammer that is still on the server", () => {
         expect(channel.send).not.toHaveBeenCalled();
       }
     });
-    expect().toMatchSnapshot();
   });
 
   it("Sends back correct interaction reply to calling moderator", async () => {
@@ -140,6 +139,18 @@ describe("Banning spammer who has DM set to private", () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(messageMock.react).toHaveBeenCalled();
     expect(reactArg).toMatchSnapshot();
+  });
+
+  it("Sends log to the correct channel", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    guild.channels.cache.forEach((channel) => {
+      if (channel.id === config.channels.moderationLog) {
+        expect(channel.send).toHaveBeenCalled();
+        expect(channel.arg).toMatchSnapshot();
+      } else {
+        expect(channel.send).not.toHaveBeenCalled();
+      }
+    });
   });
 
   it("Sends back correct interaction reply to calling moderator", async () => {
