@@ -7,8 +7,8 @@ class SpamBanningService {
     if (message.author.bot) return;
 
     try {
-      // const reply = await SpamBanningService.#handleBanning(message);
-      // interaction.reply(reply);
+      const reply = await SpamBanningService.#handleBanning(message);
+      interaction.reply(reply);
       await SpamBanningService.#announceBan(interaction);
     } catch (error) {
       console.error(error);
@@ -54,8 +54,7 @@ class SpamBanningService {
   }
 
   static async #announceBan(interaction) {
-    const channelID = config.channels.moderationActions;
-    console.log("Getting channels");
+    const channelID = config.channels.moderationLog;
     const channel = interaction.guild.channels.cache.find(
       (c) => c.id === channelID,
     );
