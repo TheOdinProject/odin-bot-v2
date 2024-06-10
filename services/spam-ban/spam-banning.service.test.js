@@ -58,19 +58,19 @@ describe("Banning spammer with DM enabled", () => {
 
   it("Discord ban api is called with the correct reason", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.member.ban).toHaveBeenCalled();
+    expect(messageMock.member.ban).toHaveBeenCalledTimes(1);
     expect(banArg).toMatchSnapshot();
   });
 
   it("Discord message api is called with the correct message", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalled();
+    expect(messageMock.author.send).toHaveBeenCalledTimes(1);
     expect(sendArg).toMatchSnapshot();
   });
 
   it("Reacts with the correct emoji", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.react).toHaveBeenCalled();
+    expect(messageMock.react).toHaveBeenCalledTimes(1);
     expect(reactArg).toMatchSnapshot();
   });
 
@@ -78,10 +78,10 @@ describe("Banning spammer with DM enabled", () => {
     await SpamBanningService.handleInteraction(interactionMock);
     guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLog) {
-        expect(channel.send).toHaveBeenCalled();
+        expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.arg).toMatchSnapshot();
       } else {
-        expect(channel.send).not.toHaveBeenCalled();
+        expect(channel.send).not.toHaveBeenCalledTimes(1);
       }
     });
   });
@@ -126,18 +126,18 @@ describe("Banning spammer who has DM set to private", () => {
 
   it("Discord ban api is called with the correct reason", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.member.ban).toHaveBeenCalled();
+    expect(messageMock.member.ban).toHaveBeenCalledTimes(1);
     expect(banArg).toMatchSnapshot();
   });
 
   it("Discord message api is called and error handled", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalled();
+    expect(messageMock.author.send).toHaveBeenCalledTimes(1);
   });
 
   it("Reacts with the correct emoji", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.react).toHaveBeenCalled();
+    expect(messageMock.react).toHaveBeenCalledTimes(1);
     expect(reactArg).toMatchSnapshot();
   });
 
@@ -145,10 +145,10 @@ describe("Banning spammer who has DM set to private", () => {
     await SpamBanningService.handleInteraction(interactionMock);
     guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLog) {
-        expect(channel.send).toHaveBeenCalled();
+        expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.arg).toMatchSnapshot();
       } else {
-        expect(channel.send).not.toHaveBeenCalled();
+        expect(channel.send).not.toHaveBeenCalledTimes(1);
       }
     });
   });
@@ -191,7 +191,7 @@ describe("Banning spammer that has left the server", () => {
 
   it("Reacts with the correct emoji to automod message", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.react).toHaveBeenCalled();
+    expect(messageMock.react).toHaveBeenCalledTimes(1);
     expect(reactArg).toMatchSnapshot();
   });
 
