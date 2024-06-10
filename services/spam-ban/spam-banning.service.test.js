@@ -158,3 +158,52 @@ describe("Banning spammer who has DM set to private", () => {
     expect(reply).toMatchSnapshot();
   });
 });
+
+describe("Banning spammer that has left the server", () => {
+  let reactArg;
+
+  const messageMock = {
+    author: {
+      id: "123",
+      send: jest.fn(() => {}),
+    },
+    member: null,
+    react: jest.fn((arg) => {
+      reactArg = arg;
+    }),
+  };
+
+  let reply;
+  const interactionMock = {
+    reply: jest.fn((message) => {
+      reply = message;
+    }),
+    options: {
+      getMessage: () => messageMock,
+    },
+    guild,
+  };
+
+  it("Author message sending api is not called", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.author.send).not.toHaveBeenCalled();
+  });
+
+  it("Reacts with the correct emoji to automod message", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(messageMock.react).toHaveBeenCalled();
+    expect(reactArg).toMatchSnapshot();
+  });
+
+  it("Does not log any channel", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    guild.channels.cache.forEach((channel) => {
+      expect(channel.send).not.toHaveBeenCalled();
+    });
+  });
+
+  it("Sends back correct interaction reply to calling moderator", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(reply).toMatchSnapshot();
+  });
+});

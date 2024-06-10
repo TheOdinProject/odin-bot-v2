@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Banning spammer that has left the server Reacts with the correct emoji to automod message 1`] = `"❌"`;
+
+exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Couldn't bann <@123>. User is not on the server.",
+}
+`;
+
 exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
 {
   "reason": "Account is compromised",
