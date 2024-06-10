@@ -6,24 +6,21 @@ class SpamBanningService {
     const message = interaction.options.getMessage("message");
     if (message.author.bot) return;
 
+    let reply;
     try {
-      const reply = await SpamBanningService.#handleBanning(message);
+      if (!message.member) {
+        message.react("❌");
+        reply = {
+          content: `Couldn't bann <@${message.author.id}>. User is not on the server.`,
+        };
+      } else {
+        reply = await SpamBanningService.#banUser(message);
+        await SpamBanningService.#announceBan(interaction);
+      }
       interaction.reply(reply);
-      await SpamBanningService.#announceBan(interaction);
     } catch (error) {
       console.error(error);
     }
-  }
-
-  static async #handleBanning(message) {
-    if (message.member) {
-      return SpamBanningService.#banUser(message);
-    }
-
-    message.react("❌");
-    return {
-      content: `Couldn't bann <@${message.author.id}>. User is not on the server.`,
-    };
   }
 
   static async #banUser(message) {
