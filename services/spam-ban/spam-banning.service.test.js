@@ -203,19 +203,33 @@ describe("Banning spammer that has left the server", () => {
   });
 });
 
-describe("Attempting to bann a bot or a member with admin role", () => {
+describe("Attempting to bann a bot", () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
     const guildMock = createGuildMock();
     interactionMock = createInteractionMock(messageMock, guildMock);
+    interactionMock.message.author.bot = true;
   });
 
-  it("Attempting to ban a bot", async () => {
-    interactionMock.message.author.bot = true;
+  it("Does not call ban api", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+  });
+
+  it("Does not call send api", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
     expect(interactionMock.message.react).not.toHaveBeenCalled();
+  });
+
+  it("Does not call react api", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
+  });
+
+  it("Sends back correct reply", async () => {
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+    await SpamBanningService.handleInteraction(interactionMock);
   });
 });
