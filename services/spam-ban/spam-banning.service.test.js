@@ -20,7 +20,9 @@ function createInteractionMock(message, guild) {
     getBanArg: () => message.getBanArg(),
     getReactArg: () => message.getReactArg(),
     getChannelSendArg: () =>
-      guild.channels.cache.map((c) => c.getSendArg()).find((m) => m),
+      guild.channels.cache
+        .find((c) => c.id === config.channels.moderationLog)
+        .getSendArg(),
   };
 }
 
