@@ -34,11 +34,15 @@ function createMessageMock() {
   return {
     author: {
       id: "123",
+      bot: false,
       send: jest.fn((arg) => {
         sendArg = arg;
       }),
     },
     member: {
+      roles: {
+        cache: [],
+      },
       ban: jest.fn((arg) => {
         banArg = arg;
       }),
@@ -196,5 +200,22 @@ describe("Banning spammer that has left the server", () => {
   it("Sends back correct interaction reply to calling moderator", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+});
+
+describe("Attempting to bann a bot or a member with admin role", () => {
+  let interactionMock;
+  beforeEach(() => {
+    const messageMock = createMessageMock();
+    const guildMock = createGuildMock();
+    interactionMock = createInteractionMock(messageMock, guildMock);
+  });
+
+  it("Attempting to ban a bot", async () => {
+    interactionMock.message.author.bot = true;
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.message.author.send).not.toHaveBeenCalled();
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
   });
 });
