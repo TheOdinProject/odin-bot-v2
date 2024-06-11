@@ -203,7 +203,7 @@ describe("Banning spammer that has left the server", () => {
   });
 });
 
-describe("Attempting to bann a bot or admin", () => {
+describe("Attempting to bann a bot or team member", () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -211,7 +211,7 @@ describe("Attempting to bann a bot or admin", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Does not ban a bot", async () => {
+  it("Does not ban bots", async () => {
     interactionMock.message.author.bot = true;
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
@@ -220,8 +220,36 @@ describe("Attempting to bann a bot or admin", () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
-  it("Does not ban a moderator", async () => {
+  it("Does not ban moderators", async () => {
     interactionMock.message.member.roles.cache = ["moderator"];
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.message.author.send).not.toHaveBeenCalled();
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it("Does not ban maintainers", async () => {
+    interactionMock.message.member.roles.cache = ["maintainer"];
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.message.author.send).not.toHaveBeenCalled();
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it("Does not ban core", async () => {
+    interactionMock.message.member.roles.cache = ["core"];
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.message.author.send).not.toHaveBeenCalled();
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
+    interactionMock.getReplyArg = () => "";
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it("Does not ban admins", async () => {
+    interactionMock.message.member.roles.cache = ["admin"];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
