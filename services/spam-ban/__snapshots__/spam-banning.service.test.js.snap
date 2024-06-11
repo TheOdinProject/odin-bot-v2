@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Attempting to bann a bot Sends back correct reply 1`] = `undefined`;
+exports[`Attempting to bann a bot or admin Does not ban a bot 1`] = `undefined`;
 
 exports[`Banning spammer that has left the server Reacts with the correct emoji to automod message 1`] = `"❌"`;
 
