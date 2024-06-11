@@ -1,12 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Attempting to bann a bot or admin Does not ban a bot 1`] = `
+exports[`Attempting to bann a bot or team member Does not ban admins 1`] = `
 {
   "content": "You do not have the permission to ban this user",
 }
 `;
 
-exports[`Attempting to bann a bot or admin Does not ban a moderator 1`] = `
+exports[`Attempting to bann a bot or team member Does not ban bots 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban core 1`] = `""`;
+
+exports[`Attempting to bann a bot or team member Does not ban maintainers 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban moderators 1`] = `
 {
   "content": "You do not have the permission to ban this user",
 }
