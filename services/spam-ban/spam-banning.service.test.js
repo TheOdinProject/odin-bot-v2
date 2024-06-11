@@ -10,8 +10,17 @@ function createInteractionMock(message, guild) {
     }),
 
     guild,
+    message,
+
+    // Used by service to retrieve the message
     options: { getMessage: () => message },
+
     getReplyArg: () => replyArg,
+    getAuthorSendArg: () => message.getSendArg(),
+    getBanArg: () => message.getBanArg(),
+    getReactArg: () => message.getReactArg(),
+    getChannelSendArg: () =>
+      guild.channels.cache.map((c) => c.getSendArg()).find((m) => m),
   };
 }
 
@@ -22,6 +31,7 @@ function createMessageMock() {
 
   return {
     author: {
+      id: "123",
       send: jest.fn((arg) => {
         sendArg = arg;
       }),
@@ -40,52 +50,54 @@ function createMessageMock() {
   };
 }
 
-class ChannelMock {
-  constructor(id) {
-    this.id = id;
-    this.send = jest.fn((arg) => {
-      this.arg = arg;
-    });
-  }
+function createChannelMock(id) {
+  let sendArg;
+  return {
+    id,
+    send: jest.fn((arg) => {
+      sendArg = arg;
+    }),
+    getSendArg: () => sendArg,
+  };
 }
 
-const createGuild = () => ({
+const createGuildMock = () => ({
   channels: {
     cache: [
-      new ChannelMock("2342314"),
-      new ChannelMock("101010"),
-      new ChannelMock("22223333"),
-      new ChannelMock(config.channels.moderationLog),
-      new ChannelMock("2302382"),
-      new ChannelMock("000000"),
+      createChannelMock("2342314"),
+      createChannelMock("101010"),
+      createChannelMock("22223333"),
+      createChannelMock(config.channels.moderationLog),
+      createChannelMock("2302382"),
+      createChannelMock("000000"),
     ],
   },
 });
 
 describe("Banning spammer with DM enabled", () => {
-  const guild = createGuild();
-
-  const interactionMock = createInteractionMock(
-    createMessageMock(),
-    createGuild(),
-  );
+  let interactionMock;
+  beforeEach(() => {
+    const messageMock = createMessageMock();
+    const guildMock = createGuildMock();
+    interactionMock = createInteractionMock(messageMock, guildMock);
+  });
 
   it("Discord ban api is called with the correct reason", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
-    expect(interactionMock.message.banArg).toMatchSnapshot();
+    expect(interactionMock.getBanArg()).toMatchSnapshot();
   });
 
   it("Discord message api is called with the correct message", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.author.send).toHaveBeenCalledTimes(1);
-    expect(messageMock.sendArg).toMatchSnapshot();
+    expect(interactionMock.message.author.send).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getAuthorSendArg()).toMatchSnapshot();
   });
 
   it("Reacts with the correct emoji", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(messageMock.react).toHaveBeenCalledTimes(1);
-    expect(messageMock.reactArg).toMatchSnapshot();
+    expect(interactionMock.message.react).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getReactArg()).toMatchSnapshot();
   });
 
   it("Sends log to the correct channel", async () => {
@@ -93,7 +105,7 @@ describe("Banning spammer with DM enabled", () => {
     interactionMock.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLog) {
         expect(channel.send).toHaveBeenCalledTimes(1);
-        expect(channel.arg).toMatchSnapshot();
+        expect(interactionMock.getChannelSendArg()).toMatchSnapshot();
       } else {
         expect(channel.send).not.toHaveBeenCalledTimes(1);
       }
@@ -102,7 +114,7 @@ describe("Banning spammer with DM enabled", () => {
 
   it("Sends back correct interaction reply to calling moderator", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(interactionMock.reply).toMatchSnapshot();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 });
 // describe("Banning spammer who has DM set to private", () => {
