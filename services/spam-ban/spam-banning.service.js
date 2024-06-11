@@ -4,7 +4,12 @@ const config = require("../../config");
 class SpamBanningService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage("message");
-    if (message.author.bot) return;
+    if (message.author.bot || SpamBanningService.#isAdmin(message.member)) {
+      interaction.reply({
+        content: "You do not have the permission to ban this user",
+      });
+      return;
+    }
 
     let reply;
     try {
@@ -56,6 +61,16 @@ class SpamBanningService {
       (c) => c.id === channelID,
     );
     channel.send("Hello fred");
+  }
+
+  static #isAdmin(member) {
+    if (!member) {
+      return false;
+    }
+
+    return member.roles.cache.some((role) =>
+      config.roles.adminRolesName.includes(role),
+    );
   }
 }
 
