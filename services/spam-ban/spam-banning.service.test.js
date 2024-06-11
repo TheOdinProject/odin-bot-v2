@@ -221,7 +221,7 @@ describe("Attempting to bann a bot or team member", () => {
   });
 
   it("Does not ban moderators", async () => {
-    interactionMock.message.member.roles.cache = ["moderator"];
+    interactionMock.message.member.roles.cache = [{ name: "moderator" }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -230,7 +230,7 @@ describe("Attempting to bann a bot or team member", () => {
   });
 
   it("Does not ban maintainers", async () => {
-    interactionMock.message.member.roles.cache = ["maintainer"];
+    interactionMock.message.member.roles.cache = [{ name: "maintainer" }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -239,7 +239,7 @@ describe("Attempting to bann a bot or team member", () => {
   });
 
   it("Does not ban core", async () => {
-    interactionMock.message.member.roles.cache = ["core"];
+    interactionMock.message.member.roles.cache = [{ name: "core" }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -249,7 +249,7 @@ describe("Attempting to bann a bot or team member", () => {
   });
 
   it("Does not ban admins", async () => {
-    interactionMock.message.member.roles.cache = ["admin"];
+    interactionMock.message.member.roles.cache = [{ name: "admin" }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();

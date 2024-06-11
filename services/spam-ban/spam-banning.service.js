@@ -69,7 +69,7 @@ class SpamBanningService {
     }
 
     return member.roles.cache.some((role) =>
-      config.roles.adminRolesName.includes(role),
+      config.roles.adminRolesName.includes(role.name),
     );
   }
 }
