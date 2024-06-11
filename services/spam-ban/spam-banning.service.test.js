@@ -203,33 +203,29 @@ describe("Banning spammer that has left the server", () => {
   });
 });
 
-describe("Attempting to bann a bot", () => {
+describe("Attempting to bann a bot or admin", () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
     const guildMock = createGuildMock();
     interactionMock = createInteractionMock(messageMock, guildMock);
-    interactionMock.message.author.bot = true;
   });
 
-  it("Does not call ban api", async () => {
+  it("Does not ban a bot", async () => {
+    interactionMock.message.author.bot = true;
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
-  });
-
-  it("Does not call send api", async () => {
-    await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
     expect(interactionMock.message.react).not.toHaveBeenCalled();
-  });
-
-  it("Does not call react api", async () => {
-    await SpamBanningService.handleInteraction(interactionMock);
-    expect(interactionMock.message.react).not.toHaveBeenCalled();
-  });
-
-  it("Sends back correct reply", async () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it("Does not ban a moderator", async () => {
+    interactionMock.message.member.roles.cache = ["moderator"];
     await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.message.author.send).not.toHaveBeenCalled();
+    expect(interactionMock.message.react).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 });
