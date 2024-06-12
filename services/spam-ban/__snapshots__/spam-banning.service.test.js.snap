@@ -48,7 +48,40 @@ exports[`Banning spammer who has DM set to private Sends back correct interactio
 }
 `;
 
-exports[`Banning spammer who has DM set to private Sends log to the correct channel 1`] = `"Hello fred"`;
+exports[`Banning spammer who has DM set to private Sends log to the correct channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Ban | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Moderator",
+          "value": "<@007>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "Account is compromised and spamming phishing links.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 222",
+      },
+      "timestamp": "2024-06-12T10:56:17.844Z",
+    },
+  ],
+}
+`;
 
 exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 1`] = `
 {
@@ -78,4 +111,37 @@ exports[`Banning spammer with DM enabled Sends back correct interaction reply to
 }
 `;
 
-exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = `"Hello fred"`;
+exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Ban | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Moderator",
+          "value": "<@007>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "Account is compromised and spamming phishing links.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 222",
+      },
+      "timestamp": "2024-06-12T10:56:17.836Z",
+    },
+  ],
+}
+`;
