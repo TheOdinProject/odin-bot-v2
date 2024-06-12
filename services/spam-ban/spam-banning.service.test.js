@@ -5,12 +5,17 @@ function createInteractionMock(message, guild) {
   let replyArg;
 
   return {
+    id: "222",
     reply: jest.fn((arg) => {
       replyArg = arg;
     }),
-
     guild,
     message,
+
+    // The mode who initialized the interaction
+    user: {
+      id: "007",
+    },
 
     // Used by service to retrieve the message
     options: { getMessage: () => message },
@@ -34,10 +39,12 @@ function createMessageMock() {
   return {
     author: {
       id: "123",
+      username: "bad.spammer",
       bot: false,
       send: jest.fn((arg) => {
         sendArg = arg;
       }),
+      displayAvatarURL: () => "image.jpg",
     },
     member: {
       roles: {

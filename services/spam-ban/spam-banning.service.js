@@ -11,8 +11,9 @@ class SpamBanningService {
       return;
     }
 
-    let reply;
     try {
+      let reply;
+
       if (!message.member) {
         message.react("❌");
         reply = {
@@ -20,8 +21,9 @@ class SpamBanningService {
         };
       } else {
         reply = await SpamBanningService.#banUser(message);
-        await SpamBanningService.#announceBan(interaction);
+        await SpamBanningService.#announceBan(interaction, message);
       }
+
       interaction.reply(reply);
     } catch (error) {
       console.error(error);
@@ -55,12 +57,42 @@ class SpamBanningService {
     await author.send({ embeds: [embedMessage] });
   }
 
-  static async #announceBan(interaction) {
+  static async #announceBan(interaction, message) {
+    const embed = {
+      timestamp: `${new Date().toISOString()}`,
+      color: 15747399,
+      footer: {
+        text: `ID: ${interaction.id}`,
+      },
+      author: {
+        name: `Ban | ${message.author.username}`,
+        icon_url: `${message.author.displayAvatarURL()}`,
+      },
+      fields: [
+        {
+          value: `<@${message.author.id}>`,
+          name: "User",
+          inline: true,
+        },
+        {
+          value: `<@${interaction.user.id}>`,
+          name: "Moderator",
+          inline: true,
+        },
+        {
+          value: "Account is compromised and spamming phishing links.",
+          name: "Reason",
+          inline: true,
+        },
+      ],
+    };
+
     const channelID = config.channels.moderationLog;
     const channel = interaction.guild.channels.cache.find(
       (c) => c.id === channelID,
     );
-    channel.send("Hello fred");
+
+    channel.send({ embeds: [embed] });
   }
 
   static #isAdmin(member) {
