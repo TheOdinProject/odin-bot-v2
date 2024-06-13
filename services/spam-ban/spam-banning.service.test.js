@@ -1,6 +1,15 @@
 const SpamBanningService = require("./spam-banning.service");
 const config = require("../../config");
 
+beforeAll(() => {
+  jest.useFakeTimers("modern");
+  jest.setSystemTime(new Date(2024, 1, 1));
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+});
+
 function createInteractionMock(message, guild) {
   let replyArg;
 
