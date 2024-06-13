@@ -7,6 +7,7 @@ class SpamBanningService {
     if (message.author.bot || SpamBanningService.#isAdmin(message.member)) {
       interaction.reply({
         content: "You do not have the permission to ban this user",
+        ephemeral: true,
       });
       return;
     }
@@ -16,15 +17,13 @@ class SpamBanningService {
 
       if (!message.member) {
         message.react("❌");
-        reply = {
-          content: `Couldn't bann <@${message.author.id}>. User is not on the server.`,
-        };
+        reply = `Couldn't bann <@${message.author.id}>. User is not on the server.`;
       } else {
         reply = await SpamBanningService.#banUser(message);
         await SpamBanningService.#announceBan(interaction, message);
       }
 
-      interaction.reply(reply);
+      interaction.reply({ content: reply, ephemeral: true });
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +40,7 @@ class SpamBanningService {
 
     message.member.ban({ reason: "Account is compromised" });
     message.react("✅");
-    return { content: reply };
+    return reply;
   }
 
   static async #sendMessageToUser(author) {
