@@ -14,7 +14,12 @@ exports[`Attempting to bann a bot or team member Does not ban bots 1`] = `
 }
 `;
 
-exports[`Attempting to bann a bot or team member Does not ban core 1`] = `""`;
+exports[`Attempting to bann a bot or team member Does not ban core 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
 
 exports[`Attempting to bann a bot or team member Does not ban maintainers 1`] = `
 {
