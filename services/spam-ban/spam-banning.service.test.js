@@ -21,7 +21,7 @@ function createInteractionMock(message, guild) {
     guild,
     message,
 
-    // The mode who initialized the interaction
+    // The mod who initialized the interaction
     user: {
       id: "007",
     },
