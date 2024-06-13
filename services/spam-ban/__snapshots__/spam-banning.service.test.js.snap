@@ -3,12 +3,14 @@
 exports[`Attempting to bann a bot or team member Does not ban admins 1`] = `
 {
   "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
 }
 `;
 
 exports[`Attempting to bann a bot or team member Does not ban bots 1`] = `
 {
   "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
 }
 `;
 
@@ -17,12 +19,14 @@ exports[`Attempting to bann a bot or team member Does not ban core 1`] = `""`;
 exports[`Attempting to bann a bot or team member Does not ban maintainers 1`] = `
 {
   "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
 }
 `;
 
 exports[`Attempting to bann a bot or team member Does not ban moderators 1`] = `
 {
   "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
 }
 `;
 
@@ -31,6 +35,7 @@ exports[`Banning spammer that has left the server Reacts with the correct emoji 
 exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Couldn't bann <@123>. User is not on the server.",
+  "ephemeral": true,
 }
 `;
 
@@ -45,6 +50,7 @@ exports[`Banning spammer who has DM set to private Reacts with the correct emoji
 exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam but wasn't able to contact the user.",
+  "ephemeral": true,
 }
 `;
 
@@ -77,7 +83,7 @@ exports[`Banning spammer who has DM set to private Sends log to the correct chan
       "footer": {
         "text": "ID: 222",
       },
-      "timestamp": "2024-06-12T10:56:17.844Z",
+      "timestamp": "2024-06-13T07:56:40.392Z",
     },
   ],
 }
@@ -108,6 +114,7 @@ exports[`Banning spammer with DM enabled Reacts with the correct emoji 1`] = `"â
 exports[`Banning spammer with DM enabled Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam successfully.",
+  "ephemeral": true,
 }
 `;
 
@@ -140,7 +147,7 @@ exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = 
       "footer": {
         "text": "ID: 222",
       },
-      "timestamp": "2024-06-12T10:56:17.836Z",
+      "timestamp": "2024-06-13T07:56:40.385Z",
     },
   ],
 }
