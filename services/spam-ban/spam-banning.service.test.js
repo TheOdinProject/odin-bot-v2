@@ -260,7 +260,6 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
     expect(interactionMock.message.react).not.toHaveBeenCalled();
-    interactionMock.getReplyArg = () => "";
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
