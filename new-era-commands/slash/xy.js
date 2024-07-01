@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const {xy} = require('../../commandsContent');
 
+const {color, title, description} = xy;
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('xy')
@@ -9,12 +11,9 @@ module.exports = {
     const userId = interaction.options.getUser('user');
 
     const xyEmbed = new EmbedBuilder()
-      .setColor('#cc9543')
-      .setTitle('This could very well be an xy problem')
-      .setDescription(`
-What problem are you *really* trying to solve?
-Check out [this article about xy problems](https://xyproblem.info/) to help others better understand your question.
-    `);
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description);
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
