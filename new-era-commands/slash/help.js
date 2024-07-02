@@ -16,11 +16,11 @@ module.exports = {
       .setColor("#cc9543")
       .setTitle("Get help on The Odin Project's Discord Server")
       .addFields(
-        { name: '**Server Conduct**', value: 'All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@575252669443211264>, as well as to ask any rule-related questions. Modmail How-To - <#1059513837197459547>' },
-        { name: '**Just the FAQs**', value: 'We have a list of frequently asked questions - <#823266307293839401>!' },
-        { name: '**Helpful bot commands**', value: 'Type `/` in the message box to see the full list of commands! Explore them in our bot channel - <#513125912070455296>.' },
-        { name: '**It\'s TOP o\'Clock, 24/7/365**', value: 'This server is for supporting learners working through our curriculum.\nIf your question is not about TOP\'s curriculum or the projects it contains, try another discord: [Discord Server Search](https://disboard.org/servers/tag/coding).' },
-        { name: '**TOP is community-driven**', value: 'The Odin Project is open source and independent. Donate here: [Open Collective](https://opencollective.com/theodinproject). To learn more, use the `/contribute` or `/support` commands.' }
+        { name: 'Server Conduct', value: 'All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@575252669443211264>, as well as to ask any rule-related questions. Modmail How-To - <#1059513837197459547>' },
+        { name: 'Just the FAQs', value: 'We have a list of frequently asked questions - <#823266307293839401>!' },
+        { name: 'Helpful bot commands', value: 'Type `/` in the message box to see the full list of commands! Explore them in our bot channel - <#513125912070455296>.' },
+        { name: 'It\'s TOP o\'Clock, 24/7/365', value: 'This server is for supporting learners working through our curriculum.\nIf your question is not about TOP\'s curriculum or the projects it contains, try another discord: [Discord Server Search](https://disboard.org/servers/tag/coding).' },
+        { name: 'TOP is community-driven', value: 'The Odin Project is open source and independent. Donate here: [Open Collective](https://opencollective.com/theodinproject). To learn more, use the `/contribute` or `/support` commands.' }
       );
 
     await interaction.reply({
