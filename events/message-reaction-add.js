@@ -54,5 +54,6 @@ module.exports = {
         user,
       );
     }
+    console.log(reaction.emoji.name === 'Question')
   },
 };

@@ -5,10 +5,8 @@ exports[`!top callback returns correct output 1`] = `
   "embeds": [
     {
       "color": 13407555,
-      "description": "
-For more information about The Odin Project, visit our site:
-[Your Career in Web Development Starts Here](https://www.theodinproject.com/)    
-    ",
+      "description": "For more information about The Odin Project, visit our site:
+[Your Career in Web Development Starts Here](https://www.theodinproject.com/)",
       "title": "The Odin Project",
     },
   ],

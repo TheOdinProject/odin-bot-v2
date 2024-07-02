@@ -1,13 +1,15 @@
 const Discord = require('discord.js');
 const { registerBotCommand } = require('../botEngine');
+const { xy } = require('../lib/commandsContent');
 
+const {color, title, description} = xy;
 const command = {
   regex: /(?<!\S)!xy(?!\S)/,
   cb: () => {
     const xyEmbed = new Discord.EmbedBuilder()
-      .setColor('#cc9543')
-      .setTitle('This could very well be an xy problem')
-      .setDescription(`What problem are you *really* trying to solve? Check out [this article about xy problems](https://xyproblem.info/) to help others better understand your question.`);
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description);
     return { embeds: [xyEmbed] };
   },
 };
