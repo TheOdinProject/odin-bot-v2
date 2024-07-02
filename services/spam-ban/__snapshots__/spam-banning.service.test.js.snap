@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Attempting to bann a bot or team member Does not ban admins 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban bots 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban core 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban maintainers 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
+
+exports[`Attempting to bann a bot or team member Does not ban moderators 1`] = `
+{
+  "content": "You do not have the permission to ban this user",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer that has left the server Reacts with the correct emoji to automod message 1`] = `"❌"`;
+
+exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Couldn't bann <@123>. User is not on the server.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
+{
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer who has DM set to private Reacts with the correct emoji 1`] = `"✅"`;
+
+exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Banned <@123> for spam but wasn't able to contact the user.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer who has DM set to private Sends log to the correct channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Ban | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Moderator",
+          "value": "<@007>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "Account is compromised and spamming phishing links.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 222",
+      },
+      "timestamp": "2024-01-31T23:00:00.000Z",
+    },
+  ],
+}
+`;
+
+exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 1`] = `
+{
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer with DM enabled Discord message api is called with the correct message 1`] = `
+{
+  "embeds": [
+    {
+      "description": "Account is compromised and is used to spam phishing links.
+
+  If you would still like to continue using our server, make sure to change your password and recover your account.
+  After that send a detailed contact information to appeal the ban on theodinprojectcontact@gmail.com",
+      "title": "Banned: Compromised account / Spam",
+    },
+  ],
+}
+`;
+
+exports[`Banning spammer with DM enabled Reacts with the correct emoji 1`] = `"✅"`;
+
+exports[`Banning spammer with DM enabled Sends back correct interaction reply to calling moderator 1`] = `
+{
+  "content": "Banned <@123> for spam successfully.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Ban | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Moderator",
+          "value": "<@007>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "Account is compromised and spamming phishing links.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 222",
+      },
+      "timestamp": "2024-01-31T23:00:00.000Z",
+    },
+  ],
+}
+`;
