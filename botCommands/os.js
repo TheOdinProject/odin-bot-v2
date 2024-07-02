@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { registerBotCommand } = require("../botEngine");
-const { os } = require("../commandsContent");
+const { os } = require("../lib/commandsContent");
 
 const { color, title, description, url } = os;
 

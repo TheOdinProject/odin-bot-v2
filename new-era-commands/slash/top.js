@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { top } = require('../../commandsContent');
+const { top } = require('../../lib/commandsContent');
 
 const { color, title, description } = top;
 
