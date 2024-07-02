@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "format": "npx prettier . --write --cache",
+    "format": "prettier --cache --write",
     "eslint": "eslint '**/*.js'"
   },
   "author": "",
