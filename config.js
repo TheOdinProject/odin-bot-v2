@@ -20,6 +20,7 @@ const config = {
     backer: '1134874972339327087',
   },
   modmailUserId: '575252669443211264',
+  color: '#cc9543'
 };
 
 module.exports = config;

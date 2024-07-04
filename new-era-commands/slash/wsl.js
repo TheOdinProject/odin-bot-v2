@@ -1,4 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { wsl } = require('../../lib/commandsContent');
+
+const { color, title, description } = wsl;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,9 +12,9 @@ module.exports = {
     const userId = interaction.options.getUser('user')?.id;
 
     const wslEmbed = new EmbedBuilder()
-      .setColor('#cc9543')
-      .setTitle('WSL')
-      .setDescription('For help with using WSL please use the WSL channel: <#1179839248803844117>')
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description)
 
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',

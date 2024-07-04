@@ -1,18 +1,17 @@
 const Discord = require("discord.js");
 const { registerBotCommand } = require("../botEngine");
+const { os } = require("../lib/commandsContent");
+
+const { color, title, description, url } = os;
 
 const command = {
   regex: /(?<!\S)!os(?!\S)/,
   cb: () => {
     const osEmbed = new Discord.EmbedBuilder()
-      .setColor("#cc9543")
-      .setTitle("Windows")
-      .setDescription(
-        "**The Odin Project does not support Windows or any other OS outside of our recommendations**. We are happy to assist with any questions about installing a VM, using WSL, or dual booting Linux. <https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options>"
-      )
-      .setURL(
-        "https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options"
-      );
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description)
+      .setURL(url);
 
     return { embeds: [osEmbed] };
   },

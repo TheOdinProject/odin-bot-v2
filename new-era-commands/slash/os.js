@@ -1,4 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { os } = require('../../lib/commandsContent');
+
+const { color, title, description } = os;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,10 +12,9 @@ module.exports = {
     const userId = interaction.options.getUser('user')?.id;
 
     const osEmbed = new EmbedBuilder()
-      .setColor('#cc9543')
-      .setTitle('Windows')
-      .setDescription('**The Odin Project does not support Windows or any other OS outside of our recommendations**. We are happy to assist with any questions about installing a VM, using WSL, or dual booting Linux. <https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options>')
-      .setURL('https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/installation-overview#os-options');
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description)
 
     await interaction.reply({
       content: userId ? `<@${userId}>` : '',

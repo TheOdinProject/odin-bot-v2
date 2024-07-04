@@ -1,4 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { code } = require('../../lib/commandsContent');
+
+const { color, title, description } = code;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -9,29 +12,9 @@ module.exports = {
     const userId = interaction.options.getUser('user');
 
     const codeEmbed = new EmbedBuilder()
-      .setColor('#cc9543')
-      .setTitle('How to share your code')
-      .setDescription(`
-**Codeblocks:**
-
-To write multiple lines of code with language syntax highlighting, use three [backticks](https://i.stack.imgur.com/ETTnT.jpg) followed by the language:
-
-\\\`\\\`\\\`js
-// your JavaScript code goes here
-\\\`\\\`\\\`
-
-**Inline code:**
-
-For \`inline code\` use one backtick (no syntax highlighting):
-
-\\\`code here!\\\`
-
-**Websites:**
-
-- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
-- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
-- [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
-      `);
+      .setColor(color)
+      .setTitle(title)
+      .setDescription(description);
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
