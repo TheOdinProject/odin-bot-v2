@@ -13,6 +13,8 @@ const config = {
     gettingHiredChannelId: process.env.DISCORD_GETTING_HIRED_CHANNEL_ID,
     botSpamPlaygroundChannelId: '513125912070455296',
     FAQChannelId: '823266307293839401',
+    WSLChannelId: '1179839248803844117',
+    ContactModeratorsChannelId: '1059513837197459547',
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
@@ -20,7 +22,7 @@ const config = {
     backer: '1134874972339327087',
   },
   modmailUserId: '575252669443211264',
-  color: '#cc9543'
+  color: '#cc9543',
 };
 
 module.exports = config;
