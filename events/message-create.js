@@ -1,13 +1,15 @@
 const { Events } = require('discord.js');
 const GettingHiredMessageService = require('../services/getting-hired-message.service');
 const config = require('../config');
+const { isAdmin } = require('../utils/is-admin');
 
 const botCommands = [];
 
 let authorBuffer = [];
 
 let currentIntroductionsMessage = null;
-const introductionsWelcomeMessage = 'Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We\'re excited for you to join us on your programming journey. Happy learning!';
+const introductionsWelcomeMessage =
+  "Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We're excited for you to join us on your programming journey. Happy learning!";
 
 function createAuthorEntry(message) {
   const entry = {
@@ -46,9 +48,7 @@ module.exports = {
      */
     let isAdminMessage = false;
     try {
-      isAdminMessage = message.member.roles.cache.some(
-        (r) => config.roles.adminRolesName.includes(r.name),
-      );
+      isAdminMessage = isAdmin(message.member);
     } catch (e) {
       //  The only 'con' is a command or message gets ignored.
     }
@@ -121,8 +121,8 @@ module.exports = {
       // introductions
       if (!isAdminMessage) {
         if (
-          currentIntroductionsMessage
-          && currentIntroductionsMessage.content === introductionsWelcomeMessage
+          currentIntroductionsMessage &&
+          currentIntroductionsMessage.content === introductionsWelcomeMessage
         ) {
           currentIntroductionsMessage.delete();
         }
