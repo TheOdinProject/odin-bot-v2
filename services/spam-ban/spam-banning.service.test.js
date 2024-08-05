@@ -14,7 +14,6 @@ function createInteractionMock(message, guild) {
   let replyArg;
 
   return {
-    id: "222",
     reply: jest.fn((arg) => {
       replyArg = arg;
     }),
