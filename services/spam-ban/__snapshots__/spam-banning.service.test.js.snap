@@ -86,7 +86,7 @@ exports[`Banning spammer who has DM set to private Sends log to the correct chan
         },
       ],
       "footer": {
-        "text": "ID: 222",
+        "text": "ID: 123",
       },
       "timestamp": "2024-01-31T23:00:00.000Z",
     },
@@ -150,7 +150,7 @@ exports[`Banning spammer with DM enabled Sends log to the correct channel 1`] = 
         },
       ],
       "footer": {
-        "text": "ID: 222",
+        "text": "ID: 123",
       },
       "timestamp": "2024-01-31T23:00:00.000Z",
     },
