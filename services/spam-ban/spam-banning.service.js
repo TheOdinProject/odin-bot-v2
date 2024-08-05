@@ -61,7 +61,7 @@ class SpamBanningService {
       timestamp: `${new Date().toISOString()}`,
       color: 15747399,
       footer: {
-        text: `ID: ${interaction.id}`,
+        text: `ID: ${message.author.id}`,
       },
       author: {
         name: `Ban | ${message.author.username}`,
