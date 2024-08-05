@@ -87,8 +87,12 @@ Note: It may take several days for our volunteer staff to take action on your ap
     };
 
     const channelID = config.channels.moderationLogChannelId;
-    const channel = interaction.guild.channels.fetch(channelID);
-    channel.send({ embeds: [embed] });
+    const channel = await interaction.guild.channels.fetch(channelID);
+    if (channel == null) {
+      console.error("No channel of that ID were found");
+    } else {
+      channel.send({ embeds: [embed] });
+    }
   }
 
   static #isAdmin(member) {

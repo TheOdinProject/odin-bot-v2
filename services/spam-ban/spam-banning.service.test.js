@@ -96,7 +96,7 @@ function createGuildMock() {
       createChannelMock("2302382"),
       createChannelMock("000000"),
     ],
-    fetch: (id) => id === channelId ? moderationLogChannel : undefined,
+    fetch: async (id) => id === channelId ? moderationLogChannel : undefined,
     }
 }
 }
