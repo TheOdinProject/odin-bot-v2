@@ -34,7 +34,7 @@ function createInteractionMock(message, guild) {
     getReactArg: () => message.getReactArg(),
     getChannelSendArg: () =>
       guild.channels.cache
-        .find((c) => c.id === config.channels.moderationLog)
+        .find((c) => c.id === config.channels.moderationLogChannelId)
         .getSendArg(),
   };
 }
@@ -88,7 +88,7 @@ const createGuildMock = () => ({
       createChannelMock("2342314"),
       createChannelMock("101010"),
       createChannelMock("22223333"),
-      createChannelMock(config.channels.moderationLog),
+      createChannelMock(config.channels.moderationLogChannelId),
       createChannelMock("2302382"),
       createChannelMock("000000"),
     ],
@@ -124,7 +124,7 @@ describe("Banning spammer with DM enabled", () => {
   it("Sends log to the correct channel", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
-      if (channel.id === config.channels.moderationLog) {
+      if (channel.id === config.channels.moderationLogChannelId) {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(interactionMock.getChannelSendArg()).toMatchSnapshot();
       } else {
@@ -170,7 +170,7 @@ describe("Banning spammer who has DM set to private", () => {
   it("Sends log to the correct channel", async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
-      if (channel.id === config.channels.moderationLog) {
+      if (channel.id === config.channels.moderationLogChannelId) {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.getSendArg()).toMatchSnapshot();
       } else {
