@@ -83,18 +83,23 @@ function createChannelMock(id) {
   };
 }
 
-const createGuildMock = () => ({
-  channels: {
+function createGuildMock() {
+  const channelId = config.channels.moderationLogChannelId;
+  const moderationLogChannel = createChannelMock(channelId);
+  return {
+    channels:  {
     cache: [
       createChannelMock("2342314"),
       createChannelMock("101010"),
       createChannelMock("22223333"),
-      createChannelMock(config.channels.moderationLogChannelId),
+      moderationLogChannel,
       createChannelMock("2302382"),
       createChannelMock("000000"),
     ],
-  },
-});
+    fetch: (id) => id === channelId ? moderationLogChannel : undefined,
+    }
+}
+}
 
 describe("Banning spammer with DM enabled", () => {
   let interactionMock;
