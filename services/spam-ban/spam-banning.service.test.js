@@ -2,8 +2,9 @@ const SpamBanningService = require("./spam-banning.service");
 const config = require("../../config");
 
 beforeAll(() => {
-  jest.useFakeTimers("modern");
-  jest.setSystemTime(new Date(2024, 1, 1));
+  jest.useFakeTimers();
+  // Date.UTC Required so that test snippets match on different timezones
+  jest.setSystemTime(new Date(Date.UTC(2024, 1, 1)));
 });
 
 afterAll(() => {
