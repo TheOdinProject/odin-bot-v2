@@ -57,6 +57,12 @@ Note: It may take several days for our volunteer staff to take action on your ap
   }
 
   static async #announceBan(interaction, message) {
+    const channelID = config.channels.moderationLogChannelId;
+    const channel = await interaction.guild.channels.fetch(channelID);
+    if (channel == null) {
+      throw new Error(`No channel of the ID ${channelID} were found.`);
+    }
+
     const embed = {
       timestamp: `${new Date().toISOString()}`,
       color: 15747399,
@@ -86,13 +92,7 @@ Note: It may take several days for our volunteer staff to take action on your ap
       ],
     };
 
-    const channelID = config.channels.moderationLogChannelId;
-    const channel = await interaction.guild.channels.fetch(channelID);
-    if (channel == null) {
-      console.error("No channel of that ID were found");
-    } else {
-      channel.send({ embeds: [embed] });
-    }
+    channel.send({ embeds: [embed] });
   }
 
   static #isAdmin(member) {

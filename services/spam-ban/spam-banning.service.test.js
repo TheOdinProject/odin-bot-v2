@@ -96,7 +96,7 @@ function createGuildMock() {
       createChannelMock("2302382"),
       createChannelMock("000000"),
     ],
-    fetch: async (id) => id === channelId ? moderationLogChannel : undefined,
+    fetch: async (id) => id === channelId ? moderationLogChannel : null,
     }
 }
 }
@@ -275,5 +275,37 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
     expect(interactionMock.message.react).not.toHaveBeenCalled();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+});
+
+describe("Attempting to log banned user in moderation log channel", () => {
+  let interactionMock;
+  beforeEach(() => {
+    const messageMock = createMessageMock();
+    const guildMock = createGuildMock();
+    interactionMock = createInteractionMock(messageMock, guildMock);
+  });
+
+  it("Sends log to the correct channel", async () => {
+    await SpamBanningService.handleInteraction(interactionMock);
+    interactionMock.guild.channels.cache.forEach((channel) => {
+      if (channel.id === config.channels.moderationLogChannelId) {
+        expect(channel.send).toHaveBeenCalledTimes(1);
+        expect(interactionMock.getChannelSendArg()).toMatchSnapshot();
+      } else {
+        expect(channel.send).not.toHaveBeenCalledTimes(1);
+      }
+    });
+  });
+
+  it("Error is handled if channel doesn't exist", async () => {
+    console.error = jest.fn();
+    interactionMock.guild.channels.fetch = async () => null;
+    await SpamBanningService.handleInteraction(interactionMock);
+    interactionMock.guild.channels.cache.forEach((channel) => {
+        expect(channel.send).not.toHaveBeenCalledTimes(1);
+    });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    console.error.mockClear();
   });
 });
