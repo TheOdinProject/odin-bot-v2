@@ -35,6 +35,41 @@ exports[`Attempting to bann a bot or team member Does not ban moderators 1`] = `
 }
 `;
 
+exports[`Attempting to log banned user in moderation log channel Sends log to the correct channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Ban | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Moderator",
+          "value": "<@007>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "Account is compromised and spamming phishing links.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 123",
+      },
+      "timestamp": "2024-02-01T00:00:00.000Z",
+    },
+  ],
+}
+`;
+
 exports[`Banning spammer that has left the server Reacts with the correct emoji to automod message 1`] = `"❌"`;
 
 exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
