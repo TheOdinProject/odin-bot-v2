@@ -17,6 +17,7 @@ const config = {
     ContactModeratorsChannelId: '1059513837197459547',
     rulesChannelId: '693244715839127653',
     moderationLogChannelId: '922520585018433536',
+    moderationLogChannelId: '922520585018433536'
   },
   roles: {
     NOBOTRoleId: '783764176178774036',

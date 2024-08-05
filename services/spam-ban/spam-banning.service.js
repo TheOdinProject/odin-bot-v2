@@ -49,7 +49,7 @@ class SpamBanningService {
       .setDescription(
         `Your account has been banned from The Odin Project Discord server for sending spam. If this account is compromised, please follow the steps linked in [this Discord support article](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised) to secure your account.
 
-Once your account is secure, you may appeal your ban by emailing [theodinprojectcontact@gmail.com](mailto:theodinprojectcontact@gmail.com) with your Discord username and that you are appealing your ban due to a compromised account.
+Once your account is secure, you may appeal your ban by emailing \`theodinprojectcontact@gmail.com\` with your Discord username and that you are appealing your ban due to a compromised account.
 
 Note: It may take several days for our volunteer staff to take action on your appeal, and unbanning is not guaranteed.`);
 
