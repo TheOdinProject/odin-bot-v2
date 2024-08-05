@@ -86,7 +86,7 @@ Note: It may take several days for our volunteer staff to take action on your ap
       ],
     };
 
-    const channelID = config.channels.moderationLog;
+    const channelID = config.channels.moderationLogChannelId;
     const channel = interaction.guild.channels.cache.find(
       (c) => c.id === channelID,
     );
