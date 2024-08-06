@@ -616,9 +616,9 @@ describe('?++ callback', () => {
   it('returns correct output for a user who does not have an admin role', async () => {
     const mentionedUser = User([], 2, 20);
     // change to use Collection
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: '@everyone' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: '@everyone' });
+    const member = Member(memberCollection);
     // users must be passed in as an array
     const client = Client([author, mentionedUser], channel);
     const data = {
@@ -644,9 +644,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user w/o club-40', async () => {
     const mentionedUser = User([], 2, 20);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     // users must be passed in as an array
     const client = Client([author, mentionedUser], channel);
     const data = {
@@ -672,9 +672,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user entering club-40', async () => {
     const mentionedUser = User([], 2, 39);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -702,9 +702,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user re-entering club-40', async () => {
     const mentionedUser = User([], 2, 40);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -735,9 +735,9 @@ describe('?++ callback', () => {
     const mentionedUser2 = User([], 3, 21);
     const mentionedUser3 = User([], 4, 2);
     const mentionedUser4 = User([], 5, 0);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client(
       [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
       channel,
@@ -798,9 +798,9 @@ describe('?++ callback', () => {
     const mentionedUser3 = User([], 4, 1);
     const mentionedUser4 = User([], 5, 0);
     const mentionedUser5 = User([], 6, 21);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client(
       [
         author,
@@ -873,9 +873,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning themselves', async () => {
     const client = Client([author], channel);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const data = {
       author,
       content: `${author.id} ?++`,
@@ -900,9 +900,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const odinBot = User([], 0, 0);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, odinBot], channel, odinBot);
     const data = {
       author,
@@ -927,9 +927,9 @@ describe('?++ callback', () => {
       { virtual: true },
     );
     const mentionedUser = User([], 2, 20);
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
     const client = Client([author, mentionedUser], botSpamChannel);

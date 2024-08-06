@@ -1,5 +1,5 @@
 const { Collection, Member } = require('discord.js');
-const { isAdmin } = require('./is-admin'); // Adjust the path as necessary
+const { isAdmin } = require('./is-admin')
 
 jest.mock('discord.js', () => ({
   ...jest.requireActual('discord.js'),
@@ -12,15 +12,15 @@ jest.mock('discord.js', () => ({
 
 describe('isAdmin', () => {
   it('should return true if the user has an admin role', () => {
-    const memberMap = new Collection();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     expect(isAdmin(member)).toBe(true);
   });
 
   it('should return false if the user does not have an admin role', () => {
-    const memberMap = new Collection();
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    const member = Member(memberCollection);
     expect(isAdmin(member)).toBe(false);
   });
 });
