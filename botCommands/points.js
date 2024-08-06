@@ -3,6 +3,8 @@ const config = require('../config');
 const { registerBotCommand } = require('../botEngine');
 const club40Gifs = require('./club_40_gifs.json');
 
+const { isAdmin } = require('../utils/is-admin');
+
 axios.default.defaults.headers.common.Authorization = `Token ${config.pointsbot.token}`;
 
 function gifPicker(gifContainer, clubChannel) {
@@ -11,7 +13,15 @@ function gifPicker(gifContainer, clubChannel) {
   clubChannel.send(`Gif by ${gifContainer[choice].author}`);
 }
 
-function getUserIdsFromMessage(client, author, guild, text, regex, authorMember, channel) {
+function getUserIdsFromMessage(
+  client,
+  author,
+  guild,
+  text,
+  regex,
+  authorMember,
+  channel,
+) {
   const matches = [];
   const processedIDs = [];
   let match = regex.exec(text);
@@ -19,22 +29,19 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
   while (match !== null) {
     const userID = match[1].replace('!', '');
     if (match[2] === '?++') {
-      let isAdmin = false;
-      authorMember.roles.cache.forEach((value) => {
-        if (config.roles.adminRolesName.includes(value.name)) {
-          isAdmin = true;
-        }
-      });
-
-      if (isAdmin) {
+      if (isAdmin(authorMember)) {
         matches.push([userID, 2]);
       } else {
-        channel.send('Only maintainers or core members can give double points!');
+        channel.send(
+          'Only maintainers or core members can give double points!',
+        );
       }
       match = regex.exec(text);
     } else {
       if (processedIDs.includes(userID)) {
-        channel.send('Only maintainers or core members can give double points!');
+        channel.send(
+          'Only maintainers or core members can give double points!',
+        );
       } else {
         processedIDs.push(userID);
         matches.push([userID, 1]);
@@ -47,7 +54,8 @@ function getUserIdsFromMessage(client, author, guild, text, regex, authorMember,
 
 const deductPoints = {
   regex: /(?<!\S)<@!?(\d+)>\s?(--)(?!\S)/,
-  cb: () => 'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
+  cb: () =>
+    'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
 };
 
 registerBotCommand(deductPoints.regex, deductPoints.cb);
@@ -163,26 +171,29 @@ const awardPoints = {
           if (user) {
             const recipientMember = await guild.members.fetch(user);
             if (
-              recipientMember
-              && !recipientMember.roles.cache.find((r) => r.name === 'club-40')
-              && pointsUser.points > 39
+              recipientMember &&
+              !recipientMember.roles.cache.find((r) => r.name === 'club-40') &&
+              pointsUser.points > 39
             ) {
               const pointsRole = guild.roles.cache.find(
                 (r) => r.name === 'club-40',
               );
               recipientMember.roles.add(pointsRole);
-              const clubChannel = client.channels.cache.get(
-                '707225752608964628',
-              );
+              const clubChannel =
+                client.channels.cache.get('707225752608964628');
 
               if (clubChannel) {
-                const welcomeMessage = (previousPoints < 40) ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!` : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
+                const welcomeMessage =
+                  previousPoints < 40
+                    ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`
+                    : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
                 clubChannel.send(welcomeMessage);
                 gifPicker(club40Gifs, clubChannel);
               }
             }
             channel.send(
-              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${pointsUser.points
+              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${
+                pointsUser.points
               } ${plural(pointsUser.points)}`,
             );
           }
