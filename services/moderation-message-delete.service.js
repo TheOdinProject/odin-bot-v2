@@ -1,7 +1,7 @@
 const { RESTJSONErrorCodes } = require('discord-api-types/v10');
 const { EmbedBuilder } = require('discord.js');
 const ThreadCreator = require('../utils/thread-creator');
-const { modmailUserId } = require('../config');
+const { modmailUserId, channels } = require('../config');
 
 class ModerationMessageDeleteService {
   static async handleInteraction(interaction) {
@@ -86,8 +86,8 @@ Some common reasons for post removal include but isn't limited to;
 
 If further action is deemed necessary, a moderator will follow up on this message in a private thread.
 
-Please make sure to check the rules of the server and the description of the channel you’ve posted in.
-You can find our rules including a link to the additional community expectations here <#693244715839127653>
+Please make sure to check the rules of the server and the description of the channel you've posted in.
+You can find our rules including a link to the additional community expectations here <#${channels.rulesChannelId}>
 
 If after reading the rules, channel description or community expectations, you feel this deletion was made in error, feel free to send a dm to <@${modmailUserId}>`,
       )
