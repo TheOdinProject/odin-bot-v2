@@ -1,6 +1,12 @@
 const axios = require('axios');
-const { Guild, Channel, Client, User, Member } = require('discord.js');
-const { Collection } = require('@discordjs/collection');
+const {
+  Guild,
+  Channel,
+  Client,
+  Collection,
+  User,
+  Member,
+} = require('discord.js');
 const commands = require('./points');
 
 axios.post = jest.fn();
@@ -22,6 +28,7 @@ jest.mock('../botEngine.js', () => ({
 }));
 
 jest.mock('discord.js', () => ({
+  ...jest.requireActual('discord.js'),
   Client: jest.fn().mockImplementation((users, channel, user) => ({
     channels: {
       cache: {

@@ -46,21 +46,10 @@ module.exports = {
      * based on the admin (core, maintainer) status of the member in the Discord.
      * Sets the flag for later use.
      */
-    let isAdminMessage = false;
-    try {
-      isAdminMessage = isAdmin(message.member);
-    } catch (e) {
-      //  The only 'con' is a command or message gets ignored.
-    }
-
-    let isMessageAuthorNobot = false;
-    try {
-      isMessageAuthorNobot = message.member.roles.cache.has(
-        config.roles.NOBOTRoleId,
-      );
-    } catch (err) {
-      // message.member can be null
-    }
+    const isAdminMessage = isAdmin(message.member);
+    const isMessageAuthorNobot = message.member?.roles.cache.has(
+      config.roles.NOBOTRoleId,
+    );
 
     // can't bot if user is NOBOT
     if (isMessageAuthorNobot) {

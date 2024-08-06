@@ -1,8 +1,8 @@
-const { Member } = require('discord.js');
-const { Collection } = require('@discordjs/collection');
+const { Collection, Member } = require('discord.js');
 const { isAdmin } = require('./is-admin'); // Adjust the path as necessary
 
 jest.mock('discord.js', () => ({
+  ...jest.requireActual('discord.js'),
   Member: jest.fn().mockImplementation((roles) => ({
     roles: {
       cache: roles,
