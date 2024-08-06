@@ -30,8 +30,7 @@ module.exports = {
         {
           name: 'Helpful bot commands',
           value:
-            `Type \` /
-            \` in the message box to see the full list of commands! Explore them in our bot channel - <#${channels.botSpamPlaygroundChannelId}>.`,
+            `Type \`/\` in the message box to see the full list of commands! Explore them in our bot channel - <#${channels.botSpamPlaygroundChannelId}>.`,
         },
         {
           name: "It's TOP o'Clock, 24/7/365",
