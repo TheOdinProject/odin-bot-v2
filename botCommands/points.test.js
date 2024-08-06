@@ -1,6 +1,11 @@
 const axios = require('axios');
 const {
-  Guild, Channel, Client, User, Member,
+  Guild,
+  Channel,
+  Client,
+  Collection,
+  User,
+  Member,
 } = require('discord.js');
 const commands = require('./points');
 
@@ -23,6 +28,7 @@ jest.mock('../botEngine.js', () => ({
 }));
 
 jest.mock('discord.js', () => ({
+  ...jest.requireActual('discord.js'),
   Client: jest.fn().mockImplementation((users, channel, user) => ({
     channels: {
       cache: {
@@ -31,7 +37,8 @@ jest.mock('discord.js', () => ({
     },
     users: {
       cache: {
-        get: (userId) => users.filter((filteredUser) => `<@${userId}>` === filteredUser.id)[0],
+        get: (userId) =>
+          users.filter((filteredUser) => `<@${userId}>` === filteredUser.id)[0],
       },
     },
     user,
@@ -305,13 +312,7 @@ describe('callback', () => {
     const mentionedUser3 = User([], 4, 2);
     const mentionedUser4 = User([], 5, 0);
     const client = Client(
-      [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-      ],
+      [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
       channel,
     );
 
@@ -367,31 +368,21 @@ describe('callback', () => {
   describe('where one user is mentioned more than once', () => {
     it('returns correct output for only 1 user mentioned twice', async () => {
       const mentionedUser1 = User([], 2, 5);
-      const client = Client(
-        [
-          author,
-          mentionedUser1,
-        ],
-        channel,
-      );
+      const client = Client([author, mentionedUser1], channel);
       const data = {
         author,
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
         channel,
         client,
-        guild: Guild([
-          author,
-          mentionedUser1,
-        ]),
+        guild: Guild([author, mentionedUser1]),
       };
 
-      axios.post
-        .mockResolvedValueOnce({
-          data: {
-            ...mentionedUser1,
-            points: (mentionedUser1.points += 1),
-          },
-        });
+      axios.post.mockResolvedValueOnce({
+        data: {
+          ...mentionedUser1,
+          points: (mentionedUser1.points += 1),
+        },
+      });
 
       await commands.awardPoints.cb(data);
 
@@ -402,32 +393,22 @@ describe('callback', () => {
 
     it('returns correct output for only 1 user mentioned more than 5 times', async () => {
       const mentionedUser1 = User([], 2, 5);
-      const client = Client(
-        [
-          author,
-          mentionedUser1,
-        ],
-        channel,
-      );
+      const client = Client([author, mentionedUser1], channel);
 
       const data = {
         author,
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
         channel,
         client,
-        guild: Guild([
-          author,
-          mentionedUser1,
-        ]),
+        guild: Guild([author, mentionedUser1]),
       };
 
-      axios.post
-        .mockResolvedValueOnce({
-          data: {
-            ...mentionedUser1,
-            points: (mentionedUser1.points += 1),
-          },
-        });
+      axios.post.mockResolvedValueOnce({
+        data: {
+          ...mentionedUser1,
+          points: (mentionedUser1.points += 1),
+        },
+      });
 
       await commands.awardPoints.cb(data);
 
@@ -443,23 +424,14 @@ describe('callback', () => {
     it('returns correct output for 1 user mentioned more than once with another user', async () => {
       const mentionedUser1 = User([], 2, 21);
       const mentionedUser2 = User([], 3, 23);
-      const client = Client(
-        [
-          author,
-          mentionedUser1,
-        ],
-        channel,
-      );
+      const client = Client([author, mentionedUser1], channel);
 
       const data = {
         author,
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser2.id} ++`,
         channel,
         client,
-        guild: Guild([
-          author,
-          mentionedUser1,
-        ]),
+        guild: Guild([author, mentionedUser1]),
       };
 
       axios.post
@@ -629,9 +601,7 @@ describe('callback', () => {
 
     await commands.awardPoints.cb(botSpamChannelData);
     expect(botSpamChannelData.channel.send).toHaveBeenCalled();
-    expect(
-      botSpamChannelData.channel.send.mock.calls[0][0],
-    ).toMatchSnapshot();
+    expect(botSpamChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
 
     await commands.awardPoints.cb(bannedChannelData);
     expect(bannedChannelData.channel.send).toHaveBeenCalled();
@@ -645,9 +615,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user who does not have an admin role', async () => {
     const mentionedUser = User([], 2, 20);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: '@everyone' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: '@everyone' });
+    const member = Member(memberCollection);
     // users must be passed in as an array
     const client = Client([author, mentionedUser], channel);
     const data = {
@@ -673,9 +643,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user w/o club-40', async () => {
     const mentionedUser = User([], 2, 20);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     // users must be passed in as an array
     const client = Client([author, mentionedUser], channel);
     const data = {
@@ -701,9 +671,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user entering club-40', async () => {
     const mentionedUser = User([], 2, 39);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -731,9 +701,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user re-entering club-40', async () => {
     const mentionedUser = User([], 2, 40);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -764,17 +734,11 @@ describe('?++ callback', () => {
     const mentionedUser2 = User([], 3, 21);
     const mentionedUser3 = User([], 4, 2);
     const mentionedUser4 = User([], 5, 0);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client(
-      [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-      ],
+      [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
       channel,
     );
 
@@ -833,9 +797,9 @@ describe('?++ callback', () => {
     const mentionedUser3 = User([], 4, 1);
     const mentionedUser4 = User([], 5, 0);
     const mentionedUser5 = User([], 6, 21);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client(
       [
         author,
@@ -908,9 +872,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning themselves', async () => {
     const client = Client([author], channel);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const data = {
       author,
       content: `${author.id} ?++`,
@@ -935,9 +899,9 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const odinBot = User([], 0, 0);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const client = Client([author, odinBot], channel, odinBot);
     const data = {
       author,
@@ -962,9 +926,9 @@ describe('?++ callback', () => {
       { virtual: true },
     );
     const mentionedUser = User([], 2, 20);
-    const memberMap = new Map();
-    memberMap.set('role-1', { name: 'core' });
-    const member = Member(memberMap);
+    const memberCollection = new Collection();
+    memberCollection.set('role-1', { name: 'core' });
+    const member = Member(memberCollection);
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
     const client = Client([author, mentionedUser], botSpamChannel);
@@ -989,9 +953,7 @@ describe('?++ callback', () => {
 
     await commands.awardPoints.cb(botSpamChannelData);
     expect(botSpamChannelData.channel.send).toHaveBeenCalled();
-    expect(
-      botSpamChannelData.channel.send.mock.calls[0][0],
-    ).toMatchSnapshot();
+    expect(botSpamChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
 
     await commands.awardPoints.cb(bannedChannelData);
     expect(bannedChannelData.channel.send).toHaveBeenCalled();
