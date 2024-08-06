@@ -615,7 +615,6 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user who does not have an admin role', async () => {
     const mentionedUser = User([], 2, 20);
-    // change to use Collection
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: '@everyone' });
     const member = Member(memberCollection);
