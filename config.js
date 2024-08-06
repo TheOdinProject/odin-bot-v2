@@ -10,7 +10,7 @@ const config = {
   channels: {
     noPointsChannelIds: ['513125912070455296', '948409662255026227'],
     introductionsChannelId: '690618925494566912',
-    gettingHiredChannelId: process.env.DISCORD_GETTING_HIRED_CHANNEL_ID,
+    gettingHiredChannelId: '669547324707569665',
     botSpamPlaygroundChannelId: '513125912070455296',
     FAQChannelId: '823266307293839401',
     WSLChannelId: '1179839248803844117',
