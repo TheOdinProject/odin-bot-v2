@@ -1,4 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const config = require('../../config');
+
+const { channels } = config;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,18 +21,17 @@ module.exports = {
       .addFields(
         {
           name: 'Server Conduct',
-          value:
-            'All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@575252669443211264>, as well as to ask any rule-related questions. Modmail How-To - <#1059513837197459547>',
+          value: `All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@${config.modmailUserId}>, as well as to ask any rule-related questions. Modmail How-To - <#${channels.ContactModeratorsChannelId}>`,
         },
         {
           name: 'Just the FAQs',
-          value:
-            'We have a list of frequently asked questions - <#823266307293839401>!',
+          value: `We have a list of frequently asked questions - <#${channels.FAQChannelId}>!`,
         },
         {
           name: 'Helpful bot commands',
           value:
-            'Type `/` in the message box to see the full list of commands! Explore them in our bot channel - <#513125912070455296>.',
+            `Type ` /
+            ` in the message box to see the full list of commands! Explore them in our bot channel - <#${channels.botSpamPlaygroundChannelId}>.`,
         },
         {
           name: "It's TOP o'Clock, 24/7/365",

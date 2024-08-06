@@ -13,6 +13,9 @@ const config = {
     gettingHiredChannelId: '669547324707569665',
     botSpamPlaygroundChannelId: '513125912070455296',
     FAQChannelId: '823266307293839401',
+    WSLChannelId: '1179839248803844117',
+    ContactModeratorsChannelId: '1059513837197459547',
+    rulesChannelId: '693244715839127653',
   },
   roles: {
     NOBOTRoleId: '783764176178774036',

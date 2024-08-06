@@ -8,8 +8,8 @@ const botCommands = [];
 let authorBuffer = [];
 
 let currentIntroductionsMessage = null;
-const introductionsWelcomeMessage =
-  "Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#823266307293839401> channel for answers to commonly asked questions. We're excited for you to join us on your programming journey. Happy learning!";
+
+const introductionsWelcomeMessage = `Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#${config.channels.FAQChannelId}> channel for answers to commonly asked questions. We're excited for you to join us on your programming journey. Happy learning!`;
 
 function createAuthorEntry(message) {
   const entry = {
@@ -46,6 +46,7 @@ module.exports = {
      * based on the admin (core, maintainer) status of the member in the Discord.
      * Sets the flag for later use.
      */
+
     const isAdminMessage = isAdmin(message.member);
     const isMessageAuthorNobot = message.member?.roles.cache.has(
       config.roles.NOBOTRoleId,
