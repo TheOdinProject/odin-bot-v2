@@ -53,7 +53,7 @@ Once your account is secure, you may appeal your ban by emailing \`theodinprojec
 
 Note: It may take several days for our volunteer staff to take action on your appeal, and unbanning is not guaranteed.`);
 
-    await author.send({ embeds: [embedMessage] });
+    await author.send({content: "Your account has been banned, Please enable the embed option if you cannot see the message bellow.", embeds: [embedMessage] });
   }
 
   static async #announceBan(interaction, message) {
