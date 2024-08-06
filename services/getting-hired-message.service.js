@@ -12,7 +12,7 @@ class GettingHiredMessageService {
     const userId = message.member.id;
 
     try {
-      const userIsCached = false;
+      const userIsCached = await this.#isCached(userId);
 
       if (!userIsCached) {
         await this.redis.set(userId, true);
