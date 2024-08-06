@@ -24,7 +24,8 @@ class GettingHiredMessageService {
   }
 
   static async sendIntroMessage(message) {
-    const welcomeMessage = 'Welcome to the channel for the **Getting Hired** part of the curriculum. Please ensure you have **completed the Getting Hired course** and **read all of the pins** prior to engaging in this channel for resume review, interview help, or anything else covered in that section!';
+    const welcomeMessage =
+      'Welcome to the channel for the **Getting Hired** part of the curriculum. Please ensure you have **completed the Getting Hired course** and **read all of the pins** prior to engaging in this channel for resume review, interview help, or anything else covered in that section!';
 
     try {
       await message.author.send(welcomeMessage);
