@@ -16,7 +16,7 @@ module.exports = {
       .setLabel('Donate Now')
       .setURL('https://opencollective.com/theodinproject/donate?amount=5')
       .setStyle(ButtonStyle.Link)
-      .setEmoji('💰');
+      .setEmoji('1270559118368964710');
 
     const buttons = new ActionRowBuilder()
       .addComponents(learnMoreButton, donateNowButton);
