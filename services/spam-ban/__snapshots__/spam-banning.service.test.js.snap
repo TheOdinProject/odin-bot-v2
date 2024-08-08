@@ -137,11 +137,12 @@ exports[`Banning spammer with DM enabled Discord ban api is called with the corr
 
 exports[`Banning spammer with DM enabled Discord message api is called with the correct message 1`] = `
 {
+  "content": "Your account has been banned, Please enable the embed option if you cannot see the message bellow.",
   "embeds": [
     {
       "description": "Your account has been banned from The Odin Project Discord server for sending spam. If this account is compromised, please follow the steps linked in [this Discord support article](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised) to secure your account.
 
-Once your account is secure, you may appeal your ban by emailing \`theodinprojectcontact@gmail.com\` with your Discord username and that you are appealing your ban due to a compromised account.
+Once your account is secure, you may appeal your ban by emailing \`moderation@theodinproject.com\` with your Discord username and that you are appealing your ban due to a compromised account.
 
 Note: It may take several days for our volunteer staff to take action on your appeal, and unbanning is not guaranteed.",
       "title": "Banned: Compromised account / Spam",
