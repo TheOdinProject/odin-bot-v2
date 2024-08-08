@@ -1,5 +1,5 @@
-const SpamBanningService = require("./spam-banning.service");
-const config = require("../../config");
+const SpamBanningService = require('./spam-banning.service');
+const config = require('../../config');
 
 beforeAll(() => {
   jest.useFakeTimers();
@@ -23,7 +23,7 @@ function createInteractionMock(message, guild) {
 
     // The mod who initialized the interaction
     user: {
-      id: "007",
+      id: '007',
     },
 
     // Used by service to retrieve the message
@@ -47,13 +47,13 @@ function createMessageMock() {
 
   return {
     author: {
-      id: "123",
-      username: "bad.spammer",
+      id: '123',
+      username: 'bad.spammer',
       bot: false,
       send: jest.fn((arg) => {
         sendArg = arg;
       }),
-      displayAvatarURL: () => "image.jpg",
+      displayAvatarURL: () => 'image.jpg',
     },
     member: {
       roles: {
@@ -87,21 +87,21 @@ function createGuildMock() {
   const channelId = config.channels.moderationLogChannelId;
   const moderationLogChannel = createChannelMock(channelId);
   return {
-    channels:  {
-    cache: [
-      createChannelMock("2342314"),
-      createChannelMock("101010"),
-      createChannelMock("22223333"),
-      moderationLogChannel,
-      createChannelMock("2302382"),
-      createChannelMock("000000"),
-    ],
-    fetch: async (id) => id === channelId ? moderationLogChannel : null,
-    }
-}
+    channels: {
+      cache: [
+        createChannelMock('2342314'),
+        createChannelMock('101010'),
+        createChannelMock('22223333'),
+        moderationLogChannel,
+        createChannelMock('2302382'),
+        createChannelMock('000000'),
+      ],
+      fetch: async (id) => (id === channelId ? moderationLogChannel : null),
+    },
+  };
 }
 
-describe("Banning spammer with DM enabled", () => {
+describe('Banning spammer with DM enabled', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -109,25 +109,25 @@ describe("Banning spammer with DM enabled", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Discord ban api is called with the correct reason", async () => {
+  it('Discord ban api is called with the correct reason', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
   });
 
-  it("Discord message api is called with the correct message", async () => {
+  it('Discord message api is called with the correct message', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.author.send).toHaveBeenCalledTimes(1);
     expect(interactionMock.getAuthorSendArg()).toMatchSnapshot();
   });
 
-  it("Reacts with the correct emoji", async () => {
+  it('Reacts with the correct emoji', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.react).toHaveBeenCalledTimes(1);
     expect(interactionMock.getReactArg()).toMatchSnapshot();
   });
 
-  it("Sends log to the correct channel", async () => {
+  it('Sends log to the correct channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
@@ -139,13 +139,13 @@ describe("Banning spammer with DM enabled", () => {
     });
   });
 
-  it("Sends back correct interaction reply to calling moderator", async () => {
+  it('Sends back correct interaction reply to calling moderator', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 });
 
-describe("Banning spammer who has DM set to private", () => {
+describe('Banning spammer who has DM set to private', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -156,24 +156,24 @@ describe("Banning spammer who has DM set to private", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Discord ban api is called with the correct reason", async () => {
+  it('Discord ban api is called with the correct reason', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
   });
 
-  it("Discord message api is called and error handled", async () => {
+  it('Discord message api is called and error handled', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.author.send).toHaveBeenCalledTimes(1);
   });
 
-  it("Reacts with the correct emoji", async () => {
+  it('Reacts with the correct emoji', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.react).toHaveBeenCalledTimes(1);
     expect(interactionMock.getReactArg()).toMatchSnapshot();
   });
 
-  it("Sends log to the correct channel", async () => {
+  it('Sends log to the correct channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
@@ -185,13 +185,13 @@ describe("Banning spammer who has DM set to private", () => {
     });
   });
 
-  it("Sends back correct interaction reply to calling moderator", async () => {
+  it('Sends back correct interaction reply to calling moderator', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 });
 
-describe("Banning spammer that has left the server", () => {
+describe('Banning spammer that has left the server', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -200,31 +200,31 @@ describe("Banning spammer that has left the server", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Author message sending api is not called", async () => {
+  it('Author message sending api is not called', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
   });
 
-  it("Reacts with the correct emoji to automod message", async () => {
+  it('Reacts with the correct emoji to automod message', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.react).toHaveBeenCalledTimes(1);
     expect(interactionMock.getReactArg()).toMatchSnapshot();
   });
 
-  it("Does not log any channel", async () => {
+  it('Does not log any channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
       expect(channel.send).not.toHaveBeenCalled();
     });
   });
 
-  it("Sends back correct interaction reply to calling moderator", async () => {
+  it('Sends back correct interaction reply to calling moderator', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 });
 
-describe("Attempting to bann a bot or team member", () => {
+describe('Attempting to bann a bot or team member', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -232,7 +232,7 @@ describe("Attempting to bann a bot or team member", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Does not ban bots", async () => {
+  it('Does not ban bots', async () => {
     interactionMock.message.author.bot = true;
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
@@ -241,8 +241,8 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
-  it("Does not ban moderators", async () => {
-    interactionMock.message.member.roles.cache = [{ name: "moderator" }];
+  it('Does not ban moderators', async () => {
+    interactionMock.message.member.roles.cache = [{ name: 'moderator' }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -250,8 +250,8 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
-  it("Does not ban maintainers", async () => {
-    interactionMock.message.member.roles.cache = [{ name: "maintainer" }];
+  it('Does not ban maintainers', async () => {
+    interactionMock.message.member.roles.cache = [{ name: 'maintainer' }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -259,8 +259,8 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
-  it("Does not ban core", async () => {
-    interactionMock.message.member.roles.cache = [{ name: "core" }];
+  it('Does not ban core', async () => {
+    interactionMock.message.member.roles.cache = [{ name: 'core' }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -268,8 +268,8 @@ describe("Attempting to bann a bot or team member", () => {
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
-  it("Does not ban admins", async () => {
-    interactionMock.message.member.roles.cache = [{ name: "admin" }];
+  it('Does not ban admins', async () => {
+    interactionMock.message.member.roles.cache = [{ name: 'admin' }];
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.message.author.send).not.toHaveBeenCalled();
@@ -278,7 +278,7 @@ describe("Attempting to bann a bot or team member", () => {
   });
 });
 
-describe("Attempting to log banned user in moderation log channel", () => {
+describe('Attempting to log banned user in moderation log channel', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -286,7 +286,7 @@ describe("Attempting to log banned user in moderation log channel", () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Sends log to the correct channel", async () => {
+  it('Sends log to the correct channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
@@ -303,7 +303,7 @@ describe("Attempting to log banned user in moderation log channel", () => {
     interactionMock.guild.channels.fetch = async () => null;
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
-        expect(channel.send).not.toHaveBeenCalledTimes(1);
+      expect(channel.send).not.toHaveBeenCalledTimes(1);
     });
     expect(console.error).toHaveBeenCalledTimes(1);
     console.error.mockClear();
