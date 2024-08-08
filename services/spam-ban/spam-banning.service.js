@@ -1,10 +1,11 @@
 const { EmbedBuilder } = require('discord.js');
+const { isAdmin } = require('../../utils/is-admin');
 const config = require('../../config');
 
 class SpamBanningService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage('message');
-    if (message.author.bot || SpamBanningService.#isAdmin(message.member)) {
+    if (message.author.bot || isAdmin(message.member)) {
       interaction.reply({
         content: 'You do not have the permission to ban this user',
         ephemeral: true,
@@ -98,16 +99,6 @@ Note: It may take several days for our volunteer staff to take action on your ap
     };
 
     channel.send({ embeds: [embed] });
-  }
-
-  static #isAdmin(member) {
-    if (!member) {
-      return false;
-    }
-
-    return member.roles.cache.some((role) =>
-      config.roles.adminRolesName.includes(role.name),
-    );
   }
 }
 
