@@ -224,7 +224,7 @@ describe('Banning spammer that has left the server', () => {
   });
 });
 
-describe('Attempting to bann a bot or team member', () => {
+describe('Attempting to ban a bot or team member', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();

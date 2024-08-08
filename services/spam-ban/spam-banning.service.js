@@ -18,7 +18,7 @@ class SpamBanningService {
 
       if (!message.member) {
         message.react('❌');
-        reply = `Couldn't bann <@${message.author.id}>. User is not on the server.`;
+        reply = `Couldn't ban <@${message.author.id}>. User is not on the server.`;
       } else {
         reply = await SpamBanningService.#banUser(message);
         await SpamBanningService.#announceBan(interaction, message);
@@ -48,7 +48,7 @@ class SpamBanningService {
     const embedMessage = new EmbedBuilder()
       .setTitle('Banned: Compromised account / Spam')
       .setDescription(
-        `Your account has been banned from The Odin Project Discord server for sending spam. If this account is compromised, please follow the steps linked in [this Discord support article](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised) to secure your account.
+        `Your account has been banned from The Odin Project Discord server for sending spam. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).
 
 Once your account is secure, you may appeal your ban by emailing \`moderation@theodinproject.com\` with your Discord username and that you are appealing your ban due to a compromised account.
 
@@ -57,7 +57,7 @@ Note: It may take several days for our volunteer staff to take action on your ap
 
     await author.send({
       content:
-        'Your account has been banned, Please enable the embed option if you cannot see the message bellow.',
+        'Your account has been banned. Please enable embeds in Discord settings if you cannot see the message below.',
       embeds: [embedMessage],
     });
   }
@@ -66,7 +66,7 @@ Note: It may take several days for our volunteer staff to take action on your ap
     const channelID = config.channels.moderationLogChannelId;
     const channel = await interaction.guild.channels.fetch(channelID);
     if (channel == null) {
-      throw new Error(`No channel of the ID ${channelID} were found.`);
+      throw new Error(`No channel with the ID ${channelID} was found.`);
     }
 
     const embed = {
