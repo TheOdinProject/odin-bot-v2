@@ -3,7 +3,7 @@ const SpamBanningService = require("../../services/spam-ban/spam-banning.service
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
-    .setName("Bann Spammer")
+    .setName("Ban Spammer")
     .setType(ApplicationCommandType.Message)
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
   execute: async (interaction) => {
