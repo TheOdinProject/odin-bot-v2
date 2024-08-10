@@ -31,7 +31,7 @@ class SpamBanningService {
   }
 
   static async #banUser(message) {
-    let reply = `Banned <@${message.author.id}> for spam successfully.`;
+    let reply = `Successfully banned <@${message.author.id}> for spam.`;
     try {
       // Make sure to send the message before banning otherwise user will not be found
       await SpamBanningService.#sendMessageToUser(message.author);
