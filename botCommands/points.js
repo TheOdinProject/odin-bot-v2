@@ -153,7 +153,10 @@ const awardPoints = {
         if (i >= MAX_POINTS_CALLS_PER_MESSAGE) {
           return;
         }
-        if (i === MAX_POINTS_CALLS_PER_MESSAGE - 1 && userIds.length > MAX_POINTS_CALLS_PER_MESSAGE) {
+        if (
+          i === MAX_POINTS_CALLS_PER_MESSAGE - 1 &&
+          userIds.length > MAX_POINTS_CALLS_PER_MESSAGE
+        ) {
           channel.send('you can only do 5 at a time..... ');
         }
         const user = await client.users.cache.get(userId[0]);
