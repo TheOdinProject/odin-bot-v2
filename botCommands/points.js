@@ -140,6 +140,7 @@ const awardPoints = {
       channel,
     );
 
+    const MAX_POINTS_CALLS_PER_MESSAGE = 5;
     const isGoodQuestion = new RegExp(doublePointsPlusRegex).test(content);
 
     return Promise.all(
@@ -149,10 +150,10 @@ const awardPoints = {
           return;
         }
         // this limits the number of calls per message to 5 to avoid abuse
-        if (i > 4) {
+        if (i >= MAX_POINTS_CALLS_PER_MESSAGE) {
           return;
         }
-        if (i === 4) {
+        if (i === MAX_POINTS_CALLS_PER_MESSAGE - 1 && userIds.length > MAX_POINTS_CALLS_PER_MESSAGE) {
           channel.send('you can only do 5 at a time..... ');
         }
         const user = await client.users.cache.get(userId[0]);
