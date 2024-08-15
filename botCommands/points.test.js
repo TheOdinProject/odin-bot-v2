@@ -463,6 +463,7 @@ describe('callback', () => {
     const mentionedUser3 = User([], 4, 1);
     const mentionedUser4 = User([], 5, 0);
     const mentionedUser5 = User([], 6, 21);
+    const mentionedUser6 = User([], 7, 29);
     const client = Client(
       [
         author,
@@ -471,13 +472,14 @@ describe('callback', () => {
         mentionedUser3,
         mentionedUser4,
         mentionedUser5,
+        mentionedUser6,
       ],
       channel,
     );
 
     const data = {
       author,
-      content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++ ${mentionedUser5.id} ++`,
+      content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++ ${mentionedUser5.id} ++ ${mentionedUser6.id} ++`,
       channel,
       client,
       guild: Guild([
@@ -487,6 +489,7 @@ describe('callback', () => {
         mentionedUser3,
         mentionedUser4,
         mentionedUser5,
+        mentionedUser6,
       ]),
     };
 
@@ -797,6 +800,7 @@ describe('?++ callback', () => {
     const mentionedUser3 = User([], 4, 1);
     const mentionedUser4 = User([], 5, 0);
     const mentionedUser5 = User([], 6, 21);
+    const mentionedUser6 = User([], 7, 29);
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -808,13 +812,14 @@ describe('?++ callback', () => {
         mentionedUser3,
         mentionedUser4,
         mentionedUser5,
+        mentionedUser6,
       ],
       channel,
     );
 
     const data = {
       author,
-      content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ?++ ${mentionedUser3.id} ?++ ${mentionedUser4.id} ?++ ${mentionedUser5.id} ?++`,
+      content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ?++ ${mentionedUser3.id} ?++ ${mentionedUser4.id} ?++ ${mentionedUser5.id} ?++ ${mentionedUser6.id} ?++`,
       channel,
       client,
       guild: Guild([
@@ -824,6 +829,7 @@ describe('?++ callback', () => {
         mentionedUser3,
         mentionedUser4,
         mentionedUser5,
+        mentionedUser6,
       ]),
       member,
     };
