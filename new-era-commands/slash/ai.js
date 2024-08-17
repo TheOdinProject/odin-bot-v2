@@ -21,7 +21,7 @@ module.exports = {
         {
           name: 'Using AI while learning',
           value:
-            'For a more productive journey, The Odin Project recommends that learners  [avoid using generative AI while learning](https://www.theodinproject.com/lessons/foundations-motivation-and-mindset#a-note-on-ai-code-generation).',
+            'For a more productive journey, The Odin Project recommends that learners [avoid using generative AI while learning](https://www.theodinproject.com/lessons/foundations-motivation-and-mindset#a-note-on-ai-code-generation).',
           inline: true,
         },
         {
