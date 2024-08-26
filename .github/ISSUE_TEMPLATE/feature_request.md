@@ -19,7 +19,7 @@ The following checkbox is OPTIONAL:
 
 - [ ] I would like to be assigned this issue to work on it
 
-<hr>
+---
 
 ## 1. Description of the Feature Request:
 
