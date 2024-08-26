@@ -13,15 +13,7 @@ function gifPicker(gifContainer, clubChannel) {
   clubChannel.send(`Gif by ${gifContainer[choice].author}`);
 }
 
-function getUserIdsFromMessage(
-  client,
-  author,
-  guild,
-  text,
-  regex,
-  authorMember,
-  channel,
-) {
+function getUserIdsFromMessage(text, regex, authorMember, channel) {
   const matches = [];
   const processedIDs = [];
   let match = regex.exec(text);
@@ -128,9 +120,6 @@ const awardPoints = {
     member,
   }) {
     const userIds = getUserIdsFromMessage(
-      client,
-      author,
-      guild,
       content,
       new RegExp(
         `(?<!\\S)${userRegex}\\s?(${doublePointsPlusRegex}|${plusRegex}|${starRegex})(?!\\S)`,
