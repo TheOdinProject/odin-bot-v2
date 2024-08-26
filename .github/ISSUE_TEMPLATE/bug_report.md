@@ -11,7 +11,6 @@ assignees: ''
 Complete the following REQUIRED checkboxes:
 
 - [ ] I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md)
-
 - [ ] The title of this issue follows the `Bug - location of bug: brief description of bug` format, e.g. `Bug - points command: Extra whitespace causes command to not be called`
 
 The following checkbox is OPTIONAL:

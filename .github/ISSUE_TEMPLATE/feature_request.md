@@ -11,7 +11,6 @@ assignees: ''
 Complete the following REQUIRED checkboxes:
 
 - [ ] I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md)
-
 - [ ] The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`
 
 The following checkbox is OPTIONAL:
