@@ -16,7 +16,7 @@ body:
       options:
         - label: I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md)
           required: true
-        - label: "The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter``"
+        - label: "The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`"
           required: true
   - type: checkboxes
     id: assigned
