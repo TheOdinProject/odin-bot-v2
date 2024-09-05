@@ -295,6 +295,27 @@ exports[`leaderboard subcommand escapes markdown correctly 1`] = `
 }
 `;
 
+exports[`user subcommand Escapes markdown 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "fields": [
+        {
+          "name": "Points",
+          "value": "Mark \\*down\\* has 1 point",
+        },
+        {
+          "name": "Rank",
+          "value": "Mark \\*down\\* is ranked number 6",
+        },
+      ],
+      "title": "TOP Discord points for Mark \\*down\\*",
+    },
+  ],
+}
+`;
+
 exports[`user subcommand Format the points word properly for 1 point 1`] = `
 {
   "embeds": [

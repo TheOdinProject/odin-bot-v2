@@ -59,7 +59,7 @@ Our goal is to maintain a positive and supportive community, where help and cont
     for (let i = 0; i < data.length; i += 1) {
       if (data[i].discord_id === user.id) {
         points = data[i].points;
-        name = interaction.guild.members.cache.get(user.id).displayName;
+        name = escapeMarkdown(interaction.guild.members.cache.get(user.id).displayName);
         rank = i + 1;
         break;
       }

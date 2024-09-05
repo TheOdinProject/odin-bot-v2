@@ -240,6 +240,7 @@ describe('user subcommand', () => {
     { id: 2, discord_id: '2222', points: 20 }, // Someone
     { id: 4, discord_id: '4444', points: 15 }, // Tree
     { id: 1, discord_id: '1111', points: 1 }, // NotOdin
+    { id: 8, discord_id: '8888', points: 1}, // Mark *down*
   ]
 
   const guildMock = new GuildMock([
@@ -247,7 +248,8 @@ describe('user subcommand', () => {
     { displayName: 'Someone', discord_id: '2222' },
     { displayName: 'Dog', discord_id: '3333' },
     { displayName: 'Tree', discord_id: '4444' },
-    { displayName: 'Cat', discord_id: '6666' }
+    { displayName: 'Cat', discord_id: '6666' },
+    { displayName: 'Mark *down*', discord_id: '8888'}
   ])
 
   beforeEach(() => {
@@ -324,6 +326,14 @@ describe('user subcommand', () => {
 
   it("Formats the points word correctly for more than 1 points", async () => {
     user = { id: '3333', username: 'Dog' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it("Escapes markdown", async () => {
+    user = { id: '8888', username: 'Mark *down*' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
