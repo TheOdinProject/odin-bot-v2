@@ -1,6 +1,6 @@
 const axios = require('axios');
 const PointsService = require('./points.service');
-const { generateLeaderData } = require('../../botCommands/mockData');
+const { generateLeaderData, generateLeaderDataWithMarkdown } = require('../../botCommands/mockData');
 
 /* eslint-disable */
 /* eslint max-classes-per-file: ["error", 2] */
@@ -218,6 +218,16 @@ describe('leaderboard subcommand', () => {
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
   })
+
+  it("escapes markdown correctly", async () => {
+    const members = generateLeaderDataWithMarkdown(5);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
 });
 
 

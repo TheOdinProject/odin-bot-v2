@@ -278,6 +278,23 @@ exports[`leaderboard subcommand Returns users starting from offset 1`] = `
 }
 `;
 
+exports[`leaderboard subcommand escapes markdown correctly 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "1 - user100 \\|\\|test\\|\\| [1000 points] :tada: 
+2 - user101 \\*test\\* [999 points] 
+3 - user102 \\*\\*test\\*\\* [998 points] 
+4 - user103 \\\`test\\\` [997 points] 
+5 - user104 \\|\\|test\\|\\| [996 points] 
+",
+      "title": "TOP Discord points leaderboard",
+    },
+  ],
+}
+`;
+
 exports[`user subcommand Format the points word properly for 1 point 1`] = `
 {
   "embeds": [
