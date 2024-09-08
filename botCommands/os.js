@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { registerBotCommand } = require("../botEngine");
 const { os } = require("../lib/commandsContent");
 
-const { color, title, description, url } = os;
+const { color, title, description } = os;
 
 const command = {
   regex: /(?<!\S)!os(?!\S)/,
@@ -10,8 +10,7 @@ const command = {
     const osEmbed = new Discord.EmbedBuilder()
       .setColor(color)
       .setTitle(title)
-      .setDescription(description)
-      .setURL(url);
+      .setDescription(description);
 
     return { embeds: [osEmbed] };
   },
