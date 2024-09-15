@@ -18,7 +18,7 @@
     "discord-api-types": "^0.37.86",
     "discord.js": "^14.16.1",
     "dotenv": "^16.4.5",
-    "glob": "^10.4.1",
+    "glob": "^11.0.0",
     "ioredis": "^5.4.1",
     "prettier": "^3.3.3"
   },
