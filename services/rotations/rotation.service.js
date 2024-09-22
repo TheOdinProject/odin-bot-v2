@@ -1,4 +1,4 @@
-const RedisService = require("../redis");
+const RedisService = require('../redis');
 
 class RotationService {
   constructor(keyName, rotationName) {
@@ -25,7 +25,7 @@ class RotationService {
   }
 
   static #getFormattedPings(memberIds) {
-    return memberIds.reduce((acc, id) => `${acc} <@${id}>`, "");
+    return memberIds.reduce((acc, id) => `${acc} <@${id}>`, '');
   }
 
   async #getDisplayNames(members, server) {
@@ -44,20 +44,20 @@ class RotationService {
     const members = await this.#getQueue();
     const membersDisplayNames = await this.#getDisplayNames(
       members,
-      interaction.guild
+      interaction.guild,
     );
     const formattedQueue = membersDisplayNames.reduce(
       (acc, displayname) => `${acc} ${displayname} >`,
-      ""
+      '',
     );
     if (formattedQueue) {
       return `${this.rotationName} rotation queue order:${formattedQueue}`;
     }
-    return "No members";
+    return 'No members';
   }
 
   async #handleAddMembers(members, interaction) {
-    let reply = "";
+    let reply = '';
     const memberIds = members.map((member) => member?.id || member);
     const addedIds = await this.#addMembers(memberIds);
 
@@ -65,10 +65,10 @@ class RotationService {
       const nonAddedIds = memberIds.filter((id) => !addedIds.includes(id));
       const nonAddedNames = await this.#getDisplayNames(
         nonAddedIds,
-        interaction.guild
+        interaction.guild,
       );
       const formattedNonAddedNames = nonAddedNames
-        .reduce((acc, name) => `${acc} ${name},`, "")
+        .reduce((acc, name) => `${acc} ${name},`, '')
         .slice(0, -1);
       reply += `${formattedNonAddedNames} not added as they are already in the queue\n\n`;
     }
@@ -156,24 +156,30 @@ class RotationService {
     const currentQueue = await this.#getQueue();
     const currentQueueLength = currentQueue?.length || 0;
 
-    if (currentQueueLength < 2 && (actionType !== "add" && actionType !== "remove")) {
-      await interaction.reply("Less than two members in the queue. Try adding some with `/triage add`!");
+    if (
+      currentQueueLength < 2 &&
+      actionType !== 'add' &&
+      actionType !== 'remove'
+    ) {
+      await interaction.reply(
+        'Less than two members in the queue. Try adding some with `/triage add`!',
+      );
       return;
     }
 
     const members = this.#getMembers(interaction.options);
 
     switch (actionType) {
-      case "add":
+      case 'add':
         await this.#handleAddMembers(members, interaction);
         return;
-      case "swap":
+      case 'swap':
         await this.#handleSwapMembers(members, interaction);
         return;
-      case "remove":
+      case 'remove':
         await this.#handleRemoveMember(members[0], interaction);
         return;
-      case "rotate":
+      case 'rotate':
         await this.#handleRotateQueue(interaction);
         return;
       default:
