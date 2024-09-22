@@ -173,6 +173,26 @@ describe("addition", () => {
 
     expect(reply).toHaveBeenCalledTimes(1);
   });
+
+  it("escapes markdown in usernames and nicknames", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const users = getUsers();
+    users[0].nickname = "Foo `test`";
+    users[1].username = "Baz *test*";
+    
+    const server = initializeServer(users);
+
+    const additionUsers = users.slice(0, 2);
+    const reply = jest.fn();
+    const interaction = buildInteraction("add", server, additionUsers, reply);
+
+    await rotation.handleInteraction(interaction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo \\`test\\` > Baz \\*test\\* >"
+    );
+  });
 });
 
 describe("removal", () => {
@@ -292,6 +312,35 @@ describe("removal", () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledTimes(1);
+  });
+
+  it("escapes markdown in usernames and nicknames", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const users = getUsers();
+    users[0].nickname = "Foo `test`";
+    users[1].username = "Baz *test*";
+
+    const server = initializeServer(users);
+
+    const additionUsers = users.slice(0, 2);
+    const additionInteraction = buildInteraction(
+      "add", server, additionUsers, () => {}
+    );
+
+    const reply = jest.fn();
+    const removalUsers = additionUsers.slice(1);
+    const removalInteraction = buildInteraction(
+      "remove", server, removalUsers, reply
+    );
+
+    await rotation.handleInteraction(additionInteraction);
+
+    await rotation.handleInteraction(removalInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "<@5678> removed from the queue\n\ntest rotation queue order: Foo \\`test\\` >"
+    );
   });
 });
 
@@ -413,6 +462,35 @@ describe("swapping", () => {
 
     expect(reply).toHaveBeenCalledTimes(1);
   });
+
+  it("escapes markdown in usernames and nicknames", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const users = getUsers();
+    users[0].nickname = "Foo `test`";
+    users[1].username = "Baz *test*";
+
+    const server = initializeServer(users);
+
+    const additionUsers = users.slice(0, 2);
+    const additionInteraction = buildInteraction(
+      "add", server, additionUsers, () => {}
+    );
+
+    const reply = jest.fn();
+    const swapUsers = additionUsers.slice();
+    const swapInteraction = buildInteraction(
+      "swap", server, swapUsers, reply
+    );
+
+    await rotation.handleInteraction(additionInteraction);
+
+    await rotation.handleInteraction(swapInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz \\*test\\* > Foo \\`test\\` >"
+    );
+  });
 });
 
 describe("reading", () => {
@@ -461,6 +539,32 @@ describe("reading", () => {
 
     expect(reply).toHaveBeenCalledTimes(1);
   });
+
+  it("escapes markdown in usernames and nicknames", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const users = getUsers();
+    users[0].nickname = "Foo `test`";
+    users[1].username = "Baz *test*";
+
+    const server = initializeServer(users);
+
+    const additionUsers = users.slice(0, 2);
+    const additionInteraction = buildInteraction(
+      "add", server, additionUsers, () => {}
+    );
+
+    const reply = jest.fn();
+    const readInteraction = buildInteraction("read", server, [], reply);
+
+    await rotation.handleInteraction(additionInteraction);
+
+    await rotation.handleInteraction(readInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "test rotation queue order: Foo \\`test\\` > Baz \\*test\\* >"
+    );
+  });
 });
 
 describe("rotation", () => {
@@ -508,5 +612,31 @@ describe("rotation", () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledTimes(1);
+  });
+
+  it("escapes markdown in usernames and nicknames", async () => {
+    const rotation = new RotationService("test", "test");
+
+    const users = getUsers();
+    users[0].nickname = "Foo `test`";
+    users[1].username = "Baz *test*";
+
+    const server = initializeServer(users);
+
+    const additionUsers = users.slice(0, 2);
+    const additionInteraction = buildInteraction(
+      "add", server, additionUsers, () => {}
+    );
+
+    const reply = jest.fn();
+    const rotateInteraction = buildInteraction("rotate", server, [], reply);
+
+    await rotation.handleInteraction(additionInteraction);
+
+    await rotation.handleInteraction(rotateInteraction);
+
+    expect(reply).toHaveBeenCalledWith(
+      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* > Foo \\`test\\` >"
+    );
   });
 });
