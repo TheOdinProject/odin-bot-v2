@@ -6,13 +6,10 @@ const generateMentions = (number) => {
   for (let i = 0; i < number; i += 1) {
     collection.set(
       `User${i + 1}`,
-      new ClientUser(
-        'client',
-        {
-          id: i + 1,
-          username: `User${i + 1}`,
-        },
-      ),
+      new ClientUser('client', {
+        id: i + 1,
+        username: `User${i + 1}`,
+      }),
     );
   }
 
@@ -43,7 +40,13 @@ const generateLeaderData = (num) => {
 };
 
 const generateLeaderDataWithMarkdown = (num) => {
-  const exampleMarkdown = ["||test||", "*test*", "**test**", "`test`", "```test```"];
+  const exampleMarkdown = [
+    '||test||',
+    '*test*',
+    '**test**',
+    '`test`',
+    '```test```',
+  ];
   let markdownPointer = 0;
   const arr = [];
   let id = 100;
@@ -62,10 +65,10 @@ const generateLeaderDataWithMarkdown = (num) => {
   }
 
   return arr;
-}
+};
 
 module.exports = {
   generateMentions,
   generateLeaderData,
-  generateLeaderDataWithMarkdown
+  generateLeaderDataWithMarkdown,
 };
