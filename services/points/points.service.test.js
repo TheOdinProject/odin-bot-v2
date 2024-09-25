@@ -1,6 +1,9 @@
 const axios = require('axios');
 const PointsService = require('./points.service');
-const { generateLeaderData } = require('../../botCommands/mockData');
+const {
+  generateLeaderData,
+  generateLeaderDataWithMarkdown,
+} = require('../../botCommands/mockData');
 
 /* eslint-disable */
 /* eslint max-classes-per-file: ["error", 2] */
@@ -37,24 +40,25 @@ describe('leaderboard subcommand', () => {
       getInteger: (string) => {
         if (string === 'limit') {
           return limit;
-        } else if (string === "offset") {
+        } else if (string === 'offset') {
           return offset;
         }
-      }
+      },
     },
-    reply: jest.fn((message) => reply = message)
-  }
+    reply: jest.fn((message) => (reply = message)),
+  };
 
-  const setUpAxiosMock = (data) => axios.get = jest.fn().mockResolvedValue({ data });
+  const setUpAxiosMock = (data) =>
+    (axios.get = jest.fn().mockResolvedValue({ data }));
 
   afterEach(() => {
     limit = null;
     offset = null;
     reply = '';
     axios.get.mockReset();
-  })
+  });
 
-  it("Returns be the first to earn points message if no user in database", async () => {
+  it('Returns be the first to earn points message if no user in database', async () => {
     const members = generateLeaderData(0);
     interactionMock.guild = new GuildMock(members);
     setUpAxiosMock(members);
@@ -62,10 +66,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-
-  it("Returned users length matches limit", async () => {
+  it('Returned users length matches limit', async () => {
     limit = 8;
     const members = generateLeaderData(30);
     interactionMock.guild = new GuildMock(members);
@@ -74,7 +77,7 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
   it('Limit defaults to 5 if limit not provided', async () => {
     const members = generateLeaderData(30);
@@ -97,7 +100,7 @@ describe('leaderboard subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it("Limit defaults to 5 if limit provided lower than 1", async () => {
+  it('Limit defaults to 5 if limit provided lower than 1', async () => {
     limit = 0;
     const members = generateLeaderData(25);
     interactionMock.guild = new GuildMock(members);
@@ -106,9 +109,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Limit defaults to 25 if limit provided is higher than 25", async () => {
+  it('Limit defaults to 25 if limit provided is higher than 25', async () => {
     limit = 50;
     const members = generateLeaderData(70);
     interactionMock.guild = new GuildMock(members);
@@ -117,7 +120,7 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
   it('Limit does not exceed users length', async () => {
     limit = 10;
@@ -128,9 +131,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Members who left are filtered out", async () => {
+  it('Members who left are filtered out', async () => {
     const members = generateLeaderData(50);
     const limitMembers = members.slice(20, 40);
     interactionMock.guild = new GuildMock(limitMembers);
@@ -139,9 +142,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Returns users starting from offset", async () => {
+  it('Returns users starting from offset', async () => {
     offset = 5;
     const members = generateLeaderData(50);
     setUpAxiosMock(members);
@@ -150,9 +153,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Offset defaults to 0 if not provided", async () => {
+  it('Offset defaults to 0 if not provided', async () => {
     const members = generateLeaderData(25);
     setUpAxiosMock(members);
     interactionMock.guild = new GuildMock(members);
@@ -160,9 +163,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Offset defaults to 0 if invalid characters provided", async () => {
+  it('Offset defaults to 0 if invalid characters provided', async () => {
     offset = 'sdfs';
     const members = generateLeaderData(25);
     setUpAxiosMock(members);
@@ -171,9 +174,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Offset defaults to 0 if negative value provided", async () => {
+  it('Offset defaults to 0 if negative value provided', async () => {
     offset = -5;
     const members = generateLeaderData(25);
     setUpAxiosMock(members);
@@ -182,9 +185,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Offset cannot exceed max users length", async () => {
+  it('Offset cannot exceed max users length', async () => {
     offset = 70;
     const members = generateLeaderData(50);
     setUpAxiosMock(members);
@@ -193,9 +196,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Offset show the last users depending on limit if offset is too high", async () => {
+  it('Offset show the last users depending on limit if offset is too high', async () => {
     offset = 56;
     limit = 5;
     const members = generateLeaderData(50);
@@ -205,9 +208,9 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
+  });
 
-  it("Return the correct limit, moving offset backward if necessary", async () => {
+  it('Return the correct limit, moving offset backward if necessary', async () => {
     offset = 56;
     limit = 10;
     const members = generateLeaderData(60);
@@ -217,9 +220,18 @@ describe('leaderboard subcommand', () => {
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
     expect(reply).toMatchSnapshot();
-  })
-});
+  });
 
+  it('escapes markdown correctly', async () => {
+    const members = generateLeaderDataWithMarkdown(5);
+    setUpAxiosMock(members);
+    interactionMock.guild = new GuildMock(members);
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+});
 
 describe('user subcommand', () => {
   const apiData = [
@@ -230,19 +242,21 @@ describe('user subcommand', () => {
     { id: 2, discord_id: '2222', points: 20 }, // Someone
     { id: 4, discord_id: '4444', points: 15 }, // Tree
     { id: 1, discord_id: '1111', points: 1 }, // NotOdin
-  ]
+    { id: 8, discord_id: '8888', points: 1 }, // Mark *down*
+  ];
 
   const guildMock = new GuildMock([
     { displayName: 'NotOdin', discord_id: '1111' },
     { displayName: 'Someone', discord_id: '2222' },
     { displayName: 'Dog', discord_id: '3333' },
     { displayName: 'Tree', discord_id: '4444' },
-    { displayName: 'Cat', discord_id: '6666' }
-  ])
+    { displayName: 'Cat', discord_id: '6666' },
+    { displayName: 'Mark *down*', discord_id: '8888' },
+  ]);
 
   beforeEach(() => {
     axios.get = jest.fn().mockResolvedValue({ data: apiData });
-  })
+  });
 
   let user = {}; // created for each test each test
   let reply = '';
@@ -252,8 +266,8 @@ describe('user subcommand', () => {
       getSubcommand: () => 'user',
       getUser: () => user,
     },
-    reply: jest.fn((message) => reply = message)
-  }
+    reply: jest.fn((message) => (reply = message)),
+  };
 
   afterEach(() => {
     reply = '';
@@ -304,7 +318,7 @@ describe('user subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it("Formats the points word properly for 0 points", async () => {
+  it('Formats the points word properly for 0 points', async () => {
     user = { id: '9292', username: 'OldestUser' };
 
     await PointsService.handleInteraction(interactionMock);
@@ -312,8 +326,16 @@ describe('user subcommand', () => {
     expect(reply).toMatchSnapshot();
   });
 
-  it("Formats the points word correctly for more than 1 points", async () => {
+  it('Formats the points word correctly for more than 1 points', async () => {
     user = { id: '3333', username: 'Dog' };
+
+    await PointsService.handleInteraction(interactionMock);
+    expect(axios.get).toHaveBeenCalled();
+    expect(reply).toMatchSnapshot();
+  });
+
+  it('Escapes markdown', async () => {
+    user = { id: '8888', username: 'Mark *down*' };
 
     await PointsService.handleInteraction(interactionMock);
     expect(axios.get).toHaveBeenCalled();
