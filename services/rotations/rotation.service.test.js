@@ -177,15 +177,14 @@ describe('addition', () => {
   it('escapes markdown in usernames and nicknames', async () => {
     const rotation = new RotationService('test', 'test');
 
-    const users = getUsers();
+    const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
     users[1].username = 'Baz *test*';
 
     const server = initializeServer(users);
 
-    const additionUsers = users.slice(0, 2);
     const reply = jest.fn();
-    const interaction = buildInteraction('add', server, additionUsers, reply);
+    const interaction = buildInteraction('add', server, users, reply);
 
     await rotation.handleInteraction(interaction);
 
@@ -317,22 +316,21 @@ describe('removal', () => {
   it('escapes markdown in usernames and nicknames', async () => {
     const rotation = new RotationService('test', 'test');
 
-    const users = getUsers();
+    const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
     users[1].username = 'Baz *test*';
 
     const server = initializeServer(users);
 
-    const additionUsers = users.slice(0, 2);
     const additionInteraction = buildInteraction(
       'add',
       server,
-      additionUsers,
+      users,
       () => {},
     );
 
     const reply = jest.fn();
-    const removalUsers = additionUsers.slice(1);
+    const removalUsers = users.slice(1);
     const removalInteraction = buildInteraction(
       'remove',
       server,
@@ -472,23 +470,21 @@ describe('swapping', () => {
   it('escapes markdown in usernames and nicknames', async () => {
     const rotation = new RotationService('test', 'test');
 
-    const users = getUsers();
+    const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
     users[1].username = 'Baz *test*';
 
     const server = initializeServer(users);
 
-    const additionUsers = users.slice(0, 2);
     const additionInteraction = buildInteraction(
       'add',
       server,
-      additionUsers,
+      users,
       () => {},
     );
 
     const reply = jest.fn();
-    const swapUsers = additionUsers.slice();
-    const swapInteraction = buildInteraction('swap', server, swapUsers, reply);
+    const swapInteraction = buildInteraction('swap', server, users, reply);
 
     await rotation.handleInteraction(additionInteraction);
 
@@ -550,17 +546,16 @@ describe('reading', () => {
   it('escapes markdown in usernames and nicknames', async () => {
     const rotation = new RotationService('test', 'test');
 
-    const users = getUsers();
+    const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
     users[1].username = 'Baz *test*';
 
     const server = initializeServer(users);
 
-    const additionUsers = users.slice(0, 2);
     const additionInteraction = buildInteraction(
       'add',
       server,
-      additionUsers,
+      users,
       () => {},
     );
 
@@ -627,17 +622,16 @@ describe('rotation', () => {
   it('escapes markdown in usernames and nicknames', async () => {
     const rotation = new RotationService('test', 'test');
 
-    const users = getUsers();
+    const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
     users[1].username = 'Baz *test*';
 
     const server = initializeServer(users);
 
-    const additionUsers = users.slice(0, 2);
     const additionInteraction = buildInteraction(
       'add',
       server,
-      additionUsers,
+      users,
       () => {},
     );
 
