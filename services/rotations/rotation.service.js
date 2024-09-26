@@ -1,3 +1,4 @@
+const { escapeMarkdown } = require('discord.js');
 const RedisService = require('../redis');
 
 class RotationService {
@@ -31,10 +32,7 @@ class RotationService {
   async #getDisplayNames(members, server) {
     this.displayNames = members.map(async (memberId) => {
       const member = await server.members.fetch(memberId);
-      if (member.nickname) {
-        return member.nickname;
-      }
-      return member.user.username;
+      return escapeMarkdown(member.nickname || member.user.username);
     });
 
     return Promise.all(this.displayNames);

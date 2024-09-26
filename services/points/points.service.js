@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, escapeMarkdown } = require('discord.js');
 const axios = require('axios');
 const config = require('../../config');
 
@@ -20,8 +20,7 @@ class PointsService {
   static async displayInfo(interaction) {
     const pointsEmbed = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle('Points in the TOP Discord server')
-      .setDescription(`
+      .setTitle('Points in the TOP Discord server').setDescription(`
 Want to give credit where it's due? Show your appreciation for helpful members in our server by giving them a point! Mention their \`@name\` and add \`++\` or \`:star:\`
 
 **Example:**
@@ -50,7 +49,9 @@ Our goal is to maintain a positive and supportive community, where help and cont
     const response = await axios.get(PointsService.API_URL);
 
     // eslint-disable-next-line
-    const data = response.data.filter((member) => interaction.guild.members.cache.get(member.discord_id));
+    const data = response.data.filter((member) =>
+      interaction.guild.members.cache.get(member.discord_id),
+    );
 
     let points = 0;
     let rank = 0;
@@ -59,7 +60,9 @@ Our goal is to maintain a positive and supportive community, where help and cont
     for (let i = 0; i < data.length; i += 1) {
       if (data[i].discord_id === user.id) {
         points = data[i].points;
-        name = interaction.guild.members.cache.get(user.id).displayName;
+        name = escapeMarkdown(
+          interaction.guild.members.cache.get(user.id).displayName,
+        );
         rank = i + 1;
         break;
       }
@@ -68,12 +71,27 @@ Our goal is to maintain a positive and supportive community, where help and cont
     const userRankReply = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle(`TOP Discord points for ${name}`)
-      .addFields([{ name: 'Points', value: `${name} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}` }]);
+      .addFields([
+        {
+          name: 'Points',
+          value: `${name} has ${points === undefined ? 0 : points} point${points === 1 ? '' : 's'}`,
+        },
+      ]);
 
     if (rank >= 1) {
-      userRankReply.addFields([{ name: 'Rank', value: `${name} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}` }]);
+      userRankReply.addFields([
+        {
+          name: 'Rank',
+          value: `${name} is ranked number ${rank}${rank === 1 ? ' :tada:' : ''}`,
+        },
+      ]);
     } else {
-      userRankReply.addFields([{ name: 'Rank', value: `${name} currently has no rank in the leaderboard` }]);
+      userRankReply.addFields([
+        {
+          name: 'Rank',
+          value: `${name} currently has no rank in the leaderboard`,
+        },
+      ]);
     }
 
     await interaction.reply({ embeds: [userRankReply] });
@@ -85,7 +103,7 @@ Our goal is to maintain a positive and supportive community, where help and cont
     for (let i = offset; i < limit + offset; i += 1) {
       const user = users[i];
       const member = interaction.guild.members.cache.get(user.discord_id);
-      const username = member ? member.displayName : 'Unknown';
+      const username = member ? escapeMarkdown(member.displayName) : 'Unknown';
       if (i === 0) {
         usersList += `${i + 1} - ${username} [${user.points} points] :tada: \n`;
       } else {
@@ -99,7 +117,9 @@ Our goal is to maintain a positive and supportive community, where help and cont
   static async displayLeaderboard(interaction) {
     const response = await axios.get(PointsService.API_URL);
     // eslint-disable-next-line max-len
-    const users = response.data.filter((user) => interaction.guild.members.cache.get(user.discord_id));
+    const users = response.data.filter((user) =>
+      interaction.guild.members.cache.get(user.discord_id),
+    );
 
     let limit = interaction.options.getInteger('limit');
     limit = limit > 0 ? limit : 5;
@@ -109,9 +129,17 @@ Our goal is to maintain a positive and supportive community, where help and cont
     let offset = interaction.options.getInteger('offset');
     offset = offset > 0 ? offset : 0;
     // Always show the last members if offset too high
-    offset = offset + limit < users.length ? offset : Math.max(0, users.length - limit);
+    offset =
+      offset + limit < users.length
+        ? offset
+        : Math.max(0, users.length - limit);
 
-    const usersList = PointsService.getUsersList(users, limit, offset, interaction);
+    const usersList = PointsService.getUsersList(
+      users,
+      limit,
+      offset,
+      interaction,
+    );
 
     const leaderboardReply = new EmbedBuilder()
       .setColor('#cc9543')

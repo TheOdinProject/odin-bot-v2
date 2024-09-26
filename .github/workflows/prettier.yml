@@ -1,0 +1,28 @@
+name: Prettier
+on:
+  pull_request:
+    paths:
+      - '**/*.js'
+      - '**/*.json'
+      - '**/*.yml'
+      - '**/*.yaml'
+
+jobs:
+  format_check:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tj-actions/changed-files@v41
+        id: changed-files
+        with:
+          files: |
+            **/*.js
+            **/*.json
+            **/*.yml
+            **/*.yaml
+          separator: ' '
+      - uses: creyD/prettier_action@v4.3
+        with:
+          dry: True
+          prettier_options: --check ${{ steps.changed-files.outputs.all_changed_files }}
