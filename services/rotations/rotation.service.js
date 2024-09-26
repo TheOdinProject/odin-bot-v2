@@ -151,6 +151,20 @@ class RotationService {
   async handleInteraction(interaction) {
     const actionType = interaction.options.getSubcommand();
 
+    const currentQueue = await this.#getQueue();
+    const currentQueueLength = currentQueue?.length || 0;
+
+    if (
+      currentQueueLength < 2 &&
+      actionType !== 'add' &&
+      actionType !== 'remove'
+    ) {
+      await interaction.reply(
+        'Less than two members in the queue. Try adding some with `/triage add`!',
+      );
+      return;
+    }
+
     const members = this.#getMembers(interaction.options);
 
     switch (actionType) {
