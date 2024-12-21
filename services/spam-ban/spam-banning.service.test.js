@@ -66,6 +66,9 @@ function createMessageMock() {
     react: jest.fn((arg) => {
       reactArg = arg;
     }),
+    channel: {
+      id: config.channels.automodBlockChannelId
+    },
     getSendArg: () => sendArg,
     getBanArg: () => banArg,
     getReactArg: () => reactArg,
@@ -84,20 +87,21 @@ function createChannelMock(id) {
 }
 
 function createGuildMock() {
-  const channelId = config.channels.moderationLogChannelId;
-  const moderationLogChannel = createChannelMock(channelId);
+  const channels = {
+    cache: [
+      createChannelMock(config.channels.moderationLogChannelId),
+      createChannelMock(config.channels.automodBlockChannelId),
+      createChannelMock('101010'),
+      createChannelMock('22223333'),
+      createChannelMock('2302382'),
+      createChannelMock('000000'),
+
+    ],
+    fetch: (id) => channels.cache.find(c => c.id === id)
+  };
+
   return {
-    channels: {
-      cache: [
-        createChannelMock('2342314'),
-        createChannelMock('101010'),
-        createChannelMock('22223333'),
-        moderationLogChannel,
-        createChannelMock('2302382'),
-        createChannelMock('000000'),
-      ],
-      fetch: async (id) => (id === channelId ? moderationLogChannel : null),
-    },
+    channels,
   };
 }
 
