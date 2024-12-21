@@ -22,6 +22,9 @@ const config = {
     ContactModeratorsChannelId:
       process.env.CONTACT_MODERATORS_CHANNEL_ID || '1059513837197459547',
     rulesChannelId: process.env.RULES_CHANNEL_ID || '693244715839127653',
+    moderationLogChannelId: process.env.MODERATION_LOG_CHANNEL_ID || '922520585018433536',
+    automodBlockChannelId: process.env.AUTOMOD_BLOCK_CHANNEL_ID || '902580242881859654',
+
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
