@@ -11,6 +11,12 @@ class SpamBanningService {
         ephemeral: true,
       });
       return;
+    } else if (message.channel.id !== config.channels.automodBlockChannelId) {
+      interaction.reply({
+        content: 'This command can only be used in the automod block channel.',
+        ephemeral: true,
+      });
+      return;
     }
 
     try {
