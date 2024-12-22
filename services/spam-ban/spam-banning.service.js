@@ -5,24 +5,15 @@ const config = require('../../config');
 class SpamBanningService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage('message');
-    if (message.author.bot || isAdmin(message.member)) {
-      interaction.reply({
-        content: 'You do not have the permission to ban this user',
-        ephemeral: true,
-      });
-      return;
-    } else if (message.channel.id !== config.channels.automodBlockChannelId) {
-      interaction.reply({
-        content: 'This command can only be used in the automod block channel.',
-        ephemeral: true,
-      });
-      return;
-    }
 
     try {
       let reply;
 
-      if (!message.member) {
+      if (message.author.bot || isAdmin(message.member)) {
+        reply = 'You do not have the permission to ban this user';
+      } else if (message.channel.id !== config.channels.automodBlockChannelId) {
+        reply = 'This command can only be used in the automod block channel.';
+      } else if (!message.member) {
         message.react('❌');
         reply = `Couldn't ban <@${message.author.id}>. User is not on the server.`;
       } else {
