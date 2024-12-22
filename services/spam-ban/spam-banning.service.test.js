@@ -93,9 +93,8 @@ function createGuildMock() {
       createChannelMock('22223333'),
       createChannelMock('2302382'),
       createChannelMock('000000'),
-
     ],
-    fetch: (id) => channels.cache.find(c => c.id === id),
+    fetch: (id) => channels.cache.find((c) => c.id === id),
   };
 
   return {
@@ -111,15 +110,15 @@ describe('Banning spammer in different channels', () => {
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
 
-  it("Ban user if in the automod channel", async () => {
+  it('Ban user if in the automod channel', async () => {
     interactionMock.message.channelId = config.channels.automodBlockChannelId;
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
-  })
+  });
 
-  it("Does not ban user in different channels other than automod", async () => {
+  it('Does not ban user in different channels other than automod', async () => {
     interactionMock.message.channelId = null;
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
@@ -130,12 +129,11 @@ describe('Banning spammer in different channels', () => {
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
 
-
     interactionMock.message.channelId = '21304782342';
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
-  })
+  });
 });
 
 describe('Banning spammer with DM enabled', () => {
@@ -189,7 +187,7 @@ describe('Banning spammer who has DM set to private', () => {
     const messageMock = createMessageMock();
     const guildMock = createGuildMock();
     messageMock.author.send = jest.fn(() => {
-      throw new Error('Can\'t contact user');
+      throw new Error("Can't contact user");
     });
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
@@ -336,7 +334,7 @@ describe('Attempting to log banned user in moderation log channel', () => {
     });
   });
 
-  it('Error is handled if channel doesn\'t exist', async () => {
+  it("Error is handled if channel doesn't exist", async () => {
     console.error = jest.fn();
     interactionMock.guild.channels.fetch = async () => null;
     await SpamBanningService.handleInteraction(interactionMock);
