@@ -46,6 +46,7 @@ function createMessageMock() {
   let reactArg;
 
   return {
+    channelId: config.channels.automodBlockChannelId,
     author: {
       id: '123',
       username: 'bad.spammer',
@@ -66,9 +67,6 @@ function createMessageMock() {
     react: jest.fn((arg) => {
       reactArg = arg;
     }),
-    channel: {
-      id: config.channels.automodBlockChannelId
-    },
     getSendArg: () => sendArg,
     getBanArg: () => banArg,
     getReactArg: () => reactArg,
@@ -97,13 +95,48 @@ function createGuildMock() {
       createChannelMock('000000'),
 
     ],
-    fetch: (id) => channels.cache.find(c => c.id === id)
+    fetch: (id) => channels.cache.find(c => c.id === id),
   };
 
   return {
     channels,
   };
 }
+
+describe('Banning spammer in different channels', () => {
+  let interactionMock;
+  beforeEach(() => {
+    const messageMock = createMessageMock();
+    const guildMock = createGuildMock();
+    interactionMock = createInteractionMock(messageMock, guildMock);
+  });
+
+  it("Ban user if in the automod channel", async () => {
+    interactionMock.message.channelId = config.channels.automodBlockChannelId;
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getBanArg()).toMatchSnapshot();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  })
+
+  it("Does not ban user in different channels other than automod", async () => {
+    interactionMock.message.channelId = null;
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+
+    interactionMock.message.channelId = config.channels.moderationLogChannelId;
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+
+
+    interactionMock.message.channelId = '21304782342';
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.member.ban).not.toHaveBeenCalled();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  })
+});
 
 describe('Banning spammer with DM enabled', () => {
   let interactionMock;
@@ -117,6 +150,7 @@ describe('Banning spammer with DM enabled', () => {
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.member.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
 
   it('Discord message api is called with the correct message', async () => {
@@ -138,7 +172,7 @@ describe('Banning spammer with DM enabled', () => {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(interactionMock.getChannelSendArg()).toMatchSnapshot();
       } else {
-        expect(channel.send).not.toHaveBeenCalledTimes(1);
+        expect(channel.send).not.toHaveBeenCalled();
       }
     });
   });
@@ -155,7 +189,7 @@ describe('Banning spammer who has DM set to private', () => {
     const messageMock = createMessageMock();
     const guildMock = createGuildMock();
     messageMock.author.send = jest.fn(() => {
-      throw new Error("Can't contact user");
+      throw new Error('Can\'t contact user');
     });
     interactionMock = createInteractionMock(messageMock, guildMock);
   });
@@ -184,7 +218,7 @@ describe('Banning spammer who has DM set to private', () => {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.getSendArg()).toMatchSnapshot();
       } else {
-        expect(channel.send).not.toHaveBeenCalledTimes(1);
+        expect(channel.send).not.toHaveBeenCalled();
       }
     });
   });
@@ -297,17 +331,17 @@ describe('Attempting to log banned user in moderation log channel', () => {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(interactionMock.getChannelSendArg()).toMatchSnapshot();
       } else {
-        expect(channel.send).not.toHaveBeenCalledTimes(1);
+        expect(channel.send).not.toHaveBeenCalled();
       }
     });
   });
 
-  it("Error is handled if channel doesn't exist", async () => {
+  it('Error is handled if channel doesn\'t exist', async () => {
     console.error = jest.fn();
     interactionMock.guild.channels.fetch = async () => null;
     await SpamBanningService.handleInteraction(interactionMock);
     interactionMock.guild.channels.cache.forEach((channel) => {
-      expect(channel.send).not.toHaveBeenCalledTimes(1);
+      expect(channel.send).not.toHaveBeenCalled();
     });
     expect(console.error).toHaveBeenCalledTimes(1);
     console.error.mockClear();

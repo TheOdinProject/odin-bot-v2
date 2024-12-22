@@ -70,6 +70,40 @@ exports[`Attempting to log banned user in moderation log channel Sends log to th
 }
 `;
 
+exports[`Banning spammer in different channels Ban user if in the automod channel 1`] = `
+{
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer in different channels Ban user if in the automod channel 2`] = `
+{
+  "content": "Successfully banned <@123> for spam.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer in different channels Does not ban user in different channels other than automod 1`] = `
+{
+  "content": "This command can only be used in the automod block channel.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer in different channels Does not ban user in different channels other than automod 2`] = `
+{
+  "content": "This command can only be used in the automod block channel.",
+  "ephemeral": true,
+}
+`;
+
+exports[`Banning spammer in different channels Does not ban user in different channels other than automod 3`] = `
+{
+  "content": "This command can only be used in the automod block channel.",
+  "ephemeral": true,
+}
+`;
+
 exports[`Banning spammer that has left the server Reacts with the correct emoji to automod message 1`] = `"❌"`;
 
 exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
@@ -132,6 +166,13 @@ exports[`Banning spammer who has DM set to private Sends log to the correct chan
 exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 1`] = `
 {
   "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 2`] = `
+{
+  "content": "Successfully banned <@123> for spam.",
+  "ephemeral": true,
 }
 `;
 

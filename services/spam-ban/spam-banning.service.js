@@ -11,7 +11,7 @@ class SpamBanningService {
 
       if (message.author.bot || isAdmin(message.member)) {
         reply = 'You do not have the permission to ban this user';
-      } else if (message.channel.id !== config.channels.automodBlockChannelId) {
+      } else if (message.channelId !== config.channels.automodBlockChannelId) {
         reply = 'This command can only be used in the automod block channel.';
       } else if (!message.member) {
         message.react('❌');
