@@ -91,6 +91,12 @@ function exclamation(points, isGoodQuestion) {
   if (points === 4000) {
     return '`//TODO: Implement Club 4000`';
   }
+  if (points === 5000) {
+    return 'FIVE THOUSAND POINTS. Now go touch grass.';
+  }
+  if (points === 10000) {
+    return 'You know there is a world outside the Discord right?';
+  }
   return 'Woot!';
 }
 
