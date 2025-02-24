@@ -19,7 +19,7 @@
     "discord.js": "^14.18.0",
     "dotenv": "^16.4.5",
     "glob": "^11.0.0",
-    "ioredis": "^5.4.1",
+    "ioredis": "^5.5.0",
     "prettier": "^3.3.3"
   },
   "devDependencies": {
