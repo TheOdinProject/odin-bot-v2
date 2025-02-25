@@ -1,4 +1,4 @@
-const { registerBotCommand } = require('../botEngine');
+const { registerBotCommand } = require('../../botEngine');
 const { randomInt } = require('./helpers');
 
 const command = {

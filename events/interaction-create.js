@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const newEraCommands = require('../new-era-commands');
+const newEraCommands = require('../bot-commands');
 const FormatCodeService = require('../services/format-code');
 
 module.exports = {
