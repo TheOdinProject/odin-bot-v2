@@ -1,5 +1,5 @@
 const command = require('./code-legacy');
-const { generateMentions } = require('./mockData');
+const { generateMentions } = require('../misc-features/mockData');
 
 describe('!code', () => {
   it.each([

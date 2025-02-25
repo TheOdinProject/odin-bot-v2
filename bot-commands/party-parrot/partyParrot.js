@@ -1,5 +1,5 @@
 const { registerBotCommand } = require('../../botEngine');
-const { randomInt } = require('./helpers');
+const { randomInt } = require('../misc-features/helpers');
 
 const command = {
   regex: /partyparrot|party_parrot|party parrot|oiseau/,

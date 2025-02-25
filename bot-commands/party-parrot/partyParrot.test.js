@@ -1,5 +1,5 @@
 const command = require('./partyParrot');
-const { randomInt } = require('./helpers');
+const { randomInt } = require('../misc-features/helpers');
 
 describe('/partyparrot', () => {
   it.each([
