@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`!question callback returns correct output 1`] = `
+{
+  "embeds": [
+    {
+      "color": 13407555,
+      "description": "
+Asking context-rich questions makes it easy to receive help, and makes it easy for others to help you quickly! Great engineers ask great questions, and the prompt below is an invitation to improve your skills and set yourself up for success in the workplace.
+
+**Project/Exercise:**
+**Lesson link:**
+**Code:** [code sandbox like replit or codepen]
+**Issue/Problem:** [screenshots if applicable]
+**What I expected:**
+**What I've tried:**
+
+For more information, read our [guide on honing your question-asking skills](<https://www.theodinproject.com/guides/community/how_to_ask>).
+        ",
+      "title": "Asking Great Questions",
+    },
+  ],
+}
+`;
