@@ -1,4 +1,4 @@
-const question = require('./question-legacy');
+const { legacy: question } = require('./question');
 
 describe('!question', () => {
   describe('regex', () => {

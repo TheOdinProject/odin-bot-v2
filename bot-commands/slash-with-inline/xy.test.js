@@ -1,4 +1,4 @@
-const command = require('./xy-legacy');
+const { legacy: command } = require('./xy');
 
 describe('!xy', () => {
   describe('regex', () => {
@@ -45,9 +45,12 @@ describe('!xy', () => {
       ['!xy!'],
       ['!xy*'],
       ['!xy...'],
-    ])("'%s' - command should be its own word!group - no leading or trailing characters", (string) => {
-      expect(command.regex.test(string)).toBeFalsy();
-    });
+    ])(
+      "'%s' - command should be its own word!group - no leading or trailing characters",
+      (string) => {
+        expect(command.regex.test(string)).toBeFalsy();
+      },
+    );
   });
 
   describe('callback', () => {

@@ -1,4 +1,4 @@
-const command = require('./code-legacy');
+const { legacy: command } = require('./code');
 const { generateMentions } = require('../../utils/slash-command-helpers/mockData');
 
 describe('!code', () => {
