@@ -1,5 +1,6 @@
 // SCRIPT TO REGISTER THE NEW DISCORD COMMANDS
-// Commands can be deployed directly from terminal with: node bin/deploy-commands.js
+// This will be automatically run when the bot starts (required in index.js)
+// This script can also be run directly from terminal with: node bin/deploy-commands.js
 
 /* eslint import/no-unresolved: 2 */
 const { REST } = require('@discordjs/rest');
