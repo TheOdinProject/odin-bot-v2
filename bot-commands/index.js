@@ -4,7 +4,7 @@ const path = require('path');
 const commandFiles = globSync('./bot-commands/**/*.js', {
   ignore: [
     'bot-commands/*.js',
-    'bot-commands/{legacy-commands,points,party-parrot}/*.js',
+    'bot-commands/{points,party-parrot}/*.js',
     'bot-commands/**/*.test.js',
   ],
 });
