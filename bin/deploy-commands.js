@@ -5,7 +5,7 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
-const commands = require('../new-era-commands');
+const commands = require('../bot-commands');
 
 const rest = new REST({ version: '10' }).setToken(token);
 

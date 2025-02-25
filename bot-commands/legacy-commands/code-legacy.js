@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-const { registerBotCommand } = require("../botEngine");
-const { code } = require("../lib/commandsContent")
+const Discord = require('discord.js');
+const { registerBotCommand } = require('../../botEngine');
+const { code } = require('../../lib/commandsContent');
 
 const { color, title, description } = code;
 
 const command = {
   regex: /(?<!\S)!code(?!\S)/,
   cb: ({ mentions }) => {
-    let users = "";
+    let users = '';
     if (mentions.users) {
       mentions.users.forEach((user) => {
         users += `<@${user.id}> `;
@@ -21,7 +21,7 @@ const command = {
 
     return {
       content: users ? `${users.trim()}` : '',
-      embeds: [codeCommandEmbed]
+      embeds: [codeCommandEmbed],
     };
   },
 };

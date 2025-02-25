@@ -1,7 +1,13 @@
 const { globSync } = require('glob');
 const path = require('path');
 
-const commandFiles = globSync('./new-era-commands/**/*.js', { ignore: 'new-era-commands/*.js' });
+const commandFiles = globSync('./bot-commands/**/*.js', {
+  ignore: [
+    'bot-commands/*.js',
+    'bot-commands/{legacy-commands,points,party-parrot}/*.js',
+    'bot-commands/**/*.test.js',
+  ],
+});
 
 const commands = new Map();
 
