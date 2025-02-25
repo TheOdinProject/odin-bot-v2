@@ -25,8 +25,6 @@ module.exports = {
   },
   legacy: {
     regex: /(?<!\S)!xy(?!\S)/,
-    cb: () => {
-      return { embeds: [xyEmbed] };
-    },
+    cb: () => ({ embeds: [xyEmbed] }),
   },
 };

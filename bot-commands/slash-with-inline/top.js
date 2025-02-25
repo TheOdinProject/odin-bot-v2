@@ -25,8 +25,6 @@ module.exports = {
   },
   legacy: {
     regex: /(?<!\S)!top(?!\S)/,
-    cb: () => {
-      return { embeds: [topEmbed] };
-    },
+    cb: () => ({ embeds: [topEmbed] }),
   },
 };

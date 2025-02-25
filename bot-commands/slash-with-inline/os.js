@@ -24,8 +24,6 @@ module.exports = {
   },
   legacy: {
     regex: /(?<!\S)!os(?!\S)/,
-    cb: () => {
-      return { embeds: [osEmbed] };
-    },
+    cb: () => ({ embeds: [osEmbed] }),
   },
 };
