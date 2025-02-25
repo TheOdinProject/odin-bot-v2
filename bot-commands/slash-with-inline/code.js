@@ -44,14 +44,12 @@ module.exports = {
     regex: /(?<!\S)!code(?!\S)/,
     cb: ({ mentions }) => {
       let users = '';
-      if (mentions.users) {
-        mentions.users.forEach((user) => {
-          users += `<@${user.id}> `;
-        });
-      }
+      mentions.users?.forEach((user) => {
+        users += `<@${user.id}> `;
+      });
 
       return {
-        content: users ? `${users.trim()}` : '',
+        content: users.trim(),
         embeds: [codeEmbed],
       };
     },
