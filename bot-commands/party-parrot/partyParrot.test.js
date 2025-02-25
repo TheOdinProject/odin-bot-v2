@@ -1,5 +1,5 @@
 const command = require('./partyParrot');
-const { randomInt } = require('../misc-features/helpers');
+const { randomInt } = require('../../utils/random-int');
 
 describe('/partyparrot', () => {
   it.each([
@@ -51,7 +51,7 @@ describe('/partyparrot', () => {
 });
 
 // mock randomInt
-jest.mock('./helpers');
+jest.mock('../../utils/random-int');
 
 describe('partyparrot snapshot', () => {
   it.each([

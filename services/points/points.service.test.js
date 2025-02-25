@@ -3,7 +3,7 @@ const PointsService = require('./points.service');
 const {
   generateLeaderData,
   generateLeaderDataWithMarkdown,
-} = require('../../bot-commands/misc-features/mockData');
+} = require('../../utils/slash-command-helpers/mockData');
 
 /* eslint-disable */
 /* eslint max-classes-per-file: ["error", 2] */

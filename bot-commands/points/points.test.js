@@ -21,7 +21,7 @@ const gifContainer = [
   },
 ];
 
-jest.mock('./club_40_gifs.json', () => gifContainer);
+jest.mock('../club-40/club_40_gifs.json', () => gifContainer);
 
 jest.mock('../../botEngine.js', () => ({
   registerBotCommand: jest.fn(),
