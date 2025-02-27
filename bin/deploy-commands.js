@@ -7,7 +7,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
 const { registerBotCommand } = require('../botEngine');
-const commands = require('../bot-commands').values().toArray();
+const commands = Array.from(require('../bot-commands').values());
 
 // Registering inline ! commands
 commands.forEach((command) => {
