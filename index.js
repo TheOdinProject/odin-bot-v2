@@ -6,7 +6,8 @@ const { token } = require('./config');
 const events = require('./events');
 require('./bin/deploy-commands');
 
-globSync('./bot-commands/{legacy-commands,points,party-parrot}/*.js', {
+// Register points/party parrot features
+globSync('./bot-commands/{points,party-parrot}/*.js', {
   ignore: 'bot-commands/**/*.test.js',
 }).forEach((file) => {
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require

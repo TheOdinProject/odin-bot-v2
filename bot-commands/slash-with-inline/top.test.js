@@ -1,4 +1,4 @@
-const command = require('./top-legacy');
+const { legacy: command } = require('./top');
 
 describe('!top', () => {
   describe('regex', () => {

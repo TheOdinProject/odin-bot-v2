@@ -1,4 +1,4 @@
-const command = require('./os');
+const { legacy: command } = require('./os');
 
 describe('!os', () => {
   describe('regex', () => {

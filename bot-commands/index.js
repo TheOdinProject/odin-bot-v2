@@ -4,7 +4,9 @@ const path = require('path');
 const commandFiles = globSync('./bot-commands/**/*.js', {
   ignore: [
     'bot-commands/*.js',
-    'bot-commands/{legacy-commands,points,party-parrot}/*.js',
+    // If not ignored, registerBotCommand call will result in circular dep
+    // points/party parrot get registered in /index.js
+    'bot-commands/{points,party-parrot}/*.js',
     'bot-commands/**/*.test.js',
   ],
 });
