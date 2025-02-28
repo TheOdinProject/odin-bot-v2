@@ -72,9 +72,8 @@ class FormatCodeService {
       return;
     }
 
-    const formatCodeMessageEmbed = FormatCodeService.#formattedCodeMessageEmbedBuilder(
-      formattedCodeBlock,
-    );
+    const formatCodeMessageEmbed =
+      FormatCodeService.#formattedCodeMessageEmbedBuilder(formattedCodeBlock);
 
     await FormatCodeService.sendMessage(interaction, {
       embeds: [formatCodeMessageEmbed],
@@ -137,16 +136,20 @@ class FormatCodeService {
     return new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Format Code (beta)')
-      .setDescription('Use [prettier](https://prettier.io/) to format code block in a message.')
+      .setDescription(
+        'Use [prettier](https://prettier.io/) to format code block in a message.',
+      )
       .addFields([
         {
           name: 'Instructions',
-          value: '- Write click on a message. Go to Apps > beta Format Code option. \n- The bot will reply with a formatted code block. \n- If the codeblock doesn\'t have the lang specified a modal will pop up prompting for a lang input. \n- If the bot fails to format the code block, it will reply with an error message.',
+          value:
+            "- Write click on a message. Go to Apps > beta Format Code option. \n- The bot will reply with a formatted code block. \n- If the codeblock doesn't have the lang specified a modal will pop up prompting for a lang input. \n- If the bot fails to format the code block, it will reply with an error message.",
           inline: true,
         },
         {
           name: 'Limitations',
-          value: '1. Limited parsers. Full list here: https://prettier.io/docs/en/options.html#parser\n\n2. Only formats the first code block in a message.',
+          value:
+            '1. Limited parsers. Full list here: https://prettier.io/docs/en/options.html#parser\n\n2. Only formats the first code block in a message.',
           inline: true,
         },
       ]);

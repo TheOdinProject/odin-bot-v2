@@ -4,15 +4,16 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('contribute')
     .setDescription('Information on how to contribute to TOP on GitHub')
-    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
+    .addUserOption((option) =>
+      option.setName('user').setDescription('user to ping'),
+    ),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 
     const contributingEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Contributing to The Odin Project Repositories')
-      .setURL('https://github.com/TheOdinProject')
-      .setDescription(`
+      .setURL('https://github.com/TheOdinProject').setDescription(`
 **How to contribute**
 
 To contribute to The Odin Project, check out our repositories on GitHub:

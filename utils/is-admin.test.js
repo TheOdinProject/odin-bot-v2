@@ -1,5 +1,5 @@
 const { Collection, Member } = require('discord.js');
-const { isAdmin } = require('./is-admin')
+const { isAdmin } = require('./is-admin');
 
 jest.mock('discord.js', () => ({
   ...jest.requireActual('discord.js'),

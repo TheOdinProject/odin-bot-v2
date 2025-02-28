@@ -1,6 +1,4 @@
-const {
-  SlashCommandBuilder, PermissionFlagsBits,
-} = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const FormatCodeService = require('../../services/format-code');
 
 module.exports = {

@@ -1,6 +1,4 @@
-const {
-  SlashCommandBuilder, PermissionFlagsBits,
-} = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const UpdateFAQsService = require('../../services/update-faq/update-faq.service');
 
 module.exports = {

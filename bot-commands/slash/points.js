@@ -2,10 +2,12 @@ const { SlashCommandBuilder } = require('discord.js');
 const PointsService = require('../../services/points');
 
 function user(command) {
-  command.setName('user')
+  command
+    .setName('user')
     .setDescription('TOP Discord points and rank for specified user')
     .addUserOption((option) => {
-      option.setName('name')
+      option
+        .setName('name')
         .setDescription('The name of the user to display their points')
         .setRequired(true);
       return option;
@@ -15,16 +17,19 @@ function user(command) {
 }
 
 function leaderboard(command) {
-  command.setName('leaderboard')
+  command
+    .setName('leaderboard')
     .setDescription('Displays the TOP Discord leaderboard')
     .addIntegerOption((option) => {
-      option.setName('limit')
+      option
+        .setName('limit')
         .setDescription('Limit the result. Max is 25')
         .setRequired(false);
       return option;
     })
     .addIntegerOption((option) => {
-      option.setName('offset')
+      option
+        .setName('offset')
         .setDescription('Offset is the starting position in the leaderboard')
         .setRequired(false);
       return option;
@@ -34,7 +39,8 @@ function leaderboard(command) {
 }
 
 function info(command) {
-  command.setName('info')
+  command
+    .setName('info')
     .setDescription('A guide to points in the TOP Discord server');
   return command;
 }
@@ -42,7 +48,9 @@ function info(command) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('points')
-    .setDescription('Points provides a fun way for users to see the points ranking on the server!')
+    .setDescription(
+      'Points provides a fun way for users to see the points ranking on the server!',
+    )
     .addSubcommand(user)
     .addSubcommand(leaderboard)
     .addSubcommand(info),

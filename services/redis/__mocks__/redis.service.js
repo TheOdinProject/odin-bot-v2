@@ -2,13 +2,13 @@ class MockRedisInstance {
   constructor() {
     this.store = {};
   }
-  
+
   async rpush(keyName, entry) {
     if (!this.store[keyName]) {
       this.store[keyName] = [];
     }
 
-    const standardizedEntry = typeof entry === "string" ? [entry] : entry;
+    const standardizedEntry = typeof entry === 'string' ? [entry] : entry;
 
     this.store[keyName].push(...standardizedEntry);
   }
@@ -25,11 +25,13 @@ class MockRedisInstance {
   }
 
   async lrem(keyName, _count, element) {
-    this.store[keyName] = this.store[keyName].filter((entry) => entry !== element);
+    this.store[keyName] = this.store[keyName].filter(
+      (entry) => entry !== element,
+    );
   }
 
   async lpop(keyName) {
-    return this.store[keyName].shift()
+    return this.store[keyName].shift();
   }
 }
 
@@ -39,4 +41,4 @@ const MockRedisService = {
   },
 };
 
-module.exports = MockRedisService
+module.exports = MockRedisService;

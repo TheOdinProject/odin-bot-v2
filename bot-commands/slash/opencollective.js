@@ -4,11 +4,15 @@ const OpenCollectiveService = require('../../services/opencollective');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('opencollective')
-    .setDescription('Provide your open collective username to get exclusive role')
-    .addStringOption((option) => option
-      .setName('username')
-      .setDescription('Your open collective username')
-      .setRequired(true)),
+    .setDescription(
+      'Provide your open collective username to get exclusive role',
+    )
+    .addStringOption((option) =>
+      option
+        .setName('username')
+        .setDescription('Your open collective username')
+        .setRequired(true),
+    ),
   execute: async (interaction) => {
     try {
       await OpenCollectiveService.handleInteraction(interaction);

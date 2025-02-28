@@ -3,8 +3,12 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('time')
-    .setDescription('Information on why it\'s near impossible to tell how long TOP will take')
-    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
+    .setDescription(
+      "Information on why it's near impossible to tell how long TOP will take",
+    )
+    .addUserOption((option) =>
+      option.setName('user').setDescription('user to ping'),
+    ),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
     const timeEmbed = new EmbedBuilder()

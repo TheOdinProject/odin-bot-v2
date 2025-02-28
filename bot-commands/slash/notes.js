@@ -4,7 +4,9 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('notes')
     .setDescription('Things to consider about taking notes')
-    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
+    .addUserOption((option) =>
+      option.setName('user').setDescription('user to ping'),
+    ),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 

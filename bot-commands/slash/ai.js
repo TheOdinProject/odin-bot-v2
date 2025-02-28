@@ -4,7 +4,9 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('ai')
     .setDescription('Generative AI and Learning to Code')
-    .addUserOption((option) => option.setName('user').setDescription('user to ping')),
+    .addUserOption((option) =>
+      option.setName('user').setDescription('user to ping'),
+    ),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 
