@@ -45,7 +45,6 @@ body:
         - [ ] A theme toggle is present on the dashboard
         - [ ] Clicking the theme toggle changes between light and dark
         - [ ] A user's theme choice persists after leaving the website
-      render: '[tasklist]'
     validations:
       required: true
   - type: textarea
