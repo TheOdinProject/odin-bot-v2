@@ -1,13 +1,13 @@
 function addUserOptions(builder, min, max, description) {
   for (let i = 0; i < min; i += 1) {
     builder.addUserOption((option) =>
-      option.setName(`user${i}`).setDescription(description).setRequired(true)
+      option.setName(`user${i}`).setDescription(description).setRequired(true),
     );
   }
 
   for (let i = min; i < max; i += 1) {
     builder.addUserOption((option) =>
-      option.setName(`user${i}`).setDescription(description)
+      option.setName(`user${i}`).setDescription(description),
     );
   }
 

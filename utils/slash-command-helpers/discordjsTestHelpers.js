@@ -1,11 +1,11 @@
 function getUsers(count, start = 0) {
   const users = [
-    { id: "1234", username: "Foo", nickname: "" },
-    { id: "5678", username: "Baz", nickname: "" },
-    { id: "9101", username: "Bang", nickname: "" },
-    { id: "1121", username: "Bing", nickname: "" },
-    { id: "3141", username: "Bong", nickname: "" },
-    { id: "5161", username: "Ding", nickname: "" },
+    { id: '1234', username: 'Foo', nickname: '' },
+    { id: '5678', username: 'Baz', nickname: '' },
+    { id: '9101', username: 'Bang', nickname: '' },
+    { id: '1121', username: 'Bing', nickname: '' },
+    { id: '3141', username: 'Bong', nickname: '' },
+    { id: '5161', username: 'Ding', nickname: '' },
   ];
 
   if (start > 0) {
@@ -27,7 +27,7 @@ function buildInteractionUsers(usersArray) {
 }
 
 function buildInteraction(subcommand, guild, usersArray, reply) {
-  const users = buildInteractionUsers(usersArray)
+  const users = buildInteractionUsers(usersArray);
   return {
     options: {
       getSubcommand: () => subcommand,

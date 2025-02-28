@@ -1,3 +1,3 @@
-const { rotationBuilder } = require("../../utils/rotation-builder");
+const { rotationBuilder } = require('../../utils/rotation-builder');
 
-module.exports = rotationBuilder("triage", "maintainerTriageRotationList");
+module.exports = rotationBuilder('triage', 'maintainerTriageRotationList');

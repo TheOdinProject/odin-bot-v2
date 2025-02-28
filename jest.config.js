@@ -1,6 +1,4 @@
 module.exports = {
   testEnvironment: 'node',
-  transformIgnorePatterns: [
-    '/node_modules/(?!axios)',
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!axios)'],
 };

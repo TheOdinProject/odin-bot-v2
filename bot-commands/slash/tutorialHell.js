@@ -1,16 +1,16 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("tutorialhell")
+    .setName('tutorialhell')
     .setDescription("TOP's advice on doing more than one course at a time")
     .addUserOption((option) =>
-      option.setName("user").setDescription("user to ping")
+      option.setName('user').setDescription('user to ping'),
     ),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser("user");
+    const userId = interaction.options.getUser('user');
     const tutorialHellEmbed = new EmbedBuilder()
-      .setColor("#cc9543")
+      .setColor('#cc9543')
       .setTitle("TOP's advice on doing more than one course at a time")
       .setDescription(`
 1. There is no "best" course when you're a self-learner. It's about learning yourself and not being handed the concepts.
@@ -20,7 +20,7 @@ module.exports = {
 5. Undecided? Pick the course you feel you are most likely to complete.
       `);
     await interaction.reply({
-      content: userId ? `${userId}` : "",
+      content: userId ? `${userId}` : '',
       embeds: [tutorialHellEmbed],
     });
   },

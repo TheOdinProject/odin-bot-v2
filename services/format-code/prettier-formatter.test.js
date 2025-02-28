@@ -47,7 +47,9 @@ describe('prettierFormatter', () => {
       prettier.format.mockImplementationOnce(() => {
         throw new SyntaxError('Syntax Error');
       });
-      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow('Syntax Error');
+      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow(
+        'Syntax Error',
+      );
     });
   });
 
@@ -61,7 +63,9 @@ describe('prettierFormatter', () => {
       prettier.format.mockImplementationOnce(() => {
         throw new Error('Other Error');
       });
-      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow('Error while formatting');
+      expect(async () => prettierFormatter(codeBlock)).rejects.toThrow(
+        'Error while formatting',
+      );
     });
   });
 });

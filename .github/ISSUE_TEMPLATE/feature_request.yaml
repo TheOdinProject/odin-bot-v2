@@ -1,6 +1,6 @@
 name: Feature Request
 description: Suggest a new feature or an enhancement to an existing feature
-labels: ["Status: Needs Review"]
+labels: ['Status: Needs Review']
 assignees:
   - nil
 body:
@@ -16,7 +16,7 @@ body:
       options:
         - label: I have thoroughly read and understand [The Odin Project Contributing Guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md)
           required: true
-        - label: "The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`"
+        - label: 'The title of this issue follows the `command name: brief description of request` format, e.g. `/help: add optional @user parameter`'
           required: true
   - type: checkboxes
     id: assigned
@@ -45,7 +45,7 @@ body:
         - [ ] A theme toggle is present on the dashboard
         - [ ] Clicking the theme toggle changes between light and dark
         - [ ] A user's theme choice persists after leaving the website
-      render: "[tasklist]"
+      render: '[tasklist]'
     validations:
       required: true
   - type: textarea
