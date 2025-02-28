@@ -10,7 +10,7 @@ module.exports = {
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user');
 
-    const stuckEmbed = new EmbedBuilder()
+    const imposterEmbed = new EmbedBuilder()
       .setColor('#cc9543')
       .setTitle('Dealing with Imposter Syndrome?')
       .setDescription(
@@ -34,7 +34,7 @@ Here is an illustration to give you a more realistic view of imposter syndrome:
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
-      embeds: [stuckEmbed],
+      embeds: [imposterEmbed],
     });
   },
 };
