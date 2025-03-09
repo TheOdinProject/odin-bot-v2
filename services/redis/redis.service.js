@@ -1,4 +1,5 @@
 const Redis = require('ioredis');
+const { exitProcessNoRedis } = require('../../utils/errors/startup');
 
 class RedisService {
   static #instance;
@@ -9,6 +10,10 @@ class RedisService {
     }
 
     RedisService.#instance = new Redis(process.env.REDIS_URL);
+    RedisService.#instance.on('connect', () =>
+      console.log('Successfully connected to Redis.'),
+    );
+    RedisService.#instance.on('error', exitProcessNoRedis);
   }
 
   static getInstance() {
