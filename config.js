@@ -1,4 +1,4 @@
-const { exitProcessMissingEnvVars } = require('./utils/errors/startup');
+const { MissingEnvVarError } = require('./utils/errors/startup');
 
 require('dotenv').config();
 
@@ -8,7 +8,7 @@ const missingMandatoryEnvKeys = [
   'DISCORD_GUILD_ID',
 ].filter((key) => !process.env[key]);
 if (missingMandatoryEnvKeys.length) {
-  exitProcessMissingEnvVars(missingMandatoryEnvKeys);
+  throw new MissingEnvVarError(missingMandatoryEnvKeys);
 }
 
 const config = {
