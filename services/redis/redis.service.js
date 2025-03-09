@@ -1,5 +1,5 @@
 const Redis = require('ioredis');
-const { RedisConnectionError } = require('../../utils/errors/startup');
+const RedisConnectionError = require('../../utils/errors/no-redis');
 
 class RedisService {
   static #instance;

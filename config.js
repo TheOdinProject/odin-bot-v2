@@ -1,4 +1,4 @@
-const { MissingEnvVarError } = require('./utils/errors/startup');
+const MissingEnvVarError = require('./utils/errors/startup/missing-env-var');
 
 require('dotenv').config();
 
