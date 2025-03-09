@@ -4,6 +4,17 @@ const { globSync } = require('glob');
 const path = require('path');
 const { token } = require('./config');
 const events = require('./events');
+const MissingEnvVarError = require('./utils/errors/missing-env-var');
+
+const missingMandatoryEnvKeys = [
+  'DISCORD_API_KEY',
+  'DISCORD_CLIENT_ID',
+  'DISCORD_GUILD_ID',
+].filter((key) => !process.env[key]);
+if (missingMandatoryEnvKeys.length) {
+  throw new MissingEnvVarError(missingMandatoryEnvKeys);
+}
+
 require('./bin/deploy-commands');
 
 // Register points/party parrot features
