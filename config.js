@@ -1,15 +1,4 @@
-const MissingEnvVarError = require('./utils/errors/startup/missing-env-var');
-
 require('dotenv').config();
-
-const missingMandatoryEnvKeys = [
-  'DISCORD_API_KEY',
-  'DISCORD_CLIENT_ID',
-  'DISCORD_GUILD_ID',
-].filter((key) => !process.env[key]);
-if (missingMandatoryEnvKeys.length) {
-  throw new MissingEnvVarError(missingMandatoryEnvKeys);
-}
 
 const config = {
   pointsbot: {
