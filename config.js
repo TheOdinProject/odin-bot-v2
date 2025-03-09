@@ -1,4 +1,15 @@
+const { exitProcessMissingEnvVars } = require('./utils/errors/startup');
+
 require('dotenv').config();
+
+const missingMandatoryEnvKeys = [
+  'DISCORD_API_KEY',
+  'DISCORD_CLIENT_ID',
+  'DISCORD_GUILD_ID',
+].filter((key) => !process.env[key]);
+if (missingMandatoryEnvKeys.length) {
+  exitProcessMissingEnvVars(missingMandatoryEnvKeys);
+}
 
 const config = {
   pointsbot: {

@@ -7,4 +7,15 @@ You can find your OS's installation instructions and Redis start command at http
   process.exit(1);
 }
 
-module.exports = { exitProcessNoRedis };
+function exitProcessMissingEnvVars(missingEnvVars) {
+  console.error(`
+Could not start the bot. The following values are missing from .env:
+
+${missingEnvVars.join('\n')}
+
+Follow our "Getting Started" guide to obtain and set these values: https://github.com/TheOdinProject/odin-bot-v2/wiki/Getting-Started.
+  `);
+  process.exit(1);
+}
+
+module.exports = { exitProcessNoRedis, exitProcessMissingEnvVars };
