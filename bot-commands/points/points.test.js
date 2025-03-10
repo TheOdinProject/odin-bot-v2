@@ -26,10 +26,6 @@ const gifContainer = [
 
 jest.mock('../club-40/club_40_gifs.json', () => gifContainer);
 
-jest.mock('../../botEngine.js', () => ({
-  registerBotCommand: jest.fn(),
-}));
-
 jest.mock('discord.js', () => ({
   ...jest.requireActual('discord.js'),
   Client: jest.fn().mockImplementation((users, channel, user) => ({

@@ -6,7 +6,7 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
-const { registerBotCommand } = require('../botEngine');
+const { registerBotCommand } = require('../events').get('messageCreate');
 const commands = Array.from(require('../bot-commands').values());
 
 // Registering non-slash commands like inline ! commands, points and party parrot
