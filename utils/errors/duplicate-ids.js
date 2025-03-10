@@ -1,10 +1,11 @@
 class DuplicateIdsError extends Error {
-  constructor(missingIDs) {
+  constructor(duplicateIDs) {
     super(`
 Could not start Odin Bot locally. Each channel ID configured in config.js must be unique. The following IDs are duplicates:
-${missingIDs.join('\n')}
 
-You can modify what value the ID's are set to in the .env file. See .env for more information.`);
+${duplicateIDs.join('\n')}
+
+You can modify what value the IDs are set to in the .env file. See .env for more information.`);
 
     this.name = 'DuplicateIdsError';
   }
