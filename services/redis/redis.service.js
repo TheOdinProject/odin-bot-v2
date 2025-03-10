@@ -11,7 +11,9 @@ class RedisService {
 
     RedisService.#instance = new Redis(process.env.REDIS_URL);
     RedisService.#instance.on('connect', () =>
-      console.log('Successfully connected to Redis.'),
+      console.log(
+        `Successfully connected to Redis at: ${process.env.REDIS_URL}`,
+      ),
     );
     RedisService.#instance.on('error', () => {
       throw new RedisConnectionError();
