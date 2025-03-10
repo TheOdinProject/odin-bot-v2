@@ -7,36 +7,46 @@ class SpamBanningService {
     const message = interaction.options.getMessage('message');
 
     try {
-      let reply;
-
       if (message.author.bot || isAdmin(message.member)) {
-        reply = 'You do not have the permission to ban this user';
-      } else if (message.channelId !== config.channels.automodBlockChannelId) {
-        reply = 'This command can only be used in the automod block channel.';
-      } else if (!message.member) {
-        message.react('❌');
-        reply = `Couldn't ban <@${message.author.id}>. User is not on the server.`;
-      } else {
-        reply = await SpamBanningService.#banUser(message);
-        await SpamBanningService.#announceBan(interaction, message);
+        interaction.reply({
+          content: 'You do not have the permission to ban this user',
+          ephemeral: true,
+        });
+        return;
       }
-
+      if (message.channelId !== config.channels.automodBlockChannelId) {
+        interaction.reply({
+          content:
+            'This command can only be used in the automod block channel.',
+          ephemeral: true,
+        });
+        return;
+      }
+      const reply = await SpamBanningService.#banUser(interaction);
       interaction.reply({ content: reply, ephemeral: true });
+      await SpamBanningService.#announceBan(interaction, message);
     } catch (error) {
       console.error(error);
     }
   }
 
-  static async #banUser(message) {
+  static async #banUser(interaction) {
+    const message = interaction.options.getMessage('message');
+    const { guild } = interaction;
     let reply = `Successfully banned <@${message.author.id}> for spam.`;
-    try {
-      // Make sure to send the message before banning otherwise user will not be found
-      await SpamBanningService.#sendMessageToUser(message.author);
-    } catch (error) {
-      reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user.`;
+    // Only attempt to send the message if message.author exists
+    if (message.member) {
+      try {
+        await SpamBanningService.#sendMessageToUser(message.author);
+      } catch (error) {
+        reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user.`;
+      }
+    } else {
+      reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user as they have left the server.`;
     }
-
-    message.member.ban({ reason: 'Account is compromised' });
+    await guild.members.ban(message.author.id, {
+      reason: 'Account is compromised',
+    });
     message.react('✅');
     return reply;
   }
