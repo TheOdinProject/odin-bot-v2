@@ -1,7 +1,4 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
-
-const { globSync } = require('glob');
-const path = require('path');
 const { token } = require('./config');
 const events = require('./events');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
@@ -16,13 +13,6 @@ if (missingMandatoryEnvKeys.length) {
 }
 
 require('./bin/deploy-commands');
-
-// Register points/party parrot features
-globSync('./bot-commands/party-parrot/*.js', {
-  ignore: 'bot-commands/**/*.test.js',
-}).forEach((file) => {
-  require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require
-});
 
 const client = new Client({
   intents: [
