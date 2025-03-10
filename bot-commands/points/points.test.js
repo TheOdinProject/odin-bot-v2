@@ -96,6 +96,10 @@ describe('award points', () => {
     it('has the name "award points"', () => {
       expect(commands.awardPoints.data.name).toBe('award points');
     });
+
+    it('is registrable', () => {
+      expect(commands.awardPoints.isManuallyRegistrable).toBe(true);
+    });
   });
 
   describe('regex ++', () => {
@@ -980,6 +984,10 @@ describe('@user --', () => {
   describe('command properties', () => {
     it('has the name "deduct points"', () => {
       expect(commands.deductPoints.data.name).toBe('deduct points');
+    });
+
+    it('is registrable', () => {
+      expect(commands.deductPoints.isManuallyRegistrable).toBe(true);
     });
   });
 

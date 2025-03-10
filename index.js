@@ -18,7 +18,7 @@ if (missingMandatoryEnvKeys.length) {
 require('./bin/deploy-commands');
 
 // Register points/party parrot features
-globSync('./bot-commands/{points,party-parrot}/*.js', {
+globSync('./bot-commands/party-parrot/*.js', {
   ignore: 'bot-commands/**/*.test.js',
 }).forEach((file) => {
   require(`${path.resolve(file)}`); // eslint-disable-line global-require, import/no-dynamic-require

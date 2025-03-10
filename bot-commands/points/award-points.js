@@ -1,6 +1,5 @@
 const axios = require('axios');
 const config = require('../../config');
-const { registerBotCommand } = require('../../botEngine');
 const club40Gifs = require('../club-40/club_40_gifs.json');
 const { isAdmin } = require('../../utils/is-admin');
 
@@ -97,6 +96,7 @@ const doublePointsPlusRegex = '\\?(\\+){2,}';
 
 const awardPoints = {
   data: { name: 'award points' },
+  isManuallyRegistrable: true,
   // uses a negative lookback to isolate the command
   // followed by the Discord User, a whitespace character and either the star or plus incrementer
   regex: new RegExp(
@@ -189,7 +189,5 @@ const awardPoints = {
     );
   },
 };
-
-registerBotCommand(awardPoints.regex, awardPoints.cb);
 
 module.exports = awardPoints;
