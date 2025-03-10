@@ -7,7 +7,10 @@ const {
   User,
   Member,
 } = require('discord.js');
-const commands = { ...require('./award-points'), ...require('./deduct-points') };
+const commands = {
+  awardPoints: require('./award-points'),
+  deductPoints: require('./deduct-points'),
+};
 
 axios.post = jest.fn();
 
@@ -89,6 +92,12 @@ beforeEach(() => {
 });
 
 describe('award points', () => {
+  describe('command properties', () => {
+    it('has the name "award points"', () => {
+      expect(commands.awardPoints.data.name).toBe('award points');
+    });
+  });
+
   describe('regex ++', () => {
     it.each([
       ['<@!123456789> ++'],
@@ -968,6 +977,12 @@ describe('?++ callback', () => {
 });
 
 describe('@user --', () => {
+  describe('command properties', () => {
+    it('has the name "deduct points"', () => {
+      expect(commands.deductPoints.data.name).toBe('deduct points');
+    });
+  });
+
   describe('regex', () => {
     it.each([
       ['<@!123456789> --'],

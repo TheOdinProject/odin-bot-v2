@@ -96,6 +96,7 @@ const plusRegex = '(\\+){2,}';
 const doublePointsPlusRegex = '\\?(\\+){2,}';
 
 const awardPoints = {
+  data: { name: 'award points' },
   // uses a negative lookback to isolate the command
   // followed by the Discord User, a whitespace character and either the star or plus incrementer
   regex: new RegExp(
@@ -191,4 +192,4 @@ const awardPoints = {
 
 registerBotCommand(awardPoints.regex, awardPoints.cb);
 
-module.exports = { awardPoints };
+module.exports = awardPoints;
