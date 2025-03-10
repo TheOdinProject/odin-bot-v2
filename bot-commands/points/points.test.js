@@ -7,7 +7,8 @@ const {
   User,
   Member,
 } = require('discord.js');
-const commands = require('./points');
+const awardPoints = require('./award-points');
+const deductPoints = require('./deduct-points');
 
 axios.post = jest.fn();
 
@@ -22,10 +23,6 @@ const gifContainer = [
 ];
 
 jest.mock('../club-40/club_40_gifs.json', () => gifContainer);
-
-jest.mock('../../botEngine.js', () => ({
-  registerBotCommand: jest.fn(),
-}));
 
 jest.mock('discord.js', () => ({
   ...jest.requireActual('discord.js'),
@@ -89,6 +86,16 @@ beforeEach(() => {
 });
 
 describe('award points', () => {
+  describe('command properties', () => {
+    it('has the name "award points"', () => {
+      expect(awardPoints.data.name).toBe('award points');
+    });
+
+    it('is registrable', () => {
+      expect(awardPoints.isManuallyRegistrable).toBe(true);
+    });
+  });
+
   describe('regex ++', () => {
     it.each([
       ['<@!123456789> ++'],
@@ -96,7 +103,7 @@ describe('award points', () => {
       ['<@!123456789> ++++++++++++'],
       ['thanks <@!123456789> ++'],
     ])("%s' - triggers the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      expect(string.match(awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -108,7 +115,7 @@ describe('award points', () => {
       ['/++'],
       ['```function("<@!123456789> ++", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+      expect(string.match(awardPoints.regex)).toBeFalsy();
     });
 
     it.each([
@@ -117,7 +124,7 @@ describe('award points', () => {
       ['Hey <@!123456789> ++'],
       ['/ <@!123456789> ++ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      expect(string.match(awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -130,7 +137,7 @@ describe('award points', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+        expect(string.match(awardPoints.regex)).toBeFalsy();
       },
     );
   });
@@ -142,7 +149,7 @@ describe('award points', () => {
       ['<@!123456789> ?++++++++++++'],
       ['thanks <@!123456789> ?++'],
     ])("%s' - triggers the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      expect(string.match(awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -154,7 +161,7 @@ describe('award points', () => {
       ['/?++'],
       ['```function("<@!123456789> ?++", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+      expect(string.match(awardPoints.regex)).toBeFalsy();
     });
 
     it.each([
@@ -163,7 +170,7 @@ describe('award points', () => {
       ['Hey <@!123456789> ?++'],
       ['/ <@!123456789> ?++ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      expect(string.match(awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -176,7 +183,7 @@ describe('award points', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+        expect(string.match(awardPoints.regex)).toBeFalsy();
       },
     );
   });
@@ -185,7 +192,7 @@ describe('award points', () => {
     it.each([['<@!123456789> ⭐'], ['thanks <@!123456789> ⭐']])(
       "'%s' - correct strings trigger the callback",
       (string) => {
-        expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+        expect(string.match(awardPoints.regex)).toBeTruthy();
       },
     );
 
@@ -198,7 +205,7 @@ describe('award points', () => {
       ['/⭐'],
       ['```function("<@!123456789> ⭐", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+      expect(string.match(awardPoints.regex)).toBeFalsy();
     });
 
     it.each([
@@ -207,7 +214,7 @@ describe('award points', () => {
       ['Hey <@!123456789> ⭐'],
       ['/ <@!123456789> ⭐ ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(string.match(commands.awardPoints.regex)).toBeTruthy();
+      expect(string.match(awardPoints.regex)).toBeTruthy();
     });
 
     it.each([
@@ -220,7 +227,7 @@ describe('award points', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(string.match(commands.awardPoints.regex)).toBeFalsy();
+        expect(string.match(awardPoints.regex)).toBeFalsy();
       },
     );
   });
@@ -249,7 +256,7 @@ describe('callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -272,7 +279,7 @@ describe('callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -298,7 +305,7 @@ describe('callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -356,7 +363,7 @@ describe('callback', () => {
         },
       });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
 
     expect(data.channel.send).toHaveBeenCalledTimes(4);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
@@ -384,7 +391,7 @@ describe('callback', () => {
         },
       });
 
-      await commands.awardPoints.cb(data);
+      await awardPoints.cb(data);
 
       expect(data.channel.send).toHaveBeenCalledTimes(2);
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
@@ -410,7 +417,7 @@ describe('callback', () => {
         },
       });
 
-      await commands.awardPoints.cb(data);
+      await awardPoints.cb(data);
 
       expect(data.channel.send).toHaveBeenCalledTimes(6);
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
@@ -448,7 +455,7 @@ describe('callback', () => {
           },
         });
 
-      await commands.awardPoints.cb(data);
+      await awardPoints.cb(data);
 
       expect(data.channel.send).toHaveBeenCalledTimes(3);
       expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
@@ -524,7 +531,7 @@ describe('callback', () => {
           points: (mentionedUser5.points += 1),
         },
       });
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalledTimes(6);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -551,7 +558,7 @@ describe('callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -568,7 +575,7 @@ describe('callback', () => {
       guild: Guild([author]),
     };
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -602,11 +609,11 @@ describe('callback', () => {
       guild: Guild([author, mentionedUser]),
     };
 
-    await commands.awardPoints.cb(botSpamChannelData);
+    await awardPoints.cb(botSpamChannelData);
     expect(botSpamChannelData.channel.send).toHaveBeenCalled();
     expect(botSpamChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
 
-    await commands.awardPoints.cb(bannedChannelData);
+    await awardPoints.cb(bannedChannelData);
     expect(bannedChannelData.channel.send).toHaveBeenCalled();
     expect(bannedChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -639,7 +646,7 @@ describe('?++ callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -667,7 +674,7 @@ describe('?++ callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -694,7 +701,7 @@ describe('?++ callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -724,7 +731,7 @@ describe('?++ callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -786,7 +793,7 @@ describe('?++ callback', () => {
         },
       });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalledTimes(4);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -866,7 +873,7 @@ describe('?++ callback', () => {
         },
       });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalledTimes(6);
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -897,7 +904,7 @@ describe('?++ callback', () => {
       },
     });
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
     expect(data.channel.send.mock.calls[1][0]).toMatchSnapshot();
@@ -918,7 +925,7 @@ describe('?++ callback', () => {
       member,
     };
 
-    await commands.awardPoints.cb(data);
+    await awardPoints.cb(data);
     expect(data.channel.send).toHaveBeenCalled();
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -957,24 +964,34 @@ describe('?++ callback', () => {
       member,
     };
 
-    await commands.awardPoints.cb(botSpamChannelData);
+    await awardPoints.cb(botSpamChannelData);
     expect(botSpamChannelData.channel.send).toHaveBeenCalled();
     expect(botSpamChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
 
-    await commands.awardPoints.cb(bannedChannelData);
+    await awardPoints.cb(bannedChannelData);
     expect(bannedChannelData.channel.send).toHaveBeenCalled();
     expect(bannedChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
 });
 
 describe('@user --', () => {
+  describe('command properties', () => {
+    it('has the name "deduct points"', () => {
+      expect(deductPoints.data.name).toBe('deduct points');
+    });
+
+    it('is registrable', () => {
+      expect(deductPoints.isManuallyRegistrable).toBe(true);
+    });
+  });
+
   describe('regex', () => {
     it.each([
       ['<@!123456789> --'],
       ['thanks <@!123456789> --'],
       ['<@!123456789>--'],
     ])('correct strings trigger the callback', (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeTruthy();
+      expect(deductPoints.regex.test(string)).toBeTruthy();
     });
     it.each([
       ['--'],
@@ -985,7 +1002,7 @@ describe('@user --', () => {
       ['/--'],
       ['```function("<@!123456789> --", () => {}```'],
     ])("'%s' does not trigger the callback", (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeFalsy();
+      expect(deductPoints.regex.test(string)).toBeFalsy();
     });
 
     it.each([
@@ -994,7 +1011,7 @@ describe('@user --', () => {
       ['Hey <@!123456789> --'],
       ['/ <@!123456789>-- ^ /me /leaderboard /tests$*'],
     ])("'%s' - command can be anywhere in the string", (string) => {
-      expect(commands.deductPoints.regex.test(string)).toBeTruthy();
+      expect(deductPoints.regex.test(string)).toBeTruthy();
     });
 
     it.each([
@@ -1007,14 +1024,14 @@ describe('@user --', () => {
     ])(
       "'%s' - command should be its own word/group - no leading or trailing characters",
       (string) => {
-        expect(commands.deductPoints.regex.test(string)).toBeFalsy();
+        expect(deductPoints.regex.test(string)).toBeFalsy();
       },
     );
   });
 
   describe('callback', () => {
     it('returns correct output', async () => {
-      expect(commands.deductPoints.cb()).toMatchSnapshot();
+      expect(deductPoints.cb()).toMatchSnapshot();
     });
   });
 });

@@ -1,7 +1,8 @@
-const { registerBotCommand } = require('../../botEngine');
 const { randomInt } = require('../../utils/random-int');
 
 const command = {
+  data: { name: 'party parrot' },
+  isManuallyRegistrable: true,
   regex: /partyparrot|party_parrot|party parrot|oiseau/,
   cb: ({ content }) => {
     const parrots = [
@@ -28,7 +29,5 @@ const command = {
     return `${parrots[index]}`;
   },
 };
-
-registerBotCommand(command.regex, command.cb);
 
 module.exports = command;
