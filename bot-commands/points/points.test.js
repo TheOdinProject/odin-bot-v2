@@ -7,7 +7,7 @@ const {
   User,
   Member,
 } = require('discord.js');
-const commands = require('./points');
+const commands = { ...require('./points'), ...require('./deduct-points') };
 
 axios.post = jest.fn();
 

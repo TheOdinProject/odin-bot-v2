@@ -43,14 +43,6 @@ function getUserIdsFromMessage(text, regex, authorMember, channel) {
   return matches;
 }
 
-const deductPoints = {
-  regex: /(?<!\S)<@!?(\d+)>\s?(--)(?!\S)/,
-  cb: () =>
-    'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
-};
-
-registerBotCommand(deductPoints.regex, deductPoints.cb);
-
 async function addPointsToUser(discordId, numPoints) {
   try {
     const pointsBotResponse = await axios.post(
@@ -199,9 +191,4 @@ const awardPoints = {
 
 registerBotCommand(awardPoints.regex, awardPoints.cb);
 
-module.exports = {
-  addPointsToUser,
-  awardPoints,
-  deductPoints,
-  getUserIdsFromMessage,
-};
+module.exports = { awardPoints };
