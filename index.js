@@ -1,8 +1,10 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
-const { token } = require('./config');
+const { token, channels } = require('./config');
 const events = require('./events');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
+const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
+// check all mandatory env variables are set
 const missingMandatoryEnvKeys = [
   'DISCORD_API_KEY',
   'DISCORD_CLIENT_ID',
@@ -10,6 +12,12 @@ const missingMandatoryEnvKeys = [
 ].filter((key) => !process.env[key]);
 if (missingMandatoryEnvKeys.length) {
   throw new MissingEnvVarError(missingMandatoryEnvKeys);
+}
+
+// check all channel IDs are unique
+const duplicateKeys = DuplicateIdsError.checkForDuplicateIds(channels);
+if (duplicateKeys.length) {
+  throw new DuplicateIdsError(duplicateKeys);
 }
 
 require('./bin/deploy-commands');
