@@ -5,13 +5,21 @@ const commandFiles = globSync('./bot-commands/**/*.js', {
   ignore: ['bot-commands/*.js', 'bot-commands/**/*.test.js'],
 });
 
-const commands = new Map();
+const discordRegistrableCommands = new Map();
+const manuallyRegistrableCommands = new Map();
 
 commandFiles.forEach((file) => {
   const filePath = path.resolve(file);
   /* eslint-disable global-require, import/no-dynamic-require */
   const command = require(filePath);
-  commands.set(command.data.name, command);
+
+  if (command.data) {
+    discordRegistrableCommands.set(command.data.name, command);
+  }
+  if (command.legacy || !command.data) {
+    const commandToSet = command.legacy ?? command;
+    manuallyRegistrableCommands.set(commandToSet.name, commandToSet);
+  }
 });
 
-module.exports = commands;
+module.exports = { discordRegistrableCommands, manuallyRegistrableCommands };

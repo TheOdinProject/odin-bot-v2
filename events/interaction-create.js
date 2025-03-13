@@ -1,12 +1,12 @@
 const { Events } = require('discord.js');
-const newEraCommands = require('../bot-commands');
+const { discordRegistrableCommands } = require('../bot-commands');
 const FormatCodeService = require('../services/format-code');
 
 module.exports = {
   name: Events.InteractionCreate,
   execute: () => async (interaction) => {
     if (interaction.isCommand()) {
-      const command = newEraCommands.get(interaction.commandName);
+      const command = discordRegistrableCommands.get(interaction.commandName);
 
       if (!command) return;
 
