@@ -24,6 +24,7 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'xy',
     regex: /(?<!\S)!xy(?!\S)/,
     cb: () => ({ embeds: [xyEmbed] }),
   },

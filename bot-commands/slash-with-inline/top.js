@@ -24,6 +24,7 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'top',
     regex: /(?<!\S)!top(?!\S)/,
     cb: () => ({ embeds: [topEmbed] }),
   },

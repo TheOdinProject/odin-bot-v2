@@ -1,6 +1,10 @@
-const { legacy: command } = require('./top');
+const command = require('./top').legacy;
 
 describe('!top', () => {
+  it('has the name "top"', () => {
+    expect(command.name).toBe('top');
+  });
+
   describe('regex', () => {
     it.each([['!top'], [' !top'], ['!top @odin-bot'], ['@odin-bot !top']])(
       'correct strings trigger the callback',
