@@ -86,14 +86,8 @@ beforeEach(() => {
 });
 
 describe('award points', () => {
-  describe('command properties', () => {
-    it('has the name "award points"', () => {
-      expect(awardPoints.data.name).toBe('award points');
-    });
-
-    it('is registrable', () => {
-      expect(awardPoints.isManuallyRegistrable).toBe(true);
-    });
+  it('has the name "award points"', () => {
+    expect(awardPoints.name).toBe('award points');
   });
 
   describe('regex ++', () => {
@@ -975,14 +969,8 @@ describe('?++ callback', () => {
 });
 
 describe('@user --', () => {
-  describe('command properties', () => {
-    it('has the name "deduct points"', () => {
-      expect(deductPoints.data.name).toBe('deduct points');
-    });
-
-    it('is registrable', () => {
-      expect(deductPoints.isManuallyRegistrable).toBe(true);
-    });
+  it('has the name "deduct points"', () => {
+    expect(deductPoints.name).toBe('deduct points');
   });
 
   describe('regex', () => {

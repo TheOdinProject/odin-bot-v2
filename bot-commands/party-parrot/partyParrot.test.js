@@ -3,11 +3,7 @@ const { randomInt } = require('../../utils/random-int');
 
 describe('/partyparrot', () => {
   it('has the name "party parrot"', () => {
-    expect(command.data.name).toBe('party parrot');
-  });
-
-  it('is registrable', () => {
-    expect(command.isManuallyRegistrable).toBe(true);
+    expect(command.name).toBe('party parrot');
   });
 
   it.each([

@@ -41,6 +41,7 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'code',
     regex: /(?<!\S)!code(?!\S)/,
     cb: ({ mentions }) => {
       let users = '';

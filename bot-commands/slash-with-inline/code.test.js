@@ -1,9 +1,13 @@
-const { legacy: command } = require('./code');
+const command = require('./code').legacy;
 const {
   generateMentions,
 } = require('../../utils/slash-command-helpers/mockData');
 
 describe('!code', () => {
+  it('has the name "code"', () => {
+    expect(command.name).toBe('code');
+  });
+
   it.each([
     ['!code'],
     [' !code'],

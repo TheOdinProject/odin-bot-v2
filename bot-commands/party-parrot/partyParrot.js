@@ -1,8 +1,7 @@
 const { randomInt } = require('../../utils/random-int');
 
 const command = {
-  data: { name: 'party parrot' },
-  isManuallyRegistrable: true,
+  name: 'party parrot',
   regex: /partyparrot|party_parrot|party parrot|oiseau/,
   cb: ({ content }) => {
     const parrots = [
