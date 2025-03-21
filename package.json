@@ -36,6 +36,15 @@
     "nodemon": "^3.1.9"
   },
   "lint-staged": {
-    "*.js": "npx eslint"
+    "!(*.js)": "prettier --check",
+    "!(*test).js": [
+      "prettier --check",
+      "eslint"
+    ],
+    "*test.js": [
+      "prettier --check",
+      "eslint",
+      "npm run test"
+    ]
   }
 }
