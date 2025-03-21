@@ -2,6 +2,10 @@ const command = require('./partyParrot');
 const { randomInt } = require('../../utils/random-int');
 
 describe('/partyparrot', () => {
+  it('has the name "party parrot"', () => {
+    expect(command.name).toBe('party parrot');
+  });
+
   it.each([
     ['party parrot'],
     ['/party parrot'],

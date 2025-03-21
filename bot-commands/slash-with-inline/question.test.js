@@ -1,6 +1,10 @@
-const { legacy: question } = require('./question');
+const question = require('./question').legacy;
 
 describe('!question', () => {
+  it('has the name "question"', () => {
+    expect(question.name).toBe('question');
+  });
+
   describe('regex', () => {
     it.each([
       ['!question'],

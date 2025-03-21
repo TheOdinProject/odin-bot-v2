@@ -6,19 +6,22 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
-const { registerBotCommand } = require('../botEngine');
-const commands = Array.from(require('../bot-commands').values());
+const { registerBotCommand } = require('../events').get('messageCreate');
+const {
+  discordRegistrableCommands,
+  manuallyRegistrableCommands,
+} = require('../bot-commands');
 
-// Registering inline ! commands
-commands.forEach((command) => {
-  if (command.legacy) {
-    registerBotCommand(command.legacy.regex, command.legacy.cb);
-  }
+// Registering non-slash commands like inline ! commands, points and party parrot
+manuallyRegistrableCommands.forEach((command) => {
+  registerBotCommand(command.regex, command.cb);
 });
 
 // Registering slash/context-menu commands
 const rest = new REST({ version: '10' }).setToken(token);
-const commandsMetadata = commands.map((command) => command.data.toJSON());
+const commandsMetadata = Array.from(discordRegistrableCommands.values()).map(
+  (command) => command.data.toJSON(),
+);
 rest
   .put(Routes.applicationGuildCommands(clientId, guildId), {
     body: commandsMetadata,

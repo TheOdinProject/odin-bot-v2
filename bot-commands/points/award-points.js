@@ -1,6 +1,5 @@
 const axios = require('axios');
 const config = require('../../config');
-const { registerBotCommand } = require('../../botEngine');
 const club40Gifs = require('../club-40/club_40_gifs.json');
 const { isAdmin } = require('../../utils/is-admin');
 
@@ -42,14 +41,6 @@ function getUserIdsFromMessage(text, regex, authorMember, channel) {
   }
   return matches;
 }
-
-const deductPoints = {
-  regex: /(?<!\S)<@!?(\d+)>\s?(--)(?!\S)/,
-  cb: () =>
-    'http://media.riffsy.com/images/636a97aa416ad674eb2b72d4a6e9ad6c/tenor.gif',
-};
-
-registerBotCommand(deductPoints.regex, deductPoints.cb);
 
 async function addPointsToUser(discordId, numPoints) {
   try {
@@ -104,6 +95,7 @@ const plusRegex = '(\\+){2,}';
 const doublePointsPlusRegex = '\\?(\\+){2,}';
 
 const awardPoints = {
+  name: 'award points',
   // uses a negative lookback to isolate the command
   // followed by the Discord User, a whitespace character and either the star or plus incrementer
   regex: new RegExp(
@@ -197,11 +189,4 @@ const awardPoints = {
   },
 };
 
-registerBotCommand(awardPoints.regex, awardPoints.cb);
-
-module.exports = {
-  addPointsToUser,
-  awardPoints,
-  deductPoints,
-  getUserIdsFromMessage,
-};
+module.exports = awardPoints;
