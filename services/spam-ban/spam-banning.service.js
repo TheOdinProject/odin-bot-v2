@@ -113,7 +113,6 @@ class SpamBanningService {
       const option = await response.awaitMessageComponent({ time: 60_000 });
 
       return { result: option.customId };
-
     } catch {
       return { result: 'timeout' };
     }
