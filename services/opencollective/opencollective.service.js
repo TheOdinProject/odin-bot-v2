@@ -1,6 +1,6 @@
+const { MessageFlags } = require('discord.js');
 const config = require('../../config');
 const RedisService = require('../redis');
-const { MessageFlags } = require('discord.js');
 
 class OpenCollectiveService {
   static API_URL = 'https://api.opencollective.com/graphql/v2';
