@@ -13,10 +13,22 @@ afterAll(() => {
 
 function createInteractionMock(message, guild) {
   let replyArg;
+  let messageComponentReturn;
 
   return {
+    setMessageComponentReturn: (arg) => {
+      messageComponentReturn = arg;
+    },
     reply: jest.fn((arg) => {
       replyArg = arg;
+      return {
+        awaitMessageComponent: jest.fn(() => {
+          if (messageComponentReturn === 'timeout') {
+            return Promise.reject();
+          }
+          return Promise.resolve({ customId: messageComponentReturn });
+        }),
+      };
     }),
     guild,
     message,
@@ -37,6 +49,8 @@ function createInteractionMock(message, guild) {
       guild.channels.cache
         .find((c) => c.id === config.channels.moderationLogChannelId)
         .getSendArg(),
+
+    editReply: jest.fn(),
   };
 }
 
@@ -65,6 +79,7 @@ function createMessageMock() {
     }),
     getSendArg: () => sendArg,
     getReactArg: () => reactArg,
+    delete: jest.fn(),
   };
 }
 
@@ -105,7 +120,7 @@ function createGuildMock() {
   };
 }
 
-describe('Banning spammer in different channels', () => {
+describe('Banning spammer in automod channel', () => {
   let interactionMock;
   beforeEach(() => {
     const messageMock = createMessageMock();
@@ -120,22 +135,61 @@ describe('Banning spammer in different channels', () => {
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
+});
 
-  it('Does not ban user in different channels other than automod', async () => {
-    interactionMock.message.channelId = null;
-    await SpamBanningService.handleInteraction(interactionMock);
-    expect(interactionMock.guild.members.ban).not.toHaveBeenCalled();
-    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+describe('Banning spammer in other channels', () => {
+  let interactionMock;
+  beforeEach(() => {
+    const messageMock = createMessageMock();
+    messageMock.channelId = '123';
+    const guildMock = createGuildMock();
+    interactionMock = createInteractionMock(messageMock, guildMock);
+  });
 
-    interactionMock.message.channelId = config.channels.moderationLogChannelId;
+  it('Asks for confirmation if not in automod channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(interactionMock.guild.members.ban).not.toHaveBeenCalled();
+    expect(interactionMock.reply).toHaveBeenCalledTimes(1);
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
 
-    interactionMock.message.channelId = '21304782342';
+  it('Bans user and deletes their messages if delete message button clicked', async () => {
+    interactionMock.setMessageComponentReturn('deleteMessages');
     await SpamBanningService.handleInteraction(interactionMock);
-    expect(interactionMock.guild.members.ban).not.toHaveBeenCalled();
+    expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it('Bans user and does not delete their messages if keep message button clicked', async () => {
+    interactionMock.setMessageComponentReturn('dontDeleteMessages');
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getBanArg()).toMatchSnapshot();
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+  });
+
+  it('Still deletes the message that triggered the interaction', async () => {
+    interactionMock.setMessageComponentReturn('dontDeleteMessages');
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.message.delete).toHaveBeenCalledTimes(1);
+  });
+
+  it('Cancels the action if the cancel button is clicked', async () => {
+    interactionMock.setMessageComponentReturn('cancel');
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.editReply).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+    expect(interactionMock.message.delete).not.toHaveBeenCalled();
+    expect(interactionMock.guild.members.ban).not.toHaveBeenCalled();
+  });
+
+  it('Cancels the action if the response times out', async () => {
+    interactionMock.setMessageComponentReturn('timeout');
+    await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.editReply).toHaveBeenCalledTimes(1);
+    expect(interactionMock.getReplyArg()).toMatchSnapshot();
+    expect(interactionMock.message.delete).not.toHaveBeenCalled();
+    expect(interactionMock.guild.members.ban).not.toHaveBeenCalled();
   });
 });
 
