@@ -1,5 +1,5 @@
 const { RESTJSONErrorCodes } = require('discord-api-types/v10');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 const ThreadCreator = require('../utils/thread-creator');
 const { modmailUserId, channels } = require('../config');
 
@@ -10,7 +10,7 @@ class ModerationMessageDeleteService {
     if (!message || !message.deletable) {
       await ModerationMessageDeleteService.#interactionReply(interaction, {
         content: 'Message cannot be deleted. It may have been deleted already.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -22,14 +22,14 @@ class ModerationMessageDeleteService {
       await ModerationMessageDeleteService.#interactionReply(interaction, {
         content:
           'Automod message deleted. This action did not affect the message that was flagged/blocked by Automod. You would want to use the app-delete command on the message directly to have the message deleted and member notified.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
 
     await ModerationMessageDeleteService.#interactionReply(interaction, {
       content: 'Message deleted.',
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
 
     if (message.author.bot) return;

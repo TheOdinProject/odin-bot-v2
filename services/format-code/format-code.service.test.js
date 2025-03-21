@@ -1,4 +1,5 @@
 const discordjs = require('discord.js');
+const { MessageFlags } = require('discord.js');
 const FormatCodeService = require('./format-code.service');
 
 // mock discord.js methods used in FormatCodeService
@@ -42,7 +43,7 @@ describe('FormatCodeService', () => {
           'mockInteraction',
           {
             content: 'Error',
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           },
         );
       });

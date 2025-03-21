@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const OpenCollectiveService = require('../../services/opencollective');
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
       console.error(error);
       await interaction.reply({
         content: 'Something went wrong. Please try again later.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   },
