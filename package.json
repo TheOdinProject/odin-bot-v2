@@ -35,11 +35,6 @@
     "lint-staged": "^15.5.0",
     "nodemon": "^3.1.9"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm run test"
-    }
-  },
   "lint-staged": {
     "*.js": "npx eslint"
   }
