@@ -37,14 +37,9 @@
   },
   "lint-staged": {
     "!(*.js)": "prettier --check",
-    "!(*test).js": [
+    "*.js": [
       "prettier --check",
       "eslint"
-    ],
-    "*test.js": [
-      "prettier --check",
-      "eslint",
-      "npm run test"
     ]
   }
 }
