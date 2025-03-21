@@ -81,8 +81,8 @@ class SpamBanningService {
   }
 
   static async #AskForDeleteMessages(interaction) {
-    const dontDeleteMessages = new ButtonBuilder()
-      .setCustomId('dontDeleteMessages')
+    const keepMessages = new ButtonBuilder()
+      .setCustomId('keepMessages')
       .setLabel("Don't delete messages")
       .setStyle(ButtonStyle.Danger);
 
@@ -97,7 +97,7 @@ class SpamBanningService {
       .setStyle(ButtonStyle.Secondary);
 
     const row = new ActionRowBuilder().addComponents(
-      dontDeleteMessages,
+      keepMessages,
       deleteMessages,
       cancel,
     );
@@ -106,19 +106,14 @@ class SpamBanningService {
       content: 'Would you like to delete messages from the user being banned?',
       components: [row],
       ephemeral: true,
-      withReponse: true,
+      withResponse: true,
     });
 
     try {
       const option = await response.awaitMessageComponent({ time: 60_000 });
 
-      if (option.customId === 'deleteMessages') {
-        return { result: 'deleteMessages' };
-      }
-      if (option.customId === 'dontDeleteMessages') {
-        return { result: 'dontDeleteMessages' };
-      }
-      return { result: 'cancel' };
+      return { result: option.customId };
+
     } catch {
       return { result: 'timeout' };
     }

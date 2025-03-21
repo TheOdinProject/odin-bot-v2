@@ -161,7 +161,7 @@ describe('Banning spammer in other channels', () => {
   });
 
   it('Bans user and does not delete their messages if keep message button clicked', async () => {
-    interactionMock.setMessageComponentReturn('dontDeleteMessages');
+    interactionMock.setMessageComponentReturn('keepMessages');
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
@@ -169,7 +169,7 @@ describe('Banning spammer in other channels', () => {
   });
 
   it('Still deletes the message that triggered the interaction', async () => {
-    interactionMock.setMessageComponentReturn('dontDeleteMessages');
+    interactionMock.setMessageComponentReturn('keepMessages');
     await SpamBanningService.handleInteraction(interactionMock);
     expect(interactionMock.message.delete).toHaveBeenCalledTimes(1);
   });

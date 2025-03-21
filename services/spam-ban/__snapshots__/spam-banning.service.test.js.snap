@@ -90,7 +90,7 @@ exports[`Banning spammer in other channels Asks for confirmation if not in autom
     {
       "components": [
         {
-          "custom_id": "dontDeleteMessages",
+          "custom_id": "keepMessages",
           "emoji": undefined,
           "label": "Don't delete messages",
           "style": 4,
@@ -116,7 +116,7 @@ exports[`Banning spammer in other channels Asks for confirmation if not in autom
   ],
   "content": "Would you like to delete messages from the user being banned?",
   "ephemeral": true,
-  "withReponse": true,
+  "withResponse": true,
 }
 `;
 
@@ -133,7 +133,7 @@ exports[`Banning spammer in other channels Bans user and deletes their messages 
     {
       "components": [
         {
-          "custom_id": "dontDeleteMessages",
+          "custom_id": "keepMessages",
           "emoji": undefined,
           "label": "Don't delete messages",
           "style": 4,
@@ -159,7 +159,7 @@ exports[`Banning spammer in other channels Bans user and deletes their messages 
   ],
   "content": "Would you like to delete messages from the user being banned?",
   "ephemeral": true,
-  "withReponse": true,
+  "withResponse": true,
 }
 `;
 
@@ -176,7 +176,7 @@ exports[`Banning spammer in other channels Bans user and does not delete their m
     {
       "components": [
         {
-          "custom_id": "dontDeleteMessages",
+          "custom_id": "keepMessages",
           "emoji": undefined,
           "label": "Don't delete messages",
           "style": 4,
@@ -202,7 +202,7 @@ exports[`Banning spammer in other channels Bans user and does not delete their m
   ],
   "content": "Would you like to delete messages from the user being banned?",
   "ephemeral": true,
-  "withReponse": true,
+  "withResponse": true,
 }
 `;
 
@@ -212,7 +212,7 @@ exports[`Banning spammer in other channels Cancels the action if the cancel butt
     {
       "components": [
         {
-          "custom_id": "dontDeleteMessages",
+          "custom_id": "keepMessages",
           "emoji": undefined,
           "label": "Don't delete messages",
           "style": 4,
@@ -238,7 +238,7 @@ exports[`Banning spammer in other channels Cancels the action if the cancel butt
   ],
   "content": "Would you like to delete messages from the user being banned?",
   "ephemeral": true,
-  "withReponse": true,
+  "withResponse": true,
 }
 `;
 
@@ -248,7 +248,7 @@ exports[`Banning spammer in other channels Cancels the action if the response ti
     {
       "components": [
         {
-          "custom_id": "dontDeleteMessages",
+          "custom_id": "keepMessages",
           "emoji": undefined,
           "label": "Don't delete messages",
           "style": 4,
@@ -274,7 +274,7 @@ exports[`Banning spammer in other channels Cancels the action if the response ti
   ],
   "content": "Would you like to delete messages from the user being banned?",
   "ephemeral": true,
-  "withReponse": true,
+  "withResponse": true,
 }
 `;
 
