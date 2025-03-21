@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
