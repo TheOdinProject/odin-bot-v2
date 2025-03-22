@@ -22,7 +22,7 @@ const gifContainer = [
   },
 ];
 
-jest.mock('../club-40/club_40_gifs.json', () => gifContainer);
+jest.mock('../points/club-40-gifs.json', () => gifContainer);
 
 jest.mock('discord.js', () => ({
   ...jest.requireActual('discord.js'),
