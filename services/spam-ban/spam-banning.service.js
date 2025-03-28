@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 const { isAdmin } = require('../../utils/is-admin');
 const config = require('../../config');
 
@@ -10,7 +10,7 @@ class SpamBanningService {
       if (message.author.bot || isAdmin(message.member)) {
         interaction.reply({
           content: 'You do not have the permission to ban this user',
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -18,12 +18,12 @@ class SpamBanningService {
         interaction.reply({
           content:
             'This command can only be used in the automod block channel.',
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
       const reply = await SpamBanningService.#banUser(interaction);
-      interaction.reply({ content: reply, ephemeral: true });
+      interaction.reply({ content: reply, flags: MessageFlags.Ephemeral });
       await SpamBanningService.#announceBan(interaction, message);
     } catch (error) {
       console.error(error);
