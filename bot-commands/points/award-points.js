@@ -1,6 +1,6 @@
 const axios = require('axios');
 const config = require('../../config');
-const club40Gifs = require('../club-40/club_40_gifs.json');
+const club40Gifs = require('./club-40-gifs.json');
 const { isAdmin } = require('../../utils/is-admin');
 
 axios.default.defaults.headers.common.Authorization = `Token ${config.pointsbot.token}`;
