@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky",
     "start": "node index.js",
     "dev": "nodemon --watch . --watch .env index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
@@ -34,12 +35,11 @@
     "lint-staged": "^15.5.0",
     "nodemon": "^3.1.9"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm run test"
-    }
-  },
   "lint-staged": {
-    "*.js": "npx eslint"
+    "!(*.js)": "prettier --check",
+    "*.js": [
+      "prettier --check",
+      "eslint"
+    ]
   }
 }
