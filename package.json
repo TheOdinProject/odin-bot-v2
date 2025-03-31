@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky",
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon --watch . --watch .env index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --cache --write",
     "eslint": "eslint '**/*.js'"
@@ -13,33 +14,32 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/rest": "^2.3.0",
-    "axios": "^1.7.7",
-    "discord-api-types": "^0.37.103",
-    "discord.js": "^14.16.3",
-    "dotenv": "^16.4.5",
-    "glob": "^11.0.0",
-    "ioredis": "^5.4.1",
-    "prettier": "^3.3.3"
+    "@discordjs/rest": "^2.4.3",
+    "axios": "^1.8.4",
+    "discord-api-types": "^0.37.119",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "glob": "^11.0.1",
+    "ioredis": "^5.6.0",
+    "prettier": "^3.5.3"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.25.9",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/eslint-parser": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-import": "^2.31.0",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
-    "lint-staged": "^15.2.10",
-    "nodemon": "^3.1.7"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm run test"
-    }
+    "lint-staged": "^15.5.0",
+    "nodemon": "^3.1.9"
   },
   "lint-staged": {
-    "*.js": "npx eslint"
+    "!(*.js)": "prettier --check",
+    "*.js": [
+      "prettier --check",
+      "eslint"
+    ]
   }
 }

@@ -7,7 +7,26 @@ class ModerationMessageDeleteService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage('message');
 
+    if (!message || !message.deletable) {
+      await ModerationMessageDeleteService.#interactionReply(interaction, {
+        content: 'Message cannot be deleted. It may have been deleted already.',
+        ephemeral: true,
+      });
+      return;
+    }
+
     await ModerationMessageDeleteService.#deleteMessage(message);
+
+    // For automod or system messages, just delete without notification
+    if (message.system || message.author.id === interaction.client.user.id) {
+      await ModerationMessageDeleteService.#interactionReply(interaction, {
+        content:
+          'Automod message deleted. This action did not affect the message that was flagged/blocked by Automod. You would want to use the app-delete command on the message directly to have the message deleted and member notified.',
+        ephemeral: true,
+      });
+      return;
+    }
+
     await ModerationMessageDeleteService.#interactionReply(interaction, {
       content: 'Message deleted.',
       ephemeral: true,
@@ -71,15 +90,21 @@ class ModerationMessageDeleteService {
   }
 
   static async #messageBuilder(message) {
-    return new EmbedBuilder()
-      .setTitle('Message Deleted')
-      .setDescription(
-        `
+    // Get content from either message content or embeds
+    let messageContent = message.content;
+
+    // If no content but has embeds, use the embed description
+    if (!messageContent && message.embeds?.length > 0) {
+      messageContent = message.embeds[0].description || 'Automod Message';
+    }
+
+    const embed = new EmbedBuilder().setTitle('Message Deleted').setDescription(
+      `
       Hi <@${message.author.id}>, your message in <#${message.channel.id}> was deleted by a moderator.
 
 Some common reasons for post removal include but isn't limited to;
 - the post was not in line with our discord rules, channel description or community expectations
-- the post didn't follow the specific forum channel guidelines (i.e. feedback trading)
+- the post didn't follow the specific forum channel guidelines
 - the post had downloadable files attached
 - a link was shared without context
 - the post was shared in multiple channels within a short timeframe (cross-posting)
@@ -90,8 +115,14 @@ Please make sure to check the rules of the server and the description of the cha
 You can find our rules including a link to the additional community expectations here <#${channels.rulesChannelId}>
 
 If after reading the rules, channel description or community expectations, you feel this deletion was made in error, feel free to send a dm to <@${modmailUserId}>`,
-      )
-      .setFields([{ name: 'Message:', value: message.content }]);
+    );
+
+    // Only add the field if we have content to show
+    if (messageContent?.trim()) {
+      embed.setFields([{ name: 'Message:', value: messageContent }]);
+    }
+
+    return embed;
   }
 }
 

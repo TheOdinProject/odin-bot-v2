@@ -2,13 +2,20 @@ const discordjs = require('discord.js');
 const FormatCodeService = require('./format-code.service');
 
 // mock discord.js methods used in FormatCodeService
-['EmbedBuilder',
+[
+  'EmbedBuilder',
   'ModalBuilder',
   'TextInputBuilder',
-  'ActionRowBuilder'].forEach((method) => jest.spyOn(discordjs, method));
+  'ActionRowBuilder',
+].forEach((method) => jest.spyOn(discordjs, method));
 
 const mockPrettierFormatter = jest.fn();
-jest.mock('./prettier-formatter', () => (...args) => mockPrettierFormatter(...args));
+jest.mock(
+  './prettier-formatter',
+  () =>
+    (...args) =>
+      mockPrettierFormatter(...args),
+);
 
 describe('FormatCodeService', () => {
   describe('sendFormattedCodeBlock', () => {
@@ -27,11 +34,17 @@ describe('FormatCodeService', () => {
         });
         FormatCodeService.sendMessage.mockImplementationOnce(jest.fn());
 
-        await FormatCodeService.sendFormattedCodeBlock('mockInteraction', codeBlock);
-        expect(FormatCodeService.sendMessage).toHaveBeenCalledWith('mockInteraction', {
-          content: 'Error',
-          ephemeral: true,
-        });
+        await FormatCodeService.sendFormattedCodeBlock(
+          'mockInteraction',
+          codeBlock,
+        );
+        expect(FormatCodeService.sendMessage).toHaveBeenCalledWith(
+          'mockInteraction',
+          {
+            content: 'Error',
+            ephemeral: true,
+          },
+        );
       });
     });
 
@@ -44,10 +57,15 @@ describe('FormatCodeService', () => {
           content: 'const a = 1;',
         };
 
-        FormatCodeService.formatCodeBlockContent.mockImplementationOnce(() => 'const a = 1;');
+        FormatCodeService.formatCodeBlockContent.mockImplementationOnce(
+          () => 'const a = 1;',
+        );
         FormatCodeService.sendMessage.mockImplementationOnce(jest.fn());
 
-        await FormatCodeService.sendFormattedCodeBlock('mockInteraction', codeBlock);
+        await FormatCodeService.sendFormattedCodeBlock(
+          'mockInteraction',
+          codeBlock,
+        );
         // we do not concern ourselves with the exact arguments passed to sendMessage
         expect(FormatCodeService.sendMessage).toHaveBeenCalled();
       });
@@ -72,8 +90,12 @@ describe('FormatCodeService', () => {
           content: 'const a = 1;',
         };
 
-        mockPrettierFormatter.mockImplementationOnce(async () => 'const a = 1;');
-        expect(await FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('const a = 1;');
+        mockPrettierFormatter.mockImplementationOnce(
+          async () => 'const a = 1;',
+        );
+        expect(await FormatCodeService.formatCodeBlockContent(codeBlock)).toBe(
+          'const a = 1;',
+        );
       });
     });
 
@@ -87,7 +109,9 @@ describe('FormatCodeService', () => {
           mockPrettierFormatter.mockImplementationOnce(() => {
             throw new SyntaxError('Syntax Error');
           });
-          expect(await FormatCodeService.formatCodeBlockContent(codeBlock)).toBe('Syntax Error');
+          expect(
+            await FormatCodeService.formatCodeBlockContent(codeBlock),
+          ).toBe('Syntax Error');
         });
       });
 
@@ -100,7 +124,9 @@ describe('FormatCodeService', () => {
           mockPrettierFormatter.mockImplementationOnce(() => {
             throw new Error('Error');
           });
-          expect(async () => FormatCodeService.formatCodeBlockContent(codeBlock)).rejects.toThrow('Error');
+          expect(async () =>
+            FormatCodeService.formatCodeBlockContent(codeBlock),
+          ).rejects.toThrow('Error');
         });
       });
     });
@@ -147,7 +173,8 @@ describe('FormatCodeService', () => {
 
     describe('when message has multiple code blocks', () => {
       describe('when code blocks have lang', () => {
-        const messageContent = '```js\nconst a = 1;\n```\n```html\n<p>hello</p>\n```';
+        const messageContent =
+          '```js\nconst a = 1;\n```\n```html\n<p>hello</p>\n```';
 
         it('returns an array of code blocks with correct lang', () => {
           const codeBlocks = FormatCodeService.findCodeBlocks(messageContent);
@@ -167,7 +194,8 @@ describe('FormatCodeService', () => {
       });
 
       describe('when some code blocks have lang', () => {
-        const messageContent = '```\nconst a = 1;\n```\n```html\n<p>hello</p>\n```\n```css\nbody {\n  color: red;\n}\n```';
+        const messageContent =
+          '```\nconst a = 1;\n```\n```html\n<p>hello</p>\n```\n```css\nbody {\n  color: red;\n}\n```';
 
         it('returns an array of code blocks with correct lang', () => {
           const codeBlocks = FormatCodeService.findCodeBlocks(messageContent);
@@ -189,7 +217,8 @@ describe('FormatCodeService', () => {
       });
 
       describe('when code blocks do not have lang', () => {
-        const messageContent = '```\nconst a = 1;\n```\n```\nconst b = 2;\nconst c = 3;\n```';
+        const messageContent =
+          '```\nconst a = 1;\n```\n```\nconst b = 2;\nconst c = 3;\n```';
 
         it('returns an array of code blocks with undefined lang', () => {
           const codeBlocks = FormatCodeService.findCodeBlocks(messageContent);
@@ -260,7 +289,8 @@ describe('FormatCodeService', () => {
       });
 
       describe('when there is a nested codeblock, so it must only consider outer code block', () => {
-        const messageContent = '```js\nconst a = 1;\n```md\nhello\n```const function = ()=>{}\n```';
+        const messageContent =
+          '```js\nconst a = 1;\n```md\nhello\n```const function = ()=>{}\n```';
         it('returns an array of code blocks with correct lang', () => {
           const codeBlocks = FormatCodeService.findCodeBlocks(messageContent);
           expect(codeBlocks[0].lang).toBe('js');
@@ -268,7 +298,9 @@ describe('FormatCodeService', () => {
 
         it('returns an array of code blocks with correct content', () => {
           const codeBlocks = FormatCodeService.findCodeBlocks(messageContent);
-          expect(codeBlocks[0].content).toBe('const a = 1;\n```md\nhello\n```const function = ()=>{}\n');
+          expect(codeBlocks[0].content).toBe(
+            'const a = 1;\n```md\nhello\n```const function = ()=>{}\n',
+          );
         });
       });
     });

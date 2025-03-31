@@ -8,18 +8,14 @@
       "type": "pwa-node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/index.js"
     },
     {
       "type": "node-terminal",
-      "request":"launch",
+      "request": "launch",
       "name": "Run Tests",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "command": "yarn jest --watch"
     }
   ]

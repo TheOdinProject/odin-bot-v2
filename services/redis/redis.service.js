@@ -1,4 +1,5 @@
 const Redis = require('ioredis');
+const RedisConnectionError = require('../../utils/errors/redis-not-found');
 
 class RedisService {
   static #instance;
@@ -9,6 +10,14 @@ class RedisService {
     }
 
     RedisService.#instance = new Redis(process.env.REDIS_URL);
+    RedisService.#instance.on('connect', () =>
+      console.log(
+        `Successfully connected to Redis at: ${process.env.REDIS_URL}`,
+      ),
+    );
+    RedisService.#instance.on('error', () => {
+      throw new RedisConnectionError();
+    });
   }
 
   static getInstance() {

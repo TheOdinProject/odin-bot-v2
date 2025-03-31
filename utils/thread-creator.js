@@ -9,9 +9,10 @@ const ThreadCreator = () => ({
     members = [],
     messages = [],
   }) => {
-    const threadType = canOpenPrivateThread(channel.guild.premiumTier) && isPrivate
-      ? ChannelType.PrivateThread
-      : ChannelType.PublicThread;
+    const threadType =
+      canOpenPrivateThread(channel.guild.premiumTier) && isPrivate
+        ? ChannelType.PrivateThread
+        : ChannelType.PublicThread;
 
     const thread = await channel.threads.create({
       name,
@@ -19,14 +20,18 @@ const ThreadCreator = () => ({
     });
 
     // add all members in thread
-    await Promise.all(members.map(async (m) => {
-      await thread.members.add(m);
-    }));
+    await Promise.all(
+      members.map(async (m) => {
+        await thread.members.add(m);
+      }),
+    );
 
     // send all messages in thread
-    await Promise.all(messages.map(async (m) => {
-      await thread.send(m);
-    }));
+    await Promise.all(
+      messages.map(async (m) => {
+        await thread.send(m);
+      }),
+    );
 
     return thread;
   },

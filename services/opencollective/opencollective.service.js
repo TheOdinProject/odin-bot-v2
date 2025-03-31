@@ -4,7 +4,8 @@ const RedisService = require('../redis');
 class OpenCollectiveService {
   static API_URL = 'https://api.opencollective.com/graphql/v2';
 
-  static successMessage = 'You have been given the Backer role, thanks for contributing!';
+  static successMessage =
+    'You have been given the Backer role, thanks for contributing!';
 
   static failureMessage = `Oops! Something went wrong. Try again, or contact us through <@${config.modmailUserId}> with a link to your Open Collective profile (https://opencollective.com/YOURUSERNAME) so we can assign the role manually.`;
 
@@ -23,16 +24,15 @@ class OpenCollectiveService {
     const username = interaction.options.getString('username');
     const redis = RedisService.getInstance();
 
-    if (
-      await OpenCollectiveService.isUsernameCached(username, redis)
-    ) {
+    if (await OpenCollectiveService.isUsernameCached(username, redis)) {
       return interaction.reply({
         content: OpenCollectiveService.failureMessage,
         ephemeral: true,
       });
     }
 
-    const data = await OpenCollectiveService.fetchUserOpenCollectiveAccount(username);
+    const data =
+      await OpenCollectiveService.fetchUserOpenCollectiveAccount(username);
 
     if (data.errors) {
       return interaction.reply({
@@ -63,7 +63,8 @@ class OpenCollectiveService {
 
   static isUserOpenCollectiveMember(userAccount) {
     return userAccount.memberOf.nodes.find(
-      (node) => node.account.slug === OpenCollectiveService.ourOpenCollectiveUsername,
+      (node) =>
+        node.account.slug === OpenCollectiveService.ourOpenCollectiveUsername,
     );
   }
 
@@ -104,10 +105,7 @@ class OpenCollectiveService {
       }),
     };
 
-    const result = await fetch(
-      OpenCollectiveService.API_URL,
-      options,
-    );
+    const result = await fetch(OpenCollectiveService.API_URL, options);
     const data = await result.json();
 
     return data;
