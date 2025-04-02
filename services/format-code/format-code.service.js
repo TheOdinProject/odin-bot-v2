@@ -4,6 +4,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
+  MessageFlags,
 } = require('discord.js');
 const prettierFormatter = require('./prettier-formatter');
 
@@ -30,7 +31,7 @@ class FormatCodeService {
     if (!firstCodeBlock) {
       await FormatCodeService.sendMessage(interaction, {
         content: 'No codeblocks found.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -67,7 +68,7 @@ class FormatCodeService {
     } catch (error) {
       await FormatCodeService.sendMessage(interaction, {
         content: error.message,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }

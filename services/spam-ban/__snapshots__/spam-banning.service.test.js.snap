@@ -3,35 +3,35 @@
 exports[`Attempting to ban a bot or team member Does not ban admins 1`] = `
 {
   "content": "You do not have the permission to ban this user",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Attempting to ban a bot or team member Does not ban bots 1`] = `
 {
   "content": "You do not have the permission to ban this user",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Attempting to ban a bot or team member Does not ban core 1`] = `
 {
   "content": "You do not have the permission to ban this user",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Attempting to ban a bot or team member Does not ban maintainers 1`] = `
 {
   "content": "You do not have the permission to ban this user",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Attempting to ban a bot or team member Does not ban moderators 1`] = `
 {
   "content": "You do not have the permission to ban this user",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
@@ -79,28 +79,28 @@ exports[`Banning spammer in different channels Ban user if in the automod channe
 exports[`Banning spammer in different channels Ban user if in the automod channel 2`] = `
 {
   "content": "Successfully banned <@123> for spam.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Banning spammer in different channels Does not ban user in different channels other than automod 1`] = `
 {
   "content": "This command can only be used in the automod block channel.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Banning spammer in different channels Does not ban user in different channels other than automod 2`] = `
 {
   "content": "This command can only be used in the automod block channel.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
 exports[`Banning spammer in different channels Does not ban user in different channels other than automod 3`] = `
 {
   "content": "This command can only be used in the automod block channel.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
@@ -109,7 +109,7 @@ exports[`Banning spammer that has left the server Reacts with the correct emoji 
 exports[`Banning spammer that has left the server Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam but wasn't able to contact the user as they have left the server.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
@@ -124,7 +124,7 @@ exports[`Banning spammer who has DM set to private Reacts with the correct emoji
 exports[`Banning spammer who has DM set to private Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Banned <@123> for spam but wasn't able to contact the user.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
@@ -172,7 +172,7 @@ exports[`Banning spammer with DM enabled Discord ban api is called with the corr
 exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 2`] = `
 {
   "content": "Successfully banned <@123> for spam.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 
@@ -203,7 +203,7 @@ exports[`Banning spammer with DM enabled Reacts with the correct emoji 1`] = `"â
 exports[`Banning spammer with DM enabled Sends back correct interaction reply to calling moderator 1`] = `
 {
   "content": "Successfully banned <@123> for spam.",
-  "ephemeral": true,
+  "flags": 64,
 }
 `;
 

@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, MessageFlags } = require('discord.js');
 const { discordRegistrableCommands } = require('../bot-commands');
 const FormatCodeService = require('../services/format-code');
 
@@ -16,7 +16,7 @@ module.exports = {
         console.error(error);
         await interaction.reply({
           content: 'There was an error while executing this command!',
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
       }
     }
@@ -27,12 +27,15 @@ module.exports = {
           await FormatCodeService.handleModalSubmit(interaction);
           return;
         }
-        interaction.reply({ content: 'Unknown modal submit', ephemeral: true });
+        interaction.reply({
+          content: 'Unknown modal submit',
+          flags: MessageFlags.Ephemeral,
+        });
       } catch (error) {
         console.error(error);
         await interaction.reply({
           content: 'There was an error while executing this command!',
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
       }
     }
