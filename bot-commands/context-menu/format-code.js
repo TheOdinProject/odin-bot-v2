@@ -2,7 +2,7 @@ const {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
   PermissionFlagsBits,
-  MessageFlags
+  MessageFlags,
 } = require('discord.js');
 const FormatCodeService = require('../../services/format-code');
 

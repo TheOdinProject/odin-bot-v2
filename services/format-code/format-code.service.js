@@ -4,7 +4,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
-  MessageFlags
+  MessageFlags,
 } = require('discord.js');
 const prettierFormatter = require('./prettier-formatter');
 

@@ -16,7 +16,7 @@ module.exports = {
         console.error(error);
         await interaction.reply({
           content: 'There was an error while executing this command!',
-          flags: MessageFlags.Ephemeral
+          flags: MessageFlags.Ephemeral,
         });
       }
     }
@@ -27,7 +27,10 @@ module.exports = {
           await FormatCodeService.handleModalSubmit(interaction);
           return;
         }
-        interaction.reply({ content: 'Unknown modal submit', flags: MessageFlags.Ephemeral });
+        interaction.reply({
+          content: 'Unknown modal submit',
+          flags: MessageFlags.Ephemeral,
+        });
       } catch (error) {
         console.error(error);
         await interaction.reply({
