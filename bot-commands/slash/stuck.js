@@ -15,7 +15,7 @@ module.exports = {
       .setTitle("I'm stuck - what can I do?")
       .setDescription(
         `
-Have a look through the following flowchart (click to enlarge) for guidance in how to approach new concepts and problems. Adopting this process can make problem solving much more productive in the long-term!
+Have a look through the following flowchart (click to enlarge) for guidance in how to approach new concepts and problems. Adopting this process can make problem solving much more productive in the long term!
 
 If you would like to ask for help, there is a very good question template you can find via the \`/question\` command which can help you include as much relevant context and structure your question in a way that makes it much easier for others to assist you.
 
