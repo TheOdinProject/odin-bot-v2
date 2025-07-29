@@ -41,7 +41,10 @@ function leaderboard(command) {
 function info(command) {
   command
     .setName('info')
-    .setDescription('A guide to points in the TOP Discord server');
+    .setDescription('A guide to points in the TOP Discord server')
+    .addUserOption((option) =>
+      option.setName('user').setDescription('user to ping'),
+    );
   return command;
 }
 
