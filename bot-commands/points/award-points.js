@@ -93,15 +93,27 @@ const starRegex = '\u{2b50}';
 // matches at least two plus signs
 const plusRegex = '(\\+){2,}';
 const doublePointsPlusRegex = '\\?(\\+){2,}';
+const pointsCharsRegex = `(${plusRegex}|${doublePointsPlusRegex}|${starRegex})`;
+
+// https://regexr.com/8gd0p to test this regex
+//
+// Ensure the user mention is not escaped or encased directly in an inline code block
+//
+// Word chars disallowed after points chars to prevent awarding points if a user pings
+// someone to ask about pre-increment syntax, e.g. "hey @odinbot ++i increments then evaluates, right?"
+// but will still allow stuff like punctuation e.g. "thanks @odinbot ++!"
+//
+// Not so simple to detect and prevent user mentions deeper within an inline or fenced code block
+// But this is mostly prevented by Discord escaping user mentions when typing in them, so they won't match userRegex
+// Still technically possible by manually pasting something like <@!123456789> ++ in a code block (though it always was)
+const fullAwardPointsRegex = new RegExp(
+  `(?<!\\\\|\`)${userRegex}\\s*${pointsCharsRegex}(?!\\w)`,
+  'gu',
+);
 
 const awardPoints = {
   name: 'award points',
-  // uses a negative lookback to isolate the command
-  // followed by the Discord User, a whitespace character and either the star or plus incrementer
-  regex: new RegExp(
-    `(?<!\\S)${userRegex}\\s?(${doublePointsPlusRegex}|${plusRegex}|${starRegex})(?!\\S)`,
-    'gu',
-  ),
+  regex: fullAwardPointsRegex,
   cb: async function pointsBotCommand({
     author,
     content,
@@ -112,10 +124,7 @@ const awardPoints = {
   }) {
     const userIds = getUserIdsFromMessage(
       content,
-      new RegExp(
-        `(?<!\\S)${userRegex}\\s?(${doublePointsPlusRegex}|${plusRegex}|${starRegex})(?!\\S)`,
-        'gu',
-      ),
+      fullAwardPointsRegex,
       member,
       channel,
     );
