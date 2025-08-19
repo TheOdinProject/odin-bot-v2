@@ -92,10 +92,14 @@ describe('award points', () => {
 
   describe('regex ++', () => {
     it.each([
+      ['<@!123456789>++'],
       ['<@!123456789> ++'],
       ['<@!123456789> +++'],
       ['<@!123456789> ++++++++++++'],
+      ['thanks<@!123456789> ++'],
       ['thanks <@!123456789> ++'],
+      ['thanks <@!123456789>      ++'],
+      ['thanks <@!123456789>                 ++'],
     ])("%s' - triggers the callback", (string) => {
       expect(string.match(awardPoints.regex)).toBeTruthy();
     });
@@ -107,7 +111,7 @@ describe('award points', () => {
       [' /'],
       ['odin-bot++'],
       ['/++'],
-      ['```function("<@!123456789> ++", () => {}```'],
+      ['`<@!123456789> ++`'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(string.match(awardPoints.regex)).toBeFalsy();
     });
@@ -122,26 +126,44 @@ describe('award points', () => {
     });
 
     it.each([
-      ['@user/ ++'],
-      ["it's about/<@!123456789> ++"],
-      ['<@!123456789> ++isanillusion'],
+      ['<@!123456789> ++!'],
       ['<@!123456789> ++/'],
-      ['<@!123456789> ++*'],
+      ['<@!123456789> ++,'],
       ['<@!123456789> ++...'],
     ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
+      "'%s' - command can be immediately followed by a non-word character",
+      (string) => {
+        expect(string.match(awardPoints.regex)).toBeTruthy();
+      },
+    );
+
+    it.each([
+      ['<@!123456789> ++i'], // e.g. prevents points if pinging to ask about pre-increment syntax
+      ['<@!123456789> ++yes'],
+      ['<@!123456789> ++_'],
+      ['<@!123456789> ++8'],
+    ])(
+      "'%s' - command cannot be immediately followed by a word character",
       (string) => {
         expect(string.match(awardPoints.regex)).toBeFalsy();
       },
     );
+
+    it('does not match if the user mention is escaped', () => {
+      expect('\\<@!123456789> ++'.match(awardPoints.regex)).toBeFalsy();
+    });
   });
 
   describe('regex ?++', () => {
     it.each([
+      ['<@!123456789>?++'],
       ['<@!123456789> ?++'],
       ['<@!123456789> ?+++'],
       ['<@!123456789> ?++++++++++++'],
+      ['<@!123456789>     ?++++++++++++'],
+      ['<@!123456789>          ?++++++++++++'],
       ['thanks <@!123456789> ?++'],
+      ['thanks<@!123456789> ?++'],
     ])("%s' - triggers the callback", (string) => {
       expect(string.match(awardPoints.regex)).toBeTruthy();
     });
@@ -153,7 +175,7 @@ describe('award points', () => {
       [' /'],
       ['odin-bot?++'],
       ['/?++'],
-      ['```function("<@!123456789> ?++", () => {}```'],
+      ['`<@!123456789> ?++`'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(string.match(awardPoints.regex)).toBeFalsy();
     });
@@ -168,27 +190,32 @@ describe('award points', () => {
     });
 
     it.each([
-      ['@user/ ?++'],
-      ["it's about/<@!123456789> ?++"],
-      ['<@!123456789> ?++isanillusion'],
+      ['<@!123456789> ?++!'],
       ['<@!123456789> ?++/'],
-      ['<@!123456789> ?++*'],
+      ['<@!123456789> ?++,'],
       ['<@!123456789> ?++...'],
     ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
-      (string) => {
-        expect(string.match(awardPoints.regex)).toBeFalsy();
-      },
-    );
-  });
-
-  describe('regex ⭐', () => {
-    it.each([['<@!123456789> ⭐'], ['thanks <@!123456789> ⭐']])(
-      "'%s' - correct strings trigger the callback",
+      "'%s' - command can be immediately followed by a non-word character",
       (string) => {
         expect(string.match(awardPoints.regex)).toBeTruthy();
       },
     );
+
+    it('does not match if the user mention is escaped', () => {
+      expect('\\<@!123456789> ?++'.match(awardPoints.regex)).toBeFalsy();
+    });
+  });
+
+  describe('regex ⭐', () => {
+    it.each([
+      ['<@!123456789>⭐'],
+      ['<@!123456789> ⭐'],
+      ['<@!123456789>     ⭐'],
+      ['thanks <@!123456789> ⭐'],
+      ['thanks<@!123456789> ⭐'],
+    ])("'%s' - correct strings trigger the callback", (string) => {
+      expect(string.match(awardPoints.regex)).toBeTruthy();
+    });
 
     it.each([
       ['⭐'],
@@ -197,7 +224,7 @@ describe('award points', () => {
       [' /'],
       ['odin-bot⭐'],
       ['/⭐'],
-      ['```function("<@!123456789> ⭐", () => {}```'],
+      ['`<@!123456789> ⭐`'],
     ])("'%s' does not trigger the callback", (string) => {
       expect(string.match(awardPoints.regex)).toBeFalsy();
     });
@@ -212,18 +239,20 @@ describe('award points', () => {
     });
 
     it.each([
-      ['@user/++'],
-      ["it's about/<@!123456789> ⭐"],
-      ['<@!123456789> ⭐isanillusion'],
+      ['<@!123456789> ⭐!'],
       ['<@!123456789> ⭐/'],
-      ['<@!123456789> ⭐*'],
+      ['<@!123456789> ⭐,'],
       ['<@!123456789> ⭐...'],
     ])(
-      "'%s' - command should be its own word/group - no leading or trailing characters",
+      "'%s' - command can be immediately followed by a non-word character",
       (string) => {
-        expect(string.match(awardPoints.regex)).toBeFalsy();
+        expect(string.match(awardPoints.regex)).toBeTruthy();
       },
     );
+
+    it('does not match if the user mention is escaped', () => {
+      expect('\\<@!123456789> ⭐'.match(awardPoints.regex)).toBeFalsy();
+    });
   });
 });
 
