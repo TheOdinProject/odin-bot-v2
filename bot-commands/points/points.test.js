@@ -201,6 +201,18 @@ describe('award points', () => {
       },
     );
 
+    it.each([
+      ['<@!123456789> ?++i'],
+      ['<@!123456789> ?++yes'],
+      ['<@!123456789> ?++_'],
+      ['<@!123456789> ?++8'],
+    ])(
+      "'%s' - command cannot be immediately followed by a word character",
+      (string) => {
+        expect(string.match(awardPoints.regex)).toBeFalsy();
+      },
+    );
+
     it('does not match if the user mention is escaped', () => {
       expect('\\<@!123456789> ?++'.match(awardPoints.regex)).toBeFalsy();
     });
@@ -245,6 +257,13 @@ describe('award points', () => {
       ['<@!123456789> ⭐...'],
     ])(
       "'%s' - command can be immediately followed by a non-word character",
+      (string) => {
+        expect(string.match(awardPoints.regex)).toBeTruthy();
+      },
+    );
+
+    it.each([['<@!123456789> ⭐thanks'], ['<@!123456789> ⭐yes']])(
+      "'%s' - :star: command can be immediately followed by a word character",
       (string) => {
         expect(string.match(awardPoints.regex)).toBeTruthy();
       },
