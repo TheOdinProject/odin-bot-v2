@@ -40,8 +40,12 @@ We will have a strict moderation policy in place which will include losing acces
 
 Our goal is to maintain a positive and supportive community, where help and contributions are valued.
       `);
+    const userId = interaction.options.getUser('user');
 
-    await interaction.reply({ embeds: [pointsEmbed] });
+    await interaction.reply({
+      content: userId ? `${userId}` : '',
+      embeds: [pointsEmbed],
+    });
   }
 
   static async displayUserPoints(interaction) {
