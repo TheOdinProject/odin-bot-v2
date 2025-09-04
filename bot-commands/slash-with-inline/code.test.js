@@ -1,7 +1,4 @@
 const command = require('./code').legacy;
-const {
-  generateMentions,
-} = require('../../utils/slash-command-helpers/mockData');
 
 describe('!code', () => {
   it('has the name "code"', () => {
@@ -56,13 +53,4 @@ describe('!code', () => {
       expect(command.regex.test(string)).toBeFalsy();
     },
   );
-});
-
-describe('!code snapshot', () => {
-  it('returns correct output', () => {
-    expect(command.cb(generateMentions(0))).toMatchSnapshot();
-    expect(command.cb(generateMentions(1))).toMatchSnapshot();
-    expect(command.cb(generateMentions(2))).toMatchSnapshot();
-    expect(command.cb(generateMentions(3))).toMatchSnapshot();
-  });
 });

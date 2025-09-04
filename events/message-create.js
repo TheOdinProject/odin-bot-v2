@@ -78,7 +78,7 @@ module.exports = {
       if (message.content.toLowerCase().match(regex)) {
         authorBuffer.push(createAuthorEntry(message));
         try {
-          const response = await fn(message);
+          const response = await fn();
           if (response) {
             try {
               if (Array.isArray(response)) {
