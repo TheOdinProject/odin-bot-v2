@@ -78,6 +78,9 @@ module.exports = {
       if (message.content.toLowerCase().match(regex)) {
         authorBuffer.push(createAuthorEntry(message));
         try {
+          // Don't be an idiot like me and remove the callback's message arg
+          // Even if none of the ! commands use it, award-points does.
+          // - Mao
           const response = await fn(message);
           if (response) {
             try {
