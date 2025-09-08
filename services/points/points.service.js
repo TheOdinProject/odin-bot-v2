@@ -28,6 +28,8 @@ Want to give credit where it's due? Show your appreciation for helpful members i
 \`@username ++\`
 \`@username :star:\`
 
+The bot will only detect these in new messages, not message edits.
+
 **Club 40:**
 
 Users who have accumulated 40 points will be awarded a special role in recognition of their consistent helpfulness.
