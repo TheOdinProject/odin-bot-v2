@@ -23,6 +23,7 @@ jobs:
             **/*.yaml
           separator: ' '
       - uses: creyD/prettier_action@v4.3
+        if: steps.changed-files.outputs.all_changed_files
         with:
           dry: True
           prettier_options: --check ${{ steps.changed-files.outputs.all_changed_files }}
@@ -38,5 +39,5 @@ jobs:
           files: |
             **/*.js
           separator: ' '
-      - run: npm install
-      - run: npm run eslint -- ${{ steps.changed-files.outputs.all_changed_files }}
+      - if: steps.changed-files.outputs.all_changed_files
+        run: npm install && npm run eslint -- ${{ steps.changed-files.outputs.all_changed_files }}
