@@ -14,7 +14,7 @@ class SpamBanningService {
     const message = interaction.options.getMessage('message');
 
     if (message.author.bot || isAdmin(message.member)) {
-      interaction.reply({
+      await interaction.reply({
         content: 'You do not have the permission to ban this user',
         flags: MessageFlags.Ephemeral,
       });
@@ -111,9 +111,19 @@ class SpamBanningService {
     });
 
     try {
-      const option = await response.awaitMessageComponent({ time: 60_000 });
-
-      return { result: option.customId };
+      const buttonInteraction = await response.resource.message.awaitMessageComponent({ time: 60_000 });
+  
+      // Handle the button interaction
+      if (buttonInteraction.customId === 'cancel') {
+      await buttonInteraction.update({
+        content: 'Action has been cancelled.',
+        components: [],
+      });
+    } else {
+      // Acknowledge the button press but don't change the message yet
+      await buttonInteraction.deferUpdate();
+    }
+      return { result: buttonInteraction.customId };
     } catch {
       return { result: 'timeout' };
     }
