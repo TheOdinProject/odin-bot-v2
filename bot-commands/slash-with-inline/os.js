@@ -23,6 +23,7 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'os',
     regex: /(?<!\S)!os(?!\S)/,
     cb: () => ({ embeds: [osEmbed] }),
   },

@@ -28,6 +28,8 @@ Want to give credit where it's due? Show your appreciation for helpful members i
 \`@username ++\`
 \`@username :star:\`
 
+The bot will only detect these in new messages, not message edits.
+
 **Club 40:**
 
 Users who have accumulated 40 points will be awarded a special role in recognition of their consistent helpfulness.
@@ -40,8 +42,12 @@ We will have a strict moderation policy in place which will include losing acces
 
 Our goal is to maintain a positive and supportive community, where help and contributions are valued.
       `);
+    const userId = interaction.options.getUser('user');
 
-    await interaction.reply({ embeds: [pointsEmbed] });
+    await interaction.reply({
+      content: userId ? `${userId}` : '',
+      embeds: [pointsEmbed],
+    });
   }
 
   static async displayUserPoints(interaction) {

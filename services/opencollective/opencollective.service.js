@@ -1,3 +1,4 @@
+const { MessageFlags } = require('discord.js');
 const config = require('../../config');
 const RedisService = require('../redis');
 
@@ -17,7 +18,7 @@ class OpenCollectiveService {
     if (interaction.member.roles.cache.has(config.roles.backer)) {
       return interaction.reply({
         content: 'You already have the Backer role!',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
 
@@ -27,7 +28,7 @@ class OpenCollectiveService {
     if (await OpenCollectiveService.isUsernameCached(username, redis)) {
       return interaction.reply({
         content: OpenCollectiveService.failureMessage,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
 
@@ -37,7 +38,7 @@ class OpenCollectiveService {
     if (data.errors) {
       return interaction.reply({
         content: OpenCollectiveService.failureMessage,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
 
@@ -51,13 +52,13 @@ class OpenCollectiveService {
       await interaction.member.roles.add(config.roles.backer);
       return interaction.reply({
         content: OpenCollectiveService.successMessage,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
 
     return interaction.reply({
       content: OpenCollectiveService.failureMessage,
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
   }
 

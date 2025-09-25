@@ -41,17 +41,8 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'code',
     regex: /(?<!\S)!code(?!\S)/,
-    cb: ({ mentions }) => {
-      let users = '';
-      mentions.users?.forEach((user) => {
-        users += `<@${user.id}> `;
-      });
-
-      return {
-        content: users.trim(),
-        embeds: [codeEmbed],
-      };
-    },
+    cb: () => ({ embeds: [codeEmbed] }),
   },
 };

@@ -32,6 +32,7 @@ module.exports = {
     });
   },
   legacy: {
+    name: 'question',
     regex: /(?<!\S)!question(?!\S)/,
     cb: () => ({ embeds: [questionEmbed] }),
   },

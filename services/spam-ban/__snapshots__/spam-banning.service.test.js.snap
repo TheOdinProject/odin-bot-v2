@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Attempting to ban a bot or team member Does not ban admins 1`] = `
 {
@@ -81,6 +81,7 @@ exports[`Banning spammer in automod channel Ban user if in the automod channel 2
 {
   "content": "Successfully banned <@123> for spam.",
   "flags": 64,
+
 }
 `;
 
@@ -165,6 +166,7 @@ exports[`Banning spammer in other channels Bans user and deletes their messages 
 
 exports[`Banning spammer in other channels Bans user and does not delete their messages if keep message button clicked 1`] = `
 {
+
   "deleteMessageSeconds": 0,
   "reason": "Account is compromised",
 }
