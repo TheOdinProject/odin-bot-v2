@@ -1,4 +1,11 @@
-const { EmbedBuilder, MessageFlags } = require('discord.js');
+
+const {
+  EmbedBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+  MessageFlags,
+} = require('discord.js');
 const { isAdmin } = require('../../utils/is-admin');
 const config = require('../../config');
 
@@ -6,35 +13,117 @@ class SpamBanningService {
   static async handleInteraction(interaction) {
     const message = interaction.options.getMessage('message');
 
+    if (message.author.bot || isAdmin(message.member)) {
+      interaction.reply({
+        content: 'You do not have the permission to ban this user',
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
+    let deleteMessages = false;
+
+    if (message.channelId !== config.channels.automodBlockChannelId) {
+      const response =
+        await SpamBanningService.#AskForDeleteMessages(interaction);
+
+      if (response.result === 'cancel') {
+        await interaction.editReply({
+          content: 'Action has been cancelled.',
+          flags: MessageFlags.Ephemeral,
+          components: [],
+        });
+        return;
+      }
+      if (response.result === 'timeout') {
+        await interaction.editReply({
+          content: 'Action has been cancelled as you did not reply in time.',
+          flags: MessageFlags.Ephemeral,
+          components: [],
+        });
+        return;
+      }
+
+      deleteMessages = response.result === 'deleteMessages';
+
+      if (!deleteMessages) {
+        // still delete the message that triggered the interaction.
+        await message.delete();
+      }
+    }
+
     try {
-      if (message.author.bot || isAdmin(message.member)) {
-        interaction.reply({
-          content: 'You do not have the permission to ban this user',
+      const reply = await SpamBanningService.#banUser(
+        interaction,
+        deleteMessages,
+      );
+
+      if (message.channelId === config.channels.automodBlockChannelId) {
+        message.react('✅');
+        await interaction.reply({
+          content: reply,
           flags: MessageFlags.Ephemeral,
         });
-        return;
       }
-      if (message.channelId !== config.channels.automodBlockChannelId) {
-        interaction.reply({
-          content:
-            'This command can only be used in the automod block channel.',
-          flags: MessageFlags.Ephemeral,
-        });
-        return;
-      }
-      const reply = await SpamBanningService.#banUser(interaction);
-      interaction.reply({ content: reply, flags: MessageFlags.Ephemeral });
-      await SpamBanningService.#announceBan(interaction, message);
+
+      await interaction.editReply({
+        content: reply,
+        flags: MessageFlags.Ephemeral,
+        components: [],
+      });
+      await SpamBanningService.#announceBan(
+        interaction,
+        message,
+        deleteMessages,
+      );
     } catch (error) {
       console.error(error);
     }
   }
 
-  static async #banUser(interaction) {
+  static async #AskForDeleteMessages(interaction) {
+    const keepMessages = new ButtonBuilder()
+      .setCustomId('keepMessages')
+      .setLabel("Don't delete messages")
+      .setStyle(ButtonStyle.Danger);
+
+    const deleteMessages = new ButtonBuilder()
+      .setCustomId('deleteMessages')
+      .setLabel('Delete messages')
+      .setStyle(ButtonStyle.Danger);
+
+    const cancel = new ButtonBuilder()
+      .setCustomId('cancel')
+      .setLabel('Cancel')
+      .setStyle(ButtonStyle.Secondary);
+
+    const row = new ActionRowBuilder().addComponents(
+      keepMessages,
+      deleteMessages,
+      cancel,
+    );
+
+    const response = await interaction.reply({
+      content: 'Would you like to delete messages from the user being banned?',
+      components: [row],
+      ephemeral: true,
+      withResponse: true,
+    });
+
+    try {
+      const option = await response.awaitMessageComponent({ time: 60_000 });
+
+      return { result: option.customId };
+    } catch {
+      return { result: 'timeout' };
+    }
+  }
+
+  static async #banUser(interaction, deleteMessages) {
     const message = interaction.options.getMessage('message');
     const { guild } = interaction;
     let reply = `Successfully banned <@${message.author.id}> for spam.`;
-    // Only attempt to send the message if message.author exists
+    // Only attempt to send the message if message.member exists
     if (message.member) {
       try {
         await SpamBanningService.#sendMessageToUser(message.author);
@@ -46,8 +135,8 @@ class SpamBanningService {
     }
     await guild.members.ban(message.author.id, {
       reason: 'Account is compromised',
+      deleteMessageSeconds: deleteMessages ? 60 * 60 * 24 * 7 : 0,
     });
-    message.react('✅');
     return reply;
   }
 

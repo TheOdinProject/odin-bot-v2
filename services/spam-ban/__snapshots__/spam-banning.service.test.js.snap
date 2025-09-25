@@ -70,37 +70,213 @@ exports[`Attempting to log banned user in moderation log channel Sends log to th
 }
 `;
 
-exports[`Banning spammer in different channels Ban user if in the automod channel 1`] = `
+exports[`Banning spammer in automod channel Ban user if in the automod channel 1`] = `
 {
+  "deleteMessageSeconds": 0,
   "reason": "Account is compromised",
 }
 `;
 
-exports[`Banning spammer in different channels Ban user if in the automod channel 2`] = `
+exports[`Banning spammer in automod channel Ban user if in the automod channel 2`] = `
 {
   "content": "Successfully banned <@123> for spam.",
   "flags": 64,
+
 }
 `;
 
-exports[`Banning spammer in different channels Does not ban user in different channels other than automod 1`] = `
+exports[`Banning spammer in other channels Asks for confirmation if not in automod channel 1`] = `
 {
-  "content": "This command can only be used in the automod block channel.",
-  "flags": 64,
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "keepMessages",
+          "emoji": undefined,
+          "label": "Don't delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "deleteMessages",
+          "emoji": undefined,
+          "label": "Delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "cancel",
+          "emoji": undefined,
+          "label": "Cancel",
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "Would you like to delete messages from the user being banned?",
+  "ephemeral": true,
+  "withResponse": true,
 }
 `;
 
-exports[`Banning spammer in different channels Does not ban user in different channels other than automod 2`] = `
+exports[`Banning spammer in other channels Bans user and deletes their messages if delete message button clicked 1`] = `
 {
-  "content": "This command can only be used in the automod block channel.",
-  "flags": 64,
+  "deleteMessageSeconds": 604800,
+  "reason": "Account is compromised",
 }
 `;
 
-exports[`Banning spammer in different channels Does not ban user in different channels other than automod 3`] = `
+exports[`Banning spammer in other channels Bans user and deletes their messages if delete message button clicked 2`] = `
 {
-  "content": "This command can only be used in the automod block channel.",
-  "flags": 64,
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "keepMessages",
+          "emoji": undefined,
+          "label": "Don't delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "deleteMessages",
+          "emoji": undefined,
+          "label": "Delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "cancel",
+          "emoji": undefined,
+          "label": "Cancel",
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "Would you like to delete messages from the user being banned?",
+  "ephemeral": true,
+  "withResponse": true,
+}
+`;
+
+exports[`Banning spammer in other channels Bans user and does not delete their messages if keep message button clicked 1`] = `
+{
+
+  "deleteMessageSeconds": 0,
+  "reason": "Account is compromised",
+}
+`;
+
+exports[`Banning spammer in other channels Bans user and does not delete their messages if keep message button clicked 2`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "keepMessages",
+          "emoji": undefined,
+          "label": "Don't delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "deleteMessages",
+          "emoji": undefined,
+          "label": "Delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "cancel",
+          "emoji": undefined,
+          "label": "Cancel",
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "Would you like to delete messages from the user being banned?",
+  "ephemeral": true,
+  "withResponse": true,
+}
+`;
+
+exports[`Banning spammer in other channels Cancels the action if the cancel button is clicked 1`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "keepMessages",
+          "emoji": undefined,
+          "label": "Don't delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "deleteMessages",
+          "emoji": undefined,
+          "label": "Delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "cancel",
+          "emoji": undefined,
+          "label": "Cancel",
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "Would you like to delete messages from the user being banned?",
+  "ephemeral": true,
+  "withResponse": true,
+}
+`;
+
+exports[`Banning spammer in other channels Cancels the action if the response times out 1`] = `
+{
+  "components": [
+    {
+      "components": [
+        {
+          "custom_id": "keepMessages",
+          "emoji": undefined,
+          "label": "Don't delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "deleteMessages",
+          "emoji": undefined,
+          "label": "Delete messages",
+          "style": 4,
+          "type": 2,
+        },
+        {
+          "custom_id": "cancel",
+          "emoji": undefined,
+          "label": "Cancel",
+          "style": 2,
+          "type": 2,
+        },
+      ],
+      "type": 1,
+    },
+  ],
+  "content": "Would you like to delete messages from the user being banned?",
+  "ephemeral": true,
+  "withResponse": true,
 }
 `;
 
@@ -115,6 +291,7 @@ exports[`Banning spammer that has left the server Sends back correct interaction
 
 exports[`Banning spammer who has DM set to private Discord ban api is called with the correct reason 1`] = `
 {
+  "deleteMessageSeconds": 0,
   "reason": "Account is compromised",
 }
 `;
@@ -165,6 +342,7 @@ exports[`Banning spammer who has DM set to private Sends log to the correct chan
 
 exports[`Banning spammer with DM enabled Discord ban api is called with the correct reason 1`] = `
 {
+  "deleteMessageSeconds": 0,
   "reason": "Account is compromised",
 }
 `;
