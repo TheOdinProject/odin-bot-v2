@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.0",
-    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-env": "^7.28.3",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
