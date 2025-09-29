@@ -18,7 +18,7 @@
     "axios": "^1.12.2",
     "discord-api-types": "^0.37.120",
     "discord.js": "^14.22.1",
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.2.2",
     "glob": "^11.0.1",
     "ioredis": "^5.7.0",
     "prettier": "^3.6.2"
