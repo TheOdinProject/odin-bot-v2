@@ -22,12 +22,19 @@ function createInteractionMock(message, guild) {
     reply: jest.fn((arg) => {
       replyArg = arg;
       return {
-        awaitMessageComponent: jest.fn(() => {
-          if (messageComponentReturn === 'timeout') {
-            return Promise.reject();
-          }
-          return Promise.resolve({ customId: messageComponentReturn });
-        }),
+        resource: {
+          message: {
+            awaitMessageComponent: () => {
+              if (messageComponentReturn === 'timeout') {
+                return Promise.reject();
+              }
+              return Promise.resolve({
+                customId: messageComponentReturn,
+                deferUpdate: () => {},
+              });
+            },
+          },
+        },
       };
     }),
     guild,
@@ -130,8 +137,7 @@ describe('Banning spammer in automod channel', () => {
 
   it('Ban user if in the automod channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    await SpamBanningService.handleInteraction(interactionMock);
-    // expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
+    expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
