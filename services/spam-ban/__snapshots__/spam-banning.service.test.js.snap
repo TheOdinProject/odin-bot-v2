@@ -81,7 +81,6 @@ exports[`Banning spammer in automod channel Ban user if in the automod channel 2
 {
   "content": "Successfully banned <@123> for spam.",
   "flags": 64,
-
 }
 `;
 
