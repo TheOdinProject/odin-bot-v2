@@ -5,17 +5,13 @@ const MissingEnvVarError = require('./utils/errors/missing-env-var');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
 // check all mandatory env variables are set
-const missingMandatoryEnvKeys = [
-  'DISCORD_API_KEY',
-  'DISCORD_CLIENT_ID',
-  'DISCORD_GUILD_ID',
-].filter((key) => !process.env[key]);
+const missingMandatoryEnvKeys = MissingEnvVarError.getMissingMandatoryKeys();
 if (missingMandatoryEnvKeys.length) {
   throw new MissingEnvVarError(missingMandatoryEnvKeys);
 }
 
 // check all channel IDs are unique
-const duplicateKeys = DuplicateIdsError.checkForDuplicateIds(channels);
+const duplicateKeys = DuplicateIdsError.getDuplicateIds(channels);
 if (duplicateKeys.length) {
   throw new DuplicateIdsError(duplicateKeys);
 }
