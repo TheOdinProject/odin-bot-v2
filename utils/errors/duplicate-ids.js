@@ -10,7 +10,7 @@ You can modify what value the IDs are set to in the .env file. See .env for more
     this.name = 'DuplicateIdsError';
   }
 
-  static checkForDuplicateIds(channels) {
+  static getDuplicateIds(channels) {
     const channelsByID = Object.entries(channels).reduce(
       (acc, [key, value]) => {
         if (!Array.isArray(value)) {

@@ -11,7 +11,7 @@ if (missingMandatoryEnvKeys.length) {
 }
 
 // check all channel IDs are unique
-const duplicateKeys = DuplicateIdsError.checkForDuplicateIds(channels);
+const duplicateKeys = DuplicateIdsError.getDuplicateIds(channels);
 if (duplicateKeys.length) {
   throw new DuplicateIdsError(duplicateKeys);
 }
