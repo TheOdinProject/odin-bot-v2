@@ -14,7 +14,7 @@ afterAll(() => {
 function createInteractionMock(message, guild) {
   let replyArg;
   let messageComponentReturn;
-  let deferUpdate = jest.fn();
+  const deferUpdate = jest.fn();
 
   return {
     setMessageComponentReturn: (arg) => {
@@ -29,8 +29,11 @@ function createInteractionMock(message, guild) {
               if (messageComponentReturn === 'timeout') {
                 return Promise.reject();
               }
-              return Promise.resolve({ customId: messageComponentReturn, deferUpdate });
-            }
+              return Promise.resolve({
+                customId: messageComponentReturn,
+                deferUpdate,
+              });
+            },
           },
         },
       };
