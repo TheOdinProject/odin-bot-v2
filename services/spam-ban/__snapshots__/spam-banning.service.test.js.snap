@@ -165,7 +165,6 @@ exports[`Banning spammer in other channels Bans user and deletes their messages 
 
 exports[`Banning spammer in other channels Bans user and does not delete their messages if keep message button clicked 1`] = `
 {
-
   "deleteMessageSeconds": 0,
   "reason": "Account is compromised",
 }
