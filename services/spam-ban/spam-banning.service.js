@@ -1,4 +1,3 @@
-
 const {
   EmbedBuilder,
   ButtonBuilder,
@@ -25,7 +24,7 @@ class SpamBanningService {
 
     if (message.channelId !== config.channels.automodBlockChannelId) {
       const response =
-        await SpamBanningService.#AskForDeleteMessages(interaction);
+        await SpamBanningService.#askForDeleteMessages(interaction);
 
       if (response.result === 'cancel') {
         await interaction.editReply({
@@ -81,7 +80,7 @@ class SpamBanningService {
     }
   }
 
-  static async #AskForDeleteMessages(interaction) {
+  static async #askForDeleteMessages(interaction) {
     const keepMessages = new ButtonBuilder()
       .setCustomId('keepMessages')
       .setLabel("Don't delete messages")
@@ -111,18 +110,19 @@ class SpamBanningService {
     });
 
     try {
-      const buttonInteraction = await response.resource.message.awaitMessageComponent({ time: 60_000 });
-  
+      const buttonInteraction =
+        await response.resource.message.awaitMessageComponent({ time: 60_000 });
+
       // Handle the button interaction
       if (buttonInteraction.customId === 'cancel') {
-      await buttonInteraction.update({
-        content: 'Action has been cancelled.',
-        components: [],
-      });
-    } else {
-      // Acknowledge the button press but don't change the message yet
-      await buttonInteraction.deferUpdate();
-    }
+        await buttonInteraction.update({
+          content: 'Action has been cancelled.',
+          components: [],
+        });
+      } else {
+        // Acknowledge the button press but don't change the message yet
+        await buttonInteraction.deferUpdate();
+      }
       return { result: buttonInteraction.customId };
     } catch {
       return { result: 'timeout' };
@@ -143,10 +143,12 @@ class SpamBanningService {
     } else {
       reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user as they have left the server.`;
     }
+
     await guild.members.ban(message.author.id, {
       reason: 'Account is compromised',
       deleteMessageSeconds: deleteMessages ? 60 * 60 * 24 * 7 : 0,
     });
+
     return reply;
   }
 
