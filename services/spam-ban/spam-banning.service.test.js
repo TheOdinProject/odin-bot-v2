@@ -14,6 +14,7 @@ afterAll(() => {
 function createInteractionMock(message, guild) {
   let replyArg;
   let messageComponentReturn;
+  let deferUpdate = jest.fn();
 
   return {
     setMessageComponentReturn: (arg) => {
@@ -22,12 +23,16 @@ function createInteractionMock(message, guild) {
     reply: jest.fn((arg) => {
       replyArg = arg;
       return {
-        awaitMessageComponent: jest.fn(() => {
-          if (messageComponentReturn === 'timeout') {
-            return Promise.reject();
-          }
-          return Promise.resolve({ customId: messageComponentReturn });
-        }),
+        resource: {
+          message: {
+            awaitMessageComponent: () => {
+              if (messageComponentReturn === 'timeout') {
+                return Promise.reject();
+              }
+              return Promise.resolve({ customId: messageComponentReturn, deferUpdate });
+            }
+          },
+        },
       };
     }),
     guild,
@@ -41,6 +46,7 @@ function createInteractionMock(message, guild) {
     // Used by service to retrieve the message
     options: { getMessage: () => message },
 
+    getDeferUpdate: () => deferUpdate,
     getReplyArg: () => replyArg,
     getAuthorSendArg: () => message.getSendArg(),
     getBanArg: () => guild.getBanArg(),
@@ -154,6 +160,7 @@ describe('Banning spammer in other channels', () => {
   it('Bans user and deletes their messages if delete message button clicked', async () => {
     interactionMock.setMessageComponentReturn('deleteMessages');
     await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.getDeferUpdate()).toHaveBeenCalledTimes(1);
     expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
@@ -162,6 +169,7 @@ describe('Banning spammer in other channels', () => {
   it('Bans user and does not delete their messages if keep message button clicked', async () => {
     interactionMock.setMessageComponentReturn('keepMessages');
     await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.getDeferUpdate()).toHaveBeenCalledTimes(1);
     expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
@@ -170,6 +178,7 @@ describe('Banning spammer in other channels', () => {
   it('Still deletes the message that triggered the interaction', async () => {
     interactionMock.setMessageComponentReturn('keepMessages');
     await SpamBanningService.handleInteraction(interactionMock);
+    expect(interactionMock.getDeferUpdate()).toHaveBeenCalledTimes(1);
     expect(interactionMock.message.delete).toHaveBeenCalledTimes(1);
   });
 
