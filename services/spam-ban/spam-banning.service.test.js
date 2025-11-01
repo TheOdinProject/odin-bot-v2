@@ -130,8 +130,7 @@ describe('Banning spammer in automod channel', () => {
 
   it('Ban user if in the automod channel', async () => {
     await SpamBanningService.handleInteraction(interactionMock);
-    await SpamBanningService.handleInteraction(interactionMock);
-    // expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
+    expect(interactionMock.guild.members.ban).toHaveBeenCalledTimes(1);
     expect(interactionMock.getBanArg()).toMatchSnapshot();
     expect(interactionMock.getReplyArg()).toMatchSnapshot();
   });
