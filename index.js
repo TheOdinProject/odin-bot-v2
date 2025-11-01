@@ -5,11 +5,7 @@ const MissingEnvVarError = require('./utils/errors/missing-env-var');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
 // check all mandatory env variables are set
-const missingMandatoryEnvKeys = [
-  'DISCORD_API_KEY',
-  'DISCORD_CLIENT_ID',
-  'DISCORD_GUILD_ID',
-].filter((key) => !process.env[key]);
+const missingMandatoryEnvKeys = MissingEnvVarError.getMissingMandatoryKeys();
 if (missingMandatoryEnvKeys.length) {
   throw new MissingEnvVarError(missingMandatoryEnvKeys);
 }
