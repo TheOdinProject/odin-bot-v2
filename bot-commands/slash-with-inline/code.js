@@ -21,6 +21,7 @@ For \`inline code\` use one backtick (no syntax highlighting):
 **Websites:**
 
 - [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+- [Github](https://github.com) a link to an up-to-date GitHub repo
 - [Repl.it](https://replit.com/) for JavaScript/Ruby projects
 - [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
 `);
