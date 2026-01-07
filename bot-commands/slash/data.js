@@ -23,7 +23,7 @@ Instead of asking if anyone can help you, ask your question outright with as muc
 
 **Project/Exercise:**
 **Lesson link:**
-**Code:** [code sandbox like replit or codepen]
+**Code:** [code sandbox like codepen or replit, or your github repo]
 **Issue/Problem:** [screenshots if applicable]
 **What I expected:**
 **What I've tried:**
