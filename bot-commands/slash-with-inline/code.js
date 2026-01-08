@@ -20,9 +20,10 @@ For \`inline code\` use one backtick (no syntax highlighting):
 
 **Websites:**
 
-- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
-- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
 - [Codepen](https://codepen.io/) for basic HTML/CSS/Javascript
+- A link to an up-to-date GitHub repo
+- [Repl.it](https://replit.com/) for JavaScript/Ruby projects
+- [Code Sandbox](https://codesandbox.io/) for Webpack/React projects
 `);
 
 module.exports = {
