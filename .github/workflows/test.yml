@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - '**/*.js'
+      - 'package*.json'
 
 jobs:
   jest:
