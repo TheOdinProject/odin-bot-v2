@@ -9,7 +9,7 @@
     "dev": "nodemon --watch . --watch .env index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --cache --write",
-    "eslint": "eslint '**/*.js'"
+    "eslint": "eslint"
   },
   "author": "",
   "license": "ISC",
