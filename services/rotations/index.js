@@ -1,1 +1,1 @@
-export * from './rotation.service';
+module.exports = require('./rotation.service');

@@ -145,7 +145,7 @@ class RotationService {
     for (let i = 0; i < 10; i += 1) {
       this.members.push(interactionOptions.getUser(`user${i}`));
     }
-    return this.members.filter((member) => !!member);
+    return this.members.filter((member) => member);
   }
 
   async handleInteraction(interaction) {

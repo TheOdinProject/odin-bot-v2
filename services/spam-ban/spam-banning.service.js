@@ -137,7 +137,7 @@ class SpamBanningService {
     if (message.member) {
       try {
         await SpamBanningService.#sendMessageToUser(message.author);
-      } catch (error) {
+      } catch {
         reply = `Banned <@${message.author.id}> for spam but wasn't able to contact the user.`;
       }
     } else {
