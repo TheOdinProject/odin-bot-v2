@@ -10,7 +10,6 @@ const manuallyRegistrableCommands = new Map();
 
 commandFiles.forEach((file) => {
   const filePath = path.resolve(file);
-  /* eslint-disable global-require, import/no-dynamic-require */
   const command = require(filePath);
 
   if (command.data) {

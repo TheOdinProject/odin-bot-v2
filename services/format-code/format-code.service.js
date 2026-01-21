@@ -87,7 +87,6 @@ class FormatCodeService {
     let matches;
     const codeBlocks = [];
 
-    /* eslint-disable no-cond-assign */
     while ((matches = PATTERN.exec(messageContent)) !== null) {
       const [, lang, content] = matches;
       codeBlocks.push({ lang, content });

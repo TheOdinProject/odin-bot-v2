@@ -9,7 +9,6 @@ const events = new Map();
 
 eventFiles.forEach((file) => {
   const filePath = path.resolve(file);
-  /* eslint-disable global-require, import/no-dynamic-require */
   const event = require(filePath);
   events.set(event.name, event);
 });

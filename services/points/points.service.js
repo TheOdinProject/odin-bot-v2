@@ -54,7 +54,6 @@ Our goal is to maintain a positive and supportive community, where help and cont
     const user = interaction.options.getUser('name');
     const response = await axios.get(PointsService.API_URL);
 
-    // eslint-disable-next-line
     const data = response.data.filter((member) =>
       interaction.guild.members.cache.get(member.discord_id),
     );
@@ -122,7 +121,6 @@ Our goal is to maintain a positive and supportive community, where help and cont
 
   static async displayLeaderboard(interaction) {
     const response = await axios.get(PointsService.API_URL);
-    // eslint-disable-next-line max-len
     const users = response.data.filter((user) =>
       interaction.guild.members.cache.get(user.discord_id),
     );

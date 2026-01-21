@@ -26,11 +26,10 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.DirectMessageReactions,
-  ], // eslint-disable-line max-len
+  ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
-// eslint-disable-next-line no-restricted-syntax
 for (const [name, event] of events) {
   if (event.once) {
     client.once(name, event.execute(client));

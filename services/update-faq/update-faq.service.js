@@ -67,7 +67,6 @@ class UpdateFAQsService {
         : segmentedString[i];
 
       if (segmentedString[i] === '') {
-        // eslint-disable-next-line no-continue
         continue;
       }
 

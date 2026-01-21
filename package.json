@@ -9,7 +9,7 @@
     "dev": "nodemon --watch . --watch .env index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --cache --write",
-    "eslint": "eslint '**/*.js'"
+    "eslint": "eslint"
   },
   "author": "",
   "license": "ISC",
@@ -26,10 +26,10 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^10.1.8",
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
+    "globals": "^17.0.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "lint-staged": "^16.2.7",
