@@ -1,11 +1,13 @@
 const { defineConfig } = require('eslint/config');
 const eslintJs = require('@eslint/js');
 const eslintImport = require('eslint-plugin-import');
+const checkFile = require('eslint-plugin-check-file');
 const babelParser = require('@babel/eslint-parser');
 const globals = require('globals');
 
 module.exports = defineConfig([
   {
+    files: ['**/*.js'],
     extends: [
       eslintJs.configs.recommended,
       eslintImport.flatConfigs.recommended,
@@ -112,6 +114,28 @@ module.exports = defineConfig([
       'import/no-absolute-path': 'error',
       'import/no-cycle': 'error',
       'import/no-self-import': 'error',
+    },
+  },
+  {
+    // process non-JS files for file/dir name linting
+    ignores: ['**/*.js'],
+    processor: 'checkFile/eslint-processor-check-file',
+  },
+  {
+    plugins: {
+      checkFile,
+    },
+    rules: {
+      'checkFile/filename-naming-convention': [
+        'error',
+        { '**/*': 'KEBAB_CASE' },
+        { ignoreMiddleExtensions: true },
+      ],
+      'checkFile/folder-naming-convention': [
+        'error',
+        { '**/': 'KEBAB_CASE' },
+        { ignoreWords: ['__mocks__', '__snapshots__', '__tests__'] },
+      ],
     },
   },
 ]);
