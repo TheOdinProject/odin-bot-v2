@@ -1,4 +1,4 @@
-const command = require('./partyParrot');
+const command = require('./party-parrot');
 const { randomInt } = require('../../utils/random-int');
 
 describe('/partyparrot', () => {

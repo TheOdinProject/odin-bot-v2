@@ -2,7 +2,7 @@ const {
   getUsers,
   buildInteraction,
   initializeServer,
-} = require('./discordjsTestHelpers');
+} = require('./discordjs-test-helpers');
 
 describe('getUsers', () => {
   it('returns the full list of users when called with no arguments', () => {
