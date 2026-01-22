@@ -37,7 +37,7 @@
     "nodemon": "^3.1.11"
   },
   "lint-staged": {
-    "!(*.js)": "prettier --check",
+    "!(*.js)": "prettier --check --ignore-unknown",
     "*.js": [
       "prettier --check",
       "eslint"
