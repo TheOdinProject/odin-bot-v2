@@ -1,4 +1,4 @@
-const { addSubcommands } = require('./addSubcommands');
+const { addSubcommands } = require('./add-subcommands');
 
 describe('adding subcommands', () => {
   it('does not call the addSubcommand method when no subcommands are passed', () => {

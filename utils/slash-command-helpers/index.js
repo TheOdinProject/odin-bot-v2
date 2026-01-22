@@ -1,4 +1,4 @@
-const testHelpers = require('./discordjsTestHelpers');
-const addUserOptions = require('./addSubcommands');
+const testHelpers = require('./discordjs-test-helpers');
+const addUserOptions = require('./add-subcommands');
 
 module.exports = { ...testHelpers, ...addUserOptions };
