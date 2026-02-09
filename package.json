@@ -26,7 +26,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.6",
     "@babel/preset-env": "^7.28.5",
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "eslint": "^9.39.2",
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-import": "^2.32.0",
