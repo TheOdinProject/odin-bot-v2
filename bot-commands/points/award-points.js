@@ -5,22 +5,23 @@ const { isAdmin } = require('../../utils/is-admin');
 
 axios.default.defaults.headers.common.Authorization = `Token ${config.pointsbot.token}`;
 
-function gifPicker(gifContainer, clubChannel) {
+function sendRandomClub40Gif(gifContainer, clubChannel) {
   const choice = Math.floor(Math.random() * gifContainer.length);
   clubChannel.send(`${gifContainer[choice].gif}`);
   clubChannel.send(`Gif by ${gifContainer[choice].author}`);
 }
 
-function getUserIdsFromMessage(text, regex, authorMember, channel) {
+function extractAwardsFromMessage(text, regex, authorMember, channel) {
   const matches = [];
-  const processedIDs = [];
+  const processedIds = [];
   let match = regex.exec(text);
 
   while (match !== null) {
-    const userID = match[1].replace('!', '');
+    const userId = match[1].replace('!', '');
+
     if (match[2] === '?++') {
       if (isAdmin(authorMember)) {
-        matches.push([userID, 2]);
+        matches.push([userId, 2]);
       } else {
         channel.send(
           'Only maintainers or core members can give double points!',
@@ -28,13 +29,13 @@ function getUserIdsFromMessage(text, regex, authorMember, channel) {
       }
       match = regex.exec(text);
     } else {
-      if (processedIDs.includes(userID)) {
+      if (processedIds.includes(userId)) {
         channel.send(
           'Only maintainers or core members can give double points!',
         );
       } else {
-        processedIDs.push(userID);
-        matches.push([userID, 1]);
+        processedIds.push(userId);
+        matches.push([userId, 1]);
       }
       match = regex.exec(text);
     }
@@ -122,28 +123,28 @@ const awardPoints = {
     guild,
     member,
   }) {
-    const userIds = getUserIdsFromMessage(
+    const awards = extractAwardsFromMessage(
       content,
       fullAwardPointsRegex,
       member,
       channel,
     );
 
-    const MAX_POINTS_CALLS_PER_MESSAGE = 5;
+    const MAX_AWARDS_PER_MESSAGE = 5;
 
     return Promise.all(
-      userIds.map(async (userId, i) => {
+      awards.map(async (userId, i) => {
         if (config.channels.noPointsChannelIds.includes(channel.id)) {
           channel.send("You can't do that here!");
           return;
         }
         // this limits the number of calls per message to 5 to avoid abuse
-        if (i >= MAX_POINTS_CALLS_PER_MESSAGE) {
+        if (i >= MAX_AWARDS_PER_MESSAGE) {
           return;
         }
         if (
-          i === MAX_POINTS_CALLS_PER_MESSAGE - 1 &&
-          userIds.length > MAX_POINTS_CALLS_PER_MESSAGE
+          i === MAX_AWARDS_PER_MESSAGE - 1 &&
+          awards.length > MAX_AWARDS_PER_MESSAGE
         ) {
           channel.send('you can only do 5 at a time..... ');
         }
@@ -158,36 +159,36 @@ const awardPoints = {
           return;
         }
         try {
-          const pointsUser = await addPointsToUser(user.id, userId[1]);
-          const previousPoints = pointsUser.points - userId[1];
+          const updatedUser = await addPointsToUser(user.id, userId[1]);
           if (user) {
-            const recipientMember = await guild.members.fetch(user);
+            const awardedMember = await guild.members.fetch(user);
             if (
-              recipientMember &&
-              !recipientMember.roles.cache.find((r) => r.name === 'club-40') &&
-              pointsUser.points > 39
+              awardedMember &&
+              !awardedMember.roles.cache.find((r) => r.name === 'club-40') &&
+              updatedUser.points > 39
             ) {
               const pointsRole = guild.roles.cache.find(
                 (r) => r.name === 'club-40',
               );
-              recipientMember.roles.add(pointsRole);
+              awardedMember.roles.add(pointsRole);
+
               const clubChannel =
                 client.channels.cache.get('707225752608964628');
+              if (!clubChannel) return;
 
-              if (clubChannel) {
-                const welcomeMessage =
-                  previousPoints < 40
-                    ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`
-                    : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
-                clubChannel.send(welcomeMessage);
-                gifPicker(club40Gifs, clubChannel);
-              }
+              const isNewClub40Member = updatedUser.points - userId[1] < 40;
+              const welcomeMessage = isNewClub40Member
+                ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`
+                : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
+              clubChannel.send(welcomeMessage);
+              sendRandomClub40Gif(club40Gifs, clubChannel);
             }
+
             const isGoodQuestion = userId[1] === 2;
             channel.send(
-              `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${
-                pointsUser.points
-              } ${plural(pointsUser.points)}`,
+              `${exclamation(updatedUser.points, isGoodQuestion)} ${user} now has ${
+                updatedUser.points
+              } ${plural(updatedUser.points)}`,
             );
           }
         } catch (err) {
