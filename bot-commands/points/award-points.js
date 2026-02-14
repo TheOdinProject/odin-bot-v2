@@ -13,31 +13,24 @@ function sendRandomClub40Gif(gifContainer, clubChannel) {
 
 function extractAwardsFromMessage(text, regex, authorMember, channel) {
   const matches = [];
-  const processedIds = [];
-  let match = regex.exec(text);
+  const processedIds = new Set();
 
-  while (match !== null) {
+  for (const match of text.matchAll(regex)) {
     const userId = match[1].replace('!', '');
 
     if (match[2] === '?++') {
       if (isAdmin(authorMember)) {
-        matches.push([userId, 2]);
+        matches.push({ userId, pointsToAward: 2 });
       } else {
         channel.send(
           'Only maintainers or core members can give double points!',
         );
       }
-      match = regex.exec(text);
+    } else if (processedIds.has(userId)) {
+      channel.send('Only maintainers or core members can give double points!');
     } else {
-      if (processedIds.includes(userId)) {
-        channel.send(
-          'Only maintainers or core members can give double points!',
-        );
-      } else {
-        processedIds.push(userId);
-        matches.push([userId, 1]);
-      }
-      match = regex.exec(text);
+      processedIds.add(userId);
+      matches.push({ userId, pointsToAward: 1 });
     }
   }
   return matches;
@@ -133,7 +126,7 @@ const awardPoints = {
     const MAX_AWARDS_PER_MESSAGE = 5;
 
     return Promise.all(
-      awards.map(async (userId, i) => {
+      awards.map(async ({ userId, pointsToAward }, i) => {
         if (config.channels.noPointsChannelIds.includes(channel.id)) {
           channel.send("You can't do that here!");
           return;
@@ -148,7 +141,7 @@ const awardPoints = {
         ) {
           channel.send('you can only do 5 at a time..... ');
         }
-        const user = await client.users.cache.get(userId[0]);
+        const user = await client.users.cache.get(userId);
         if (user === author) {
           channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
           channel.send("You can't do that!");
@@ -159,7 +152,7 @@ const awardPoints = {
           return;
         }
         try {
-          const updatedUser = await addPointsToUser(user.id, userId[1]);
+          const updatedUser = await addPointsToUser(user.id, pointsToAward);
           if (user) {
             const awardedMember = await guild.members.fetch(user);
             if (
@@ -176,7 +169,7 @@ const awardPoints = {
                 client.channels.cache.get('707225752608964628');
               if (!clubChannel) return;
 
-              const isNewClub40Member = updatedUser.points - userId[1] < 40;
+              const isNewClub40Member = updatedUser.points - pointsToAward < 40;
               const welcomeMessage = isNewClub40Member
                 ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`
                 : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
@@ -184,7 +177,7 @@ const awardPoints = {
               sendRandomClub40Gif(club40Gifs, clubChannel);
             }
 
-            const isGoodQuestion = userId[1] === 2;
+            const isGoodQuestion = pointsToAward === 2;
             channel.send(
               `${exclamation(updatedUser.points, isGoodQuestion)} ${user} now has ${
                 updatedUser.points
