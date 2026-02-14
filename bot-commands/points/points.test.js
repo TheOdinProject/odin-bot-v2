@@ -1014,6 +1014,41 @@ describe('?++ callback', () => {
     expect(bannedChannelData.channel.send).toHaveBeenCalled();
     expect(bannedChannelData.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
+
+  it('sends the correct exclamations for mixed awarding (++ and ?++) in a single message', async () => {
+    const mentionedUser1 = User([], 2, 0);
+    const mentionedUser2 = User([], 3, 0);
+
+    const data = {
+      author,
+      content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ++`,
+      channel,
+      client: Client([author, mentionedUser1, mentionedUser2], channel),
+      guild: Guild([author, mentionedUser1, mentionedUser2]),
+      member: Member(new Collection([['role-1', { name: 'core' }]])),
+    };
+
+    axios.post
+      .mockResolvedValueOnce({
+        data: {
+          ...mentionedUser1,
+          points: (mentionedUser1.points += 2),
+        },
+      })
+      .mockResolvedValueOnce({
+        data: {
+          ...mentionedUser2,
+          points: (mentionedUser2.points += 1),
+        },
+      });
+
+    await awardPoints.cb(data);
+
+    expect(data.channel.send.mock.calls.flat()).toEqual([
+      'Thanks for the great question! <@2> now has 2 points',
+      'Nice! <@3> now has 1 point',
+    ]);
+  });
 });
 
 describe('@user --', () => {
