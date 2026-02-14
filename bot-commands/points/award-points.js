@@ -130,7 +130,6 @@ const awardPoints = {
     );
 
     const MAX_POINTS_CALLS_PER_MESSAGE = 5;
-    const isGoodQuestion = new RegExp(doublePointsPlusRegex).test(content);
 
     return Promise.all(
       userIds.map(async (userId, i) => {
@@ -184,6 +183,7 @@ const awardPoints = {
                 gifPicker(club40Gifs, clubChannel);
               }
             }
+            const isGoodQuestion = userId[1] === 2;
             channel.send(
               `${exclamation(pointsUser.points, isGoodQuestion)} ${user} now has ${
                 pointsUser.points
