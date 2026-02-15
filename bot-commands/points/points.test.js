@@ -1045,8 +1045,8 @@ describe('?++ callback', () => {
     await awardPoints.cb(data);
 
     expect(data.channel.send.mock.calls.flat()).toEqual([
-      'Thanks for the great question! <@2> now has 2 points',
-      'Nice! <@3> now has 1 point',
+      `Thanks for the great question! ${mentionedUser1.id} now has ${mentionedUser1.points} points`,
+      `Nice! ${mentionedUser2.id} now has ${mentionedUser2.points} point`,
     ]);
   });
 });
