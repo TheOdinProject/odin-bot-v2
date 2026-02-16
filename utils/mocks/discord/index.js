@@ -19,6 +19,7 @@ const Guild = require('./guild');
 const GuildMember = require('./guild-member');
 const TextChannel = require('./text-channel');
 const User = require('./user');
+const Role = require('./role');
 
 module.exports = {
   Client,
@@ -26,5 +27,6 @@ module.exports = {
   GuildMember,
   TextChannel,
   User,
+  Role,
   ODIN_BOT,
 };

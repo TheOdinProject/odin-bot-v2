@@ -4,6 +4,7 @@ const {
   Guild,
   TextChannel,
   User,
+  Role,
   ODIN_BOT,
 } = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
@@ -655,8 +656,12 @@ describe('callback', () => {
 });
 
 describe('?++ callback', () => {
-  const nonStaffAuthor = new User({ id: 1, points: 10, roles: ['@everyone'] });
-  const author = new User({ id: 1, points: 10, roles: ['core'] });
+  const nonStaffAuthor = new User({
+    id: 1,
+    points: 10,
+    roles: [new Role(0, '@everyone')],
+  });
+  const author = new User({ id: 1, points: 10, roles: [new Role(1, 'core')] });
   const channel = new TextChannel();
   const club40Channel = new TextChannel('707225752608964628');
 
