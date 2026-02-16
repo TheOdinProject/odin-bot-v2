@@ -15,7 +15,7 @@ async function logKick(member) {
       text: `ID: ${member.id}`,
     },
     author: {
-      name: `Kick | ${member.username}`,
+      name: `Kick | ${member.user.username}`,
       icon_url: `${member.displayAvatarURL()}`,
     },
     fields: [
