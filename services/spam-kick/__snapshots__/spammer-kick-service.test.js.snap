@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Kicking spammer Does not kick admin roles 1`] = `[Error: Bot attempting to Kick an admin user.]`;
+
+exports[`Kicking spammer Error is handled if channel doesn't exist 1`] = `[Error: No channel with the ID 922520585018433536 was found.]`;
+
+exports[`Kicking spammer Kicked spammer info is logged in moderation channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Kick | bad.spammer",
+      },
+      "color": 15747399,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "User has been kicked for posting more than 4 attachments in a single message.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 123",
+      },
+      "timestamp": "2024-02-01T00:00:00.000Z",
+    },
+  ],
+}
+`;
+
+exports[`Kicking spammer Kicked spammer is informed about the kick in DM 1`] = `"You have been kicked from the Odin Project Discord server for sending multiple attachments in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server"`;
+
+exports[`Kicking spammer Kicks spammer even if their DM is disabled 1`] = `"Attachments spam, account flagged for being compromised"`;
+
+exports[`Kicking spammer Kicks spammer service kicks with correct message 1`] = `"Attachments spam, account flagged for being compromised"`;
