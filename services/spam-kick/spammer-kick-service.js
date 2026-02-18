@@ -1,12 +1,13 @@
 const config = require('../../config');
 
+const ROLE_ID = config.roles.muted;
+
 class SpamKickingService {
   static async handleRoleUpdateEvent(oldMemberState, newMemberState) {
     try {
-      const mutedID = config.roles.muted;
       if (
-        oldMemberState.roles.cache.get(mutedID) != null ||
-        newMemberState.roles.cache.get(mutedID) == null
+        oldMemberState.roles.cache.get(ROLE_ID) != null ||
+        newMemberState.roles.cache.get(ROLE_ID) == null
       ) {
         return;
       }

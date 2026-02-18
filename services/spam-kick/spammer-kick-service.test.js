@@ -1,6 +1,8 @@
 const SpamKickingService = require('./spammer-kick-service');
 const config = require('../../config');
 
+const ROLE_ID = config.roles.muted;
+
 beforeAll(() => {
   jest.useFakeTimers();
   // Date.UTC Required so that test snippets match on different timezones
@@ -68,9 +70,9 @@ describe('Kicking spammer', () => {
   let oldMemberState;
   let newMemberState;
   beforeEach(() => {
-    // We run send, kick and channels operations on newMemberState only
-    oldMemberState = createMember();
-    newMemberState = createMember(createGuildMock(), config.roles.muted);
+    const guild = createGuildMock();
+    oldMemberState = createMember(guild);
+    newMemberState = createMember(guild, ROLE_ID);
   });
 
   it('Kicks member after receiving muted role', async () => {
@@ -103,6 +105,37 @@ describe('Kicking spammer', () => {
       } else {
         expect(channel.send).not.toHaveBeenCalled();
       }
+    });
+  });
+
+  it('Does not kick member on role removal', async () => {
+    const guild = createGuildMock();
+    const oldMemberState = createMember(guild, ROLE_ID);
+    const newMemberState = createMember(guild);
+    await SpamKickingService.handleRoleUpdateEvent(
+      oldMemberState,
+      newMemberState,
+    );
+    expect(newMemberState.send).not.toHaveBeenCalled();
+    expect(newMemberState.kick).not.toHaveBeenCalled();
+    newMemberState.guild.channels.cache.forEach((channel) => {
+      expect(channel.send).not.toHaveBeenCalled();
+    });
+  });
+
+  it('Does not kick member on different role gains', async () => {
+    const guild = createGuildMock();
+    oldMemberState = createMember(guild);
+    // By not giving role ID, we effectively test that it does not exist
+    newMemberState = createMember(guild);
+    await SpamKickingService.handleRoleUpdateEvent(
+      oldMemberState,
+      newMemberState,
+    );
+    expect(newMemberState.kick).not.toHaveBeenCalled();
+    expect(newMemberState.send).not.toHaveBeenCalled();
+    newMemberState.guild.channels.cache.forEach((channel) => {
+      expect(channel.send).not.toHaveBeenCalled();
     });
   });
 
