@@ -6,15 +6,12 @@ const deductPoints = require('./deduct-points');
 const { Client, Guild, Channel, User, Member, Collection } = discordMock;
 
 axios.post = jest.fn();
-
-const gifContainer = [
+jest.mock('./club-40-gifs.json', () => [
   {
     gif: 'https://i.imgur.com/ofDEfYs.gif',
     author: 'Sully',
   },
-];
-
-jest.mock('./club-40-gifs.json', () => gifContainer);
+]);
 
 beforeEach(() => {
   axios.post.mockClear();
