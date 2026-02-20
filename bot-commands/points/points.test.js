@@ -557,13 +557,6 @@ describe('callback', () => {
   });
 
   it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
-    jest.mock(
-      '../config',
-      () => ({
-        noPointsChannels: ['513125912070455296', '123456789'],
-      }),
-      { virtual: true },
-    );
     const mentionedUser = User({ id: 2, points: 20 });
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
@@ -907,13 +900,6 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
-    jest.mock(
-      '../config',
-      () => ({
-        noPointsChannels: ['513125912070455296', '123456789'],
-      }),
-      { virtual: true },
-    );
     const mentionedUser = User({ id: 2, points: 20 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
