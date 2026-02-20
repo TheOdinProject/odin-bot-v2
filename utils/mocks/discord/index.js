@@ -1,3 +1,17 @@
+/**
+ * We do not need to mock the actual Discord.js module with these features
+ * as we are only unit testing individual callbacks, and just need
+ * appropriate arguments.
+ *
+ * We would only need to mock the actual Discord.js module with these
+ * if we were able to write integration tests.
+ * However, this would be incredibly complex, requiring a lot of mocking
+ * of Discord.js' internals like events, API calls etc.
+ * Not worth it for the complexity and maintenance costs.
+ *
+ * Since these are just Discord internals,none of our callbacks should
+ * need to use any of these directly.
+ */
 module.exports = {
   Client: ({ users, channel, user }) => ({
     channels: {
