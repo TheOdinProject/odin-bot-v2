@@ -3,7 +3,6 @@ const mockSend = jest.fn((message) => message);
 module.exports = {
   mockSend,
   discordMock: {
-    ...jest.requireActual('discord.js'),
     Client: (users, channel, user) => ({
       channels: {
         cache: {

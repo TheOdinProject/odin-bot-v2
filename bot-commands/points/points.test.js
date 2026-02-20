@@ -1,9 +1,10 @@
 const axios = require('axios');
+const { Collection } = require('discord.js');
 const { mockSend, discordMock } = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
 
-const { Client, Guild, Channel, User, Member, Collection } = discordMock;
+const { Client, Guild, Channel, User, Member } = discordMock;
 
 axios.post = jest.fn();
 jest.mock('./club-40-gifs.json', () => [
