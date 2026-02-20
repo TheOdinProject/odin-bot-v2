@@ -1,19 +1,11 @@
 const axios = require('axios');
-const {
-  Guild,
-  Channel,
-  Client,
-  Collection,
-  User,
-  Member,
-} = require('discord.js');
+const { mockSend, discordMock } = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
 
-axios.post = jest.fn();
+const { Client, Guild, Channel, User, Member, Collection } = discordMock;
 
-const mockSend = jest.fn();
-mockSend.mockImplementation((message) => message);
+axios.post = jest.fn();
 
 const gifContainer = [
   {
@@ -23,61 +15,6 @@ const gifContainer = [
 ];
 
 jest.mock('./club-40-gifs.json', () => gifContainer);
-
-jest.mock('discord.js', () => ({
-  ...jest.requireActual('discord.js'),
-  Client: jest.fn().mockImplementation((users, channel, user) => ({
-    channels: {
-      cache: {
-        get: () => channel,
-      },
-    },
-    users: {
-      cache: {
-        get: (userId) =>
-          users.filter((filteredUser) => `<@${userId}>` === filteredUser.id)[0],
-      },
-    },
-    user,
-  })),
-
-  Guild: jest.fn().mockImplementation((users) => ({
-    members: {
-      members: users,
-      cache: {
-        get: (id) => users.filter((member) => member.discord_id === id)[0],
-      },
-      fetch: jest.fn().mockImplementation((user) => user),
-    },
-    roles: {
-      cache: [{ name: 'club-40' }],
-    },
-    member: (user) => users.filter((member) => member === user)[0],
-  })),
-
-  Channel: jest.fn().mockImplementation((id) => ({
-    id,
-    send: mockSend,
-  })),
-
-  User: jest.fn().mockImplementation((roles, id, points) => ({
-    roles: {
-      add: () => {
-        roles.push('club-40');
-      },
-      cache: roles,
-    },
-    id: `<@${id}>`,
-    points,
-    toString: () => `<@${id}>`,
-  })),
-
-  Member: jest.fn().mockImplementation((roles) => ({
-    roles: {
-      cache: roles,
-    },
-  })),
-}));
 
 beforeEach(() => {
   axios.post.mockClear();
