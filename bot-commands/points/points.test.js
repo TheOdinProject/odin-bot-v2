@@ -222,7 +222,7 @@ describe('callback', () => {
       content: `${mentionedUser.id} ++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
     };
 
     axios.post.mockResolvedValue({
@@ -245,7 +245,7 @@ describe('callback', () => {
       content: `${mentionedUser.id} ++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
     };
 
     axios.post.mockResolvedValue({
@@ -271,7 +271,7 @@ describe('callback', () => {
       content: `${mentionedUser.id} ++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
     };
 
     axios.post.mockResolvedValue({
@@ -310,13 +310,15 @@ describe('callback', () => {
       content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++`,
       channel,
       client,
-      guild: Guild([
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-      ]),
+      guild: Guild({
+        users: [
+          author,
+          mentionedUser1,
+          mentionedUser2,
+          mentionedUser3,
+          mentionedUser4,
+        ],
+      }),
     };
 
     axios.post
@@ -363,7 +365,7 @@ describe('callback', () => {
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
         channel,
         client,
-        guild: Guild([author, mentionedUser1]),
+        guild: Guild({ users: [author, mentionedUser1] }),
       };
 
       axios.post.mockResolvedValueOnce({
@@ -389,7 +391,7 @@ describe('callback', () => {
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
         channel,
         client,
-        guild: Guild([author, mentionedUser1]),
+        guild: Guild({ users: [author, mentionedUser1] }),
       };
 
       axios.post.mockResolvedValueOnce({
@@ -420,7 +422,7 @@ describe('callback', () => {
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++ ${mentionedUser2.id} ++`,
         channel,
         client,
-        guild: Guild([author, mentionedUser1]),
+        guild: Guild({ users: [author, mentionedUser1] }),
       };
 
       axios.post
@@ -471,15 +473,17 @@ describe('callback', () => {
       content: `${mentionedUser1.id} ++ ${mentionedUser2.id} ++ ${mentionedUser3.id} ++ ${mentionedUser4.id} ++ ${mentionedUser5.id} ++ ${mentionedUser6.id} ++`,
       channel,
       client,
-      guild: Guild([
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-        mentionedUser5,
-        mentionedUser6,
-      ]),
+      guild: Guild({
+        users: [
+          author,
+          mentionedUser1,
+          mentionedUser2,
+          mentionedUser3,
+          mentionedUser4,
+          mentionedUser5,
+          mentionedUser6,
+        ],
+      }),
     };
 
     axios.post
@@ -530,7 +534,7 @@ describe('callback', () => {
       content: `${author.id} ++`,
       channel,
       client,
-      guild: Guild([author]),
+      guild: Guild({ users: [author] }),
     };
 
     axios.post.mockResolvedValue({
@@ -554,7 +558,7 @@ describe('callback', () => {
       content: `${odinBot.id} ++`,
       channel,
       client,
-      guild: Guild([author]),
+      guild: Guild({ users: [author] }),
     };
 
     await awardPoints.cb(data);
@@ -573,7 +577,7 @@ describe('callback', () => {
       content: `${mentionedUser.id} ++`,
       channel: botSpamChannel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
     };
 
     const bannedChannelData = {
@@ -581,7 +585,7 @@ describe('callback', () => {
       content: `${mentionedUser.id} ++`,
       channel: bannedChannel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
     };
 
     await awardPoints.cb(botSpamChannelData);
@@ -611,7 +615,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -638,7 +642,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -664,7 +668,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -693,7 +697,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -735,13 +739,15 @@ describe('?++ callback', () => {
       content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ?++ ${mentionedUser3.id} ?++ ${mentionedUser4.id} ?++`,
       channel,
       client,
-      guild: Guild([
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-      ]),
+      guild: Guild({
+        users: [
+          author,
+          mentionedUser1,
+          mentionedUser2,
+          mentionedUser3,
+          mentionedUser4,
+        ],
+      }),
       member,
     };
 
@@ -806,15 +812,17 @@ describe('?++ callback', () => {
       content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ?++ ${mentionedUser3.id} ?++ ${mentionedUser4.id} ?++ ${mentionedUser5.id} ?++ ${mentionedUser6.id} ?++`,
       channel,
       client,
-      guild: Guild([
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-        mentionedUser5,
-        mentionedUser6,
-      ]),
+      guild: Guild({
+        users: [
+          author,
+          mentionedUser1,
+          mentionedUser2,
+          mentionedUser3,
+          mentionedUser4,
+          mentionedUser5,
+          mentionedUser6,
+        ],
+      }),
       member,
     };
 
@@ -869,7 +877,7 @@ describe('?++ callback', () => {
       content: `${author.id} ?++`,
       channel,
       client,
-      guild: Guild([author]),
+      guild: Guild({ users: [author] }),
       member,
     };
 
@@ -896,7 +904,7 @@ describe('?++ callback', () => {
       content: `${odinBot.id} ?++`,
       channel,
       client,
-      guild: Guild([author]),
+      guild: Guild({ users: [author] }),
       member,
     };
 
@@ -921,7 +929,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel: botSpamChannel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -930,7 +938,7 @@ describe('?++ callback', () => {
       content: `${mentionedUser.id} ?++`,
       channel: bannedChannel,
       client,
-      guild: Guild([author, mentionedUser]),
+      guild: Guild({ users: [author, mentionedUser] }),
       member,
     };
 
@@ -956,7 +964,7 @@ describe('?++ callback', () => {
         users: [author, mentionedUser1, mentionedUser2],
         channel,
       }),
-      guild: Guild([author, mentionedUser1, mentionedUser2]),
+      guild: Guild({ users: [author, mentionedUser1, mentionedUser2] }),
       member: Member({ roles }),
     };
 

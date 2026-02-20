@@ -19,7 +19,7 @@ module.exports = {
       },
       user,
     }),
-    Guild: (users) => ({
+    Guild: ({ users }) => ({
       members: {
         members: users,
         cache: {
@@ -30,7 +30,6 @@ module.exports = {
       roles: {
         cache: [{ name: 'club-40' }],
       },
-      member: (user) => users.filter((member) => member === user)[0],
     }),
     Channel: (id) => ({
       id,
