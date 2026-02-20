@@ -4,7 +4,7 @@ module.exports = {
   mockSend,
   discordMock: {
     ...jest.requireActual('discord.js'),
-    Client: jest.fn((users, channel, user) => ({
+    Client: (users, channel, user) => ({
       channels: {
         cache: {
           get: () => channel,
@@ -19,25 +19,25 @@ module.exports = {
         },
       },
       user,
-    })),
-    Guild: jest.fn((users) => ({
+    }),
+    Guild: (users) => ({
       members: {
         members: users,
         cache: {
           get: (id) => users.filter((member) => member.discord_id === id)[0],
         },
-        fetch: jest.fn((user) => user),
+        fetch: (user) => user,
       },
       roles: {
         cache: [{ name: 'club-40' }],
       },
       member: (user) => users.filter((member) => member === user)[0],
-    })),
-    Channel: jest.fn((id) => ({
+    }),
+    Channel: (id) => ({
       id,
       send: mockSend,
-    })),
-    User: jest.fn((roles, id, points) => ({
+    }),
+    User: (roles, id, points) => ({
       roles: {
         add: () => {
           roles.push('club-40');
@@ -47,11 +47,11 @@ module.exports = {
       id: `<@${id}>`,
       points,
       toString: () => `<@${id}>`,
-    })),
-    Member: jest.fn((roles) => ({
+    }),
+    Member: (roles) => ({
       roles: {
         cache: roles,
       },
-    })),
+    }),
   },
 };

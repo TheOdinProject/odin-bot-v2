@@ -19,7 +19,6 @@ jest.mock('./club-40-gifs.json', () => gifContainer);
 beforeEach(() => {
   axios.post.mockClear();
   mockSend.mockClear();
-  User.mockClear();
 });
 
 describe('award points', () => {
