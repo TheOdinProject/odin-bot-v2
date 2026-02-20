@@ -17,6 +17,11 @@ jest.mock('./club-40-gifs.json', () => [
     author: 'Sully',
   },
 ]);
+jest.mock('../../config', () => {
+  const actual = jest.requireActual('../../config');
+  actual.channels.noPointsChannelIds = ['513125912070455296', '123456789'];
+  return actual;
+});
 
 beforeEach(jest.clearAllMocks);
 

@@ -1,5 +1,3 @@
-const mockSend = jest.fn((message) => message);
-
 module.exports = {
   Client: ({ users, channel, user }) => ({
     channels: {
@@ -29,7 +27,7 @@ module.exports = {
   }),
   Channel: (id) => ({
     id,
-    send: mockSend,
+    send: jest.fn((message) => message),
   }),
   User: ({ id, points, roles = [] }) => {
     const discordIdString = `<@${id}>`;
