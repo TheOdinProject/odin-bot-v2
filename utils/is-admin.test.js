@@ -1,5 +1,5 @@
 const { Collection } = require('discord.js');
-const { Member } = require('./mocks/discord').discordMock;
+const { Member } = require('./mocks/discord');
 const { isAdmin } = require('./is-admin');
 
 describe('isAdmin', () => {

@@ -1,10 +1,14 @@
 const axios = require('axios');
 const { Collection } = require('discord.js');
-const { mockSend, discordMock } = require('../../utils/mocks/discord');
+const {
+  Client,
+  Guild,
+  Channel,
+  User,
+  Member,
+} = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
-
-const { Client, Guild, Channel, User, Member } = discordMock;
 
 axios.post = jest.fn();
 jest.mock('./club-40-gifs.json', () => [
@@ -14,10 +18,7 @@ jest.mock('./club-40-gifs.json', () => [
   },
 ]);
 
-beforeEach(() => {
-  axios.post.mockClear();
-  mockSend.mockClear();
-});
+beforeEach(jest.clearAllMocks);
 
 describe('award points', () => {
   it('has the name "award points"', () => {
