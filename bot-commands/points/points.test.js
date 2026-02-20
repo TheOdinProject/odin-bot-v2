@@ -216,7 +216,7 @@ describe('callback', () => {
   it('returns correct output for a single user w/o club-40', async () => {
     const mentionedUser = User({ id: 2, points: 20 });
     // users must be passed in as an array
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ++`,
@@ -239,7 +239,7 @@ describe('callback', () => {
 
   it('returns correct output for a single user entering club-40', async () => {
     const mentionedUser = User({ id: 2, points: 39 });
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ++`,
@@ -265,7 +265,7 @@ describe('callback', () => {
 
   it('returns correct output for a single user re-entering club-40', async () => {
     const mentionedUser = User({ id: 2, points: 40 });
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ++`,
@@ -294,10 +294,16 @@ describe('callback', () => {
     const mentionedUser2 = User({ id: 3, points: 21 });
     const mentionedUser3 = User({ id: 4, points: 2 });
     const mentionedUser4 = User({ id: 5, points: 0 });
-    const client = Client(
-      [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
+    const client = Client({
+      users: [
+        author,
+        mentionedUser1,
+        mentionedUser2,
+        mentionedUser3,
+        mentionedUser4,
+      ],
       channel,
-    );
+    });
 
     const data = {
       author,
@@ -351,7 +357,7 @@ describe('callback', () => {
   describe('where one user is mentioned more than once', () => {
     it('returns correct output for only 1 user mentioned twice', async () => {
       const mentionedUser1 = User({ id: 2, points: 5 });
-      const client = Client([author, mentionedUser1], channel);
+      const client = Client({ users: [author, mentionedUser1], channel });
       const data = {
         author,
         content: `${mentionedUser1.id} ++ ${mentionedUser1.id} ++`,
@@ -376,7 +382,7 @@ describe('callback', () => {
 
     it('returns correct output for only 1 user mentioned more than 5 times', async () => {
       const mentionedUser1 = User({ id: 2, points: 5 });
-      const client = Client([author, mentionedUser1], channel);
+      const client = Client({ users: [author, mentionedUser1], channel });
 
       const data = {
         author,
@@ -407,7 +413,7 @@ describe('callback', () => {
     it('returns correct output for 1 user mentioned more than once with another user', async () => {
       const mentionedUser1 = User({ id: 2, points: 21 });
       const mentionedUser2 = User({ id: 3, points: 23 });
-      const client = Client([author, mentionedUser1], channel);
+      const client = Client({ users: [author, mentionedUser1], channel });
 
       const data = {
         author,
@@ -447,8 +453,8 @@ describe('callback', () => {
     const mentionedUser4 = User({ id: 5, points: 0 });
     const mentionedUser5 = User({ id: 6, points: 21 });
     const mentionedUser6 = User({ id: 7, points: 29 });
-    const client = Client(
-      [
+    const client = Client({
+      users: [
         author,
         mentionedUser1,
         mentionedUser2,
@@ -458,7 +464,7 @@ describe('callback', () => {
         mentionedUser6,
       ],
       channel,
-    );
+    });
 
     const data = {
       author,
@@ -518,7 +524,7 @@ describe('callback', () => {
   });
 
   it('returns correct output for a user mentioning themselves', async () => {
-    const client = Client([author], channel);
+    const client = Client({ users: [author], channel });
     const data = {
       author,
       content: `${author.id} ++`,
@@ -542,7 +548,7 @@ describe('callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const odinBot = User({ id: 0, points: 0 });
-    const client = Client([author, odinBot], channel, odinBot);
+    const client = Client({ users: [author, odinBot], channel, user: odinBot });
     const data = {
       author,
       content: `${odinBot.id} ++`,
@@ -560,7 +566,7 @@ describe('callback', () => {
     const mentionedUser = User({ id: 2, points: 20 });
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
-    const client = Client([author, mentionedUser], botSpamChannel);
+    const client = Client({ users: [author, mentionedUser], botSpamChannel });
 
     const botSpamChannelData = {
       author,
@@ -598,7 +604,7 @@ describe('?++ callback', () => {
     memberCollection.set('role-1', { name: '@everyone' });
     const member = Member(memberCollection);
     // users must be passed in as an array
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ?++`,
@@ -626,7 +632,7 @@ describe('?++ callback', () => {
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
     // users must be passed in as an array
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ?++`,
@@ -653,7 +659,7 @@ describe('?++ callback', () => {
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ?++`,
@@ -683,7 +689,7 @@ describe('?++ callback', () => {
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
-    const client = Client([author, mentionedUser], channel);
+    const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
       content: `${mentionedUser.id} ?++`,
@@ -716,10 +722,16 @@ describe('?++ callback', () => {
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
-    const client = Client(
-      [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
+    const client = Client({
+      users: [
+        author,
+        mentionedUser1,
+        mentionedUser2,
+        mentionedUser3,
+        mentionedUser4,
+      ],
       channel,
-    );
+    });
 
     const data = {
       author,
@@ -780,8 +792,8 @@ describe('?++ callback', () => {
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
-    const client = Client(
-      [
+    const client = Client({
+      users: [
         author,
         mentionedUser1,
         mentionedUser2,
@@ -791,7 +803,7 @@ describe('?++ callback', () => {
         mentionedUser6,
       ],
       channel,
-    );
+    });
 
     const data = {
       author,
@@ -853,7 +865,7 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a user mentioning themselves', async () => {
-    const client = Client([author], channel);
+    const client = Client({ users: [author], channel });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -884,7 +896,7 @@ describe('?++ callback', () => {
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
-    const client = Client([author, odinBot], channel, odinBot);
+    const client = Client({ users: [author, odinBot], channel, user: odinBot });
     const data = {
       author,
       content: `${odinBot.id} ?++`,
@@ -906,7 +918,10 @@ describe('?++ callback', () => {
     const member = Member(memberCollection);
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
-    const client = Client([author, mentionedUser], botSpamChannel);
+    const client = Client({
+      users: [author, mentionedUser],
+      channel: botSpamChannel,
+    });
 
     const botSpamChannelData = {
       author,
@@ -943,7 +958,10 @@ describe('?++ callback', () => {
       author,
       content: `${mentionedUser1.id} ?++ ${mentionedUser2.id} ++`,
       channel,
-      client: Client([author, mentionedUser1, mentionedUser2], channel),
+      client: Client({
+        users: [author, mentionedUser1, mentionedUser2],
+        channel,
+      }),
       guild: Guild([author, mentionedUser1, mentionedUser2]),
       member: Member(new Collection([['role-1', { name: 'core' }]])),
     };
