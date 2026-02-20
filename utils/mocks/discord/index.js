@@ -36,17 +36,20 @@ module.exports = {
       id,
       send: mockSend,
     }),
-    User: (roles, id, points) => ({
-      roles: {
-        add: () => {
-          roles.push('club-40');
+    User: ({ id, points, roles = [] }) => {
+      const discordIdString = `<@${id}>`;
+      return {
+        roles: {
+          add: (role) => {
+            roles.push(role);
+          },
+          cache: roles,
         },
-        cache: roles,
-      },
-      id: `<@${id}>`,
-      points,
-      toString: () => `<@${id}>`,
-    }),
+        id: discordIdString,
+        points,
+        toString: () => discordIdString,
+      };
+    },
     Member: (roles) => ({
       roles: {
         cache: roles,

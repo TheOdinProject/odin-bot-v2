@@ -210,11 +210,11 @@ describe('award points', () => {
 });
 
 describe('callback', () => {
-  const author = User([], 1, 10);
+  const author = User({ id: 1, points: 10 });
   const channel = Channel();
 
   it('returns correct output for a single user w/o club-40', async () => {
-    const mentionedUser = User([], 2, 20);
+    const mentionedUser = User({ id: 2, points: 20 });
     // users must be passed in as an array
     const client = Client([author, mentionedUser], channel);
     const data = {
@@ -238,7 +238,7 @@ describe('callback', () => {
   });
 
   it('returns correct output for a single user entering club-40', async () => {
-    const mentionedUser = User([], 2, 39);
+    const mentionedUser = User({ id: 2, points: 39 });
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -264,7 +264,7 @@ describe('callback', () => {
   });
 
   it('returns correct output for a single user re-entering club-40', async () => {
-    const mentionedUser = User([], 2, 40);
+    const mentionedUser = User({ id: 2, points: 40 });
     const client = Client([author, mentionedUser], channel);
     const data = {
       author,
@@ -290,10 +290,10 @@ describe('callback', () => {
   });
 
   it('returns correct output for up to five mentioned users', async () => {
-    const mentionedUser1 = User([], 2, 33);
-    const mentionedUser2 = User([], 3, 21);
-    const mentionedUser3 = User([], 4, 2);
-    const mentionedUser4 = User([], 5, 0);
+    const mentionedUser1 = User({ id: 2, points: 33 });
+    const mentionedUser2 = User({ id: 3, points: 21 });
+    const mentionedUser3 = User({ id: 4, points: 2 });
+    const mentionedUser4 = User({ id: 5, points: 0 });
     const client = Client(
       [author, mentionedUser1, mentionedUser2, mentionedUser3, mentionedUser4],
       channel,
@@ -350,7 +350,7 @@ describe('callback', () => {
 
   describe('where one user is mentioned more than once', () => {
     it('returns correct output for only 1 user mentioned twice', async () => {
-      const mentionedUser1 = User([], 2, 5);
+      const mentionedUser1 = User({ id: 2, points: 5 });
       const client = Client([author, mentionedUser1], channel);
       const data = {
         author,
@@ -375,7 +375,7 @@ describe('callback', () => {
     });
 
     it('returns correct output for only 1 user mentioned more than 5 times', async () => {
-      const mentionedUser1 = User([], 2, 5);
+      const mentionedUser1 = User({ id: 2, points: 5 });
       const client = Client([author, mentionedUser1], channel);
 
       const data = {
@@ -405,8 +405,8 @@ describe('callback', () => {
     });
 
     it('returns correct output for 1 user mentioned more than once with another user', async () => {
-      const mentionedUser1 = User([], 2, 21);
-      const mentionedUser2 = User([], 3, 23);
+      const mentionedUser1 = User({ id: 2, points: 21 });
+      const mentionedUser2 = User({ id: 3, points: 23 });
       const client = Client([author, mentionedUser1], channel);
 
       const data = {
@@ -441,12 +441,12 @@ describe('callback', () => {
   });
 
   it('returns correct output for more than five mentioned users', async () => {
-    const mentionedUser1 = User([], 2, 10);
-    const mentionedUser2 = User([], 3, 3);
-    const mentionedUser3 = User([], 4, 1);
-    const mentionedUser4 = User([], 5, 0);
-    const mentionedUser5 = User([], 6, 21);
-    const mentionedUser6 = User([], 7, 29);
+    const mentionedUser1 = User({ id: 2, points: 10 });
+    const mentionedUser2 = User({ id: 3, points: 3 });
+    const mentionedUser3 = User({ id: 4, points: 1 });
+    const mentionedUser4 = User({ id: 5, points: 0 });
+    const mentionedUser5 = User({ id: 6, points: 21 });
+    const mentionedUser6 = User({ id: 7, points: 29 });
     const client = Client(
       [
         author,
@@ -541,7 +541,7 @@ describe('callback', () => {
   });
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
-    const odinBot = User([], 0, 0);
+    const odinBot = User({ id: 0, points: 0 });
     const client = Client([author, odinBot], channel, odinBot);
     const data = {
       author,
@@ -564,7 +564,7 @@ describe('callback', () => {
       }),
       { virtual: true },
     );
-    const mentionedUser = User([], 2, 20);
+    const mentionedUser = User({ id: 2, points: 20 });
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
     const client = Client([author, mentionedUser], botSpamChannel);
@@ -596,11 +596,11 @@ describe('callback', () => {
 });
 
 describe('?++ callback', () => {
-  const author = User([], 1, 10);
+  const author = User({ id: 1, points: 10 });
   const channel = Channel();
 
   it('returns correct output for a user who does not have an admin role', async () => {
-    const mentionedUser = User([], 2, 20);
+    const mentionedUser = User({ id: 2, points: 20 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: '@everyone' });
     const member = Member(memberCollection);
@@ -628,7 +628,7 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a single user w/o club-40', async () => {
-    const mentionedUser = User([], 2, 20);
+    const mentionedUser = User({ id: 2, points: 20 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -656,7 +656,7 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a single user entering club-40', async () => {
-    const mentionedUser = User([], 2, 39);
+    const mentionedUser = User({ id: 2, points: 39 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -686,7 +686,7 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a single user re-entering club-40', async () => {
-    const mentionedUser = User([], 2, 40);
+    const mentionedUser = User({ id: 2, points: 40 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -716,10 +716,10 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for up to five mentioned users', async () => {
-    const mentionedUser1 = User([], 2, 33);
-    const mentionedUser2 = User([], 3, 21);
-    const mentionedUser3 = User([], 4, 2);
-    const mentionedUser4 = User([], 5, 0);
+    const mentionedUser1 = User({ id: 2, points: 33 });
+    const mentionedUser2 = User({ id: 3, points: 21 });
+    const mentionedUser3 = User({ id: 4, points: 2 });
+    const mentionedUser4 = User({ id: 5, points: 0 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -778,12 +778,12 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for more than five mentioned users', async () => {
-    const mentionedUser1 = User([], 2, 10);
-    const mentionedUser2 = User([], 3, 3);
-    const mentionedUser3 = User([], 4, 1);
-    const mentionedUser4 = User([], 5, 0);
-    const mentionedUser5 = User([], 6, 21);
-    const mentionedUser6 = User([], 7, 29);
+    const mentionedUser1 = User({ id: 2, points: 10 });
+    const mentionedUser2 = User({ id: 3, points: 3 });
+    const mentionedUser3 = User({ id: 4, points: 1 });
+    const mentionedUser4 = User({ id: 5, points: 0 });
+    const mentionedUser5 = User({ id: 6, points: 21 });
+    const mentionedUser6 = User({ id: 7, points: 29 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -887,7 +887,7 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
-    const odinBot = User([], 0, 0);
+    const odinBot = User({ id: 0, points: 0 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -914,7 +914,7 @@ describe('?++ callback', () => {
       }),
       { virtual: true },
     );
-    const mentionedUser = User([], 2, 20);
+    const mentionedUser = User({ id: 2, points: 20 });
     const memberCollection = new Collection();
     memberCollection.set('role-1', { name: 'core' });
     const member = Member(memberCollection);
@@ -950,8 +950,8 @@ describe('?++ callback', () => {
   });
 
   it('sends the correct exclamations for mixed awarding (++ and ?++) in a single message', async () => {
-    const mentionedUser1 = User([], 2, 0);
-    const mentionedUser2 = User([], 3, 0);
+    const mentionedUser1 = User({ id: 2, points: 0 });
+    const mentionedUser2 = User({ id: 3, points: 0 });
 
     const data = {
       author,
