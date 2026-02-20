@@ -50,7 +50,7 @@ module.exports = {
         toString: () => discordIdString,
       };
     },
-    Member: (roles) => ({
+    Member: ({ roles }) => ({
       roles: {
         cache: roles,
       },

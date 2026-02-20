@@ -600,9 +600,10 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user who does not have an admin role', async () => {
     const mentionedUser = User({ id: 2, points: 20 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: '@everyone' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', {
+      name: '@everyone',
+    });
+    const member = Member({ roles });
     // users must be passed in as an array
     const client = Client({ users: [author, mentionedUser], channel });
     const data = {
@@ -628,9 +629,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user w/o club-40', async () => {
     const mentionedUser = User({ id: 2, points: 20 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     // users must be passed in as an array
     const client = Client({ users: [author, mentionedUser], channel });
     const data = {
@@ -656,9 +656,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user entering club-40', async () => {
     const mentionedUser = User({ id: 2, points: 39 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
@@ -686,9 +685,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a single user re-entering club-40', async () => {
     const mentionedUser = User({ id: 2, points: 40 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const client = Client({ users: [author, mentionedUser], channel });
     const data = {
       author,
@@ -719,9 +717,8 @@ describe('?++ callback', () => {
     const mentionedUser2 = User({ id: 3, points: 21 });
     const mentionedUser3 = User({ id: 4, points: 2 });
     const mentionedUser4 = User({ id: 5, points: 0 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const client = Client({
       users: [
         author,
@@ -789,9 +786,8 @@ describe('?++ callback', () => {
     const mentionedUser4 = User({ id: 5, points: 0 });
     const mentionedUser5 = User({ id: 6, points: 21 });
     const mentionedUser6 = User({ id: 7, points: 29 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const client = Client({
       users: [
         author,
@@ -866,9 +862,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning themselves', async () => {
     const client = Client({ users: [author], channel });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const data = {
       author,
       content: `${author.id} ?++`,
@@ -893,9 +888,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const odinBot = User({ id: 0, points: 0 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const client = Client({ users: [author, odinBot], channel, user: odinBot });
     const data = {
       author,
@@ -913,9 +907,8 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
     const mentionedUser = User({ id: 2, points: 20 });
-    const memberCollection = new Collection();
-    memberCollection.set('role-1', { name: 'core' });
-    const member = Member(memberCollection);
+    const roles = new Collection().set('role-1', { name: 'core' });
+    const member = Member({ roles });
     const botSpamChannel = Channel('513125912070455296');
     const bannedChannel = Channel('123456789');
     const client = Client({
@@ -953,6 +946,7 @@ describe('?++ callback', () => {
   it('sends the correct exclamations for mixed awarding (++ and ?++) in a single message', async () => {
     const mentionedUser1 = User({ id: 2, points: 0 });
     const mentionedUser2 = User({ id: 3, points: 0 });
+    const roles = new Collection().set('role-1', { name: 'core' });
 
     const data = {
       author,
@@ -963,7 +957,7 @@ describe('?++ callback', () => {
         channel,
       }),
       guild: Guild([author, mentionedUser1, mentionedUser2]),
-      member: Member(new Collection([['role-1', { name: 'core' }]])),
+      member: Member({ roles }),
     };
 
     axios.post
