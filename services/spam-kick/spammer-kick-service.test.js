@@ -66,6 +66,8 @@ function createMember(guild, roleId) {
   };
 }
 
+// Note: SpamKickingService will call member methods (kick, send) are being done on the newMemberState
+// oldmMemberState are only being used to call (roles.cache.get) in order to compare the past, and new roles.
 describe('Kicking spammer', () => {
   let oldMemberState;
   let newMemberState;
