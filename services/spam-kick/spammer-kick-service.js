@@ -12,10 +12,8 @@ class SpamKickingService {
         return;
       }
 
-      await newMemberState.send(
-        `You have been kicked from the Odin Project Discord server for sending multiple images in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
-      );
-
+      // User has to be informed before the kick happens
+      await SpamKickingService.#informUser(newMemberState);
       await SpamKickingService.#logKick(newMemberState);
       await newMemberState.kick(
         'Image spam, account flagged for being compromised',
@@ -57,6 +55,16 @@ class SpamKickingService {
     };
 
     channel.send({ embeds: [embed] });
+  }
+
+  static async #informUser(member) {
+    try {
+      await member.send(
+        `You have been kicked from the Odin Project Discord server for sending multiple images in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
+      );
+      // If user has DMs disabled, ignore the error
+      // eslint-disable-next-line no-unused-vars, no-empty
+    } catch (_) {}
   }
 }
 

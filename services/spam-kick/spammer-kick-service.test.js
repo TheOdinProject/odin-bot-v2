@@ -84,6 +84,19 @@ describe('Kicking spammer', () => {
     expect(newMemberState.getKickReason()).toMatchSnapshot();
   });
 
+  it('Kicks member even if their DM is disabled', async () => {
+    newMemberState.send = jest.fn(() => {
+      throw new Error("Can't contact user");
+    });
+    await SpamKickingService.handleRoleUpdateEvent(
+      oldMemberState,
+      newMemberState,
+    );
+    expect(newMemberState.kick).toHaveBeenCalledTimes(1);
+    expect(newMemberState.send).toHaveBeenCalledTimes(1);
+    expect(newMemberState.getKickReason()).toMatchSnapshot();
+  });
+
   it('Kicked member is informed about the kick in DM', async () => {
     await SpamKickingService.handleRoleUpdateEvent(
       oldMemberState,

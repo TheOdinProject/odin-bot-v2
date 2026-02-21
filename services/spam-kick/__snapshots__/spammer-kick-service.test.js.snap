@@ -33,3 +33,5 @@ exports[`Kicking spammer Kicked member is logged in moderation channel 1`] = `
 `;
 
 exports[`Kicking spammer Kicks member after receiving muted role 1`] = `"Image spam, account flagged for being compromised"`;
+
+exports[`Kicking spammer Kicks member even if their DM is disabled 1`] = `"Image spam, account flagged for being compromised"`;
