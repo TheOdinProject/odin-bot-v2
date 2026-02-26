@@ -601,7 +601,7 @@ describe('callback', () => {
       users: [author],
       channels: [channel],
     });
-    const guild = new Guild({ members: [author] });
+    const guild = new Guild({ members: [author.toGuildMember()] });
 
     const data = {
       author,
@@ -961,11 +961,11 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const client = new Client({
-      users: [author, ODIN_BOT],
+      users: [author],
       channels: [channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), ODIN_BOT],
+      members: [author.toGuildMember()],
     });
     const data = {
       author,
