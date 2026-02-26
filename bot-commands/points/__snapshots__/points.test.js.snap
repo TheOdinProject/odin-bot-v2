@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`?++ callback awards points when used by staff 1`] = `"Thanks for the great question! <@2> now has 22 points"`;
+
+exports[`?++ callback does not award points when used by non-staff 1`] = `"Only maintainers or core members can give double points!"`;
+
 exports[`?++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
 exports[`?++ callback returns correct output for a single user entering club-40 2`] = `"https://i.imgur.com/ofDEfYs.gif"`;
@@ -16,19 +20,15 @@ exports[`?++ callback returns correct output for a single user re-entering club-
 
 exports[`?++ callback returns correct output for a single user re-entering club-40 4`] = `"Thanks for the great question! <@2> now has 42 points"`;
 
-exports[`?++ callback returns correct output for a single user w/o club-40 1`] = `"Thanks for the great question! <@2> now has 22 points"`;
+exports[`?++ callback returns correct output for a user awarding points in a no-points channel 1`] = `"You can't do that here!"`;
 
-exports[`?++ callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
-
-exports[`?++ callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
+exports[`?++ callback returns correct output for a user awarding points in a no-points channel 2`] = `"You can't do that here!"`;
 
 exports[`?++ callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 
 exports[`?++ callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
 
 exports[`?++ callback returns correct output for a user mentioning themselves 2`] = `"You can't do that!"`;
-
-exports[`?++ callback returns correct output for a user who does not have an admin role 1`] = `"Only maintainers or core members can give double points!"`;
 
 exports[`?++ callback returns correct output for more than five mentioned users 1`] = `"you can only do 5 at a time..... "`;
 
@@ -70,9 +70,9 @@ exports[`callback returns correct output for a single user re-entering club-40 4
 
 exports[`callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 
-exports[`callback returns correct output for a user awarding points in a channel listed in the config file 1`] = `"You can't do that here!"`;
+exports[`callback returns correct output for a user awarding points in a no-points channel 1`] = `"You can't do that here!"`;
 
-exports[`callback returns correct output for a user awarding points in a channel listed in the config file 2`] = `"You can't do that here!"`;
+exports[`callback returns correct output for a user awarding points in a no-points channel 2`] = `"You can't do that here!"`;
 
 exports[`callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 

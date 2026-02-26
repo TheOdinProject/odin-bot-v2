@@ -616,7 +616,7 @@ describe('callback', () => {
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
 
-  it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
+  it('returns correct output for a user awarding points in a no-points channel', async () => {
     const mentionedUser = new User({ id: 2, points: 20 });
     const botSpamChannel = new TextChannel('513125912070455296');
     const bannedChannel = new TextChannel('123456789');
@@ -660,7 +660,7 @@ describe('?++ callback', () => {
   const channel = new TextChannel();
   const club40Channel = new TextChannel('707225752608964628');
 
-  it('returns correct output for a user who does not have an admin role', async () => {
+  it('does not award points when used by non-staff', async () => {
     const mentionedUser = new User({ id: 2, points: 20 });
     const client = new Client({
       users: [nonStaffAuthor, mentionedUser],
@@ -690,7 +690,7 @@ describe('?++ callback', () => {
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
 
-  it('returns correct output for a single user w/o club-40', async () => {
+  it('awards points when used by staff', async () => {
     const mentionedUser = new User({ id: 2, points: 20 });
     const client = new Client({
       users: [author, mentionedUser],
@@ -981,7 +981,7 @@ describe('?++ callback', () => {
     expect(data.channel.send.mock.calls[0][0]).toMatchSnapshot();
   });
 
-  it('returns correct output for a user awarding points in a channel listed in the config file', async () => {
+  it('returns correct output for a user awarding points in a no-points channel', async () => {
     const mentionedUser = new User({ id: 2, points: 20 });
     const botSpamChannel = new TextChannel('513125912070455296');
     const bannedChannel = new TextChannel('123456789');
