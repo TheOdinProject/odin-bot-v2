@@ -5,7 +5,7 @@ class Guild {
   #members = new Collection().set(ODIN_BOT.id, ODIN_BOT);
   #roles = new Collection().set(1, { name: 'club-40' });
 
-  contructor({ members }) {
+  constructor({ members }) {
     members.forEach((member) => {
       this.#members.set(member.id, member);
     });
