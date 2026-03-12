@@ -3,10 +3,15 @@ const { Collection } = require('discord.js');
 class GuildMember {
   #roles = new Collection();
 
-  constructor({ roles }) {
+  constructor({ id, roles }) {
+    this.id = id;
     roles.forEach((role, index) => {
       this.#roles.set(index, { name: role });
     });
+  }
+
+  get displayName() {
+    return `User ${this.id}`;
   }
 
   get roles() {
