@@ -11,10 +11,16 @@ class PointsService {
   static users = PointsService.client.db().collection('users');
 
   static async handleInteraction(interaction) {
-    if (interaction.options.getSubcommand() === 'user') {
-      await PointsService.displayUserPoints(interaction);
-    } else {
-      await PointsService.displayInfo(interaction);
+    switch (interaction.options.getSubcommand()) {
+      case 'user':
+        await PointsService.displayUserPoints(interaction);
+        break;
+      case 'leaderboard':
+        await PointsService.displayLeaderboard(interaction);
+        break;
+      default:
+        await PointsService.displayInfo(interaction);
+        break;
     }
   }
 
@@ -49,6 +55,41 @@ Our goal is to maintain a positive and supportive community, where help and cont
       content: userId ? `${userId}` : '',
       embeds: [pointsEmbed],
     });
+  }
+
+  static async displayLeaderboard(interaction) {
+    const allUsers = await PointsService.#getAllSortedUsers(
+      interaction.guild.members.cache,
+    );
+
+    let limit = interaction.options.getInteger('limit') ?? 5;
+    if (limit > 25) {
+      limit = 25;
+    }
+
+    let offset = interaction.options.getInteger('offset') ?? 0;
+    if (offset >= allUsers.length) {
+      offset = allUsers.length - 1;
+    }
+
+    const leaderboard = allUsers
+      .slice(offset, offset + limit)
+      .map((user, i) => {
+        const displayName = interaction.guild.members.cache.get(
+          user.discordID,
+        )?.displayName;
+        const position = i + offset + 1;
+        return `${position}. ${escapeMarkdown(displayName)} - ${user.points}${position === 1 ? ' :tada:' : ''}`;
+      });
+
+    const leaderboardEmbed = new EmbedBuilder()
+      .setColor('#cc9543')
+      .setTitle('TOP Discord points leaderboard')
+      .setDescription(
+        leaderboard.join('\n') || 'Be the first to earn a point!',
+      );
+
+    await interaction.reply({ embeds: [leaderboardEmbed] });
   }
 
   static async displayUserPoints(interaction) {

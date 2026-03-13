@@ -2,7 +2,7 @@ module.exports = [
   { discordID: '**0**', points: 0 },
   { discordID: '0', points: 0 },
   { discordID: '1', points: 1 },
-  { discordID: '2', points: 2 },
+  { discordID: '*2*', points: 2 },
   { discordID: '3', points: 3 },
   { discordID: '4', points: 4 },
   { discordID: '5', points: 5 },
