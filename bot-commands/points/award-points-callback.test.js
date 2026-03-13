@@ -18,6 +18,11 @@ const IDs = {
   noPointsChannel: '513125912070455296',
   club40Role: '707225790546444288',
 };
+const client = new Client({});
+const generalChannel = new TextChannel(IDs.generalChannel);
+const club40Channel = new TextChannel(IDs.club40Channel);
+const noPointsChannel = new TextChannel(IDs.noPointsChannel);
+const channels = [generalChannel, club40Channel, noPointsChannel];
 
 jest.mock('./club-40-gifs.json', () => [
   {
@@ -56,12 +61,7 @@ afterAll(async () => {
 });
 
 describe('++ / :star:', () => {
-  const client = new Client({});
   const author = new GuildMember({ id: '99999999' });
-  const generalChannel = new TextChannel(IDs.generalChannel);
-  const club40Channel = new TextChannel(IDs.club40Channel);
-  const noPointsChannel = new TextChannel(IDs.noPointsChannel);
-  const channels = [generalChannel, club40Channel, noPointsChannel];
 
   it('Awards point to different member without points', async () => {
     const mentionedMember = new GuildMember({ id: '0' });
@@ -274,5 +274,224 @@ describe('++ / :star:', () => {
     expect(
       PointsService.users.findOne({ discordID: mentionedMember.id }),
     ).resolves.toMatchObject({ points: 1 });
+  });
+});
+
+describe('?++', () => {
+  const nonStaffAuthor = new GuildMember({ id: '99999999' });
+  const staffAuthor = new GuildMember({ id: '0000000', roles: ['core'] });
+
+  it('Prevents awarding points if author is not staff member', async () => {
+    const mentionedMember = new GuildMember({ id: '0' });
+    await awardPoints.cb({
+      member: nonStaffAuthor,
+      content: `${mentionedMember} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({
+        members: [nonStaffAuthor, mentionedMember],
+        channels,
+      }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      ['Only staff can use ?++ to give double points!'],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toBeNull();
+  });
+
+  it('Awards double points to different member if author is staff member', async () => {
+    const mentionedMember = new GuildMember({ id: '1' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+      }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [`Thanks for the great question! ${mentionedMember} now has 3 points`],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toMatchObject({ points: 3 });
+  });
+
+  it('Awards double points to each of multiple different mentioned members', async () => {
+    const mentionedMember1 = new GuildMember({ id: '1' });
+    const mentionedMember2 = new GuildMember({ id: '2' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember1} ?++ ${mentionedMember2} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember1, mentionedMember2],
+        channels,
+      }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [`Thanks for the great question! ${mentionedMember1} now has 3 points`],
+      [`Thanks for the great question! ${mentionedMember2} now has 4 points`],
+    ]);
+    expect(
+      PointsService.users
+        .find({
+          discordID: { $in: [mentionedMember1.id, mentionedMember2.id] },
+        })
+        .toArray(),
+    ).resolves.toMatchObject([{ points: 3 }, { points: 4 }]);
+  });
+
+  it('Awards points only once for member mentioned multiple times', async () => {
+    const mentionedMember = new GuildMember({ id: '1' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember} ?++ ${mentionedMember} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+      }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [`Thanks for the great question! ${mentionedMember} now has 3 points`],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toMatchObject({ points: 3 });
+  });
+
+  it('Gives unique response when trying to award OdinBot', async () => {
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${ODIN_BOT} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({ members: [staffAuthor], channels }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      ['Awwwww shucks... :heart_eyes:'],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: ODIN_BOT.id }),
+    ).resolves.toBeNull();
+  });
+
+  it('Prevents awarding points in a no-points channel', async () => {
+    const mentionedMember = new GuildMember({ id: '0' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember} ?++`,
+      channel: noPointsChannel,
+      client,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+      }),
+    });
+
+    expect(noPointsChannel.send.mock.calls).toEqual([
+      ["You can't give points in this channel!"],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toBeNull();
+  });
+
+  it('Prevents self-awarding points', async () => {
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${staffAuthor} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({ members: [staffAuthor], channels }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [selfAwardGif],
+      ["You can't give yourself points!"],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: staffAuthor.id }),
+    ).resolves.toBeNull();
+  });
+
+  it('Does not prevent awarding points to other members when also self-awarding', async () => {
+    const mentionedMember = new GuildMember({ id: '0' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${staffAuthor} ?++ ${mentionedMember} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({ members: [staffAuthor, mentionedMember], channels }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [selfAwardGif],
+      ["You can't give yourself points!"],
+      [`Thanks for the great question! ${mentionedMember} now has 2 points`],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: staffAuthor.id }),
+    ).resolves.toBeNull();
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toMatchObject({ points: 2 });
+  });
+
+  it('Only uses the ?++ exclamation for ?++ awards (inc. mixed awards)', async () => {
+    const mentionedMember1 = new GuildMember({ id: '1' });
+    const mentionedMember2 = new GuildMember({ id: '2' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember1} ?++ ${mentionedMember2} ++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember1, mentionedMember2],
+        channels,
+      }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [`Thanks for the great question! ${mentionedMember1} now has 3 points`],
+      [`Nice! ${mentionedMember2} now has 3 points`],
+    ]);
+    expect(
+      PointsService.users
+        .find({
+          discordID: { $in: [mentionedMember1.id, mentionedMember2.id] },
+        })
+        .toArray(),
+    ).resolves.toMatchObject([{ points: 3 }, { points: 3 }]);
+  });
+
+  it('Prioritizes double points if same member given mixed awards in the same message', async () => {
+    const mentionedMember = new GuildMember({ id: '0' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember} ?++ ${mentionedMember} ?++`,
+      channel: generalChannel,
+      client,
+      guild: new Guild({ members: [staffAuthor, mentionedMember], channels }),
+    });
+
+    expect(generalChannel.send.mock.calls).toEqual([
+      [`Thanks for the great question! ${mentionedMember} now has 2 points`],
+    ]);
+    expect(
+      PointsService.users.findOne({ discordID: mentionedMember.id }),
+    ).resolves.toMatchObject({ points: 2 });
   });
 });
