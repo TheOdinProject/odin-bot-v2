@@ -6,6 +6,7 @@ const config = {
   },
   guildId: process.env.DISCORD_GUILD_ID,
   clientId: process.env.DISCORD_CLIENT_ID,
+  databaseURI: process.env.DATABASE_URI,
   token: process.env.DISCORD_API_KEY,
   channels: {
     noPointsChannelIds: process.env.NO_POINTS_CHANNEL_IDs
