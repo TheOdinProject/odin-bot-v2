@@ -1,3 +1,7 @@
+// PointsService not needed for this test suite but would otherwise
+// require the DATABASE_URI env var (not present in envs like GH Actions)
+jest.mock('../../services/points/points-mongo.service.js', () => class {});
+
 const awardPoints = require('./award-points-mongo');
 const deductPoints = require('./deduct-points');
 
