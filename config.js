@@ -6,6 +6,7 @@ const config = {
   },
   guildId: process.env.DISCORD_GUILD_ID,
   clientId: process.env.DISCORD_CLIENT_ID,
+  databaseURI: process.env.DATABASE_URI,
   token: process.env.DISCORD_API_KEY,
   channels: {
     noPointsChannelIds: process.env.NO_POINTS_CHANNEL_IDs
@@ -13,6 +14,7 @@ const config = {
       : ['513125912070455296', '948409662255026227'],
     introductionsChannelId:
       process.env.INTRODUCTIONS_CHANNEL_ID || '690618925494566912',
+    club40ChannelId: process.env.CLUB_40_CHANNEL_ID || '707225752608964628',
     gettingHiredChannelId:
       process.env.GETTING_HIRED_CHANNEL_ID || '669547324707569665',
     botSpamPlaygroundChannelId:
@@ -29,6 +31,7 @@ const config = {
   },
   roles: {
     NOBOTRoleId: '783764176178774036',
+    club40Id: process.env.CLUB_40_ROLE_ID || '707225790546444288',
     adminRolesName: ['core', 'maintainer', 'admin', 'moderator'],
     backer: '1134874972339327087',
   },
