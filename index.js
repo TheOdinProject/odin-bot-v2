@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { token, channels } = require('./config');
-const events = require('./events');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
@@ -16,6 +15,7 @@ if (duplicateKeys.length) {
   throw new DuplicateIdsError(duplicateKeys);
 }
 
+const events = require('./events');
 require('./bin/deploy-commands');
 
 const client = new Client({
