@@ -10,7 +10,7 @@ class User {
   }
 
   toGuildMember() {
-    return new GuildMember({ roles: this.#roles });
+    return new GuildMember({ id: this.id, roles: this.#roles });
   }
 
   toString() {
