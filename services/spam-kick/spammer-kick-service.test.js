@@ -1,7 +1,7 @@
 const SpamKickingService = require('./spammer-kick-service');
 const config = require('../../config');
 
-const ROLE_ID = config.roles.muted;
+const ROLE_ID = config.roles.autoKick;
 
 beforeAll(() => {
   jest.useFakeTimers();
