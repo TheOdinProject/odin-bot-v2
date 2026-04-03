@@ -42,12 +42,6 @@ module.exports = {
       return;
     }
 
-    // Kick people who posts more than 4 attachments
-    if (!isAdmin(message.member) && message.attachments.size >= 4) {
-      SpamKickingService.kick(message.member);
-      return;
-    }
-
     /**
      * Some bot behavior (such as responding to #introductions messages) executes
      * based on the admin (core, maintainer) status of the member in the Discord.
@@ -55,6 +49,13 @@ module.exports = {
      */
 
     const isAdminMessage = isAdmin(message.member);
+
+    // Kick people who posts more than 4 attachments
+    if (!isAdminMessage && message.attachments.size >= 4) {
+      SpamKickingService.kick(message.member);
+      return;
+    }
+
     const isMessageAuthorNobot = message.member?.roles.cache.has(
       config.roles.NOBOTRoleId,
     );
