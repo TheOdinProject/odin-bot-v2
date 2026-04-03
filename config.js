@@ -31,7 +31,6 @@ const config = {
     NOBOTRoleId: '783764176178774036',
     adminRolesName: ['core', 'maintainer', 'admin', 'moderator'],
     backer: '1134874972339327087',
-    autoKick: '1489659194721440055',
   },
   modmailUserId: '575252669443211264',
   color: '#cc9543',
