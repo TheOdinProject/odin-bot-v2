@@ -2,7 +2,7 @@
 
 exports[`Kicking spammer Does not kick admin roles 1`] = `[Error: Bot attempting to Kick an admin user.]`;
 
-exports[`Kicking spammer Error is handled if channel doesn't exist 1`] = `[Error: No channel with the ID 1320720131466330192 was found.]`;
+exports[`Kicking spammer Error is handled if channel doesn't exist 1`] = `[Error: No channel with the ID 922520585018433536 was found.]`;
 
 exports[`Kicking spammer Kicked spammer info is logged in moderation channel 1`] = `
 {
