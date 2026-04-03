@@ -8,8 +8,6 @@ const {
 } = require('../../utils/mocks/discord');
 const config = require('../../config');
 
-const ROLE_ID = config.roles.autoKick;
-
 beforeAll(() => {
   jest.useFakeTimers();
   // Date.UTC Required so that test snippets match on different timezones
@@ -30,61 +28,45 @@ function getChannels() {
   ];
 }
 
-function createMemberMock(guild, roleId) {
+function createMemberMock(guild, roleName) {
   const id = '123';
-  const roles = [new Role(roleId, 'auto-kick')];
+  const roles = [new Role(0, roleName)];
   const user = new User({ username: 'bad.spammer' });
   return new GuildMember({ id, guild, roles, user });
 }
 
-// Note: SpamKickingService will call member methods (kick, send) are being done on the newMemberState
-// oldmMemberState are only being used to call (roles.cache.get) in order to compare the past, and new roles.
 describe('Kicking spammer', () => {
-  let oldMemberState;
-  let newMemberState;
+  let member;
   beforeEach(() => {
     const guild = new Guild({ channels: getChannels() });
-    oldMemberState = createMemberMock(guild);
-    newMemberState = createMemberMock(guild, ROLE_ID);
+    member = createMemberMock(guild, 'casual-user');
   });
 
-  it('Kicks member after receiving muted role', async () => {
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    expect(newMemberState.kick).toHaveBeenCalledTimes(1);
-    expect(newMemberState.kick.mock.calls[0][0]).toMatchSnapshot();
+  it('Kicks spammer service kicks with correct message', async () => {
+    await SpamKickingService.kick(member);
+    expect(member.kick).toHaveBeenCalledTimes(1);
+    expect(member.kick.mock.calls[0][0]).toMatchSnapshot();
   });
 
-  it('Kicks member even if their DM is disabled', async () => {
-    newMemberState.send = jest.fn(() => {
+  it('Kicked spammer is informed about the kick in DM', async () => {
+    await SpamKickingService.kick(member);
+    expect(member.send).toHaveBeenCalledTimes(1);
+    expect(member.send.mock.calls[0][0]).toMatchSnapshot();
+  });
+
+  it('Kicks spammer even if their DM is disabled', async () => {
+    member.send = jest.fn(() => {
       throw new Error("Can't contact user");
     });
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    expect(newMemberState.kick).toHaveBeenCalledTimes(1);
-    expect(newMemberState.send).toHaveBeenCalledTimes(1);
-    expect(newMemberState.kick.mock.calls[0][0]).toMatchSnapshot();
+    await SpamKickingService.kick(member);
+    expect(member.kick).toHaveBeenCalledTimes(1);
+    expect(member.send).toHaveBeenCalledTimes(1);
+    expect(member.kick.mock.calls[0][0]).toMatchSnapshot();
   });
 
-  it('Kicked member is informed about the kick in DM', async () => {
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    expect(newMemberState.send).toHaveBeenCalledTimes(1);
-    expect(newMemberState.send.mock.calls[0][0]).toMatchSnapshot();
-  });
-
-  it('Kicked member is logged in moderation channel', async () => {
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    newMemberState.guild.channels.cache.forEach((channel) => {
+  it('Kicked spammer info is logged in moderation channel', async () => {
+    await SpamKickingService.kick(member);
+    member.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.send.mock.calls[0][0]).toMatchSnapshot();
@@ -94,50 +76,31 @@ describe('Kicking spammer', () => {
     });
   });
 
-  it('Does not kick member on role removal', async () => {
+  it('Does not kick admin roles', async () => {
+    console.error = jest.fn();
     const guild = new Guild({ channels: getChannels() });
-    const oldMemberState = createMemberMock(guild, ROLE_ID);
-    const newMemberState = createMemberMock(guild);
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    expect(newMemberState.send).not.toHaveBeenCalled();
-    expect(newMemberState.kick).not.toHaveBeenCalled();
-    newMemberState.guild.channels.cache.forEach((channel) => {
+    const member = createMemberMock(guild, 'admin');
+    await SpamKickingService.kick(member);
+    expect(member.send).not.toHaveBeenCalled();
+    expect(member.kick).not.toHaveBeenCalled();
+    member.guild.channels.cache.forEach((channel) => {
       expect(channel.send).not.toHaveBeenCalled();
     });
-  });
 
-  it('Does not kick member on different role gains', async () => {
-    const guild = new Guild({ channels: getChannels() });
-    oldMemberState = createMemberMock(guild);
-    // By not giving role ID, we effectively test that it does not exist
-    newMemberState = createMemberMock(guild);
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
-    expect(newMemberState.kick).not.toHaveBeenCalled();
-    expect(newMemberState.send).not.toHaveBeenCalled();
-    newMemberState.guild.channels.cache.forEach((channel) => {
-      expect(channel.send).not.toHaveBeenCalled();
-    });
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error.mock.calls[0][0]).toMatchSnapshot();
+    console.error.mockClear();
   });
 
   it("Error is handled if channel doesn't exist", async () => {
     console.error = jest.fn();
     const channels = [new TextChannel('1234')];
     const guild = new Guild({ channels });
-    oldMemberState = createMemberMock(guild);
-    newMemberState = createMemberMock(guild, ROLE_ID);
-
-    await SpamKickingService.handleRoleUpdateEvent(
-      oldMemberState,
-      newMemberState,
-    );
+    member = createMemberMock(guild, 'james-bond');
+    await SpamKickingService.kick(member);
 
     expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error.mock.calls[0][0]).toMatchSnapshot();
     console.error.mockClear();
   });
 });

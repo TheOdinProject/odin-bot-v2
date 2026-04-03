@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Kicking spammer Kicked member is informed about the kick in DM 1`] = `"You have been kicked from the Odin Project Discord server for sending multiple images in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server"`;
+exports[`Kicking spammer Does not kick admin roles 1`] = `[Error: Bot attempting to Kick an admin user.]`;
 
-exports[`Kicking spammer Kicked member is logged in moderation channel 1`] = `
+exports[`Kicking spammer Error is handled if channel doesn't exist 1`] = `[Error: No channel with the ID 1320720131466330192 was found.]`;
+
+exports[`Kicking spammer Kicked spammer info is logged in moderation channel 1`] = `
 {
   "embeds": [
     {
@@ -20,7 +22,7 @@ exports[`Kicking spammer Kicked member is logged in moderation channel 1`] = `
         {
           "inline": true,
           "name": "Reason",
-          "value": "User has been kicked, recieved auto mute after images spam.",
+          "value": "User has been kicked for posting more than 4 attachments in a single message.",
         },
       ],
       "footer": {
@@ -32,6 +34,8 @@ exports[`Kicking spammer Kicked member is logged in moderation channel 1`] = `
 }
 `;
 
-exports[`Kicking spammer Kicks member after receiving muted role 1`] = `"Image spam, account flagged for being compromised"`;
+exports[`Kicking spammer Kicked spammer is informed about the kick in DM 1`] = `"You have been kicked from the Odin Project Discord server for sending multiple attachments in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server"`;
 
-exports[`Kicking spammer Kicks member even if their DM is disabled 1`] = `"Image spam, account flagged for being compromised"`;
+exports[`Kicking spammer Kicks spammer even if their DM is disabled 1`] = `"Attachments spam, account flagged for being compromised"`;
+
+exports[`Kicking spammer Kicks spammer service kicks with correct message 1`] = `"Attachments spam, account flagged for being compromised"`;
