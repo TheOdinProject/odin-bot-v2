@@ -2,9 +2,9 @@ const { escapeMarkdown } = require('discord.js');
 const RedisService = require('../redis');
 
 class RotationService {
-  constructor(keyName, rotationName) {
-    this.keyName = keyName;
+  constructor(rotationName, keyName) {
     this.rotationName = rotationName;
+    this.keyName = keyName;
     this.redis = RedisService.getInstance();
   }
 

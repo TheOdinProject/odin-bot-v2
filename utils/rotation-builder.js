@@ -34,7 +34,7 @@ function rotationBuilder(rotationName, redisKeyName) {
   const data = addSubcommands(base, subcommands);
 
   async function execute(interaction) {
-    const triageService = new RotationService(redisKeyName, rotationName);
+    const triageService = new RotationService(rotationName, redisKeyName);
     await triageService.handleInteraction(interaction);
   }
 
