@@ -33,6 +33,10 @@ class MockRedisInstance {
   async lpop(keyName) {
     return this.store[keyName].shift();
   }
+
+  async lindex(keyName, index) {
+    return this.store[keyName][index];
+  }
 }
 
 const MockRedisService = {

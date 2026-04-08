@@ -110,9 +110,10 @@ class RotationService {
   }
 
   async #rotateQueue() {
-    const memberToPing = await this.redis.lpop(this.keyName);
-    await this.#addMembers([memberToPing]);
+    const previousMember = await this.redis.lpop(this.keyName);
+    await this.#addMembers([previousMember]);
 
+    const memberToPing = await this.redis.lindex(this.keyName, 0);
     return memberToPing;
   }
 

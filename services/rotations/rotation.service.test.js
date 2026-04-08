@@ -573,7 +573,7 @@ describe('reading', () => {
 });
 
 describe('rotation', () => {
-  it('pings the user up in the rotation, rotates the queue, and reports the new queue order', async () => {
+  it('rotates the queue, pings the new first user in the rotation then reports the new queue order', async () => {
     const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
@@ -593,7 +593,7 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz (current) > Bang > Foo >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz (current) > Bang > Foo >",
     );
   });
 
@@ -643,7 +643,7 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotateInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >",
     );
   });
 });
