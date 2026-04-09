@@ -19,7 +19,7 @@ describe('addition', () => {
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo > Baz >',
+      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz >',
     );
   });
 
@@ -49,7 +49,7 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang >',
+      '<@9101> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang >',
     );
   });
 
@@ -79,7 +79,7 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang > Bing >',
+      '<@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang > Bing >',
     );
   });
 
@@ -109,7 +109,7 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo > Baz > Bang > Bing >',
+      'Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang > Bing >',
     );
   });
 
@@ -142,7 +142,7 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Bar not added as they are already in the queue\n\ntest rotation queue order: Bar > Baz >',
+      'Bar not added as they are already in the queue\n\ntest rotation queue order: Bar (current) > Baz >',
     );
   });
 
@@ -189,7 +189,7 @@ describe('addition', () => {
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo \\`test\\` > Baz \\*test\\* >',
+      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo \\`test\\` (current) > Baz \\*test\\* >',
     );
   });
 });
@@ -221,7 +221,7 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> removed from the queue\n\ntest rotation queue order: Baz > Bang >',
+      '<@1234> removed from the queue\n\ntest rotation queue order: Baz (current) > Bang >',
     );
   });
 
@@ -251,7 +251,7 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\ntest rotation queue order: Foo > Bang >',
+      '<@5678> removed from the queue\n\ntest rotation queue order: Foo (current) > Bang >',
     );
   });
 
@@ -281,7 +281,7 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> removed from the queue\n\ntest rotation queue order: Foo > Baz >',
+      '<@9101> removed from the queue\n\ntest rotation queue order: Foo (current) > Baz >',
     );
   });
 
@@ -343,7 +343,7 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\ntest rotation queue order: Foo \\`test\\` >',
+      '<@5678> removed from the queue\n\ntest rotation queue order: Foo \\`test\\` (current) >',
     );
   });
 });
@@ -375,7 +375,7 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@9101> swapped position in the queue\n\ntest rotation queue order: Bang > Baz > Foo >',
+      '<@1234> <@9101> swapped position in the queue\n\ntest rotation queue order: Bang (current) > Baz > Foo >',
     );
   });
 
@@ -405,7 +405,7 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz > Foo > Bang >',
+      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz (current) > Foo > Bang >',
     );
   });
 
@@ -435,7 +435,7 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> <@9101> swapped position in the queue\n\ntest rotation queue order: Foo > Bang > Baz >',
+      '<@5678> <@9101> swapped position in the queue\n\ntest rotation queue order: Foo (current) > Bang > Baz >',
     );
   });
 
@@ -491,7 +491,7 @@ describe('swapping', () => {
     await rotation.handleInteraction(swapInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz \\*test\\* > Foo \\`test\\` >',
+      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >',
     );
   });
 });
@@ -517,7 +517,7 @@ describe('reading', () => {
     await rotation.handleInteraction(readInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'test rotation queue order: Foo > Baz > Bang >',
+      'test rotation queue order: Foo (current) > Baz > Bang >',
     );
   });
 
@@ -567,13 +567,13 @@ describe('reading', () => {
     await rotation.handleInteraction(readInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'test rotation queue order: Foo \\`test\\` > Baz \\*test\\* >',
+      'test rotation queue order: Foo \\`test\\` (current) > Baz \\*test\\* >',
     );
   });
 });
 
 describe('rotation', () => {
-  it('pings the user up in the rotation, rotates the queue, and reports the new queue order', async () => {
+  it('rotates the queue, pings the new first user in the rotation then reports the new queue order', async () => {
     const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
@@ -593,7 +593,7 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz > Bang > Foo >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz (current) > Bang > Foo >",
     );
   });
 
@@ -643,7 +643,7 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotateInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@1234> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* > Foo \\`test\\` >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >",
     );
   });
 });

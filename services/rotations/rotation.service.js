@@ -2,9 +2,9 @@ const { escapeMarkdown } = require('discord.js');
 const RedisService = require('../redis');
 
 class RotationService {
-  constructor(keyName, rotationName) {
-    this.keyName = keyName;
+  constructor(rotationName, keyName) {
     this.rotationName = rotationName;
+    this.keyName = keyName;
     this.redis = RedisService.getInstance();
   }
 
@@ -44,14 +44,13 @@ class RotationService {
       members,
       interaction.guild,
     );
-    const formattedQueue = membersDisplayNames.reduce(
-      (acc, displayname) => `${acc} ${displayname} >`,
-      '',
-    );
-    if (formattedQueue) {
-      return `${this.rotationName} rotation queue order:${formattedQueue}`;
-    }
-    return 'No members';
+    const formattedQueue = membersDisplayNames
+      .map((name, i) => `${name} ${i === 0 ? '(current) >' : '>'}`)
+      .join(' ');
+
+    return formattedQueue
+      ? `${this.rotationName} rotation queue order: ${formattedQueue}`
+      : 'No members';
   }
 
   async #handleAddMembers(members, interaction) {
@@ -111,9 +110,10 @@ class RotationService {
   }
 
   async #rotateQueue() {
-    const memberToPing = await this.redis.lpop(this.keyName);
-    await this.#addMembers([memberToPing]);
+    const previousMember = await this.redis.lpop(this.keyName);
+    await this.#addMembers([previousMember]);
 
+    const memberToPing = await this.redis.lindex(this.keyName, 0);
     return memberToPing;
   }
 
