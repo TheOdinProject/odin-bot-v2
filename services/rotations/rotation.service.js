@@ -45,7 +45,7 @@ class RotationService {
       interaction.guild,
     );
     const formattedQueue = membersDisplayNames
-      .map((name, i) => `${name} ${i === 0 ? '*(current)* >' : '>'}`)
+      .map((name, i) => `${name} ${i === 0 ? '(current) >' : '>'}`)
       .join(' ');
 
     return formattedQueue
@@ -120,7 +120,7 @@ class RotationService {
   async #handleRotateQueue(interaction) {
     const memberToPing = await this.#rotateQueue(interaction);
 
-    let reply = `<@${memberToPing}> it's your turn for the ${this.rotationName.toLowerCase()} rotation.\n\n`;
+    let reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\n`;
     reply += await this.#getFormattedQueue(interaction);
 
     interaction.reply(reply.trim());

@@ -9,7 +9,7 @@ jest.mock('../redis');
 
 describe('addition', () => {
   it('creates a rotation and reports the inital queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const reply = jest.fn();
     const users = getUsers(2);
@@ -19,12 +19,12 @@ describe('addition', () => {
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz >',
+      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz >',
     );
   });
 
   it('adds one person to the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(2);
     const server = initializeServer();
@@ -49,12 +49,12 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang >',
+      '<@9101> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang >',
     );
   });
 
   it('adds multiple people to the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(2);
     const server = initializeServer();
@@ -79,12 +79,12 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> <@1121> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang > Bing >',
+      '<@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang > Bing >',
     );
   });
 
   it('does not add people to the queue multiple times', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(2);
     const server = initializeServer();
@@ -109,12 +109,12 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang > Bing >',
+      'Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\ntest rotation queue order: Foo (current) > Baz > Bang > Bing >',
     );
   });
 
   it('addresses rejected users by nickname if they have one', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(2);
     const additionUsers = getUsers(1);
@@ -142,12 +142,12 @@ describe('addition', () => {
     await rotation.handleInteraction(additionInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Bar not added as they are already in the queue\n\nTest rotation queue order: Bar *(current)* > Baz >',
+      'Bar not added as they are already in the queue\n\ntest rotation queue order: Bar (current) > Baz >',
     );
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(2);
     const server = initializeServer();
@@ -175,7 +175,7 @@ describe('addition', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
@@ -189,14 +189,14 @@ describe('addition', () => {
     await rotation.handleInteraction(interaction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\nTest rotation queue order: Foo \\`test\\` *(current)* > Baz \\*test\\* >',
+      '<@1234> <@5678> successfully added to the queue\n\ntest rotation queue order: Foo \\`test\\` (current) > Baz \\*test\\* >',
     );
   });
 });
 
 describe('removal', () => {
   it('removes one person from the start of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -221,12 +221,12 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> removed from the queue\n\nTest rotation queue order: Baz *(current)* > Bang >',
+      '<@1234> removed from the queue\n\ntest rotation queue order: Baz (current) > Bang >',
     );
   });
 
   it('removes one person from the middle of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -251,12 +251,12 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\nTest rotation queue order: Foo *(current)* > Bang >',
+      '<@5678> removed from the queue\n\ntest rotation queue order: Foo (current) > Bang >',
     );
   });
 
   it('removes one person from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -281,12 +281,12 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@9101> removed from the queue\n\nTest rotation queue order: Foo *(current)* > Baz >',
+      '<@9101> removed from the queue\n\ntest rotation queue order: Foo (current) > Baz >',
     );
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -314,7 +314,7 @@ describe('removal', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
@@ -343,14 +343,14 @@ describe('removal', () => {
     await rotation.handleInteraction(removalInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\nTest rotation queue order: Foo \\`test\\` *(current)* >',
+      '<@5678> removed from the queue\n\ntest rotation queue order: Foo \\`test\\` (current) >',
     );
   });
 });
 
 describe('swapping', () => {
   it('swaps one person from the start of the queue with one from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -375,12 +375,12 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@9101> swapped position in the queue\n\nTest rotation queue order: Bang *(current)* > Baz > Foo >',
+      '<@1234> <@9101> swapped position in the queue\n\ntest rotation queue order: Bang (current) > Baz > Foo >',
     );
   });
 
   it('swaps one person from the start of the queue with one from the middle of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -405,12 +405,12 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\nTest rotation queue order: Baz *(current)* > Foo > Bang >',
+      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz (current) > Foo > Bang >',
     );
   });
 
   it('swaps one person from the middle of the queue with one from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -435,12 +435,12 @@ describe('swapping', () => {
     await rotation.handleInteraction(swappingInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@5678> <@9101> swapped position in the queue\n\nTest rotation queue order: Foo *(current)* > Bang > Baz >',
+      '<@5678> <@9101> swapped position in the queue\n\ntest rotation queue order: Foo (current) > Bang > Baz >',
     );
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -468,7 +468,7 @@ describe('swapping', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
@@ -491,14 +491,14 @@ describe('swapping', () => {
     await rotation.handleInteraction(swapInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\nTest rotation queue order: Baz \\*test\\* *(current)* > Foo \\`test\\` >',
+      '<@1234> <@5678> swapped position in the queue\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >',
     );
   });
 });
 
 describe('reading', () => {
   it('reports the queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -517,12 +517,12 @@ describe('reading', () => {
     await rotation.handleInteraction(readInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Test rotation queue order: Foo *(current)* > Baz > Bang >',
+      'test rotation queue order: Foo (current) > Baz > Bang >',
     );
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -544,7 +544,7 @@ describe('reading', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
@@ -567,14 +567,14 @@ describe('reading', () => {
     await rotation.handleInteraction(readInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      'Test rotation queue order: Foo \\`test\\` *(current)* > Baz \\*test\\* >',
+      'test rotation queue order: Foo \\`test\\` (current) > Baz \\*test\\* >',
     );
   });
 });
 
 describe('rotation', () => {
   it('rotates the queue, pings the new first user in the rotation then reports the new queue order', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -593,12 +593,12 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotationInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@5678> it's your turn for the test rotation.\n\nTest rotation queue order: Baz *(current)* > Bang > Foo >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz (current) > Bang > Foo >",
     );
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const creationUsers = getUsers(3);
     const server = initializeServer();
@@ -620,7 +620,7 @@ describe('rotation', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('Test', 'test');
+    const rotation = new RotationService('test', 'test');
 
     const users = getUsers(2);
     users[0].nickname = 'Foo `test`';
@@ -643,7 +643,7 @@ describe('rotation', () => {
     await rotation.handleInteraction(rotateInteraction);
 
     expect(reply).toHaveBeenCalledWith(
-      "<@5678> it's your turn for the test rotation.\n\nTest rotation queue order: Baz \\*test\\* *(current)* > Foo \\`test\\` >",
+      "<@5678> it's your turn for the test rotation.\n\ntest rotation queue order: Baz \\*test\\* (current) > Foo \\`test\\` >",
     );
   });
 });
