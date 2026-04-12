@@ -45,7 +45,7 @@ class RotationService {
       interaction.guild,
     );
     const formattedQueue = membersDisplayNames
-      .map((name, i) => `${name} ${i === 0 ? '(current) >' : '>'}`)
+      .map((name, i) => `${name} ${i === 0 ? '*(current)* >' : '>'}`)
       .join(' ');
 
     return formattedQueue
