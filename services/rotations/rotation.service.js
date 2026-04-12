@@ -48,8 +48,10 @@ class RotationService {
       .map((name, i) => `${name} ${i === 0 ? '*(current)* >' : '>'}`)
       .join(' ');
 
+    const capitalizedRotationName =
+      this.rotationName[0].toUpperCase() + this.rotationName.slice(1);
     return formattedQueue
-      ? `${this.rotationName} rotation queue order: ${formattedQueue}`
+      ? `${capitalizedRotationName} rotation queue order: ${formattedQueue}`
       : 'No members';
   }
 
