@@ -2,7 +2,7 @@
 
 exports[`?++ callback awards points when used by staff 1`] = `"Thanks for the great question! <@2> now has 22 points"`;
 
-exports[`?++ callback does not award points when used by non-staff 1`] = `"Only maintainers or core members can give double points!"`;
+exports[`?++ callback does not award points when used by non-staff 1`] = `"Only team members can give double points!"`;
 
 exports[`?++ callback returns correct output for a single user entering club-40 1`] = `"HEYYY EVERYONE SAY HI TO <@2> the newest member of CLUB 40. Please check the pins at the top right!"`;
 
@@ -100,24 +100,24 @@ exports[`callback returns correct output for up to five mentioned users 3`] = `"
 
 exports[`callback returns correct output for up to five mentioned users 4`] = `"Nice! <@5> now has 1 point"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for 1 user mentioned more than once with another user 1`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for 1 user mentioned more than once with another user 1`] = `"Only team members can give double points!"`;
 
 exports[`callback where one user is mentioned more than once returns correct output for 1 user mentioned more than once with another user 2`] = `"Sweet! <@2> now has 22 points"`;
 
 exports[`callback where one user is mentioned more than once returns correct output for 1 user mentioned more than once with another user 3`] = `"Sweet! <@3> now has 24 points"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 1`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 1`] = `"Only team members can give double points!"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 2`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 2`] = `"Only team members can give double points!"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 3`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 3`] = `"Only team members can give double points!"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 4`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 4`] = `"Only team members can give double points!"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 5`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 5`] = `"Only team members can give double points!"`;
 
 exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned more than 5 times 6`] = `"Sweet! <@2> now has 6 points"`;
 
-exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned twice 1`] = `"Only maintainers or core members can give double points!"`;
+exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned twice 1`] = `"Only team members can give double points!"`;
 
 exports[`callback where one user is mentioned more than once returns correct output for only 1 user mentioned twice 2`] = `"Sweet! <@2> now has 6 points"`;

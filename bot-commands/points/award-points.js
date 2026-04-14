@@ -22,12 +22,10 @@ function extractAwardsFromMessage(text, regex, authorMember, channel) {
       if (isAdmin(authorMember)) {
         matches.push({ userId, pointsToAward: 2 });
       } else {
-        channel.send(
-          'Only maintainers or core members can give double points!',
-        );
+        channel.send('Only team members can give double points!');
       }
     } else if (processedIds.has(userId)) {
-      channel.send('Only maintainers or core members can give double points!');
+      channel.send('Only team members can give double points!');
     } else {
       processedIds.add(userId);
       matches.push({ userId, pointsToAward: 1 });
