@@ -2,6 +2,7 @@ const { Events } = require('discord.js');
 const GettingHiredMessageService = require('../services/getting-hired-message.service');
 const config = require('../config');
 const { isAdmin } = require('../utils/is-admin');
+const SpamKickingService = require('../services/spam-kick/spammer-kick-service');
 
 const botCommands = [];
 
@@ -48,6 +49,13 @@ module.exports = {
      */
 
     const isAdminMessage = isAdmin(message.member);
+
+    // Kick people who posts more than 4 attachments
+    if (!isAdminMessage && message.attachments.size >= 4) {
+      SpamKickingService.kick(message.member);
+      return;
+    }
+
     const isMessageAuthorNobot = message.member?.roles.cache.has(
       config.roles.NOBOTRoleId,
     );
