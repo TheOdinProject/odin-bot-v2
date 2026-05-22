@@ -113,7 +113,6 @@ class SpamBanningService {
       const buttonInteraction =
         await response.resource.message.awaitMessageComponent({ time: 60_000 });
 
-      // Handle the button interaction
       if (buttonInteraction.customId === 'cancel') {
         await buttonInteraction.update({
           content: 'Action has been cancelled.',
@@ -133,8 +132,8 @@ class SpamBanningService {
     const message = interaction.options.getMessage('message');
     const { guild } = interaction;
     let reply = `Successfully banned <@${message.author.id}> for spam.`;
-    // Only attempt to send the message if message.member exists
     if (message.member) {
+      // Send message will throw an error if the user has their DMs disabled
       try {
         await SpamBanningService.#sendMessageToUser(message.author);
       } catch {
