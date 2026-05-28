@@ -1,20 +1,23 @@
 const { Collection } = require('discord.js');
+const User = require('./user');
 
 class GuildMember {
   #roles = new Collection();
 
-  constructor({ id, guild, roles = [], user }) {
-    this.id = id;
+  constructor({ id, guild, roles = [], username }) {
+    this.user = new User({ id, username });
     this.guild = guild;
     this.kick = jest.fn(async (msg) => msg);
     this.send = jest.fn(async (msg) => msg);
-    this.user = user;
+    this.displayAvatarURL = () => 'image.jpg';
 
     roles.forEach((role) => {
       this.#roles.set(role.id, role);
     });
+  }
 
-    this.displayAvatarURL = () => 'image.jpg';
+  get id() {
+    return this.user.id;
   }
 
   get roles() {
