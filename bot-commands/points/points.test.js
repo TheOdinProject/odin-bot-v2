@@ -5,7 +5,6 @@ const {
   TextChannel,
   GuildMember,
   Role,
-  ODIN_BOT,
 } = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
@@ -612,7 +611,7 @@ describe('callback', () => {
 
     const data = {
       author: author.member.user,
-      content: `${ODIN_BOT} ++`,
+      content: `${client.user} ++`,
       channel,
       client,
       guild,
@@ -984,12 +983,14 @@ describe('?++ callback', () => {
       users: [author.member.user],
       channels: [channel],
     });
+
     const guild = new Guild({
       members: [author.member],
     });
+
     const data = {
       author: author.member.user,
-      content: `${ODIN_BOT} ?++`,
+      content: `${client.user} ?++`,
       channel,
       client,
       guild,

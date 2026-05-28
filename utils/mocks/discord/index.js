@@ -13,7 +13,6 @@
  * Since these are just Discord internals, none of our callbacks should
  * need to instantiate any of these directly.
  */
-const ODIN_BOT = require('./odin-bot');
 const Client = require('./client');
 const Guild = require('./guild');
 const GuildMember = require('./guild-member');
@@ -28,5 +27,4 @@ module.exports = {
   TextChannel,
   User,
   Role,
-  ODIN_BOT,
 };

@@ -1,8 +1,9 @@
+const { botUserId } = require('../../../config');
 const { Collection } = require('discord.js');
-const ODIN_BOT = require('./odin-bot');
+const User = require('./user');
 
 class Client {
-  user = ODIN_BOT;
+  user = new User({ id: botUserId });
   #users = new Collection().set(this.user.id, this.user);
   #channels = new Collection();
 
@@ -10,6 +11,7 @@ class Client {
     users.forEach((user) => {
       this.#users.set(String(user.id), user);
     });
+
     channels.forEach((channel) => {
       this.#channels.set(channel.id, channel);
     });

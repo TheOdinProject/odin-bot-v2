@@ -4,7 +4,7 @@ const User = require('./user');
 class GuildMember {
   #roles = new Collection();
 
-  constructor({ id, guild, roles = [], username }) {
+  constructor({ id, username, guild, roles = [] }) {
     this.user = new User({ id, username });
     this.guild = guild;
     this.kick = jest.fn(async (msg) => msg);
