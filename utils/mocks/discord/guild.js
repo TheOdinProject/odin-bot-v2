@@ -2,7 +2,7 @@ const { Collection } = require('discord.js');
 const GuildMember = require('./guild-member');
 
 class Guild {
-  #members = new Collection().set(GuildMember.odinBot, GuildMember.odinBot);
+  #members = new Collection().set(GuildMember.odinBot.id, GuildMember.odinBot);
   #roles = new Collection().set(1, { name: 'club-40' });
   #channels = new Collection();
 

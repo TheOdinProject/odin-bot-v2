@@ -1,3 +1,4 @@
+const { botUserId } = require('../../../config');
 const { Collection } = require('discord.js');
 const User = require('./user');
 
@@ -14,6 +15,10 @@ class GuildMember {
     roles.forEach((role) => {
       this.#roles.set(role.id, role);
     });
+  }
+
+  static get odinBot() {
+    return new GuildMember({ id: botUserId });
   }
 
   get id() {

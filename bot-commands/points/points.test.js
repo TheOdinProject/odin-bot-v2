@@ -611,7 +611,7 @@ describe('callback', () => {
 
     const data = {
       author: author.member.user,
-      content: `${client.user} ++`,
+      content: `${GuildMember.odinBot.user} ++`,
       channel,
       client,
       guild,
@@ -990,7 +990,7 @@ describe('?++ callback', () => {
 
     const data = {
       author: author.member.user,
-      content: `${client.user} ?++`,
+      content: `${GuildMember.odinBot.user} ?++`,
       channel,
       client,
       guild,
