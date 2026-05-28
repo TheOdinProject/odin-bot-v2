@@ -4,6 +4,10 @@ class User {
     this.username = username;
   }
 
+  get displayName() {
+    return this.username;
+  }
+
   toString() {
     return `<@${this.id}>`;
   }
