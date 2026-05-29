@@ -3,8 +3,8 @@ const {
   Client,
   Guild,
   TextChannel,
-  User,
-  ODIN_BOT,
+  GuildMember,
+  Role,
 } = require('../../utils/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
@@ -215,23 +215,23 @@ describe('award points', () => {
 });
 
 describe('callback', () => {
-  const author = new User({ id: 1, points: 10 });
+  const author = { member: new GuildMember({ id: 1 }), points: 10 };
   const channel = new TextChannel();
   const club40Channel = new TextChannel('707225752608964628');
 
   it('returns correct output for a single user w/o club-40', async () => {
-    const mentionedUser = new User({ id: 2, points: 20 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 20 };
     // users must be passed in as an array
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ++`,
       channel,
       client,
       guild,
@@ -239,7 +239,7 @@ describe('callback', () => {
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 1),
       },
     });
@@ -250,17 +250,17 @@ describe('callback', () => {
   });
 
   it('returns correct output for a single user entering club-40', async () => {
-    const mentionedUser = new User({ id: 2, points: 39 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 39 };
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel, club40Channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ++`,
       channel,
       client,
       guild,
@@ -268,7 +268,7 @@ describe('callback', () => {
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 1),
       },
     });
@@ -281,17 +281,17 @@ describe('callback', () => {
   });
 
   it('returns correct output for a single user re-entering club-40', async () => {
-    const mentionedUser = new User({ id: 2, points: 40 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 40 };
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel, club40Channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ++`,
       channel,
       client,
       guild,
@@ -299,7 +299,7 @@ describe('callback', () => {
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 1),
       },
     });
@@ -312,33 +312,36 @@ describe('callback', () => {
   });
 
   it('returns correct output for up to five mentioned users', async () => {
-    const mentionedUser1 = new User({ id: 2, points: 33 });
-    const mentionedUser2 = new User({ id: 3, points: 21 });
-    const mentionedUser3 = new User({ id: 4, points: 2 });
-    const mentionedUser4 = new User({ id: 5, points: 0 });
+    const mentionedUser1 = {
+      member: new GuildMember({ id: 2 }),
+      points: 33,
+    };
+    const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 21 };
+    const mentionedUser3 = { member: new GuildMember({ id: 4 }), points: 2 };
+    const mentionedUser4 = { member: new GuildMember({ id: 5 }), points: 0 };
     const client = new Client({
       users: [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
+        author.member.user,
+        mentionedUser1.member.user,
+        mentionedUser2.member.user,
+        mentionedUser3.member.user,
+        mentionedUser4.member.user,
       ],
       channels: [channel],
     });
     const guild = new Guild({
       members: [
-        author.toGuildMember(),
-        mentionedUser1.toGuildMember(),
-        mentionedUser2.toGuildMember(),
-        mentionedUser3.toGuildMember(),
-        mentionedUser4.toGuildMember(),
+        author.member,
+        mentionedUser1.member,
+        mentionedUser2.member,
+        mentionedUser3.member,
+        mentionedUser4.member,
       ],
     });
 
     const data = {
-      author,
-      content: `${mentionedUser1} ++ ${mentionedUser2} ++ ${mentionedUser3} ++ ${mentionedUser4} ++`,
+      author: author.member.user,
+      content: `${mentionedUser1.member.user} ++ ${mentionedUser2.member.user} ++ ${mentionedUser3.member.user} ++ ${mentionedUser4.member.user} ++`,
       channel,
       client,
       guild,
@@ -347,25 +350,25 @@ describe('callback', () => {
     axios.post
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser1,
+          ...mentionedUser1.member.user,
           points: (mentionedUser1.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser2,
+          ...mentionedUser2.member.user,
           points: (mentionedUser2.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser3,
+          ...mentionedUser3.member.user,
           points: (mentionedUser3.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser4,
+          ...mentionedUser4.member.user,
           points: (mentionedUser4.points += 1),
         },
       });
@@ -381,17 +384,17 @@ describe('callback', () => {
 
   describe('where one user is mentioned more than once', () => {
     it('returns correct output for only 1 user mentioned twice', async () => {
-      const mentionedUser = new User({ id: 2, points: 5 });
+      const mentionedUser = { member: new GuildMember({ id: 2 }), points: 5 };
       const client = new Client({
-        users: [author, mentionedUser],
+        users: [author.member.user, mentionedUser.member.user],
         channels: [channel],
       });
       const guild = new Guild({
-        members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+        members: [author.member, mentionedUser.member],
       });
       const data = {
-        author,
-        content: `${mentionedUser} ++ ${mentionedUser} ++`,
+        author: author.member.user,
+        content: `${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++`,
         channel,
         client,
         guild,
@@ -399,7 +402,7 @@ describe('callback', () => {
 
       axios.post.mockResolvedValueOnce({
         data: {
-          ...mentionedUser,
+          ...mentionedUser.member.user,
           points: (mentionedUser.points += 1),
         },
       });
@@ -412,17 +415,17 @@ describe('callback', () => {
     });
 
     it('returns correct output for only 1 user mentioned more than 5 times', async () => {
-      const mentionedUser = new User({ id: 2, points: 5 });
+      const mentionedUser = { member: new GuildMember({ id: 2 }), points: 5 };
       const client = new Client({
-        users: [author, mentionedUser],
+        users: [author.member.user, mentionedUser.member.user],
         channels: [channel],
       });
       const guild = new Guild({
-        members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+        members: [author.member, mentionedUser.member],
       });
       const data = {
-        author,
-        content: `${mentionedUser} ++ ${mentionedUser} ++ ${mentionedUser} ++ ${mentionedUser} ++ ${mentionedUser} ++ ${mentionedUser} ++`,
+        author: author.member.user,
+        content: `${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++ ${mentionedUser.member.user} ++`,
         channel,
         client,
         guild,
@@ -430,7 +433,7 @@ describe('callback', () => {
 
       axios.post.mockResolvedValueOnce({
         data: {
-          ...mentionedUser,
+          ...mentionedUser.member.user,
           points: (mentionedUser.points += 1),
         },
       });
@@ -447,23 +450,23 @@ describe('callback', () => {
     });
 
     it('returns correct output for 1 user mentioned more than once with another user', async () => {
-      const mentionedUser1 = new User({ id: 2, points: 21 });
-      const mentionedUser2 = new User({ id: 3, points: 23 });
+      const mentionedUser1 = { member: new GuildMember({ id: 2 }), points: 21 };
+      const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 23 };
       const client = new Client({
-        users: [author, mentionedUser1, mentionedUser2],
+        users: [
+          author.member.user,
+          mentionedUser1.member.user,
+          mentionedUser2.member.user,
+        ],
         channels: [channel],
       });
       const guild = new Guild({
-        members: [
-          author.toGuildMember(),
-          mentionedUser1.toGuildMember(),
-          mentionedUser2.toGuildMember(),
-        ],
+        members: [author.member, mentionedUser1.member, mentionedUser2.member],
       });
 
       const data = {
-        author,
-        content: `${mentionedUser1} ++ ${mentionedUser1} ++ ${mentionedUser2} ++`,
+        author: author.member.user,
+        content: `${mentionedUser1.member.user} ++ ${mentionedUser1.member.user} ++ ${mentionedUser2.member.user} ++`,
         channel,
         client,
         guild,
@@ -472,13 +475,13 @@ describe('callback', () => {
       axios.post
         .mockResolvedValueOnce({
           data: {
-            ...mentionedUser1,
+            ...mentionedUser1.member.user,
             points: (mentionedUser1.points += 1),
           },
         })
         .mockResolvedValueOnce({
           data: {
-            ...mentionedUser2,
+            ...mentionedUser2.member.user,
             points: (mentionedUser2.points += 1),
           },
         });
@@ -493,39 +496,39 @@ describe('callback', () => {
   });
 
   it('returns correct output for more than five mentioned users', async () => {
-    const mentionedUser1 = new User({ id: 2, points: 10 });
-    const mentionedUser2 = new User({ id: 3, points: 3 });
-    const mentionedUser3 = new User({ id: 4, points: 1 });
-    const mentionedUser4 = new User({ id: 5, points: 0 });
-    const mentionedUser5 = new User({ id: 6, points: 21 });
-    const mentionedUser6 = new User({ id: 7, points: 29 });
+    const mentionedUser1 = { member: new GuildMember({ id: 2 }), points: 10 };
+    const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 3 };
+    const mentionedUser3 = { member: new GuildMember({ id: 4 }), points: 1 };
+    const mentionedUser4 = { member: new GuildMember({ id: 5 }), points: 0 };
+    const mentionedUser5 = { member: new GuildMember({ id: 6 }), points: 21 };
+    const mentionedUser6 = { member: new GuildMember({ id: 7 }), points: 29 };
     const client = new Client({
       users: [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-        mentionedUser5,
-        mentionedUser6,
+        author.member.user,
+        mentionedUser1.member.user,
+        mentionedUser2.member.user,
+        mentionedUser3.member.user,
+        mentionedUser4.member.user,
+        mentionedUser5.member.user,
+        mentionedUser6.member.user,
       ],
       channels: [channel],
     });
     const guild = new Guild({
       members: [
-        author.toGuildMember(),
-        mentionedUser1.toGuildMember(),
-        mentionedUser2.toGuildMember(),
-        mentionedUser3.toGuildMember(),
-        mentionedUser4.toGuildMember(),
-        mentionedUser5.toGuildMember(),
-        mentionedUser6.toGuildMember(),
+        author.member,
+        mentionedUser1.member,
+        mentionedUser2.member,
+        mentionedUser3.member,
+        mentionedUser4.member,
+        mentionedUser5.member,
+        mentionedUser6.member,
       ],
     });
 
     const data = {
-      author,
-      content: `${mentionedUser1} ++ ${mentionedUser2} ++ ${mentionedUser3} ++ ${mentionedUser4} ++ ${mentionedUser5} ++ ${mentionedUser6} ++`,
+      author: author.member.user,
+      content: `${mentionedUser1.member.user} ++ ${mentionedUser2.member.user} ++ ${mentionedUser3.member.user} ++ ${mentionedUser4.member.user} ++ ${mentionedUser5.member.user} ++ ${mentionedUser6.member.user} ++`,
       channel,
       client,
       guild,
@@ -534,31 +537,31 @@ describe('callback', () => {
     axios.post
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser1,
+          ...mentionedUser1.member.user,
           points: (mentionedUser1.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser2,
+          ...mentionedUser2.member.user,
           points: (mentionedUser2.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser3,
+          ...mentionedUser3.member.user,
           points: (mentionedUser3.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser4,
+          ...mentionedUser4.member.user,
           points: (mentionedUser4.points += 1),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser5,
+          ...mentionedUser5.member.user,
           points: (mentionedUser5.points += 1),
         },
       });
@@ -573,11 +576,14 @@ describe('callback', () => {
   });
 
   it('returns correct output for a user mentioning themselves', async () => {
-    const client = new Client({ users: [author], channels: [channel] });
-    const guild = new Guild({ members: [author.toGuildMember()] });
+    const client = new Client({
+      users: [author.member.user],
+      channels: [channel],
+    });
+    const guild = new Guild({ members: [author.member] });
     const data = {
-      author,
-      content: `${author} ++`,
+      author: author.member.user,
+      content: `${author.member.user} ++`,
       channel,
       client,
       guild,
@@ -585,7 +591,7 @@ describe('callback', () => {
 
     axios.post.mockResolvedValue({
       data: {
-        ...author,
+        ...author.member.user,
         points: (author.points += 1),
       },
     });
@@ -598,14 +604,14 @@ describe('callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const client = new Client({
-      users: [author],
+      users: [author.member.user],
       channels: [channel],
     });
-    const guild = new Guild({ members: [author.toGuildMember()] });
+    const guild = new Guild({ members: [author.member] });
 
     const data = {
-      author,
-      content: `${ODIN_BOT} ++`,
+      author: author.member.user,
+      content: `${GuildMember.odinBot.user} ++`,
       channel,
       client,
       guild,
@@ -617,28 +623,28 @@ describe('callback', () => {
   });
 
   it('returns correct output for a user awarding points in a no-points channel', async () => {
-    const mentionedUser = new User({ id: 2, points: 20 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 20 };
     const botSpamChannel = new TextChannel('513125912070455296');
     const bannedChannel = new TextChannel('123456789');
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [botSpamChannel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
 
     const botSpamChannelData = {
-      author,
-      content: `${mentionedUser} ++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ++`,
       channel: botSpamChannel,
       client,
       guild,
     };
 
     const bannedChannelData = {
-      author,
-      content: `${mentionedUser} ++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ++`,
       channel: bannedChannel,
       client,
       guild,
@@ -655,32 +661,42 @@ describe('callback', () => {
 });
 
 describe('?++ callback', () => {
-  const nonStaffAuthor = new User({ id: 1, points: 10, roles: ['@everyone'] });
-  const author = new User({ id: 1, points: 10, roles: ['core'] });
+  const nonStaffAuthor = {
+    member: new GuildMember({
+      id: 1,
+      roles: [new Role(0, '@everyone')],
+    }),
+    points: 10,
+  };
+  const author = {
+    member: new GuildMember({ id: 1, roles: [new Role(1, 'core')] }),
+    points: 10,
+  };
+
   const channel = new TextChannel();
   const club40Channel = new TextChannel('707225752608964628');
 
   it('does not award points when used by non-staff', async () => {
-    const mentionedUser = new User({ id: 2, points: 20 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 20 };
     const client = new Client({
-      users: [nonStaffAuthor, mentionedUser],
+      users: [nonStaffAuthor.member.user, mentionedUser.member.user],
       channels: [channel],
     });
     const guild = new Guild({
-      members: [nonStaffAuthor.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [nonStaffAuthor.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel,
       client,
       guild,
-      member: nonStaffAuthor.toGuildMember(),
+      member: nonStaffAuthor.member,
     };
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: mentionedUser.points,
       },
     });
@@ -691,26 +707,26 @@ describe('?++ callback', () => {
   });
 
   it('awards points when used by staff', async () => {
-    const mentionedUser = new User({ id: 2, points: 20 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 20 };
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 2),
       },
     });
@@ -721,26 +737,26 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a single user entering club-40', async () => {
-    const mentionedUser = new User({ id: 2, points: 39 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 39 };
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel, club40Channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 2),
       },
     });
@@ -753,26 +769,26 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a single user re-entering club-40', async () => {
-    const mentionedUser = new User({ id: 2, points: 40 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 40 };
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [channel, club40Channel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
     const data = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post.mockResolvedValue({
       data: {
-        ...mentionedUser,
+        ...mentionedUser.member.user,
         points: (mentionedUser.points += 2),
       },
     });
@@ -785,61 +801,61 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for up to five mentioned users', async () => {
-    const mentionedUser1 = new User({ id: 2, points: 33 });
-    const mentionedUser2 = new User({ id: 3, points: 21 });
-    const mentionedUser3 = new User({ id: 4, points: 2 });
-    const mentionedUser4 = new User({ id: 5, points: 0 });
+    const mentionedUser1 = { member: new GuildMember({ id: 2 }), points: 33 };
+    const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 21 };
+    const mentionedUser3 = { member: new GuildMember({ id: 4 }), points: 2 };
+    const mentionedUser4 = { member: new GuildMember({ id: 5 }), points: 0 };
     const client = new Client({
       users: [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
+        author.member.user,
+        mentionedUser1.member.user,
+        mentionedUser2.member.user,
+        mentionedUser3.member.user,
+        mentionedUser4.member.user,
       ],
       channels: [channel],
     });
     const guild = new Guild({
       members: [
-        author.toGuildMember(),
-        mentionedUser1.toGuildMember(),
-        mentionedUser2.toGuildMember(),
-        mentionedUser3.toGuildMember(),
-        mentionedUser4.toGuildMember(),
+        author.member,
+        mentionedUser1.member,
+        mentionedUser2.member,
+        mentionedUser3.member,
+        mentionedUser4.member,
       ],
     });
 
     const data = {
-      author,
-      content: `${mentionedUser1} ?++ ${mentionedUser2} ?++ ${mentionedUser3} ?++ ${mentionedUser4} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser1.member.user} ?++ ${mentionedUser2.member.user} ?++ ${mentionedUser3.member.user} ?++ ${mentionedUser4.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser1,
+          ...mentionedUser1.member.user,
           points: (mentionedUser1.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser2,
+          ...mentionedUser2.member.user,
           points: (mentionedUser2.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser3,
+          ...mentionedUser3.member.user,
           points: (mentionedUser3.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser4,
+          ...mentionedUser4.member.user,
           points: (mentionedUser4.points += 2),
         },
       });
@@ -853,73 +869,73 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for more than five mentioned users', async () => {
-    const mentionedUser1 = new User({ id: 2, points: 10 });
-    const mentionedUser2 = new User({ id: 3, points: 3 });
-    const mentionedUser3 = new User({ id: 4, points: 1 });
-    const mentionedUser4 = new User({ id: 5, points: 0 });
-    const mentionedUser5 = new User({ id: 6, points: 21 });
-    const mentionedUser6 = new User({ id: 7, points: 29 });
+    const mentionedUser1 = { member: new GuildMember({ id: 2 }), points: 10 };
+    const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 3 };
+    const mentionedUser3 = { member: new GuildMember({ id: 4 }), points: 1 };
+    const mentionedUser4 = { member: new GuildMember({ id: 5 }), points: 0 };
+    const mentionedUser5 = { member: new GuildMember({ id: 6 }), points: 21 };
+    const mentionedUser6 = { member: new GuildMember({ id: 7 }), points: 29 };
     const client = new Client({
       users: [
-        author,
-        mentionedUser1,
-        mentionedUser2,
-        mentionedUser3,
-        mentionedUser4,
-        mentionedUser5,
-        mentionedUser6,
+        author.member.user,
+        mentionedUser1.member.user,
+        mentionedUser2.member.user,
+        mentionedUser3.member.user,
+        mentionedUser4.member.user,
+        mentionedUser5.member.user,
+        mentionedUser6.member.user,
       ],
       channels: [channel],
     });
     const guild = new Guild({
       members: [
-        author.toGuildMember(),
-        mentionedUser1.toGuildMember(),
-        mentionedUser2.toGuildMember(),
-        mentionedUser3.toGuildMember(),
-        mentionedUser4.toGuildMember(),
-        mentionedUser5.toGuildMember(),
-        mentionedUser6.toGuildMember(),
+        author.member,
+        mentionedUser1.member,
+        mentionedUser2.member,
+        mentionedUser3.member,
+        mentionedUser4.member,
+        mentionedUser5.member,
+        mentionedUser6.member,
       ],
     });
 
     const data = {
-      author,
-      content: `${mentionedUser1} ?++ ${mentionedUser2} ?++ ${mentionedUser3} ?++ ${mentionedUser4} ?++ ${mentionedUser5} ?++ ${mentionedUser6} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser1.member.user} ?++ ${mentionedUser2.member.user} ?++ ${mentionedUser3.member.user} ?++ ${mentionedUser4.member.user} ?++ ${mentionedUser5.member.user} ?++ ${mentionedUser6.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser1,
+          ...mentionedUser1.member.user,
           points: (mentionedUser1.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser2,
+          ...mentionedUser2.member.user,
           points: (mentionedUser2.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser3,
+          ...mentionedUser3.member.user,
           points: (mentionedUser3.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser4,
+          ...mentionedUser4.member.user,
           points: (mentionedUser4.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser5,
+          ...mentionedUser5.member.user,
           points: (mentionedUser5.points += 2),
         },
       });
@@ -935,20 +951,23 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a user mentioning themselves', async () => {
-    const client = new Client({ users: [author], channels: [channel] });
-    const guild = new Guild({ members: [author.toGuildMember()] });
+    const client = new Client({
+      users: [author.member.user],
+      channels: [channel],
+    });
+    const guild = new Guild({ members: [author.member] });
     const data = {
-      author,
-      content: `${author} ?++`,
+      author: author.member.user,
+      content: `${author.member.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post.mockResolvedValue({
       data: {
-        ...author,
+        ...author.member.user,
         points: (author.points += 2),
       },
     });
@@ -961,19 +980,21 @@ describe('?++ callback', () => {
 
   it('returns correct output for a user mentioning Odin Bot', async () => {
     const client = new Client({
-      users: [author],
+      users: [author.member.user],
       channels: [channel],
     });
+
     const guild = new Guild({
-      members: [author.toGuildMember()],
+      members: [author.member],
     });
+
     const data = {
-      author,
-      content: `${ODIN_BOT} ?++`,
+      author: author.member.user,
+      content: `${GuildMember.odinBot.user} ?++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     await awardPoints.cb(data);
@@ -982,33 +1003,33 @@ describe('?++ callback', () => {
   });
 
   it('returns correct output for a user awarding points in a no-points channel', async () => {
-    const mentionedUser = new User({ id: 2, points: 20 });
+    const mentionedUser = { member: new GuildMember({ id: 2 }), points: 20 };
     const botSpamChannel = new TextChannel('513125912070455296');
     const bannedChannel = new TextChannel('123456789');
     const client = new Client({
-      users: [author, mentionedUser],
+      users: [author.member.user, mentionedUser.member.user],
       channels: [botSpamChannel, bannedChannel],
     });
     const guild = new Guild({
-      members: [author.toGuildMember(), mentionedUser.toGuildMember()],
+      members: [author.member, mentionedUser.member],
     });
 
     const botSpamChannelData = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel: botSpamChannel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     const bannedChannelData = {
-      author,
-      content: `${mentionedUser} ?++`,
+      author: author.member.user,
+      content: `${mentionedUser.member.user} ?++`,
       channel: bannedChannel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     await awardPoints.cb(botSpamChannelData);
@@ -1021,39 +1042,39 @@ describe('?++ callback', () => {
   });
 
   it('sends the correct exclamations for mixed awarding (++ and ?++) in a single message', async () => {
-    const mentionedUser1 = new User({ id: 2, points: 0 });
-    const mentionedUser2 = new User({ id: 3, points: 0 });
+    const mentionedUser1 = { member: new GuildMember({ id: 2 }), points: 0 };
+    const mentionedUser2 = { member: new GuildMember({ id: 3 }), points: 0 };
     const client = new Client({
-      users: [author, mentionedUser1, mentionedUser2],
+      users: [
+        author.member.user,
+        mentionedUser1.member.user,
+        mentionedUser2.member.user,
+      ],
       channels: [channel],
     });
     const guild = new Guild({
-      members: [
-        author.toGuildMember(),
-        mentionedUser1.toGuildMember(),
-        mentionedUser2.toGuildMember(),
-      ],
+      members: [author.member, mentionedUser1.member, mentionedUser2.member],
     });
 
     const data = {
-      author,
-      content: `${mentionedUser1} ?++ ${mentionedUser2} ++`,
+      author: author.member.user,
+      content: `${mentionedUser1.member.user} ?++ ${mentionedUser2.member.user} ++`,
       channel,
       client,
       guild,
-      member: author.toGuildMember(),
+      member: author.member,
     };
 
     axios.post
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser1,
+          ...mentionedUser1.member.user,
           points: (mentionedUser1.points += 2),
         },
       })
       .mockResolvedValueOnce({
         data: {
-          ...mentionedUser2,
+          ...mentionedUser2.member.user,
           points: (mentionedUser2.points += 1),
         },
       });
@@ -1061,8 +1082,8 @@ describe('?++ callback', () => {
     await awardPoints.cb(data);
 
     expect(data.channel.send.mock.calls.flat()).toEqual([
-      `Thanks for the great question! ${mentionedUser1} now has ${mentionedUser1.points} points`,
-      `Nice! ${mentionedUser2} now has ${mentionedUser2.points} point`,
+      `Thanks for the great question! ${mentionedUser1.member.user} now has ${mentionedUser1.points} points`,
+      `Nice! ${mentionedUser2.member.user} now has ${mentionedUser2.points} point`,
     ]);
   });
 });

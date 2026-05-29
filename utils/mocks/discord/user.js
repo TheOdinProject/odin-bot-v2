@@ -1,16 +1,11 @@
-const GuildMember = require('./guild-member');
-
 class User {
-  #roles;
-
-  constructor({ id, points, roles = [] }) {
+  constructor({ id, username }) {
     this.id = id;
-    this.points = points;
-    this.#roles = roles;
+    this.username = username;
   }
 
-  toGuildMember() {
-    return new GuildMember({ roles: this.#roles });
+  get displayName() {
+    return this.username;
   }
 
   toString() {

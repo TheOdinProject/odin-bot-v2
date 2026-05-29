@@ -1,11 +1,11 @@
-const { GuildMember } = require('./mocks/discord');
+const { GuildMember, Role } = require('./mocks/discord');
 const { isAdmin } = require('./is-admin');
 
 describe('isAdmin', () => {
   it.each([['core'], ['maintainer'], ['admin'], ['moderator']])(
     'returns true if the user has the "%s" role',
     (role) => {
-      const member = new GuildMember({ roles: [role] });
+      const member = new GuildMember({ roles: [new Role(0, role)] });
       expect(isAdmin(member)).toBe(true);
     },
   );

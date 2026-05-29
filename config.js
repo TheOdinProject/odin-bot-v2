@@ -33,6 +33,7 @@ const config = {
     backer: '1134874972339327087',
   },
   modmailUserId: '575252669443211264',
+  botUserId: '513097121482932253',
   color: '#cc9543',
 };
 
