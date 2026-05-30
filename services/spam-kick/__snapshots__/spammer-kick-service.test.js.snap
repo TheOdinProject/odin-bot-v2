@@ -2,8 +2,6 @@
 
 exports[`Kicking spammer Does not kick admin roles 1`] = `[Error: Bot attempting to Kick an admin user.]`;
 
-exports[`Kicking spammer Error is handled if channel doesn't exist 1`] = `[Error: No channel with the ID 922520585018433536 was found.]`;
-
 exports[`Kicking spammer Kicked spammer info is logged in moderation channel 1`] = `
 {
   "embeds": [
@@ -39,3 +37,37 @@ exports[`Kicking spammer Kicked spammer is informed about the kick in DM 1`] = `
 exports[`Kicking spammer Kicks spammer even if their DM is disabled 1`] = `"Attachments spam, account flagged for being compromised"`;
 
 exports[`Kicking spammer Kicks spammer service kicks with correct message 1`] = `"Attachments spam, account flagged for being compromised"`;
+
+exports[`Warning spammer Does not warn admin roles 1`] = `[Error: Bot attempting to warn an admin user.]`;
+
+exports[`Warning spammer Warned spammer is informed about the warning in DM 1`] = `"You have been warned in the Odin Project Discord server for sending multiple attachments in a single message. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised)."`;
+
+exports[`Warning spammer Warning is logged in moderation channel 1`] = `
+{
+  "embeds": [
+    {
+      "author": {
+        "icon_url": "image.jpg",
+        "name": "Warning | bad.spammer",
+      },
+      "color": 16776960,
+      "fields": [
+        {
+          "inline": true,
+          "name": "User",
+          "value": "<@123>",
+        },
+        {
+          "inline": true,
+          "name": "Reason",
+          "value": "User has been warned for posting more than 4 attachments in a single message. Next offense will result in a kick.",
+        },
+      ],
+      "footer": {
+        "text": "ID: 123",
+      },
+      "timestamp": "2024-02-01T00:00:00.000Z",
+    },
+  ],
+}
+`;

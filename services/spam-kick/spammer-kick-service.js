@@ -9,8 +9,16 @@ class SpamKickingService {
         return;
       }
       // User has to be informed before the kick happens
-      await SpamKickingService.#informUser(member);
-      await SpamKickingService.#logKick(member);
+      await SpamKickingService.#dmUser(
+        member,
+        `You have been kicked from the Odin Project Discord server for sending multiple attachments in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
+      );
+      await SpamKickingService.#logAction(member, {
+        action: 'Kick',
+        color: 15747399,
+        reason:
+          'User has been kicked for posting more than 4 attachments in a single message.',
+      });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
       );
@@ -19,7 +27,28 @@ class SpamKickingService {
     }
   }
 
-  static async #logKick(member) {
+  static async warn(member) {
+    try {
+      if (isAdmin(member)) {
+        console.error(new Error(`Bot attempting to warn an admin user.`));
+        return;
+      }
+      await SpamKickingService.#dmUser(
+        member,
+        `You have been warned in the Odin Project Discord server for sending multiple attachments in a single message. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).`,
+      );
+      await SpamKickingService.#logAction(member, {
+        action: 'Warning',
+        color: 16776960,
+        reason:
+          'User has been warned for posting more than 4 attachments in a single message. Next offense will result in a kick.',
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  static async #logAction(member, { action, color, reason }) {
     const channelID = config.channels.moderationLogChannelId;
     const channel = await member.guild.channels.fetch(channelID);
     if (channel == null) {
@@ -28,12 +57,12 @@ class SpamKickingService {
 
     const embed = {
       timestamp: `${new Date().toISOString()}`,
-      color: 15747399,
+      color,
       footer: {
         text: `ID: ${member.id}`,
       },
       author: {
-        name: `Kick | ${member.user.username}`,
+        name: `${action} | ${member.user.username}`,
         icon_url: `${member.displayAvatarURL()}`,
       },
       fields: [
@@ -43,8 +72,7 @@ class SpamKickingService {
           inline: true,
         },
         {
-          value:
-            'User has been kicked for posting more than 4 attachments in a single message.',
+          value: reason,
           name: 'Reason',
           inline: true,
         },
@@ -54,11 +82,9 @@ class SpamKickingService {
     channel.send({ embeds: [embed] });
   }
 
-  static async #informUser(member) {
+  static async #dmUser(member, message) {
     try {
-      await member.send(
-        `You have been kicked from the Odin Project Discord server for sending multiple attachments in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
-      );
+      await member.send(message);
       // If user has DMs disabled, ignore the error
       // eslint-disable-next-line no-empty
     } catch {}

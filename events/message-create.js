@@ -8,6 +8,18 @@ const botCommands = [];
 
 let authorBuffer = [];
 
+const WARN_EXPIRY_MS = 24 * 60 * 60 * 1000;
+const warnedSpammers = new Map();
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [userId, warnedAt] of warnedSpammers) {
+    if (now - warnedAt >= WARN_EXPIRY_MS) {
+      warnedSpammers.delete(userId);
+    }
+  }
+}, WARN_EXPIRY_MS);
+
 let currentIntroductionsMessage = null;
 
 const introductionsWelcomeMessage = `Welcome to The Odin Project! Take a moment to survey all of the channels on the sidebar, especially the <#${config.channels.FAQChannelId}> channel for answers to commonly asked questions. We're excited for you to join us on your programming journey. Happy learning!`;
@@ -52,7 +64,21 @@ module.exports = {
 
     // Kick people who posts more than 4 attachments
     if (!isAdminMessage && message.attachments.size >= 4) {
-      SpamKickingService.kick(message.member);
+      try {
+        // Deleting a message that has been already deleted by other bots will throw an error, we ignore it in that case
+        await message.delete();
+        // eslint-disable-next-line no-empty
+      } catch {}
+
+      const warnedAt = warnedSpammers.get(message.author.id);
+      const isActive = warnedAt && Date.now() - warnedAt < WARN_EXPIRY_MS;
+
+      if (isActive) {
+        SpamKickingService.kick(message.member);
+      } else {
+        warnedSpammers.set(message.author.id, Date.now());
+        SpamKickingService.warn(message.member);
+      }
       return;
     }
 
