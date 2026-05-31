@@ -2,10 +2,23 @@ const { Events } = require('discord.js');
 const GettingHiredMessageService = require('../services/getting-hired-message.service');
 const config = require('../config');
 const { isAdmin } = require('../utils/is-admin');
+const SpamKickingService = require('../services/spam-kick/spammer-kick-service');
 
 const botCommands = [];
 
 let authorBuffer = [];
+
+const WARN_EXPIRY_MS = 24 * 60 * 60 * 1000;
+const warnedSpammers = new Map();
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [userId, warnedAt] of warnedSpammers) {
+    if (now - warnedAt >= WARN_EXPIRY_MS) {
+      warnedSpammers.delete(userId);
+    }
+  }
+}, WARN_EXPIRY_MS);
 
 let currentIntroductionsMessage = null;
 
@@ -48,6 +61,27 @@ module.exports = {
      */
 
     const isAdminMessage = isAdmin(message.member);
+
+    // Kick people who posts more than 4 attachments
+    if (!isAdminMessage && message.attachments.size >= 4) {
+      try {
+        // Deleting a message that has been already deleted by other bots will throw an error, we ignore it in that case
+        await message.delete();
+        // eslint-disable-next-line no-empty
+      } catch {}
+
+      const warnedAt = warnedSpammers.get(message.author.id);
+      const isActive = warnedAt && Date.now() - warnedAt < WARN_EXPIRY_MS;
+
+      if (isActive) {
+        SpamKickingService.kick(message.member);
+      } else {
+        warnedSpammers.set(message.author.id, Date.now());
+        SpamKickingService.warn(message.member);
+      }
+      return;
+    }
+
     const isMessageAuthorNobot = message.member?.roles.cache.has(
       config.roles.NOBOTRoleId,
     );

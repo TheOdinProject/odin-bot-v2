@@ -2,7 +2,7 @@ const { globSync } = require('glob');
 const path = require('path');
 
 const eventFiles = globSync('./events/**/*.js', {
-  ignore: 'events/index.js',
+  ignore: ['events/index.js', 'events/**/*.test.js'],
 });
 
 const events = new Map();

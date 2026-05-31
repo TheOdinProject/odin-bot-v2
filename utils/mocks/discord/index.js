@@ -16,6 +16,7 @@
 const Client = require('./client');
 const Guild = require('./guild');
 const GuildMember = require('./guild-member');
+const Message = require('./message');
 const TextChannel = require('./text-channel');
 const User = require('./user');
 const Role = require('./role');
@@ -24,6 +25,7 @@ module.exports = {
   Client,
   Guild,
   GuildMember,
+  Message,
   TextChannel,
   User,
   Role,
