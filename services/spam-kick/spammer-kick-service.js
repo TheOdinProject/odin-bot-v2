@@ -11,7 +11,7 @@ class SpamKickingService {
       // User has to be informed before the kick happens
       await SpamKickingService.#dmUser(
         member,
-        `You have been kicked from the Odin Project Discord server for sending multiple attachments in short session. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
+        `You have been kicked from the Odin Project Discord server for sending multiple attachments in short succession. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
       );
       await SpamKickingService.#logAction(member, {
         action: 'Kick',
