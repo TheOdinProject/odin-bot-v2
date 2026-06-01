@@ -4,6 +4,8 @@ on:
     paths:
       - '**/*.js'
       - 'package*.json'
+  push:
+    branches: [main]
 
 jobs:
   jest:
