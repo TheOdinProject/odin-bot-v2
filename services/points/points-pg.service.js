@@ -7,7 +7,45 @@ class PointsService {
       case 'user':
         await PointsService.displayUserPoints(interaction);
         break;
+      case 'leaderboard':
+        await PointsService.displayLeaderboard(interaction);
+        break;
     }
+  }
+
+  static async displayLeaderboard(interaction) {
+    const allUsers = await PointsService.#getAllMembersDescPoints(
+      interaction.guild.members.cache,
+    );
+
+    let limit = interaction.options.getInteger('limit') ?? 5;
+    if (limit > 25) {
+      limit = 25;
+    }
+
+    let offset = interaction.options.getInteger('offset') ?? 0;
+    if (offset >= allUsers.length) {
+      offset = allUsers.length - 1;
+    }
+
+    const leaderboard = allUsers
+      .slice(offset, offset + limit)
+      .map((user, i) => {
+        const displayName = interaction.guild.members.cache.get(
+          user.discord_id,
+        )?.displayName;
+        const position = i + offset + 1;
+        return `${position}. ${escapeMarkdown(displayName)} - ${user.points}${position === 1 ? ' :tada:' : ''}`;
+      });
+
+    const leaderboardEmbed = new EmbedBuilder()
+      .setColor('#cc9543')
+      .setTitle('TOP Discord points leaderboard')
+      .setDescription(
+        leaderboard.join('\n') || 'Be the first to earn a point!',
+      );
+
+    await interaction.reply({ embeds: [leaderboardEmbed] });
   }
 
   static async displayUserPoints(interaction) {
