@@ -7,7 +7,7 @@
     "prepare": "husky",
     "start": "node index.js",
     "dev": "nodemon --watch . --watch .env index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
     "format": "prettier --cache --write",
     "eslint": "eslint"
   },
