@@ -511,3 +511,116 @@ describe('?++', () => {
     ]);
   });
 });
+
+describe('Club 40', () => {
+  const nonStaffAuthor = new GuildMember({ id: '99999999' });
+  const staffAuthor = new GuildMember({
+    id: '0000000',
+    roles: [new Role(0, 'core')],
+  });
+  const club40Role = new Role(config.roles.club40Id, 'club-40');
+
+  it('Adds member to Club 40 when given single point at 39 points', async () => {
+    const mentionedMember = new GuildMember({ id: '39' });
+    await awardPoints.cb({
+      member: nonStaffAuthor,
+      content: `${mentionedMember} ++`,
+      channel: generalChannel,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles: [club40Role],
+      }),
+    });
+
+    expect(club40Channel.send.mock.calls).toEqual([
+      [
+        `HEYYY EVERYONE SAY HI TO ${mentionedMember} the newest member of CLUB 40! Please check the pins at the top right!`,
+      ],
+      ['https://i.imgur.com/ofDEfYs.gif'],
+      ['Gif by Sully'],
+    ]);
+    expect(mentionedMember.roles.cache.get(config.roles.club40Id)).toBeTruthy();
+  });
+
+  it('Adds member to Club 40 when at 39 points then awarded double points', async () => {
+    const mentionedMember = new GuildMember({ id: '39' });
+    await awardPoints.cb({
+      member: staffAuthor,
+      content: `${mentionedMember} ?++`,
+      channel: generalChannel,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles: [club40Role],
+      }),
+    });
+
+    expect(club40Channel.send.mock.calls).toEqual([
+      [
+        `HEYYY EVERYONE SAY HI TO ${mentionedMember} the newest member of CLUB 40! Please check the pins at the top right!`,
+      ],
+      ['https://i.imgur.com/ofDEfYs.gif'],
+      ['Gif by Sully'],
+    ]);
+    expect(mentionedMember.roles.cache.get(config.roles.club40Id)).toBeTruthy();
+  });
+
+  it('Adds returning Club 40 member when awarded points', async () => {
+    const mentionedMember = new GuildMember({ id: '40' });
+    await awardPoints.cb({
+      member: nonStaffAuthor,
+      content: `${mentionedMember} ++`,
+      channel: generalChannel,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles: [club40Role],
+      }),
+    });
+
+    expect(club40Channel.send.mock.calls).toEqual([
+      [
+        `WELCOME BACK TO CLUB 40 ${mentionedMember}!! Please review the pins at the top right!`,
+      ],
+      ['https://i.imgur.com/ofDEfYs.gif'],
+      ['Gif by Sully'],
+    ]);
+    expect(mentionedMember.roles.cache.get(config.roles.club40Id)).toBeTruthy();
+  });
+
+  it('Does not post in Club 40 if member has fewer than 40 points', async () => {
+    const mentionedMember = new GuildMember({ id: '1' });
+    await awardPoints.cb({
+      member: nonStaffAuthor,
+      content: `${mentionedMember} ++`,
+      channel: generalChannel,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles: [club40Role],
+      }),
+    });
+
+    expect(club40Channel.send).not.toHaveBeenCalled();
+  });
+
+  it('Does not post in Club 40 if member already has the role', async () => {
+    const mentionedMember = new GuildMember({
+      id: '40',
+      roles: [club40Role],
+    });
+    await awardPoints.cb({
+      member: nonStaffAuthor,
+      content: `${mentionedMember} ++`,
+      channel: generalChannel,
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles: [club40Role],
+      }),
+    });
+
+    expect(club40Channel.send).not.toHaveBeenCalled();
+  });
+});
