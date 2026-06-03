@@ -1,4 +1,5 @@
 name: Test
+
 on:
   pull_request:
     paths:
@@ -11,7 +12,31 @@ jobs:
   jest:
     name: Run tests
     runs-on: ubuntu-latest
+    services:
+      postgresql:
+        image: postgres
+        env:
+          POSTGRES_USER: workflow_user
+          POSTGRES_PASSWORD: workflow_password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v6
-      - run: npm install
-      - run: npm run test
+
+      - name: Create database
+        run: psql -h localhost -U workflow_user -c 'CREATE DATABASE "odinbot_test";'
+        env:
+          PGPASSWORD: 'workflow_password'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+        env:
+          TEST_DATABASE_URI: postgresql://workflow_user:workflow_password@localhost:5432/odinbot_test
