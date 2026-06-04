@@ -4,12 +4,13 @@ class MissingEnvVarError extends Error {
     'DISCORD_CLIENT_ID',
     'DISCORD_GUILD_ID',
     'DATABASE_URI',
-    'TEST_DATABASE_URI',
   ];
+
+  static #mandatoryTestEnvKeys = ['TEST_DATABASE_URI'];
 
   constructor(missingEnvVars) {
     super(`
-Could not start Odin Bot locally. The following value(s) are missing from your local .env file:
+Could not start Odin Bot. The following value(s) are missing from your local .env file:
 
 ${missingEnvVars.join('\n')}
 
@@ -19,9 +20,19 @@ Follow the Odin Bot "Getting Started" guide for instructions on how to obtain an
   }
 
   static getMissingMandatoryKeys() {
-    return MissingEnvVarError.#mandatoryEnvKeys.filter(
-      (key) => !process.env[key],
+    return MissingEnvVarError.#getMissingKeys(
+      MissingEnvVarError.#mandatoryEnvKeys,
     );
+  }
+
+  static getMissingMandatoryTestKeys() {
+    return MissingEnvVarError.#getMissingKeys(
+      MissingEnvVarError.#mandatoryTestEnvKeys,
+    );
+  }
+
+  static #getMissingKeys(keys) {
+    return keys.filter((key) => !process.env[key]);
   }
 }
 
