@@ -5,7 +5,7 @@ const {
   TextChannel,
   GuildMember,
   Role,
-} = require('../../utils/mocks/discord');
+} = require('../../test/mocks/discord');
 const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
 

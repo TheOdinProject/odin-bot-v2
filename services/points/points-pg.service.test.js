@@ -1,7 +1,7 @@
-const { Guild, GuildMember, User } = require('../../utils/mocks/discord');
+const { Guild, GuildMember, User } = require('../../test/mocks/discord');
+const mockUsers = require('../../test/mocks/database-users/slash-commands');
 const PointsService = require('./points-pg.service');
 const db = require('../../db');
-const mockUsers = require('../../utils/mocks/database-users/slash-commands');
 
 // only read ops in these tests
 beforeAll(async () => {

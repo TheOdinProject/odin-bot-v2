@@ -1,4 +1,4 @@
-const { Guild, GuildMember, Message, Role } = require('../utils/mocks/discord');
+const { Guild, GuildMember, Message, Role } = require('../test/mocks/discord');
 
 jest.mock('../services/spam-kick/spammer-kick-service');
 

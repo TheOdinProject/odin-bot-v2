@@ -1,4 +1,4 @@
-const { GuildMember, Role } = require('./mocks/discord');
+const { GuildMember, Role } = require('../test/mocks/discord');
 const { isAdmin } = require('./is-admin');
 
 describe('isAdmin', () => {

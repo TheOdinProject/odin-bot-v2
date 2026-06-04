@@ -3,11 +3,11 @@ const {
   GuildMember,
   TextChannel,
   Role,
-} = require('../../utils/mocks/discord');
+} = require('../../test/mocks/discord');
+const mockUsers = require('../../test/mocks/database-users/awarding-points');
 const awardPoints = require('./award-points-pg');
 const config = require('../../config');
 const db = require('../../db');
-const mockUsers = require('../../utils/mocks/database-users/awarding-points');
 
 const selfAwardGif = 'http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif';
 const generalChannel = new TextChannel('000');

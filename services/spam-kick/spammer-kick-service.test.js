@@ -4,7 +4,7 @@ const {
   TextChannel,
   Guild,
   Role,
-} = require('../../utils/mocks/discord');
+} = require('../../test/mocks/discord');
 const config = require('../../config');
 
 beforeAll(() => {
