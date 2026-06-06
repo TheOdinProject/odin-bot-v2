@@ -3,10 +3,10 @@ class MissingEnvVarError extends Error {
     'DISCORD_API_KEY',
     'DISCORD_CLIENT_ID',
     'DISCORD_GUILD_ID',
-    'DATABASE_URI',
+    'DATABASE_URL',
   ];
 
-  static #mandatoryTestEnvKeys = ['TEST_DATABASE_URI'];
+  static #mandatoryTestEnvKeys = ['TEST_DATABASE_URL'];
 
   constructor(missingEnvVars) {
     super(`

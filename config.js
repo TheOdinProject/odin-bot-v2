@@ -4,10 +4,10 @@ const config = {
   pointsbot: {
     token: process.env.POINTSBOT_TOKEN,
   },
-  databaseUri:
+  databaseUrl:
     process.env.NODE_ENV === 'test'
-      ? process.env.TEST_DATABASE_URI
-      : process.env.DATABASE_URI,
+      ? process.env.TEST_DATABASE_URL
+      : process.env.DATABASE_URL,
   guildId: process.env.DISCORD_GUILD_ID,
   clientId: process.env.DISCORD_CLIENT_ID,
   token: process.env.DISCORD_API_KEY,

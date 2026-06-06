@@ -39,4 +39,4 @@ jobs:
       - name: Run tests
         run: npm run test
         env:
-          TEST_DATABASE_URI: postgresql://workflow_user:workflow_password@localhost:5432/odinbot_test
+          TEST_DATABASE_URL: postgresql://workflow_user:workflow_password@localhost:5432/odinbot_test
