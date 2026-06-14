@@ -17,7 +17,7 @@ class SpamKickingService {
         action: 'Kick',
         color: 15747399,
         reason:
-          'User has been kicked for posting more than 4 attachments in a single message.',
+          'User has been kicked for posting more than 1 attachment in a single message.',
       });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
@@ -41,7 +41,7 @@ class SpamKickingService {
         action: 'Warning',
         color: 16776960,
         reason:
-          'User has been warned for posting more than 4 attachments in a single message. Next offense will result in a kick.',
+          'User has been warned for posting more than 1 attachment in a single message. Next offense will result in a kick.',
       });
     } catch (e) {
       console.error(e);

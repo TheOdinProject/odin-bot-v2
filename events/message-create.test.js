@@ -32,7 +32,7 @@ describe('Spam detection', () => {
     return new Message({
       author: member.user,
       member,
-      attachments: { size: 4 },
+      attachments: { size: 2 },
     });
   }
 
