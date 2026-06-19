@@ -20,7 +20,7 @@ exports[`Kicking spammer Kicked spammer info is logged in moderation channel 1`]
         {
           "inline": true,
           "name": "Reason",
-          "value": "User has been kicked for posting more than 1 attachment in a single message.",
+          "value": "User has been kicked for posting 2 or more attachments in a single message.",
         },
       ],
       "footer": {
@@ -60,7 +60,7 @@ exports[`Warning spammer Warning is logged in moderation channel 1`] = `
         {
           "inline": true,
           "name": "Reason",
-          "value": "User has been warned for posting more than 1 attachment in a single message. Next offense will result in a kick.",
+          "value": "User has been warned for posting 2 or more attachments in a single message. Next offense will result in a kick.",
         },
       ],
       "footer": {

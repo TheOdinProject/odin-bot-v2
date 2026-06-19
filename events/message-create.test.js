@@ -1,9 +1,6 @@
 const { Guild, GuildMember, Message, Role } = require('../utils/mocks/discord');
 
-jest.mock('../services/spam-kick/spammer-kick-service', () => ({
-  kick: jest.fn(),
-  warn: jest.fn(),
-}));
+jest.mock('../services/spam-kick/spammer-kick-service');
 
 describe('Spam detection', () => {
   let execute;

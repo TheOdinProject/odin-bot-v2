@@ -2,6 +2,8 @@ const config = require('../../config');
 const { isAdmin } = require('../../utils/is-admin');
 
 class SpamKickingService {
+  static ATTACHMENT_LIMIT = 1;
+
   static async kick(member) {
     try {
       if (isAdmin(member)) {
@@ -16,8 +18,7 @@ class SpamKickingService {
       await SpamKickingService.#logAction(member, {
         action: 'Kick',
         color: 15747399,
-        reason:
-          'User has been kicked for posting more than 1 attachment in a single message.',
+        reason: `User has been kicked for posting ${SpamKickingService.ATTACHMENT_LIMIT + 1} or more attachments in a single message.`,
       });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
@@ -40,8 +41,7 @@ class SpamKickingService {
       await SpamKickingService.#logAction(member, {
         action: 'Warning',
         color: 16776960,
-        reason:
-          'User has been warned for posting more than 1 attachment in a single message. Next offense will result in a kick.',
+        reason: `User has been warned for posting ${SpamKickingService.ATTACHMENT_LIMIT + 1} or more attachments in a single message. Next offense will result in a kick.`,
       });
     } catch (e) {
       console.error(e);

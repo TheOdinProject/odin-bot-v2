@@ -62,8 +62,11 @@ module.exports = {
 
     const isAdminMessage = isAdmin(message.member);
 
-    // Kick people who posts more than 1 attachment
-    if (!isAdminMessage && message.attachments.size > 1) {
+    // Warn or kick people who posts multiple attachments
+    if (
+      !isAdminMessage &&
+      message.attachments.size > SpamKickingService.ATTACHMENT_LIMIT
+    ) {
       try {
         // Deleting a message that has been already deleted by other bots will throw an error, we ignore it in that case
         await message.delete();
