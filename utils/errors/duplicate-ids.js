@@ -13,12 +13,10 @@ You can modify what value the IDs are set to in the .env file. See .env for more
   static getDuplicateIds(channels) {
     const channelsByID = Object.entries(channels).reduce(
       (acc, [key, value]) => {
-        if (!Array.isArray(value)) {
-          if (acc[value]) {
-            acc[value].push(key);
-          } else {
-            acc[value] = [key];
-          }
+        if (acc[value.id]) {
+          acc[value.id].push(key);
+        } else {
+          acc[value.id] = [key];
         }
         return acc;
       },

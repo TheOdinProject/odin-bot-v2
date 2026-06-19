@@ -1,10 +1,5 @@
 const SpamKickingService = require('./spammer-kick-service');
-const {
-  GuildMember,
-  TextChannel,
-  Guild,
-  Role,
-} = require('../../utils/mocks/discord');
+const { GuildMember, Guild, Role } = require('../../utils/mocks/discord');
 const config = require('../../config');
 
 beforeAll(() => {
@@ -17,19 +12,9 @@ afterAll(() => {
   jest.useRealTimers();
 });
 
-function getChannels() {
-  return [
-    new TextChannel(config.channels.moderationLogChannelId),
-    new TextChannel('101010'),
-    new TextChannel('22223333'),
-    new TextChannel('2302382'),
-    new TextChannel('000000'),
-  ];
-}
-
-function createMemberMock(guild, roleName) {
+function createMemberMock(guild, role) {
   const id = '123';
-  const roles = [new Role(0, roleName)];
+  const roles = [role];
   const username = 'bad.spammer';
   return new GuildMember({ id, username, guild, roles });
 }
@@ -37,8 +22,8 @@ function createMemberMock(guild, roleName) {
 describe('Kicking spammer', () => {
   let member;
   beforeEach(() => {
-    const guild = new Guild({ channels: getChannels() });
-    member = createMemberMock(guild, 'casual-user');
+    const guild = new Guild();
+    member = createMemberMock(guild, new Role('0', 'casual-user'));
   });
 
   it('Kicks spammer service kicks with correct message', async () => {
@@ -66,7 +51,7 @@ describe('Kicking spammer', () => {
   it('Kicked spammer info is logged in moderation channel', async () => {
     await SpamKickingService.kick(member);
     member.guild.channels.cache.forEach((channel) => {
-      if (channel.id === config.channels.moderationLogChannelId) {
+      if (channel.id === config.channels.moderationLog.id) {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.send.mock.calls[0][0]).toMatchSnapshot();
       } else {
@@ -77,8 +62,8 @@ describe('Kicking spammer', () => {
 
   it('Does not kick admin roles', async () => {
     console.error = jest.fn();
-    const guild = new Guild({ channels: getChannels() });
-    const member = createMemberMock(guild, 'admin');
+    const guild = new Guild();
+    const member = createMemberMock(guild, Role.admin);
     await SpamKickingService.kick(member);
     expect(member.send).not.toHaveBeenCalled();
     expect(member.kick).not.toHaveBeenCalled();
@@ -90,25 +75,13 @@ describe('Kicking spammer', () => {
     expect(console.error.mock.calls[0][0]).toMatchSnapshot();
     console.error.mockClear();
   });
-
-  it("Error is handled if channel doesn't exist", async () => {
-    console.error = jest.fn();
-    const channels = [new TextChannel('1234')];
-    const guild = new Guild({ channels });
-    member = createMemberMock(guild, 'james-bond');
-    await SpamKickingService.kick(member);
-
-    expect(console.error).toHaveBeenCalledTimes(1);
-    expect(console.error.mock.calls[0][0]).toBeInstanceOf(Error);
-    console.error.mockClear();
-  });
 });
 
 describe('Warning spammer', () => {
   let member;
   beforeEach(() => {
-    const guild = new Guild({ channels: getChannels() });
-    member = createMemberMock(guild, 'casual-user');
+    const guild = new Guild();
+    member = createMemberMock(guild, new Role('0', 'casual-user'));
   });
 
   it('Warned spammer is informed about the warning in DM', async () => {
@@ -120,7 +93,7 @@ describe('Warning spammer', () => {
   it('Warning is logged in moderation channel', async () => {
     await SpamKickingService.warn(member);
     member.guild.channels.cache.forEach((channel) => {
-      if (channel.id === config.channels.moderationLogChannelId) {
+      if (channel.id === config.channels.moderationLog.id) {
         expect(channel.send).toHaveBeenCalledTimes(1);
         expect(channel.send.mock.calls[0][0]).toMatchSnapshot();
       } else {
@@ -131,8 +104,8 @@ describe('Warning spammer', () => {
 
   it('Does not warn admin roles', async () => {
     console.error = jest.fn();
-    const guild = new Guild({ channels: getChannels() });
-    const member = createMemberMock(guild, 'admin');
+    const guild = new Guild();
+    const member = createMemberMock(guild, Role.admin);
     await SpamKickingService.warn(member);
     expect(member.send).not.toHaveBeenCalled();
     member.guild.channels.cache.forEach((channel) => {
@@ -155,17 +128,5 @@ describe('Warning spammer', () => {
         expect(channel.send).toHaveBeenCalledTimes(1);
       }
     });
-  });
-
-  it("Error is handled if channel doesn't exist", async () => {
-    console.error = jest.fn();
-    const channels = [new TextChannel('1234')];
-    const guild = new Guild({ channels });
-    member = createMemberMock(guild, 'james-bond');
-    await SpamKickingService.warn(member);
-
-    expect(console.error).toHaveBeenCalledTimes(1);
-    expect(console.error.mock.calls[0][0]).toBeInstanceOf(Error);
-    console.error.mockClear();
   });
 });

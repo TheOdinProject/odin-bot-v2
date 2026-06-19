@@ -49,7 +49,7 @@ class SpamKickingService {
   }
 
   static async #logAction(member, { action, color, reason }) {
-    const channelID = config.channels.moderationLogChannelId;
+    const channelID = config.channels.moderationLog.id;
     const channel = await member.guild.channels.fetch(channelID);
     if (channel == null) {
       throw new Error(`No channel with the ID ${channelID} was found.`);

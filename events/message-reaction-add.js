@@ -41,7 +41,7 @@ module.exports = {
       user.id,
     );
     const isReactionUserNobot = reactionUserAsGuildMember.roles.cache.has(
-      config.roles.NOBOTRoleId,
+      config.roles.nobot.id,
     );
 
     if (isReactionUserNobot) {

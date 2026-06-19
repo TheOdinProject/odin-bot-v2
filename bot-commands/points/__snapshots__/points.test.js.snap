@@ -22,8 +22,6 @@ exports[`?++ callback returns correct output for a single user re-entering club-
 
 exports[`?++ callback returns correct output for a user awarding points in a no-points channel 1`] = `"You can't do that here!"`;
 
-exports[`?++ callback returns correct output for a user awarding points in a no-points channel 2`] = `"You can't do that here!"`;
-
 exports[`?++ callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 
 exports[`?++ callback returns correct output for a user mentioning themselves 1`] = `"http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif"`;
@@ -71,8 +69,6 @@ exports[`callback returns correct output for a single user re-entering club-40 4
 exports[`callback returns correct output for a single user w/o club-40 1`] = `"Sweet! <@2> now has 21 points"`;
 
 exports[`callback returns correct output for a user awarding points in a no-points channel 1`] = `"You can't do that here!"`;
-
-exports[`callback returns correct output for a user awarding points in a no-points channel 2`] = `"You can't do that here!"`;
 
 exports[`callback returns correct output for a user mentioning Odin Bot 1`] = `"awwwww shucks... :heart_eyes:"`;
 

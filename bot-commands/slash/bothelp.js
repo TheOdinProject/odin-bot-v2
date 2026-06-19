@@ -22,7 +22,7 @@ We also have these text-based commands which you can use in a sentence:
 \`!xy\`, \`!code\`, \`!question\`, \`!os\` and \`!top\`
 
 **Bot Playground**
-Experiment with our bot in the <#${channels.botSpamPlaygroundChannelId}> channel to try out different commands and features. It's a safe space to explore without disturbing the main channels.
+Experiment with our bot in the <#${channels.botSpamPlayground.id}> channel to try out different commands and features. It's a safe space to explore without disturbing the main channels.
 
 **Repository**
 Feel free to check out or contribute to the Odin bot's code in the [odin-bot Repository](https://github.com/TheOdinProject/odin-bot-v2)

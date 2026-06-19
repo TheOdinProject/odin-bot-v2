@@ -125,7 +125,7 @@ const awardPoints = {
 
     return Promise.all(
       awards.map(async ({ userId, pointsToAward }, i) => {
-        if (config.channels.noPointsChannelIds.includes(channel.id)) {
+        if (channel.id === config.channels.botSpamPlayground.id) {
           channel.send("You can't do that here!");
           return;
         }

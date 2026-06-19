@@ -22,7 +22,7 @@ class SpamBanningService {
 
     let deleteMessages = false;
 
-    if (message.channelId !== config.channels.automodBlockChannelId) {
+    if (message.channelId !== config.channels.automodBlock.id) {
       const response =
         await SpamBanningService.#askForDeleteMessages(interaction);
 
@@ -57,7 +57,7 @@ class SpamBanningService {
         deleteMessages,
       );
 
-      if (message.channelId === config.channels.automodBlockChannelId) {
+      if (message.channelId === config.channels.automodBlock.id) {
         message.react('✅');
         await interaction.reply({
           content: reply,
@@ -176,7 +176,7 @@ Please note that it may take at least several days for our volunteer staff to pr
   }
 
   static async #announceBan(interaction, message) {
-    const channelID = config.channels.moderationLogChannelId;
+    const channelID = config.channels.moderationLog.id;
     const channel = await interaction.guild.channels.fetch(channelID);
     if (channel == null) {
       throw new Error(`No channel with the ID ${channelID} was found.`);

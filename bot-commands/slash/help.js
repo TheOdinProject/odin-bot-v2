@@ -21,7 +21,7 @@ module.exports = {
       .addFields(
         {
           name: 'Server Conduct',
-          value: `All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@${config.modmailUserId}>, as well as to ask any rule-related questions. Modmail How-To - <#${channels.ContactModeratorsChannelId}>`,
+          value: `All conduct must be within our [rules](https://www.theodinproject.com/guides/community/rules), and [community expectations](https://www.theodinproject.com/guides/community/expectations).\nPlease report issues/misconduct to <@${config.users.modmail.id}>, as well as to ask any rule-related questions. Modmail How-To - <#${channels.ContactModeratorsChannelId}>`,
         },
         {
           name: 'Just the FAQs',

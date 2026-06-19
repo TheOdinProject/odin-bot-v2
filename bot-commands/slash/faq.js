@@ -15,7 +15,7 @@ module.exports = {
       .setColor('#cc9543')
       .setTitle('TOP FAQ')
       .setDescription(
-        `We have a channel with frequently asked questions - <#${channels.FAQChannelId}>!`,
+        `We have a channel with frequently asked questions - <#${channels.faq.id}>!`,
       );
 
     await interaction.reply({

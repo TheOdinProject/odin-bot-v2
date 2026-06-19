@@ -13,7 +13,7 @@ class BookmarkMessageService {
     } catch (error) {
       if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
         const botSpamChannel = message.guild.channels.cache.get(
-          config.channels.botSpamPlaygroundChannelId,
+          config.channels.botSpamPlayground.id,
         );
         await BookmarkMessageService.#sendToChannel(botSpamChannel, {
           content: `${user}, turn on replies from server members in Discord settings to receive bookmarks in your DM.`,
