@@ -4,7 +4,7 @@ const { isAdmin } = require('../../utils/is-admin');
 class SpamKickingService {
   static ATTACHMENT_LIMIT = 1;
 
-  static async kick(member) {
+  static async kick(member, size, content) {
     try {
       if (isAdmin(member)) {
         console.error(new Error(`Bot attempting to Kick an admin user.`));
@@ -13,12 +13,12 @@ class SpamKickingService {
       // User has to be informed before the kick happens
       await SpamKickingService.#dmUser(
         member,
-        `You have been kicked from the Odin Project Discord server for sending multiple attachments in short succession. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server`,
+        `You have been kicked from the Odin Project Discord server for ${size} attachments in short succession. If this account is compromised, please follow the steps linked in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised). Once your account is secure, feel free to rejoin the server.\nThe message that was deleted was: "${content}"`,
       );
       await SpamKickingService.#logAction(member, {
         action: 'Kick',
         color: 15747399,
-        reason: `User has been kicked for posting ${SpamKickingService.ATTACHMENT_LIMIT + 1} or more attachments in a single message.`,
+        reason: `User has been kicked for posting ${size} attachments in a single message.`,
       });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
@@ -28,7 +28,7 @@ class SpamKickingService {
     }
   }
 
-  static async warn(member) {
+  static async warn(member, size, content) {
     try {
       if (isAdmin(member)) {
         console.error(new Error(`Bot attempting to warn an admin user.`));
@@ -36,12 +36,12 @@ class SpamKickingService {
       }
       await SpamKickingService.#dmUser(
         member,
-        `You have been warned in the Odin Project Discord server for sending multiple attachments in a single message. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).`,
+        `You have been warned in the Odin Project Discord server for sending ${size} attachments in a single message. The current limit is ${this.ATTACHMENT_LIMIT}. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).\nThe message that was deleted was: "${content}"`,
       );
       await SpamKickingService.#logAction(member, {
         action: 'Warning',
         color: 16776960,
-        reason: `User has been warned for posting ${SpamKickingService.ATTACHMENT_LIMIT + 1} or more attachments in a single message. Next offense will result in a kick.`,
+        reason: `User has been warned for posting ${size} attachments single message. The limit is currently ${this.ATTACHMENT_LIMIT}. Next offense will result in a kick.`,
       });
     } catch (e) {
       console.error(e);

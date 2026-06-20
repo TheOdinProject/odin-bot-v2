@@ -77,10 +77,18 @@ module.exports = {
       const isActive = warnedAt && Date.now() - warnedAt < WARN_EXPIRY_MS;
 
       if (isActive) {
-        SpamKickingService.kick(message.member);
+        SpamKickingService.kick(
+          message.member,
+          message.attachments.size,
+          message.content,
+        );
       } else {
         warnedSpammers.set(message.author.id, Date.now());
-        SpamKickingService.warn(message.member);
+        SpamKickingService.warn(
+          message.member,
+          message.attachments.size,
+          message.content,
+        );
       }
       return;
     }

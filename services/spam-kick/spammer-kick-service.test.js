@@ -42,13 +42,13 @@ describe('Kicking spammer', () => {
   });
 
   it('Kicks spammer service kicks with correct message', async () => {
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     expect(member.kick).toHaveBeenCalledTimes(1);
     expect(member.kick.mock.calls[0][0]).toMatchSnapshot();
   });
 
   it('Kicked spammer is informed about the kick in DM', async () => {
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     expect(member.send).toHaveBeenCalledTimes(1);
     expect(member.send.mock.calls[0][0]).toMatchSnapshot();
   });
@@ -57,14 +57,14 @@ describe('Kicking spammer', () => {
     member.send = jest.fn(() => {
       throw new Error("Can't contact user");
     });
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     expect(member.kick).toHaveBeenCalledTimes(1);
     expect(member.send).toHaveBeenCalledTimes(1);
     expect(member.kick.mock.calls[0][0]).toMatchSnapshot();
   });
 
   it('Kicked spammer info is logged in moderation channel', async () => {
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     member.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
         expect(channel.send).toHaveBeenCalledTimes(1);
@@ -79,7 +79,7 @@ describe('Kicking spammer', () => {
     console.error = jest.fn();
     const guild = new Guild({ channels: getChannels() });
     const member = createMemberMock(guild, 'admin');
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     expect(member.send).not.toHaveBeenCalled();
     expect(member.kick).not.toHaveBeenCalled();
     member.guild.channels.cache.forEach((channel) => {
@@ -96,7 +96,7 @@ describe('Kicking spammer', () => {
     const channels = [new TextChannel('1234')];
     const guild = new Guild({ channels });
     member = createMemberMock(guild, 'james-bond');
-    await SpamKickingService.kick(member);
+    await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
 
     expect(console.error).toHaveBeenCalledTimes(1);
     expect(console.error.mock.calls[0][0]).toBeInstanceOf(Error);
@@ -112,13 +112,13 @@ describe('Warning spammer', () => {
   });
 
   it('Warned spammer is informed about the warning in DM', async () => {
-    await SpamKickingService.warn(member);
+    await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
     expect(member.send).toHaveBeenCalledTimes(1);
     expect(member.send.mock.calls[0][0]).toMatchSnapshot();
   });
 
   it('Warning is logged in moderation channel', async () => {
-    await SpamKickingService.warn(member);
+    await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
     member.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
         expect(channel.send).toHaveBeenCalledTimes(1);
@@ -133,7 +133,7 @@ describe('Warning spammer', () => {
     console.error = jest.fn();
     const guild = new Guild({ channels: getChannels() });
     const member = createMemberMock(guild, 'admin');
-    await SpamKickingService.warn(member);
+    await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
     expect(member.send).not.toHaveBeenCalled();
     member.guild.channels.cache.forEach((channel) => {
       expect(channel.send).not.toHaveBeenCalled();
@@ -148,7 +148,7 @@ describe('Warning spammer', () => {
     member.send = jest.fn(() => {
       throw new Error("Can't contact user");
     });
-    await SpamKickingService.warn(member);
+    await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
     expect(member.send).toHaveBeenCalledTimes(1);
     member.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
@@ -162,7 +162,7 @@ describe('Warning spammer', () => {
     const channels = [new TextChannel('1234')];
     const guild = new Guild({ channels });
     member = createMemberMock(guild, 'james-bond');
-    await SpamKickingService.warn(member);
+    await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
 
     expect(console.error).toHaveBeenCalledTimes(1);
     expect(console.error.mock.calls[0][0]).toBeInstanceOf(Error);
