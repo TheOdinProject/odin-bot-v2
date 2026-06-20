@@ -36,8 +36,17 @@ class SpamKickingService {
       }
       await SpamKickingService.#dmUser(
         member,
-        `You have been warned in the Odin Project Discord server for sending ${size} attachments in a single message. The current limit is ${SpamKickingService.ATTACHMENT_LIMIT}. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).\nThe message that was deleted was: "${content}"`,
+        `You have been warned in the Odin Project Discord server for sending ${size} attachments in a single message. The current limit is ${SpamKickingService.ATTACHMENT_LIMIT}. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).\nThe message that was deleted was:`,
       );
+      // Nitro users can send more than 2000 characters, but odin-bot can only send 2000 at a time
+      const MESSAGE_CHAR_LIMIT = 2000;
+      for (let i = 0; i < content.length; i += MESSAGE_CHAR_LIMIT) {
+        // eslint-disable-next-line no-await-in-loop
+        await SpamKickingService.#dmUser(
+          member,
+          content.slice(i, i + MESSAGE_CHAR_LIMIT),
+        );
+      }
       await SpamKickingService.#logAction(member, {
         action: 'Warning',
         color: 16776960,
@@ -85,9 +94,13 @@ class SpamKickingService {
   static async #dmUser(member, message) {
     try {
       await member.send(message);
-      // If user has DMs disabled, ignore the error
-      // eslint-disable-next-line no-empty
-    } catch {}
+    } catch (error) {
+      await SpamKickingService.#logAction(member, {
+        action: 'Failure',
+        color: 15747399,
+        reason: `Unable to deliver DM to user: ${error.message}`,
+      });
+    }
   }
 }
 

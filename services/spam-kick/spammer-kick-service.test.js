@@ -113,8 +113,25 @@ describe('Warning spammer', () => {
 
   it('Warned spammer is informed about the warning in DM', async () => {
     await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
-    expect(member.send).toHaveBeenCalledTimes(1);
+    expect(member.send).toHaveBeenCalledTimes(2);
     expect(member.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(member.send.mock.calls[1][0]).toBe('buy cheap stuff now');
+  });
+
+  it('sends deleted message content that fits in one DM as a single chunk', async () => {
+    const content = 'a'.repeat(2000);
+    await SpamKickingService.warn(member, 3, content);
+    expect(member.send).toHaveBeenCalledTimes(2);
+    expect(member.send.mock.calls[1][0]).toBe(content);
+  });
+
+  it('splits deleted message content over 2000 characters into multiple DMs', async () => {
+    const content = 'a'.repeat(4500);
+    await SpamKickingService.warn(member, 3, content);
+    expect(member.send).toHaveBeenCalledTimes(4);
+    expect(member.send.mock.calls[1][0]).toBe('a'.repeat(2000));
+    expect(member.send.mock.calls[2][0]).toBe('a'.repeat(2000));
+    expect(member.send.mock.calls[3][0]).toBe('a'.repeat(500));
   });
 
   it('Warning is logged in moderation channel', async () => {
@@ -144,15 +161,15 @@ describe('Warning spammer', () => {
     console.error.mockClear();
   });
 
-  it('Warns spammer even if their DM is disabled', async () => {
+  it('logs DM failure to moderation channel and still logs the warning action', async () => {
     member.send = jest.fn(() => {
       throw new Error("Can't contact user");
     });
     await SpamKickingService.warn(member, 3, 'buy cheap stuff now');
-    expect(member.send).toHaveBeenCalledTimes(1);
+    expect(member.send).toHaveBeenCalledTimes(2);
     member.guild.channels.cache.forEach((channel) => {
       if (channel.id === config.channels.moderationLogChannelId) {
-        expect(channel.send).toHaveBeenCalledTimes(1);
+        expect(channel.send).toHaveBeenCalledTimes(3);
       }
     });
   });

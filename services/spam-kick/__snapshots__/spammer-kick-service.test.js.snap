@@ -45,7 +45,7 @@ exports[`Warning spammer Does not warn admin roles 1`] = `[Error: Bot attempting
 
 exports[`Warning spammer Warned spammer is informed about the warning in DM 1`] = `
 "You have been warned in the Odin Project Discord server for sending 3 attachments in a single message. The current limit is 1. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).
-The message that was deleted was: "buy cheap stuff now""
+The message that was deleted was:"
 `;
 
 exports[`Warning spammer Warning is logged in moderation channel 1`] = `
