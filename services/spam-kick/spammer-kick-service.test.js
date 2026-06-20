@@ -49,8 +49,27 @@ describe('Kicking spammer', () => {
 
   it('Kicked spammer is informed about the kick in DM', async () => {
     await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
-    expect(member.send).toHaveBeenCalledTimes(1);
+    // First call: notification message. Second call: deleted message content.
+    expect(member.send).toHaveBeenCalledTimes(2);
     expect(member.send.mock.calls[0][0]).toMatchSnapshot();
+    expect(member.send.mock.calls[1][0]).toBe('buy cheap stuff now');
+  });
+
+  it('sends deleted message content that fits in one DM as a single chunk', async () => {
+    const content = 'a'.repeat(2000);
+    await SpamKickingService.kick(member, 3, content);
+    expect(member.send).toHaveBeenCalledTimes(2);
+    expect(member.send.mock.calls[1][0]).toBe(content);
+  });
+
+  it('splits deleted message content over 2000 characters into multiple DMs', async () => {
+    const content = 'a'.repeat(4500);
+    await SpamKickingService.kick(member, 3, content);
+    // 1 notification + 3 content chunks (2000 + 2000 + 500)
+    expect(member.send).toHaveBeenCalledTimes(4);
+    expect(member.send.mock.calls[1][0]).toBe('a'.repeat(2000));
+    expect(member.send.mock.calls[2][0]).toBe('a'.repeat(2000));
+    expect(member.send.mock.calls[3][0]).toBe('a'.repeat(500));
   });
 
   it('Kicks spammer even if their DM is disabled', async () => {
@@ -59,7 +78,7 @@ describe('Kicking spammer', () => {
     });
     await SpamKickingService.kick(member, 3, 'buy cheap stuff now');
     expect(member.kick).toHaveBeenCalledTimes(1);
-    expect(member.send).toHaveBeenCalledTimes(1);
+    expect(member.send).toHaveBeenCalledTimes(2);
     expect(member.kick.mock.calls[0][0]).toMatchSnapshot();
   });
 
