@@ -18,7 +18,7 @@ class SpamKickingService {
       await SpamKickingService.#logAction(member, {
         action: 'Kick',
         color: 15747399,
-        reason: `User has been kicked for posting ${size} attachments in a single message. The limit is currently ${SpamKickingService.ATTACHMENT_LIMIT}.`,
+        reason: `User has been kicked for posting ${size} attachments in a single message repeatedly. The limit is currently ${SpamKickingService.ATTACHMENT_LIMIT}.`,
       });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
