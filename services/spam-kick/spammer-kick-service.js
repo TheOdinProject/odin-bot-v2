@@ -52,8 +52,7 @@ class SpamKickingService {
   static async #dmDeletedMessage(member, content) {
     const MESSAGE_CHAR_LIMIT = 2000;
     for (let i = 0; i < content.length; i += MESSAGE_CHAR_LIMIT) {
-      // eslint-disable-next-line no-await-in-loop
-      await SpamKickingService.#dmUser(
+      SpamKickingService.#dmUser(
         member,
         content.slice(i, i + MESSAGE_CHAR_LIMIT),
       );
