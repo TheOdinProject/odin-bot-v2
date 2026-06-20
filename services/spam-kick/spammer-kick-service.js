@@ -18,7 +18,7 @@ class SpamKickingService {
       await SpamKickingService.#logAction(member, {
         action: 'Kick',
         color: 15747399,
-        reason: `User has been kicked for posting ${size} attachments in a single message.`,
+        reason: `User has been kicked for posting ${size} attachments in a single message. The limit is currently ${SpamKickingService.ATTACHMENT_LIMIT}.`,
       });
       await member.kick(
         'Attachments spam, account flagged for being compromised',
@@ -36,12 +36,12 @@ class SpamKickingService {
       }
       await SpamKickingService.#dmUser(
         member,
-        `You have been warned in the Odin Project Discord server for sending ${size} attachments in a single message. The current limit is ${this.ATTACHMENT_LIMIT}. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).\nThe message that was deleted was: "${content}"`,
+        `You have been warned in the Odin Project Discord server for sending ${size} attachments in a single message. The current limit is ${SpamKickingService.ATTACHMENT_LIMIT}. If you do this again, you will be kicked. If your account has been compromised, please follow the steps in this [Discord support article about securing your account](https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised).\nThe message that was deleted was: "${content}"`,
       );
       await SpamKickingService.#logAction(member, {
         action: 'Warning',
         color: 16776960,
-        reason: `User has been warned for posting ${size} attachments single message. The limit is currently ${this.ATTACHMENT_LIMIT}. Next offense will result in a kick.`,
+        reason: `User has been warned for posting ${size} attachments single message. The limit is currently ${SpamKickingService.ATTACHMENT_LIMIT}. Next offense will result in a kick.`,
       });
     } catch (e) {
       console.error(e);
