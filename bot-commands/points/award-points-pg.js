@@ -52,21 +52,29 @@ const awardPointsRegex = new RegExp(
 
 function getAwards(content, author) {
   const awards = new Map();
-  let nonStaffGivingDoublePoints = false;
+  const invalidAwardsGiven = {
+    toSelf: false,
+    toBot: false,
+    doublePointsWhenNotStaff: false,
+  };
 
   for (const [_, userID, awardType] of content.matchAll(awardPointsRegex)) {
-    if (awardType === '?++') {
+    if (userID === author.id) {
+      invalidAwardsGiven.toSelf = true;
+    } else if (userID === config.botUserId) {
+      invalidAwardsGiven.toBot = true;
+    } else if (awardType === '?++') {
       if (isAdmin(author)) {
         awards.set(userID, 2);
       } else {
-        nonStaffGivingDoublePoints = true;
+        invalidAwardsGiven.doublePointsWhenNotStaff = true;
       }
     } else if (awards.get(userID) !== 2) {
       awards.set(userID, 1);
     }
   }
 
-  return [awards, nonStaffGivingDoublePoints];
+  return [awards, invalidAwardsGiven];
 }
 
 const awardPoints = {
@@ -86,27 +94,25 @@ const awardPoints = {
       return;
     }
 
-    const [awards, nonStaffGivingDoublePoints] = getAwards(content, author);
-    if (nonStaffGivingDoublePoints) {
+    const [awards, invalidAwardsGiven] = getAwards(content, author);
+    if (invalidAwardsGiven.doublePointsWhenNotStaff) {
       // TODO: Remove temp conditional when old points feature removed
       if (temporarilyOnlyRunInDevOrTest) {
         channel.send('Only staff can use ?++ to give double points!');
       }
     }
-    if (awards.has(config.botUserId)) {
+    if (invalidAwardsGiven.toBot) {
       // TODO: Remove temp conditional when old points feature removed
       if (temporarilyOnlyRunInDevOrTest) {
         channel.send('Awwwww shucks... :heart_eyes:');
       }
-      awards.delete(config.botUserId);
     }
-    if (awards.has(author.id)) {
+    if (invalidAwardsGiven.toSelf) {
       // TODO: Remove temp conditional when old points feature removed
       if (temporarilyOnlyRunInDevOrTest) {
         channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
         channel.send("You can't give yourself points!");
       }
-      awards.delete(author.id);
     }
 
     const MAX_AWARDS_PER_MESSAGE = 5;
