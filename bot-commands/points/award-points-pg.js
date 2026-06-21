@@ -119,6 +119,14 @@ const awardPoints = {
       }
     }
 
+    const club40Channel = guild.channels.cache.get(
+      config.channels.club40ChannelId,
+    );
+    const club40Role = guild.roles.cache.get(config.roles.club40Id);
+    if (!club40Channel || !club40Role) {
+      throw new Error('No club 40 channel and/or role set!');
+    }
+
     try {
       const usersToAward = Array.from(awards).slice(0, MAX_AWARDS_PER_MESSAGE);
       const { rows: upsertedUsers } = await db.query(
@@ -149,14 +157,6 @@ const awardPoints = {
           );
           if (points < 40 || isInClub40) {
             continue;
-          }
-
-          const club40Channel = guild.channels.cache.get(
-            config.channels.club40ChannelId,
-          );
-          const club40Role = guild.roles.cache.get(config.roles.club40Id);
-          if (!club40Channel || !club40Role) {
-            throw new Error('No club 40 channel and/or role set!');
           }
 
           awardedMember.roles.add(club40Role);
