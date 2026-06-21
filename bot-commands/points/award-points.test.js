@@ -13,7 +13,11 @@ const selfAwardGif = 'http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif';
 const generalChannel = new TextChannel('000');
 const club40Channel = new TextChannel(config.channels.club40ChannelId);
 const noPointsChannel = new TextChannel(config.channels.noPointsChannelIds[0]);
+const coreRole = new Role(1, 'core');
+const club40Role = new Role(config.roles.club40Id, 'club-40');
+
 const channels = [generalChannel, club40Channel, noPointsChannel];
+const roles = [coreRole, club40Role];
 
 jest.mock('./club-40-gifs.json', () => [
   {
@@ -51,6 +55,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -72,6 +77,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -94,6 +100,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, mentionedMember1, mentionedMember2],
         channels,
+        roles,
       }),
     });
 
@@ -116,6 +123,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -144,6 +152,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, ...mentionedMembers],
         channels,
+        roles,
       }),
     });
 
@@ -176,7 +185,7 @@ describe('++ / :star:', () => {
       member: author,
       content: `${GuildMember.odinBot} ++`,
       channel: generalChannel,
-      guild: new Guild({ members: [author], channels }),
+      guild: new Guild({ members: [author], channels, roles }),
     });
 
     const result = await db.query(
@@ -198,6 +207,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -215,7 +225,7 @@ describe('++ / :star:', () => {
       member: author,
       content: `${author} ++`,
       channel: generalChannel,
-      guild: new Guild({ members: [author], channels }),
+      guild: new Guild({ members: [author], channels, roles }),
     });
 
     const result = await db.query(
@@ -235,7 +245,7 @@ describe('++ / :star:', () => {
       member: author,
       content: `${author} ++ ${mentionedMember} ++`,
       channel: generalChannel,
-      guild: new Guild({ members: [author, mentionedMember], channels }),
+      guild: new Guild({ members: [author, mentionedMember], channels, roles }),
     });
 
     const ownAwardResult = await db.query(
@@ -270,6 +280,7 @@ describe('++ / :star:', () => {
       guild: new Guild({
         members: [author, ...mentionedMembers],
         channels,
+        roles,
       }),
     });
 
@@ -301,10 +312,7 @@ describe('++ / :star:', () => {
 
 describe('?++', () => {
   const nonStaffAuthor = new GuildMember({ id: '99999999' });
-  const staffAuthor = new GuildMember({
-    id: '0000000',
-    roles: [new Role(1, 'core')],
-  });
+  const staffAuthor = new GuildMember({ id: '0000000', roles: [coreRole] });
 
   it('Prevents awarding points if author is not staff member', async () => {
     const mentionedMember = new GuildMember({ id: '0' });
@@ -315,6 +323,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [nonStaffAuthor, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -336,6 +345,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -358,6 +368,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember1, mentionedMember2],
         channels,
+        roles,
       }),
     });
 
@@ -380,6 +391,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -397,7 +409,7 @@ describe('?++', () => {
       member: staffAuthor,
       content: `${GuildMember.odinBot} ?++`,
       channel: generalChannel,
-      guild: new Guild({ members: [staffAuthor], channels }),
+      guild: new Guild({ members: [staffAuthor], channels, roles }),
     });
 
     const result = await db.query(
@@ -419,6 +431,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
+        roles,
       }),
     });
 
@@ -436,7 +449,7 @@ describe('?++', () => {
       member: staffAuthor,
       content: `${staffAuthor} ?++`,
       channel: generalChannel,
-      guild: new Guild({ members: [staffAuthor], channels }),
+      guild: new Guild({ members: [staffAuthor], channels, roles }),
     });
 
     const result = await db.query(
@@ -456,7 +469,11 @@ describe('?++', () => {
       member: staffAuthor,
       content: `${staffAuthor} ?++ ${mentionedMember} ?++`,
       channel: generalChannel,
-      guild: new Guild({ members: [staffAuthor, mentionedMember], channels }),
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles,
+      }),
     });
 
     const result = await db.query(
@@ -480,6 +497,7 @@ describe('?++', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember1, mentionedMember2],
         channels,
+        roles,
       }),
     });
 
@@ -499,7 +517,11 @@ describe('?++', () => {
       member: staffAuthor,
       content: `${mentionedMember} ?++ ${mentionedMember} ?++`,
       channel: generalChannel,
-      guild: new Guild({ members: [staffAuthor, mentionedMember], channels }),
+      guild: new Guild({
+        members: [staffAuthor, mentionedMember],
+        channels,
+        roles,
+      }),
     });
 
     const result = await db.query(
@@ -514,11 +536,7 @@ describe('?++', () => {
 
 describe('Club 40', () => {
   const nonStaffAuthor = new GuildMember({ id: '99999999' });
-  const staffAuthor = new GuildMember({
-    id: '0000000',
-    roles: [new Role(0, 'core')],
-  });
-  const club40Role = new Role(config.roles.club40Id, 'club-40');
+  const staffAuthor = new GuildMember({ id: '0000000', roles: [coreRole] });
 
   it('Adds member to Club 40 when given single point at 39 points', async () => {
     const mentionedMember = new GuildMember({ id: '39' });
@@ -529,7 +547,7 @@ describe('Club 40', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
-        roles: [club40Role],
+        roles,
       }),
     });
 
@@ -552,7 +570,7 @@ describe('Club 40', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
-        roles: [club40Role],
+        roles,
       }),
     });
 
@@ -575,7 +593,7 @@ describe('Club 40', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
-        roles: [club40Role],
+        roles,
       }),
     });
 
@@ -598,7 +616,7 @@ describe('Club 40', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
-        roles: [club40Role],
+        roles,
       }),
     });
 
@@ -617,7 +635,7 @@ describe('Club 40', () => {
       guild: new Guild({
         members: [staffAuthor, mentionedMember],
         channels,
-        roles: [club40Role],
+        roles,
       }),
     });
 
