@@ -20,18 +20,10 @@ Follow the Odin Bot "Getting Started" guide for instructions on how to obtain an
   }
 
   static getMissingMandatoryKeys() {
-    return MissingEnvVarError.#getMissingKeys(
-      MissingEnvVarError.#mandatoryEnvKeys,
-    );
-  }
-
-  static getMissingMandatoryTestKeys() {
-    return MissingEnvVarError.#getMissingKeys(
-      MissingEnvVarError.#mandatoryTestEnvKeys,
-    );
-  }
-
-  static #getMissingKeys(keys) {
+    const keys =
+      process.env.NODE_ENV === 'test'
+        ? MissingEnvVarError.#mandatoryTestEnvKeys
+        : MissingEnvVarError.#mandatoryEnvKeys;
     return keys.filter((key) => !process.env[key]);
   }
 }
