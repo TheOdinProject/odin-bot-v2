@@ -6,7 +6,7 @@ const pool = new Pool({
   onConnect: async (client) => {
     await client.query(`
       CREATE TABLE IF NOT EXISTS points (
-        discord_id   text UNIQUE NOT NULL,
+        discord_id   text PRIMARY KEY,
         points       integer NOT NULL
       );
     `);
