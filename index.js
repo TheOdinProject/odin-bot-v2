@@ -1,15 +1,18 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { token, channels } = require('./config');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
+const PendingMigrationsError = require('./utils/errors/pending-migrations');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
-// check all mandatory env variables are set
 const missingMandatoryEnvKeys = MissingEnvVarError.getMissingMandatoryKeys();
 if (missingMandatoryEnvKeys.length) {
   throw new MissingEnvVarError(missingMandatoryEnvKeys);
 }
 
-// check all channel IDs are unique
+if (PendingMigrationsError.hasPendingMigrations()) {
+  throw new PendingMigrationsError();
+}
+
 const duplicateKeys = DuplicateIdsError.getDuplicateIds(channels);
 if (duplicateKeys.length) {
   throw new DuplicateIdsError(duplicateKeys);
