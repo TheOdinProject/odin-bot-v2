@@ -7,7 +7,11 @@
     "prepare": "husky",
     "start": "node index.js",
     "dev": "nodemon --watch . --watch .env index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test": "dbmate --env=TEST_DATABASE_URL --no-dump-schema up && NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "migrate": "dbmate up",
+    "migrate:rollback": "dbmate rollback",
+    "migrate:new": "dbmate new",
+    "migrate:status": "dbmate status --exit-code",
     "format": "prettier --cache --write",
     "eslint": "eslint"
   },
@@ -16,6 +20,7 @@
   "dependencies": {
     "@discordjs/rest": "^2.6.1",
     "axios": "^1.16.1",
+    "dbmate": "^2.33.0",
     "discord-api-types": "^0.38.44",
     "discord.js": "^14.26.4",
     "dotenv": "^17.4.1",
