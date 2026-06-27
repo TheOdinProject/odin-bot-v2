@@ -118,13 +118,19 @@ module.exports = defineConfig([
   },
   {
     // process non-JS files for file/dir name linting
-    ignores: ['**/*.js'],
+    // but ignore auto-generated things or mandatory names
+    ignores: [
+      '.github/**',
+      '.vscode/**',
+      '.husky/**',
+      'db/migrations/*',
+      '{README,LICENSE}.md',
+    ],
+    files: ['**/*.!(js)'],
     processor: 'checkFile/eslint-processor-check-file',
   },
   {
-    plugins: {
-      checkFile,
-    },
+    plugins: { checkFile },
     rules: {
       'checkFile/filename-naming-convention': [
         'error',
