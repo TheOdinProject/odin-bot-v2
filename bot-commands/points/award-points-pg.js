@@ -3,9 +3,6 @@ const db = require('../../db');
 const club40Gifs = require('./club-40-gifs.json');
 const { isAdmin } = require('../../utils/is-admin');
 
-// TODO: Remove temp conditional when old points feature removed
-const temporarilyOnlyRunInDevOrTest = process.env.NODE_ENV !== 'production';
-
 function getRandomClub40Gif() {
   const choice = Math.floor(Math.random() * club40Gifs.length);
   return club40Gifs[choice];
@@ -87,42 +84,27 @@ const awardPoints = {
     member: author,
   }) {
     if (config.channels.noPointsChannelIds.includes(channel.id)) {
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        channel.send("You can't give points in this channel!");
-      }
+      channel.send("You can't give points in this channel!");
       return;
     }
 
     const [awards, invalidAwardsGiven] = getAwards(content, author);
     if (invalidAwardsGiven.doublePointsWhenNotStaff) {
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        channel.send('Only staff can use ?++ to give double points!');
-      }
+      channel.send('Only staff can use ?++ to give double points!');
     }
     if (invalidAwardsGiven.toBot) {
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        channel.send('Awwwww shucks... :heart_eyes:');
-      }
+      channel.send('Awwwww shucks... :heart_eyes:');
     }
     if (invalidAwardsGiven.toSelf) {
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
-        channel.send("You can't give yourself points!");
-      }
+      channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
+      channel.send("You can't give yourself points!");
     }
 
     const MAX_AWARDS_PER_MESSAGE = 5;
     if (awards.size > MAX_AWARDS_PER_MESSAGE) {
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        channel.send(
-          `You can only do up to ${MAX_AWARDS_PER_MESSAGE} users at a time...`,
-        );
-      }
+      channel.send(
+        `You can only do up to ${MAX_AWARDS_PER_MESSAGE} users at a time...`,
+      );
     }
 
     const club40Channel = guild.channels.cache.get(
@@ -149,34 +131,29 @@ const awardPoints = {
         ],
       );
 
-      // TODO: Remove temp conditional when old points feature removed
-      if (temporarilyOnlyRunInDevOrTest) {
-        for (const { discord_id, points } of upsertedUsers) {
-          const awardedMember = guild.members.cache.get(discord_id);
-          const isDoublePoints = awards.get(discord_id) === 2;
-          channel.send(
-            `${exclamation(points, isDoublePoints)} ${awardedMember} now has ${points} ${getPlural(points)}`,
-          );
+      for (const { discord_id, points } of upsertedUsers) {
+        const awardedMember = guild.members.cache.get(discord_id);
+        const isDoublePoints = awards.get(discord_id) === 2;
+        channel.send(
+          `${exclamation(points, isDoublePoints)} ${awardedMember} now has ${points} ${getPlural(points)}`,
+        );
 
-          const isInClub40 = awardedMember.roles.cache.has(
-            config.roles.club40Id,
-          );
-          if (points < 40 || isInClub40) {
-            continue;
-          }
-
-          awardedMember.roles.add(club40Role);
-
-          const isNewToClub40 = points === (isDoublePoints ? 41 : 40);
-          const welcomeGif = getRandomClub40Gif();
-          const welcomeMessage = isNewToClub40
-            ? `HEYYY EVERYONE SAY HI TO ${awardedMember} the newest member of CLUB 40! Please check the pins at the top right!`
-            : `WELCOME BACK TO CLUB 40 ${awardedMember}!! Please review the pins at the top right!`;
-
-          club40Channel.send(welcomeMessage);
-          club40Channel.send(welcomeGif.gif);
-          club40Channel.send(`Gif by ${welcomeGif.author}`);
+        const isInClub40 = awardedMember.roles.cache.has(config.roles.club40Id);
+        if (points < 40 || isInClub40) {
+          continue;
         }
+
+        awardedMember.roles.add(club40Role);
+
+        const isNewToClub40 = points === (isDoublePoints ? 41 : 40);
+        const welcomeGif = getRandomClub40Gif();
+        const welcomeMessage = isNewToClub40
+          ? `HEYYY EVERYONE SAY HI TO ${awardedMember} the newest member of CLUB 40! Please check the pins at the top right!`
+          : `WELCOME BACK TO CLUB 40 ${awardedMember}!! Please review the pins at the top right!`;
+
+        club40Channel.send(welcomeMessage);
+        club40Channel.send(welcomeGif.gif);
+        club40Channel.send(`Gif by ${welcomeGif.author}`);
       }
     } catch (error) {
       console.log(error);
