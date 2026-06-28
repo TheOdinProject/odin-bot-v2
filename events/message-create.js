@@ -148,9 +148,12 @@ module.exports = {
       }
     });
 
-    if (message.channel.id === config.channels.gettingHiredChannelId) {
-      const gettingHiredMessageService = new GettingHiredMessageService();
-      await gettingHiredMessageService.handleMessage(message, isAdminMessage);
+    if (
+      message.channel.id === config.channels.gettingHiredChannelId &&
+      !isAdminMessage
+    ) {
+      const gettingHiredMessageService = await GettingHiredMessageService.new();
+      await gettingHiredMessageService.handleMessage(message);
 
       return;
     }
