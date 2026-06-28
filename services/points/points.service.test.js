@@ -1,344 +1,270 @@
-const axios = require('axios');
+const { Guild, GuildMember, User } = require('../../test/mocks/discord');
+const mockUsers = require('../../test/mocks/database-users/slash-commands');
 const PointsService = require('./points.service');
-const {
-  generateLeaderData,
-  generateLeaderDataWithMarkdown,
-} = require('../../utils/slash-command-helpers/mock-data');
+const db = require('../../db');
 
-/* eslint-disable */
-/* eslint max-classes-per-file: ["error", 2] */
+// only read ops in these tests
+beforeAll(async () => {
+  const initialDbState = [
+    mockUsers.withPoints.map((user) => user.id),
+    mockUsers.withPoints.map((user) => user.points),
+  ];
+  await db.query('TRUNCATE points;');
+  await db.query(
+    `INSERT INTO points SELECT * FROM unnest($1::text[], $2::integer[]);`,
+    initialDbState,
+  );
+});
 
-class GuildMembersMock {
-  members;
-  cache;
+afterAll(async () => {
+  await db.end();
+});
 
-  constructor(users) {
-    this.members = users;
-    this.cache = {
-      get: (id) => users.filter((member) => member.discord_id === id)[0],
-    };
-  }
-}
+const guild = new Guild({
+  members: mockUsers.inGuild.map(
+    ({ id, username }) => new GuildMember({ id, username }),
+  ),
+});
 
-class GuildMock {
-  members;
-  member;
-
-  constructor(users) {
-    this.members = new GuildMembersMock(users);
-    this.member = (user) => users.filter((member) => member === user)[0];
-  }
-}
-
-describe('leaderboard subcommand', () => {
-  let limit = null;
-  let offset = null;
-  let reply = '';
-  const interactionMock = {
+describe('user', () => {
+  const createInteraction = (mentionedUser) => ({
+    guild,
     options: {
-      getSubcommand: () => 'leaderboard',
-      getInteger: (string) => {
-        if (string === 'limit') {
-          return limit;
-        } else if (string === 'offset') {
-          return offset;
-        }
-      },
+      getSubcommand: () => 'user',
+      getUser: () => mentionedUser,
     },
-    reply: jest.fn((message) => (reply = message)),
-  };
-
-  const setUpAxiosMock = (data) =>
-    (axios.get = jest.fn().mockResolvedValue({ data }));
-
-  afterEach(() => {
-    limit = null;
-    offset = null;
-    reply = '';
-    axios.get.mockReset();
+    reply: jest.fn((message) => message),
   });
 
-  it('Returns be the first to earn points message if no user in database', async () => {
-    const members = generateLeaderData(0);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Returns correct reply when user does not have any points', async () => {
+    const interaction = createInteraction(new User(mockUsers.all[0]));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for User 0',
+      fields: [
+        { name: 'Points', value: 'User 0 has 0 points.' },
+        { name: 'Rank', value: 'User 0 is not on the leaderboard.' },
+      ],
+    });
   });
 
-  it('Returned users length matches limit', async () => {
-    limit = 8;
-    const members = generateLeaderData(30);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Replies with error message if user is not in the guild', async () => {
+    const interaction = createInteraction(new User({ id: 'NotInGuild' }));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply).toBe(
+      'Sorry, could not find points information for that user!',
+    );
   });
 
-  it('Limit defaults to 5 if limit not provided', async () => {
-    const members = generateLeaderData(30);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Returns correct reply when user has points', async () => {
+    const interaction = createInteraction(new User(mockUsers.all[5]));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for User 5',
+      fields: [
+        { name: 'Points', value: 'User 5 has 5 points.' },
+        { name: 'Rank', value: 'User 5 is ranked number 26.' },
+      ],
+    });
   });
 
-  it('Limit defaults to 5 if invalid characters provided', async () => {
-    limit = 'sdfsdf';
-    const members = generateLeaderData(30);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Singularizes response when user has 1 point', async () => {
+    const interaction = createInteraction(new User(mockUsers.all[1]));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for User 1',
+      fields: [
+        { name: 'Points', value: 'User 1 has 1 point.' },
+        { name: 'Rank', value: 'User 1 is ranked number 30.' },
+      ],
+    });
   });
 
-  it('Limit defaults to 5 if limit provided lower than 1', async () => {
-    limit = 0;
-    const members = generateLeaderData(25);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Appends :tada: emoji if user is ranked 1', async () => {
+    const interaction = createInteraction(new User(mockUsers.all[30]));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for User 30',
+      fields: [
+        { name: 'Points', value: 'User 30 has 30 points.' },
+        { name: 'Rank', value: 'User 30 is ranked number 1 :tada:' },
+      ],
+    });
   });
 
-  it('Limit defaults to 25 if limit provided is higher than 25', async () => {
-    limit = 50;
-    const members = generateLeaderData(70);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
+  it('Escapes markdown characters in response text', async () => {
+    const interaction = createInteraction(new User(mockUsers.all[4]));
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Limit does not exceed users length', async () => {
-    limit = 10;
-    const members = generateLeaderData(5);
-    interactionMock.guild = new GuildMock(members);
-    setUpAxiosMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Members who left are filtered out', async () => {
-    const members = generateLeaderData(50);
-    const limitMembers = members.slice(20, 40);
-    interactionMock.guild = new GuildMock(limitMembers);
-    setUpAxiosMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Returns users starting from offset', async () => {
-    offset = 5;
-    const members = generateLeaderData(50);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Offset defaults to 0 if not provided', async () => {
-    const members = generateLeaderData(25);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Offset defaults to 0 if invalid characters provided', async () => {
-    offset = 'sdfs';
-    const members = generateLeaderData(25);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Offset defaults to 0 if negative value provided', async () => {
-    offset = -5;
-    const members = generateLeaderData(25);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Offset cannot exceed max users length', async () => {
-    offset = 70;
-    const members = generateLeaderData(50);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Offset show the last users depending on limit if offset is too high', async () => {
-    offset = 56;
-    limit = 5;
-    const members = generateLeaderData(50);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('Return the correct limit, moving offset backward if necessary', async () => {
-    offset = 56;
-    limit = 10;
-    const members = generateLeaderData(60);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-  });
-
-  it('escapes markdown correctly', async () => {
-    const members = generateLeaderDataWithMarkdown(5);
-    setUpAxiosMock(members);
-    interactionMock.guild = new GuildMock(members);
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for User \\*\\*4\\*\\*',
+      fields: [
+        { name: 'Points', value: 'User \\*\\*4\\*\\* has 4 points.' },
+        {
+          name: 'Rank',
+          value: 'User \\*\\*4\\*\\* is ranked number 27.',
+        },
+      ],
+    });
   });
 });
 
-describe('user subcommand', () => {
-  const apiData = [
-    { id: 7, discord_id: '7777', points: 4000 }, // Left Server
-    { id: 6, discord_id: '6666', points: 3000 }, // Cat
-    { id: 5, discord_id: '5555', points: 2000 }, // Left Server
-    { id: 3, discord_id: '3333', points: 1000 }, // Dog
-    { id: 2, discord_id: '2222', points: 20 }, // Someone
-    { id: 4, discord_id: '4444', points: 15 }, // Tree
-    { id: 1, discord_id: '1111', points: 1 }, // NotOdin
-    { id: 8, discord_id: '8888', points: 1 }, // Mark *down*
-  ];
-
-  const guildMock = new GuildMock([
-    { displayName: 'NotOdin', discord_id: '1111' },
-    { displayName: 'Someone', discord_id: '2222' },
-    { displayName: 'Dog', discord_id: '3333' },
-    { displayName: 'Tree', discord_id: '4444' },
-    { displayName: 'Cat', discord_id: '6666' },
-    { displayName: 'Mark *down*', discord_id: '8888' },
-  ]);
-
-  beforeEach(() => {
-    axios.get = jest.fn().mockResolvedValue({ data: apiData });
-  });
-
-  let user = {}; // created for each test each test
-  let reply = '';
-  const interactionMock = {
-    guild: guildMock,
+describe('leaderboard', () => {
+  const createInteraction = (integerOptions) => ({
+    guild,
     options: {
-      getSubcommand: () => 'user',
-      getUser: () => user,
+      getSubcommand: () => 'leaderboard',
+      getInteger: (option) => integerOptions[option],
     },
-    reply: jest.fn((message) => (reply = message)),
-  };
-
-  afterEach(() => {
-    reply = '';
-    user = {};
+    reply: jest.fn((message) => message),
   });
 
-  it('Return correct reply when user is not in database', async () => {
-    user = { id: '200', username: 'OldUser' };
+  it('Returns top 5 leaderboard when no options and limit set', async () => {
+    const interaction = createInteraction({});
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: [
+        '1. User 30 - 30 :tada:',
+        '2. User 29 - 29',
+        '3. User 28 - 28',
+        '4. User 27 - 27',
+        '5. User 26 - 26',
+      ].join('\n'),
+    });
   });
 
-  it('Return correct rank for user ignoring members that has left', async () => {
-    user = { id: '3333', username: 'Dog' };
+  it('Returns LIMIT number of leaderboard entries', async () => {
+    const interaction = createInteraction({ limit: 7 });
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-
-    user = { id: '2222', username: 'Someone' };
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
-
-    user = { id: '4444', username: 'Tree' };
-
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: [
+        '1. User 30 - 30 :tada:',
+        '2. User 29 - 29',
+        '3. User 28 - 28',
+        '4. User 27 - 27',
+        '5. User 26 - 26',
+        '6. User 25 - 25',
+        '7. User 24 - 24',
+      ].join('\n'),
+    });
   });
 
-  it('Rank append emoji to first ranked user', async () => {
-    user = { id: '6666', username: 'Cat' };
+  it('Caps LIMIT at 25 entries', async () => {
+    const interaction = createInteraction({ limit: 500 });
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: [
+        '1. User 30 - 30 :tada:',
+        '2. User 29 - 29',
+        '3. User 28 - 28',
+        '4. User 27 - 27',
+        '5. User 26 - 26',
+        '6. User 25 - 25',
+        '7. User 24 - 24',
+        '8. User 23 - 23',
+        '9. User 22 - 22',
+        '10. User 21 - 21',
+        '11. User 20 - 20',
+        '12. User 19 - 19',
+        '13. User 18 - 18',
+        '14. User 17 - 17',
+        '15. User 16 - 16',
+        '16. User 15 - 15',
+        '17. User 14 - 14',
+        '18. User 13 - 13',
+        '19. User 12 - 12',
+        '20. User 11 - 11',
+        '21. User 10 - 10',
+        '22. User 9 - 9',
+        '23. User 8 - 8',
+        '24. User 7 - 7',
+        '25. User 6 - 6',
+      ].join('\n'),
+    });
   });
 
-  it('Format the points word properly for 1 point', async () => {
-    user = { id: '1111', username: 'NotOdin' };
+  it('Returns 5 leaderboard entries with a starting offset', async () => {
+    const interaction = createInteraction({ offset: 3 });
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: [
+        '4. User 27 - 27',
+        '5. User 26 - 26',
+        '6. User 25 - 25',
+        '7. User 24 - 24',
+        '8. User 23 - 23',
+      ].join('\n'),
+    });
   });
 
-  it('Formats the points word properly for 0 points', async () => {
-    user = { id: '9292', username: 'OldestUser' };
+  it('Cannot offset beyond leaderboard length', async () => {
+    const interaction = createInteraction({ offset: 500 });
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: '30. User 1 - 1',
+    });
   });
 
-  it('Formats the points word correctly for more than 1 points', async () => {
-    user = { id: '3333', username: 'Dog' };
+  it('Allows both offset and limit options together', async () => {
+    const interaction = createInteraction({ limit: 6, offset: 5 });
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points leaderboard',
+      description: [
+        '6. User 25 - 25',
+        '7. User 24 - 24',
+        '8. User 23 - 23',
+        '9. User 22 - 22',
+        '10. User 21 - 21',
+        '11. User 20 - 20',
+      ].join('\n'),
+    });
   });
 
-  it('Escapes markdown', async () => {
-    user = { id: '8888', username: 'Mark *down*' };
+  it('Does not include non-guild members in leaderboard', async () => {
+    const interaction = createInteraction({});
+    await PointsService.handleInteraction(interaction);
 
-    await PointsService.handleInteraction(interactionMock);
-    expect(axios.get).toHaveBeenCalled();
-    expect(reply).toMatchSnapshot();
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    const leaderboard = botReply.embeds[0]?.data.description;
+    expect(leaderboard).toEqual(expect.not.stringContaining('NotInGuild'));
+  });
+
+  it('Escaped markdown characters in response text', async () => {
+    const interaction = createInteraction({ offset: 5, limit: 25 });
+    await PointsService.handleInteraction(interaction);
+
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    const leaderboard = botReply.embeds[0]?.data.description;
+    expect(leaderboard).toEqual(expect.stringContaining('\\*\\*4\\*\\*'));
+    expect(leaderboard).toEqual(expect.not.stringContaining('**4**'));
   });
 });

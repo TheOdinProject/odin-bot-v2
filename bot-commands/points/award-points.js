@@ -1,87 +1,31 @@
-const axios = require('axios');
 const config = require('../../config');
+const db = require('../../db');
 const club40Gifs = require('./club-40-gifs.json');
 const { isAdmin } = require('../../utils/is-admin');
 
-axios.default.defaults.headers.common.Authorization = `Token ${config.pointsbot.token}`;
-
-function sendRandomClub40Gif(gifContainer, clubChannel) {
-  const choice = Math.floor(Math.random() * gifContainer.length);
-  clubChannel.send(`${gifContainer[choice].gif}`);
-  clubChannel.send(`Gif by ${gifContainer[choice].author}`);
-}
-
-function extractAwardsFromMessage(text, regex, authorMember, channel) {
-  const matches = [];
-  const processedIds = new Set();
-
-  for (const match of text.matchAll(regex)) {
-    const userId = match[1].replace('!', '');
-
-    if (match[2] === '?++') {
-      if (isAdmin(authorMember)) {
-        matches.push({ userId, pointsToAward: 2 });
-      } else {
-        channel.send('Only team members can give double points!');
-      }
-    } else if (processedIds.has(userId)) {
-      channel.send('Only team members can give double points!');
-    } else {
-      processedIds.add(userId);
-      matches.push({ userId, pointsToAward: 1 });
-    }
-  }
-  return matches;
-}
-
-async function addPointsToUser(discordId, numPoints) {
-  try {
-    const pointsBotResponse = await axios.post(
-      `https://www.theodinproject.com/api/points?discord_id=${discordId}&value=${numPoints}`,
-    );
-    return pointsBotResponse.data;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+function getRandomClub40Gif() {
+  const choice = Math.floor(Math.random() * club40Gifs.length);
+  return club40Gifs[choice];
 }
 
 function exclamation(points, isGoodQuestion) {
-  if (isGoodQuestion) {
-    return 'Thanks for the great question!';
-  }
-  if (points < 5) {
-    return 'Nice!';
-  }
-  if (points < 25) {
-    return 'Sweet!';
-  }
-  if (points < 99) {
-    return 'Woot!';
-  }
-  if (points < 105) {
-    return 'HOLY CRAP!!';
-  }
-  if (points > 199 && points < 206) {
-    return 'DAM SON:';
-  }
-  if (points > 299 && points < 306) {
-    return 'OK YOU CAN STOP NOW:';
-  }
-  if (points === 1000) {
-    return 'ONE THOUSAND POINTS';
-  }
-  if (points === 4000) {
-    return '`//TODO: Implement Club 4000`';
-  }
+  if (isGoodQuestion) return 'Thanks for the great question!';
+  if (points < 5) return 'Nice!';
+  if (points < 25) return 'Sweet!';
+  if (points < 99) return 'Woot!';
+  if (points < 105) return 'HOLY CRAP!!';
+  if (points > 199 && points < 206) return 'DAMN, SON!';
+  if (points > 299 && points < 306) return 'OK, YOU CAN STOP NOW!';
+  if (points === 1000) return 'ONE THOUSAND POINTS!!!';
+  if (points === 4000) return '`// TODO: Implement Club 4000`';
   return 'Woot!';
 }
 
-function plural(points) {
+function getPlural(points) {
   return points === 1 ? 'point' : 'points';
 }
 
 const userRegex = '<@!?(\\d+)>';
-
 // Don't disallow word chars after :star: - this should be perfectly valid: "@odinbot ⭐thanks!"
 const starRegex = '\u{2b50}';
 // matches at least two plus signs
@@ -98,95 +42,122 @@ const plusBasedRegex = `(${plusRegex}|${doublePointsPlusRegex})(?!\\w)`;
 // Not so simple to detect and prevent user mentions deeper within an inline or fenced code block though
 // But this is mostly prevented by Discord escaping user mentions when typing in them, so they won't match userRegex
 // Still technically possible by manually pasting something like <@!123456789> ++ in a code block (though it always was)
-const fullAwardPointsRegex = new RegExp(
+const awardPointsRegex = new RegExp(
   `(?<!\\\\|\`)${userRegex}\\s*(${plusBasedRegex}|${starRegex})`,
   'gu',
 );
 
+function getAwards(content, author) {
+  const awards = new Map();
+  const invalidAwardsGiven = {
+    toSelf: false,
+    toBot: false,
+    doublePointsWhenNotStaff: false,
+  };
+
+  for (const [_, userID, awardType] of content.matchAll(awardPointsRegex)) {
+    if (userID === author.id) {
+      invalidAwardsGiven.toSelf = true;
+    } else if (userID === config.botUserId) {
+      invalidAwardsGiven.toBot = true;
+    } else if (awardType === '?++') {
+      if (isAdmin(author)) {
+        awards.set(userID, 2);
+      } else {
+        invalidAwardsGiven.doublePointsWhenNotStaff = true;
+      }
+    } else if (awards.get(userID) !== 2) {
+      awards.set(userID, 1);
+    }
+  }
+
+  return [awards, invalidAwardsGiven];
+}
+
 const awardPoints = {
   name: 'award points',
-  regex: fullAwardPointsRegex,
+  regex: awardPointsRegex,
   cb: async function pointsBotCommand({
-    author,
     content,
     channel,
-    client,
     guild,
-    member,
+    member: author,
   }) {
-    const awards = extractAwardsFromMessage(
-      content,
-      fullAwardPointsRegex,
-      member,
-      channel,
-    );
+    if (config.channels.noPointsChannelIds.includes(channel.id)) {
+      channel.send("You can't give points in this channel!");
+      return;
+    }
+
+    const [awards, invalidAwardsGiven] = getAwards(content, author);
+    if (invalidAwardsGiven.doublePointsWhenNotStaff) {
+      channel.send('Only staff can use ?++ to give double points!');
+    }
+    if (invalidAwardsGiven.toBot) {
+      channel.send('Awwwww shucks... :heart_eyes:');
+    }
+    if (invalidAwardsGiven.toSelf) {
+      channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
+      channel.send("You can't give yourself points!");
+    }
 
     const MAX_AWARDS_PER_MESSAGE = 5;
+    if (awards.size > MAX_AWARDS_PER_MESSAGE) {
+      channel.send(
+        `You can only do up to ${MAX_AWARDS_PER_MESSAGE} users at a time...`,
+      );
+    }
 
-    return Promise.all(
-      awards.map(async ({ userId, pointsToAward }, i) => {
-        if (config.channels.noPointsChannelIds.includes(channel.id)) {
-          channel.send("You can't do that here!");
-          return;
-        }
-        // this limits the number of calls per message to 5 to avoid abuse
-        if (i >= MAX_AWARDS_PER_MESSAGE) {
-          return;
-        }
-        if (
-          i === MAX_AWARDS_PER_MESSAGE - 1 &&
-          awards.length > MAX_AWARDS_PER_MESSAGE
-        ) {
-          channel.send('you can only do 5 at a time..... ');
-        }
-        const user = await client.users.cache.get(userId);
-        if (user === author) {
-          channel.send('http://media0.giphy.com/media/RddAJiGxTPQFa/200.gif');
-          channel.send("You can't do that!");
-          return;
-        }
-        if (user === client.user) {
-          channel.send('awwwww shucks... :heart_eyes:');
-          return;
-        }
-        try {
-          const updatedUser = await addPointsToUser(user.id, pointsToAward);
-          if (user) {
-            const awardedMember = await guild.members.fetch(user);
-            if (
-              awardedMember &&
-              !awardedMember.roles.cache.find((r) => r.name === 'club-40') &&
-              updatedUser.points > 39
-            ) {
-              const pointsRole = guild.roles.cache.find(
-                (r) => r.name === 'club-40',
-              );
-              awardedMember.roles.add(pointsRole);
-
-              const clubChannel =
-                client.channels.cache.get('707225752608964628');
-              if (!clubChannel) return;
-
-              const isNewClub40Member = updatedUser.points - pointsToAward < 40;
-              const welcomeMessage = isNewClub40Member
-                ? `HEYYY EVERYONE SAY HI TO ${user} the newest member of CLUB 40. Please check the pins at the top right!`
-                : `WELCOME BACK TO CLUB 40 ${user}!! Please review the pins at the top right!`;
-              clubChannel.send(welcomeMessage);
-              sendRandomClub40Gif(club40Gifs, clubChannel);
-            }
-
-            const isGoodQuestion = pointsToAward === 2;
-            channel.send(
-              `${exclamation(updatedUser.points, isGoodQuestion)} ${user} now has ${
-                updatedUser.points
-              } ${plural(updatedUser.points)}`,
-            );
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }),
+    const club40Channel = guild.channels.cache.get(
+      config.channels.club40ChannelId,
     );
+    const club40Role = guild.roles.cache.get(config.roles.club40Id);
+    if (!club40Channel || !club40Role) {
+      throw new Error('No club 40 channel and/or role set!');
+    }
+
+    try {
+      const usersToAward = Array.from(awards).slice(0, MAX_AWARDS_PER_MESSAGE);
+      const { rows: upsertedUsers } = await db.query(
+        `
+          INSERT INTO points
+          SELECT * FROM unnest($1::text[], $2::integer[])
+          ON CONFLICT(discord_id)
+          DO UPDATE SET points = points.points + EXCLUDED.points
+          RETURNING *;
+        `,
+        [
+          usersToAward.map(([id]) => id),
+          usersToAward.map(([_, points]) => points),
+        ],
+      );
+
+      for (const { discord_id, points } of upsertedUsers) {
+        const awardedMember = guild.members.cache.get(discord_id);
+        const isDoublePoints = awards.get(discord_id) === 2;
+        channel.send(
+          `${exclamation(points, isDoublePoints)} ${awardedMember} now has ${points} ${getPlural(points)}`,
+        );
+
+        const isInClub40 = awardedMember.roles.cache.has(config.roles.club40Id);
+        if (points < 40 || isInClub40) {
+          continue;
+        }
+
+        awardedMember.roles.add(club40Role);
+
+        const isNewToClub40 = points === (isDoublePoints ? 41 : 40);
+        const welcomeGif = getRandomClub40Gif();
+        const welcomeMessage = isNewToClub40
+          ? `HEYYY EVERYONE SAY HI TO ${awardedMember} the newest member of CLUB 40! Please check the pins at the top right!`
+          : `WELCOME BACK TO CLUB 40 ${awardedMember}!! Please review the pins at the top right!`;
+
+        club40Channel.send(welcomeMessage);
+        club40Channel.send(welcomeGif.gif);
+        club40Channel.send(`Gif by ${welcomeGif.author}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 

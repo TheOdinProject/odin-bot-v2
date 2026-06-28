@@ -5,7 +5,7 @@ const {
   Role,
 } = require('../../test/mocks/discord');
 const mockUsers = require('../../test/mocks/database-users/awarding-points');
-const awardPoints = require('./award-points-pg');
+const awardPoints = require('./award-points');
 const config = require('../../config');
 const db = require('../../db');
 

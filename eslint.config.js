@@ -2,7 +2,6 @@ const { defineConfig } = require('eslint/config');
 const eslintJs = require('@eslint/js');
 const eslintImport = require('eslint-plugin-import');
 const checkFile = require('eslint-plugin-check-file');
-const babelParser = require('@babel/eslint-parser');
 const globals = require('globals');
 
 module.exports = defineConfig([
@@ -18,7 +17,6 @@ module.exports = defineConfig([
     },
     languageOptions: {
       sourceType: 'commonjs',
-      parser: babelParser,
       globals: { ...globals.node, ...globals.jest },
     },
     rules: {

@@ -23,14 +23,14 @@ function leaderboard(command) {
     .addIntegerOption((option) => {
       option
         .setName('limit')
-        .setDescription('Limit the result. Max is 25')
+        .setDescription('How many places to show. Max is 25')
         .setRequired(false);
       return option;
     })
     .addIntegerOption((option) => {
       option
         .setName('offset')
-        .setDescription('Offset is the starting position in the leaderboard')
+        .setDescription('Offset start by this many places')
         .setRequired(false);
       return option;
     });
