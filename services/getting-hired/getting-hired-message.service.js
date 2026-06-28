@@ -5,6 +5,21 @@ class GettingHiredMessageService {
   static #internalToken = Symbol();
   static instance = null;
 
+  // Need a singleton but need its cache to initialise populated with DB data
+  static async new() {
+    if (GettingHiredMessageService.instance) {
+      return GettingHiredMessageService.instance;
+    }
+
+    const instance = new GettingHiredMessageService(
+      GettingHiredMessageService.#internalToken,
+    );
+    await instance.#populateCache();
+    GettingHiredMessageService.instance = instance;
+
+    return instance;
+  }
+
   constructor(token) {
     // we want the cache to initialise populated with DB data, but that's async
     // constructors/static initialisation blocks can only be sync
@@ -27,11 +42,11 @@ class GettingHiredMessageService {
 
       this.cache.add(userId);
 
-      const userInDatabase = await this.isUserInDatabase(userId);
+      const userInDatabase = await this.#isUserInDatabase(userId);
       if (!userInDatabase) {
         await Promise.all([
-          this.addUserToDatabase(userId),
-          GettingHiredMessageService.sendIntroMessage(message),
+          this.#addUserToDatabase(userId),
+          this.#sendIntroMessage(message),
         ]);
       }
     } catch (error) {
@@ -39,8 +54,8 @@ class GettingHiredMessageService {
     }
   }
 
-  async isUserInDatabase(userId) {
-    return db.query(
+  async #isUserInDatabase(userId) {
+    const { rows } = await db.query(
       `
         SELECT EXISTS (
           SELECT 1 FROM getting_hired_participants
@@ -49,31 +64,28 @@ class GettingHiredMessageService {
       `,
       [userId],
     );
+    return rows[0].exists;
   }
 
-  async addUserToDatabase(userId) {
-    await db.query(
-      `
-        INSERT INTO getting_hired_participants
-        VALUES ($1);
-      `,
-      [userId],
-    );
+  async #addUserToDatabase(userId) {
+    await db.query('INSERT INTO getting_hired_participants VALUES ($1);', [
+      userId,
+    ]);
   }
 
-  async populateCache() {
+  async #populateCache() {
     const { rows } = await db.query(
-      `SELECT * FROM getting_hired_participants;`,
+      'SELECT * FROM getting_hired_participants;',
     );
     this.cache = new Set([...this.cache, ...rows]);
   }
 
-  static async sendIntroMessage(message) {
+  async #sendIntroMessage(message) {
     const welcomeMessage =
       'Welcome to the channel for the **Getting Hired** part of the curriculum. Please ensure you have **completed the Getting Hired course** and **read all of the pins** prior to engaging in this channel for resume review, interview help, or anything else covered in that section!';
 
     try {
-      await message.author.send(welcomeMessage);
+      await message.member.send(welcomeMessage);
     } catch (error) {
       if (error.code === RESTJSONErrorCodes.CannotSendMessagesToThisUser) {
         await message.reply(welcomeMessage);
@@ -81,21 +93,6 @@ class GettingHiredMessageService {
         console.log(error);
       }
     }
-  }
-
-  // Need a singleton but need its cache to initialise populated with DB data
-  static async new() {
-    if (GettingHiredMessageService.instance) {
-      return GettingHiredMessageService.instance;
-    }
-
-    const instance = new GettingHiredMessageService(
-      GettingHiredMessageService.#internalToken,
-    );
-    await instance.populateCache();
-    GettingHiredMessageService.instance = instance;
-
-    return instance;
   }
 }
 

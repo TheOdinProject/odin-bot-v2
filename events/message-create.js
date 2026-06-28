@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const GettingHiredMessageService = require('../services/getting-hired-message.service');
+const GettingHiredMessageService = require('../services/getting-hired/getting-hired-message.service');
 const config = require('../config');
 const { isAdmin } = require('../utils/is-admin');
 const SpamKickingService = require('../services/spam-kick/spammer-kick-service');
