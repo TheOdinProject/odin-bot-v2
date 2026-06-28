@@ -1,9 +1,10 @@
+const db = require('../db');
 const { RESTJSONErrorCodes } = require('discord-api-types/v9');
-const RedisService = require('./redis');
 
 class GettingHiredMessageService {
   constructor() {
-    this.redis = RedisService.getInstance();
+    this.cache = new Set();
+    this.populateCache(); // in-memory cache empty on start-up e.g. new deploy
   }
 
   async handleMessage(message, isAdminMessage) {
@@ -12,15 +13,51 @@ class GettingHiredMessageService {
     const userId = message.member.id;
 
     try {
-      const userIsCached = await this.#isCached(userId);
+      if (this.cache.has(userId)) {
+        return;
+      }
 
-      if (!userIsCached) {
-        await this.redis.set(userId, true);
-        await GettingHiredMessageService.sendIntroMessage(message);
+      this.cache.add(userId);
+
+      const userInDatabase = await this.isUserInDatabase(userId);
+      if (!userInDatabase) {
+        await Promise.all([
+          this.addUserToDatabase(userId),
+          GettingHiredMessageService.sendIntroMessage(message),
+        ]);
       }
     } catch (error) {
       console.log('Error:', error);
     }
+  }
+
+  async isUserInDatabase(userId) {
+    return db.query(
+      `
+        SELECT EXISTS (
+          SELECT 1 FROM getting_hired_participants
+          WHERE discord_id = $1
+        );
+      `,
+      [userId],
+    );
+  }
+
+  async addUserToDatabase(userId) {
+    await db.query(
+      `
+        INSERT INTO getting_hired_participants
+        VALUES ($1);
+      `,
+      [userId],
+    );
+  }
+
+  async populateCache() {
+    const { rows } = await db.query(
+      `SELECT * FROM getting_hired_participants;`,
+    );
+    this.cache = new Set([...this.cache, ...rows]);
   }
 
   static async sendIntroMessage(message) {
@@ -36,13 +73,6 @@ class GettingHiredMessageService {
         console.log(error);
       }
     }
-  }
-
-  async #isCached(userId) {
-    const user = await this.redis.get(userId);
-    if (user) return true;
-
-    return false;
   }
 }
 
