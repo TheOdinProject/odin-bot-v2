@@ -1,4 +1,4 @@
-const awardPoints = require('./award-points-pg');
+const awardPoints = require('./award-points');
 const deductPoints = require('./deduct-points');
 
 describe('commands', () => {

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const PointsService = require('../../services/points/points-pg.service.js');
+const PointsService = require('../../services/points');
 
 function user(command) {
   command
@@ -50,8 +50,7 @@ function info(command) {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    // TODO: Remove "temporary" when old points features removed
-    .setName('temporarynewpoints')
+    .setName('points')
     .setDescription(
       'Points provides a fun way for users to see the points ranking on the server!',
     )

@@ -1,6 +1,6 @@
 const { Guild, GuildMember, User } = require('../../test/mocks/discord');
 const mockUsers = require('../../test/mocks/database-users/slash-commands');
-const PointsService = require('./points-pg.service');
+const PointsService = require('./points.service');
 const db = require('../../db');
 
 // only read ops in these tests
