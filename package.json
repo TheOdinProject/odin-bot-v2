@@ -20,7 +20,6 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^2.6.1",
-    "axios": "^1.16.1",
     "dbmate": "^2.33.0",
     "discord-api-types": "^0.38.44",
     "discord.js": "^14.26.4",
@@ -31,8 +30,6 @@
     "prettier": "^3.8.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.28.6",
-    "@babel/preset-env": "^7.29.2",
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "eslint-plugin-check-file": "^3.3.1",
