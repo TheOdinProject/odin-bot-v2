@@ -1,11 +1,11 @@
 const { execSync } = require('node:child_process');
 
-class PendingMigrationsError extends Error {
+class DatabaseError extends Error {
   constructor() {
     super(
       'There are migrations pending. Please run `npm run migrate` to apply these migrations.',
     );
-    this.name = 'PendingMigrationsError';
+    this.name = 'DatabaseError';
   }
 
   static hasPendingMigrations() {
@@ -18,4 +18,4 @@ class PendingMigrationsError extends Error {
   }
 }
 
-module.exports = PendingMigrationsError;
+module.exports = DatabaseError;
