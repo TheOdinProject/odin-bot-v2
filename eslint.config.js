@@ -16,6 +16,7 @@ module.exports = defineConfig([
       reportUnusedDisableDirectives: 'warn',
     },
     languageOptions: {
+      ecmaVersion: 'latest',
       sourceType: 'commonjs',
       globals: { ...globals.node, ...globals.jest },
     },
