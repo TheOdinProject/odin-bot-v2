@@ -19,28 +19,29 @@ class PointsService {
   static async displayInfo(interaction) {
     const pointsEmbed = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle('Points in the TOP Discord server').setDescription(`
-  Want to give credit where it's due? Show your appreciation for helpful members in our server by giving them a point! Mention their \`@name\` and add \`++\` or \`:star:\`
+      .setTitle('Points in the TOP Discord server')
+      .setDescription(
+`Want to give credit where it's due? Show your appreciation for helpful members in our server by giving them a point! Mention their \`@name\` and add \`++\` or \`:star:\`
 
-  **Example:**
+**Example:**
 
-  \`@username ++\`
-  \`@username :star:\`
+\`@username ++\`
+\`@username :star:\`
 
-  The bot will only detect these in new messages, not message edits.
+The bot will only detect these in new messages, not message edits.
 
-  **Club 40:**
+**Club 40:**
 
-  Users who have accumulated 40 points will be awarded a special role in recognition of their consistent helpfulness.
-  For further details about our roles, please refer to [our discord #roles channel](https://discord.com/channels/505093832157691914/936424264180060200)
+Users who have accumulated 40 points will be awarded a special role in recognition of their consistent helpfulness.
+For further details about our roles, please refer to [our discord #roles channel](https://discord.com/channels/505093832157691914/936424264180060200)
 
-  **Point Inflation:**
+**Point Inflation:**
 
-  Please don't beg for points or abuse the point system.
-  We have a strict moderation policy in place, including losing access to the bot or participation in the points system.
+Please don't beg for points or abuse the point system.
+We have a strict moderation policy in place, including losing access to the bot or participation in the points system.
 
-  Our goal is to maintain a positive and supportive community, where help and contributions are valued.
-        `);
+Our goal is to maintain a positive and supportive community, where help and contributions are valued.`
+      );
     const userId = interaction.options.getUser('user');
 
     await interaction.reply({
