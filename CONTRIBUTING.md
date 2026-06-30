@@ -10,9 +10,7 @@ Before continuing through this guide, be sure you've read our [general contribut
   - [Initial Setup](#initial-setup)
   - [Set up PostgreSQL](#set-up-postgresql)
   - [Install Redis](#install-redis)
-  - [Getting Your Discord API Key](#getting-your-discord-api-key)
-  - [Getting the Discord Client ID](#getting-the-discord-client-id)
-  - [Getting the Discord Guild ID](#getting-the-discord-guild-id)
+  - [Getting Discord Credentials](#getting-discord-credentials)
   - [Adjust the Bot Settings](#adjust-the-bot-settings)
   - [Invite the Bot to Your Server and Run it Locally](#invite-the-bot-to-your-server-and-run-it-locally)
 - [Changes to the Database](#changes-to-the-database)
@@ -66,7 +64,9 @@ If you already have Redis installed, you can skip this section.
 1. Follow the installation instructions for your OS to install Redis.
 1. Be sure to start the Redis service before starting Odin Bot locally.
 
-### Getting Your Discord API Key
+### Getting Discord Credentials
+
+#### API Key
 
 1. Go to the [Discord developer portal](https://discord.com/developers/applications) and log in.
 1. Click on `New Application`
@@ -78,17 +78,19 @@ If you already have Redis installed, you can skip this section.
 1. Click on `Reset Token` and copy the output. You may need to enter your 2FA code at this point.
 1. Paste the copied token after `DISCORD_API_KEY=` in your `.env` file inside of the quotes.
 
-### Getting the Discord Client ID
+#### Client ID
 
-1. In the Discord Developer Portal with your bot selected, Navigate to menu item `OAuth2`.
+1. In the Discord developer portal with your bot selected, navigate to menu item `OAuth2`.
 1. Copy the `Client ID` as shown.
 1. Paste the copied ID after `DISCORD_CLIENT_ID=` in your `.env` file inside of the quotes.
 
-### Getting the Discord Guild ID
+#### Guild ID
+
+Colloquially, people call them servers but within the discord.js API, they're known as guilds.
 
 1. Open Discord.
 1. Right-click your server to which you will later invite the bot.
-1. Click `Copy Server ID`. Note that Developer mode has to be turned on for this in Discord `Advanced` profile settings.
+1. Click `Copy Server ID`. If you cannot see this option, go to your Discord user settings and enable "Developer Mode".
 1. Paste the copied ID after `DISCORD_GUILD_ID=` in your `.env` file inside of the quotes.
 
 ### Adjust the Bot Settings
