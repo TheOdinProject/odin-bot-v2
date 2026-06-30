@@ -1,4 +1,4 @@
-const { ChannelType } = require('discord-api-types/v10');
+const { ChannelType } = require('discord.js');
 const canOpenPrivateThread = require('./can-open-private-thread');
 
 const ThreadCreator = () => ({

@@ -1,5 +1,8 @@
-const { RESTJSONErrorCodes } = require('discord-api-types/v10');
-const { EmbedBuilder, MessageFlags } = require('discord.js');
+const {
+  EmbedBuilder,
+  MessageFlags,
+  RESTJSONErrorCodes,
+} = require('discord.js');
 const ThreadCreator = require('../utils/thread-creator');
 const { modmailUserId, channels } = require('../config');
 

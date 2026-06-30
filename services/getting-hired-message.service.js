@@ -1,4 +1,4 @@
-const { RESTJSONErrorCodes } = require('discord-api-types/v9');
+const { RESTJSONErrorCodes } = require('discord.js');
 const RedisService = require('./redis');
 
 class GettingHiredMessageService {
