@@ -1,4 +1,4 @@
-require('dotenv').config({ quiet: true });
+process.loadEnvFile();
 const MissingEnvVarError = require('../utils/errors/missing-env-var');
 const { execSync } = require('node:child_process');
 
