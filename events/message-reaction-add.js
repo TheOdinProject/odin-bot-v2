@@ -1,5 +1,4 @@
-const { Events } = require('discord.js');
-const { ChannelType } = require('discord-api-types/v10');
+const { ChannelType, Events } = require('discord.js');
 const config = require('../config');
 const BookmarkMessageService = require('../services/bookmark-message.service');
 
