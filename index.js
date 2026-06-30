@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { token, channels } = require('./config');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
-const PendingMigrationsError = require('./utils/errors/pending-migrations');
+const PendingMigrationsError = require('./utils/errors/database');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
 
 const missingMandatoryEnvKeys = MissingEnvVarError.getMissingMandatoryKeys();
