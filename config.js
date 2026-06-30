@@ -1,4 +1,4 @@
-process.loadEnvFile();
+require('./utils/load-env').load();
 
 const config = {
   pointsbot: {

@@ -1,4 +1,4 @@
-process.loadEnvFile();
+require('../utils/load-env').load();
 const MissingEnvVarError = require('../utils/errors/missing-env-var');
 const { execSync } = require('node:child_process');
 
