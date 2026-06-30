@@ -1,5 +1,5 @@
 const db = require('../../db');
-const { RESTJSONErrorCodes } = require('discord-api-types/v9');
+const { RESTJSONErrorCodes } = require('discord.js');
 
 class GettingHiredMessageService {
   static #internalToken = Symbol();
