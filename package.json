@@ -19,7 +19,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/rest": "^2.6.1",
     "dbmate": "^2.33.0",
     "discord-api-types": "^0.38.49",
     "discord.js": "^14.26.4",

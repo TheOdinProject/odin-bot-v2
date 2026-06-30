@@ -2,8 +2,7 @@
 // This will be automatically run when the bot starts (required in index.js)
 // This script can also be run directly from terminal with: node bin/deploy-commands.js
 
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord.js');
+const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('../config');
 const { registerBotCommand } = require('../events').get('messageCreate');
 const {
