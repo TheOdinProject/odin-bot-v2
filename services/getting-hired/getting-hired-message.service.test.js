@@ -1,8 +1,8 @@
 const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');
-const mockUsers = require('../../test/mocks/database-users/getting-hired-users');
 const config = require('../../config');
 const db = require('../../db');
 
+const participant = { id: 'participant', username: 'User participant' };
 let gettingHiredMessageService;
 
 beforeAll(async () => {
@@ -11,11 +11,11 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  const initialDbState = mockUsers.map((user) => user.id);
+  const initialDbState = [participant.id];
   await db.query('TRUNCATE getting_hired_participants;');
   await db.query(
-    'INSERT INTO getting_hired_participants SELECT * FROM unnest($1::text[]);',
-    [initialDbState],
+    'INSERT INTO getting_hired_participants VALUES ($1);',
+    initialDbState,
   );
   gettingHiredMessageService.cache = new Set(initialDbState);
   jest.clearAllMocks();
@@ -26,6 +26,11 @@ afterAll(async () => {
 });
 
 describe('On sending message in Getting Hired channel', () => {
+  const nonParticipantMember = new GuildMember({
+    id: 'nonparticipant',
+    username: 'User nonparticipant',
+  });
+  const participantMember = new GuildMember(participant);
   const gettingHiredChannel = new TextChannel(
     config.channels.gettingHiredChannelId,
   );
@@ -36,10 +41,7 @@ describe('On sending message in Getting Hired channel', () => {
       content: 'hello',
       channel: gettingHiredChannel,
       guild: new Guild({
-        members: [
-          author,
-          ...mockUsers.map(({ id }) => new GuildMember({ id })),
-        ],
+        members: [participantMember, nonParticipantMember],
         channels: [gettingHiredChannel],
       }),
       reply: jest.fn(),
@@ -47,7 +49,7 @@ describe('On sending message in Getting Hired channel', () => {
   }
 
   it('Sends DM to author if they have not posted in the channel before', async () => {
-    const author = new GuildMember({ id: 'newbie', username: 'newbie' });
+    const author = nonParticipantMember;
     const message = createMessage(author);
 
     await gettingHiredMessageService.handleMessage(message);
@@ -55,7 +57,7 @@ describe('On sending message in Getting Hired channel', () => {
   });
 
   it('Caches author if they have not posted in the channel before', async () => {
-    const author = new GuildMember({ id: 'newbie', username: 'newbie' });
+    const author = nonParticipantMember;
     const message = createMessage(author);
 
     await gettingHiredMessageService.handleMessage(message);
@@ -63,7 +65,7 @@ describe('On sending message in Getting Hired channel', () => {
   });
 
   it('Adds author to database if they have not posted in the channel before', async () => {
-    const author = new GuildMember({ id: 'newbie', username: 'newbie' });
+    const author = nonParticipantMember;
     const message = createMessage(author);
 
     await gettingHiredMessageService.handleMessage(message);
@@ -80,7 +82,7 @@ describe('On sending message in Getting Hired channel', () => {
   });
 
   it('Does not DM author if they have posted in the channel before', async () => {
-    const author = new GuildMember(mockUsers[0]);
+    const author = participantMember;
     const message = createMessage(author);
 
     await gettingHiredMessageService.handleMessage(message);
@@ -88,7 +90,7 @@ describe('On sending message in Getting Hired channel', () => {
   });
 
   it('Does not DM author if they are not cached but are in the database', async () => {
-    const author = new GuildMember(mockUsers[0]);
+    const author = participantMember;
     const message = createMessage(author);
     gettingHiredMessageService.cache.delete(author.id);
 
@@ -97,7 +99,7 @@ describe('On sending message in Getting Hired channel', () => {
   });
 
   it('Caches author if they are not cached but are in the database', async () => {
-    const author = new GuildMember(mockUsers[0]);
+    const author = participantMember;
     const message = createMessage(author);
     gettingHiredMessageService.cache.delete(author.id);
 
