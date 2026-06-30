@@ -1,6 +1,7 @@
 const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');
 const config = require('../../config');
 const db = require('../../db');
+const { RESTJSONErrorCodes } = require('discord.js');
 
 const participant = { id: 'participant', username: 'User participant' };
 let gettingHiredMessageService;
@@ -54,6 +55,21 @@ describe('On sending message in Getting Hired channel', () => {
 
     await gettingHiredMessageService.handleMessage(message);
     expect(author.send).toHaveBeenCalled();
+    expect(message.reply).not.toHaveBeenCalled();
+  });
+
+  it('Posts to the channel if author has not posted in the channel before and does not accept DMs', async () => {
+    const author = nonParticipantMember;
+    const message = createMessage(author);
+
+    author.send.mockImplementationOnce(() => {
+      const dmDisabledError = new Error();
+      dmDisabledError.code = RESTJSONErrorCodes.CannotSendMessagesToThisUser;
+      throw dmDisabledError;
+    });
+
+    await gettingHiredMessageService.handleMessage(message);
+    expect(message.reply).toHaveBeenCalled();
   });
 
   it('Caches author if they have not posted in the channel before', async () => {
