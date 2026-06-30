@@ -1,7 +1,5 @@
 # The Odin Project Odin Bot Contributing Guide
 
-We're thrilled that you're interested in contributing to the Odin Bot! Our bot depends on open source contributions to grow, improve, and thrive. Whether you're a seasoned pro or just starting out, we welcome all kinds of contributions!
-
 Before continuing through this guide, be sure you've read our [general contributing guide](https://github.com/TheOdinProject/.github/blob/main/CONTRIBUTING.md), as it contains information that is important for all of our repos. This contributing guide assumes you have followed the instructions in our general contributing guide to fork and clone this repo.
 
 ## Table of Contents
