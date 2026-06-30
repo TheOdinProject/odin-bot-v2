@@ -7,7 +7,7 @@
     "prepare": "husky",
     "start": "node index.js",
     "dev": "nodemon --watch . --watch .env index.js",
-    "test": "dbmate --env=TEST_DATABASE_URL --no-dump-schema up && NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
     "migrate": "dbmate up",
     "migrate:only": "dbmate --no-dump-schema up",
     "migrate:rollback": "dbmate rollback",
