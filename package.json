@@ -16,6 +16,16 @@
     "format": "prettier --cache --write",
     "eslint": "eslint"
   },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "error",
+      "version": "^24.10"
+    }
+  },
+  "engines": {
+    "node": "^24.10"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
