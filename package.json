@@ -20,7 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "dbmate": "^2.33.0",
-    "discord.js": "^14.26.4",
+    "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
     "glob": "^13.0.6",
     "ioredis": "^5.10.1",
