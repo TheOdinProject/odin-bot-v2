@@ -1,5 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
-const { RESTJSONErrorCodes } = require('discord-api-types/v10');
+const { EmbedBuilder, RESTJSONErrorCodes } = require('discord.js');
 const config = require('../config');
 
 class BookmarkMessageService {

@@ -19,13 +19,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/rest": "^2.6.1",
     "dbmate": "^2.33.0",
-    "discord-api-types": "^0.38.49",
-    "discord.js": "^14.26.4",
+    "discord.js": "^14.27.0",
     "glob": "^13.0.6",
     "ioredis": "^5.10.1",
-    "pg": "^8.21.0",
+    "pg": "^8.22.0",
     "prettier": "^3.8.1"
   },
   "devDependencies": {
@@ -33,7 +31,7 @@
     "eslint": "^9.39.2",
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-import": "^2.32.0",
-    "globals": "^17.4.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
     "jest": "^30.4.2",
     "lint-staged": "^17.0.8",
