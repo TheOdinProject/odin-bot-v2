@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dbmate": "^2.33.0",
+    "dbmate": "^2.34.1",
     "discord.js": "^14.27.0",
     "glob": "^13.0.6",
     "ioredis": "^5.10.1",
