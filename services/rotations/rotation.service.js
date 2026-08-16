@@ -2,10 +2,14 @@ const { escapeMarkdown } = require('discord.js');
 const RedisService = require('../redis');
 
 class RotationService {
+  static rotations = [];
+
   constructor(rotationName, keyName) {
     this.rotationName = rotationName;
     this.keyName = keyName;
     this.redis = RedisService.getInstance();
+
+    RotationService.rotations.push(rotationName);
   }
 
   async #getQueue() {

@@ -3,6 +3,8 @@ const { RotationService } = require('../services/rotations/rotation.service');
 const { addSubcommands } = require('./slash-command-helpers');
 
 function rotationBuilder(rotationName, redisKeyName) {
+  const rotationService = new RotationService(rotationName, redisKeyName);
+
   const subcommands = [
     { name: 'read', description: 'report the current queue order' },
     { name: 'rotate', description: 'rotate the queue' },
@@ -34,8 +36,7 @@ function rotationBuilder(rotationName, redisKeyName) {
   const data = addSubcommands(base, subcommands);
 
   async function execute(interaction) {
-    const triageService = new RotationService(rotationName, redisKeyName);
-    await triageService.handleInteraction(interaction);
+    await rotationService.handleInteraction(interaction);
   }
 
   return { data, execute };
