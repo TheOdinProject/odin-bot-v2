@@ -147,33 +147,37 @@ class RotationService {
   }
 
   #getMembers(interactionOptions) {
-    this.members = [];
+    const members = [];
     for (let i = 0; i < 10; i += 1) {
-      this.members.push(interactionOptions.getUser(`user${i}`));
+      const mentionedMember = interactionOptions.getMember(`user${i}`);
+      if (mentionedMember) {
+        members.push(mentionedMember);
+      }
     }
-    return this.members.filter((member) => member);
+    return members;
   }
 
   async handleInteraction(interaction) {
-    const actionType = interaction.options.getSubcommand();
+    const subcommand = interaction.options.getSubcommand();
 
     const currentQueue = await this.#getQueue();
     const currentQueueLength = currentQueue?.length || 0;
 
+    const subcommandsNeedingMultipleMembers = ['swap', 'rotate'];
+
     if (
       currentQueueLength < 2 &&
-      actionType !== 'add' &&
-      actionType !== 'remove'
+      subcommandsNeedingMultipleMembers.includes(subcommand)
     ) {
       await interaction.reply(
-        'Less than two members in the queue. Try adding some with `/triage add`!',
+        'Fewer than two members in the queue. Try adding some with `/triage add`!',
       );
       return;
     }
 
     const members = this.#getMembers(interaction.options);
 
-    switch (actionType) {
+    switch (subcommand) {
       case 'add':
         await this.#handleAddMembers(members, interaction);
         return;
