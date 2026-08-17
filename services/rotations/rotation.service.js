@@ -113,23 +113,16 @@ class RotationService {
       `${firstMember} swapped with ${secondMember}\n\n${formattedQueue}`,
     );
   }
-  //
-  // async #rotateQueue() {
-  //   const previousMember = await this.redis.lpop(this.keyName);
-  //   await this.#addMembers([previousMember]);
-  //
-  //   const memberToPing = await this.redis.lindex(this.keyName, 0);
-  //   return memberToPing;
-  // }
-  //
-  // async #handleRotateQueue(interaction) {
-  //   const memberToPing = await this.#rotateQueue(interaction);
-  //
-  //   let reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\n`;
-  //   reply += await this.#getFormattedQueue(interaction);
-  //
-  //   interaction.reply(reply.trim());
-  // }
+
+  async #rotate({ currentQueue, interaction }) {
+    const newQueue = [...currentQueue.slice(1), currentQueue[0]];
+    await this.#updateQueue(newQueue);
+
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `<@${newQueue[0]}>, it's your turn for the ${this.rotationName} rotation\n\n${formattedQueue}`,
+    );
+  }
 
   #getMembers(interactionOptions) {
     const members = [];
@@ -173,9 +166,9 @@ class RotationService {
       case 'swap':
         await this.#swap({ currentQueue, mentionedMembers, interaction });
         return;
-      // case 'rotate':
-      //   await this.#rotate(interaction);
-      //   return;
+      case 'rotate':
+        await this.#rotate({ currentQueue, interaction });
+        return;
       // default:
       //   await this.#read(interaction);
       //   return;

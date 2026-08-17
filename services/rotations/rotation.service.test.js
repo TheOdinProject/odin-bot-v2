@@ -336,6 +336,73 @@ describe('swap', () => {
   });
 });
 
+describe('rotate', () => {
+  const interaction = createSubcommand('rotate')({});
+
+  it('rotates the queue, pings the new "current" member in the rotation then reports the new queue order', async () => {
+    const rotation = new RotationService('test', 'test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    await rotation.handleInteraction(interaction);
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(1)}, it's your turn for the test rotation\n\nTest rotation queue order: User 1 *(current)* > User 2 > User 0 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[1].id,
+      members[2].id,
+      members[0].id,
+    ]);
+
+    await rotation.handleInteraction(interaction);
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(2)}, it's your turn for the test rotation\n\nTest rotation queue order: User 2 *(current)* > User 0 > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[2].id,
+      members[0].id,
+      members[1].id,
+    ]);
+  });
+
+  it('only replies once', async () => {
+    const rotation = new RotationService('test', 'test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledTimes(1);
+  });
+
+  it('warns when used with fewer than 2 members in the queue', async () => {
+    const rotation = new RotationService('test', 'test');
+
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      'Fewer than two members in the queue. Try adding some with `/triage add`!',
+    );
+  });
+
+  it('escapes markdown in usernames and nicknames', async () => {
+    const rotation = new RotationService('test', 'test');
+    const queue = [members[0], members[3], members[4]];
+    await populateQueue(queue);
+
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(1)}, it's your turn for the test rotation\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| > User 0 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[3].id,
+      members[4].id,
+      members[0].id,
+    ]);
+  });
+});
+
 describe.skip('read', () => {
   const interaction = createSubcommand('read')({});
 
@@ -379,68 +446,5 @@ describe.skip('read', () => {
     expect(interaction.reply).toHaveBeenCalledWith(
       'Test rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| >',
     );
-  });
-});
-
-describe.skip('rotate', () => {
-  const interaction = createSubcommand('rotate')({});
-
-  it('rotates the queue, pings the new "current" member in the rotation then reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-    const queue = [members[0], members[1], members[2]];
-    await populateQueue(queue);
-
-    await rotation.handleInteraction(interaction);
-    expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(1)} it's your turn for the test rotation.\n\nTest rotation queue order: User 1 *(current)* > User 2 > User 0 >`,
-    );
-    expect(readQueue()).resolves.toEqual([
-      members[1].id,
-      members[2].id,
-      members[0].id,
-    ]);
-
-    await rotation.handleInteraction(interaction);
-    expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(2)} it's your turn for the test rotation.\n\nTest rotation queue order: User 2 *(current)* > User 0 > User 1 >`,
-    );
-    expect(readQueue()).resolves.toEqual([
-      members[2].id,
-      members[0].id,
-      members[1].id,
-    ]);
-  });
-
-  it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
-    const queue = [members[0], members[1], members[2]];
-    await populateQueue(queue);
-
-    await rotation.handleInteraction(interaction);
-
-    expect(interaction.reply).toHaveBeenCalledTimes(1);
-  });
-
-  it('warns when used with fewer than 2 members in the queue', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    await rotation.handleInteraction(interaction);
-
-    expect(interaction.reply).toHaveBeenCalledWith(
-      'Fewer than two members in the queue. Try adding some with `/triage add`!',
-    );
-  });
-
-  it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
-    const queue = [members[0], members[3], members[4]];
-    await populateQueue(queue);
-
-    await rotation.handleInteraction(interaction);
-
-    expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(1)} it's your turn for the test rotation.\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| > User 0 >`,
-    );
-    expect(readQueue()).resolves.toEqual([members[3].id, members[4].id]);
   });
 });
