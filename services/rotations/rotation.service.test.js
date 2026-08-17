@@ -238,7 +238,7 @@ describe('remove', () => {
   });
 });
 
-describe.skip('swap', () => {
+describe('swap', () => {
   const createInteraction = createSubcommand('swap');
 
   it("swaps start and end members' positions", async () => {
@@ -253,9 +253,9 @@ describe.skip('swap', () => {
     await rotation.handleInteraction(interaction);
 
     expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(0)} ${queue.at(-1)} swapped position in the queue\n\nTest rotation queue order: User 2 *(current)* > User 1 > User 0 >`,
+      `${queue.at(0)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User 2 *(current)* > User 1 > User 0 >`,
     );
-    expect(readQueue()).resolves.toEqual([
+    await expect(readQueue()).resolves.toEqual([
       members[2].id,
       members[1].id,
       members[0].id,
@@ -274,9 +274,9 @@ describe.skip('swap', () => {
     await rotation.handleInteraction(interaction);
 
     expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(0)} ${queue.at(1)} swapped position in the queue\n\nTest rotation queue order: User 1 *(current)* > User 0 > User 2 >`,
+      `${queue.at(0)} swapped with ${queue.at(1)}\n\nTest rotation queue order: User 1 *(current)* > User 0 > User 2 >`,
     );
-    expect(readQueue()).resolves.toEqual([
+    await expect(readQueue()).resolves.toEqual([
       members[1].id,
       members[0].id,
       members[2].id,
@@ -295,9 +295,9 @@ describe.skip('swap', () => {
     await rotation.handleInteraction(interaction);
 
     expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(1)} ${queue.at(-1)} swapped position in the queue\n\nTest rotation queue order: User 0 *(current)* > User 2 > User 1 >`,
+      `${queue.at(1)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User 0 *(current)* > User 2 > User 1 >`,
     );
-    expect(readQueue()).resolves.toEqual([
+    await expect(readQueue()).resolves.toEqual([
       members[0].id,
       members[2].id,
       members[1].id,
@@ -313,7 +313,7 @@ describe.skip('swap', () => {
     });
     await rotation.handleInteraction(interaction);
 
-    expect(interaction.reply).toHaveBeenCalledWith(
+    await expect(interaction.reply).toHaveBeenCalledWith(
       'Fewer than two members in the queue. Try adding some with `/triage add`!',
     );
   });
@@ -330,9 +330,9 @@ describe.skip('swap', () => {
     await rotation.handleInteraction(interaction);
 
     expect(interaction.reply).toHaveBeenCalledWith(
-      `${queue.at(0)} ${queue.at(-1)} swapped position in the queue\n\nTest rotation queue order: User \\|\\|4\\|\\| *(current)* > User \\*\\*3\\*\\* >`,
+      `${queue.at(0)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User \\|\\|4\\|\\| *(current)* > User \\*\\*3\\*\\* >`,
     );
-    expect(readQueue()).resolves.toEqual([members[4].id, members[3].id]);
+    await expect(readQueue()).resolves.toEqual([members[4].id, members[3].id]);
   });
 });
 

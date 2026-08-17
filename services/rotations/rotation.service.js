@@ -97,29 +97,22 @@ class RotationService {
     );
   }
 
-  // async #swapMembers(memberIds) {
-  //   const [firstMember, secondMember] = memberIds;
-  //   const queue = await this.#getQueue();
-  //
-  //   const firstMemberIndex = queue.indexOf(firstMember);
-  //   const secondMemberIndex = queue.indexOf(secondMember);
-  //
-  //   queue[firstMemberIndex] = secondMember;
-  //   queue[secondMemberIndex] = firstMember;
-  //
-  //   await this.#createQueue(queue);
-  // }
-  //
-  // async #handleSwapMembers(members, interaction) {
-  //   const memberIds = members.map((member) => member.id);
-  //   await this.#swapMembers(memberIds);
-  //
-  //   const swappedMemberPings = RotationService.#getFormattedPings(memberIds);
-  //   let reply = `${swappedMemberPings} swapped position in the queue\n\n`;
-  //   reply += await this.#getFormattedQueue(interaction);
-  //
-  //   interaction.reply(reply.trim());
-  // }
+  async #swap({ currentQueue, mentionedMembers, interaction }) {
+    const [firstMember, secondMember] = mentionedMembers;
+    const firstMemberIndex = currentQueue.indexOf(firstMember.id);
+    const secondMemberIndex = currentQueue.indexOf(secondMember.id);
+
+    const newQueue = [...currentQueue];
+    newQueue[firstMemberIndex] = secondMember.id;
+    newQueue[secondMemberIndex] = firstMember.id;
+
+    await this.#updateQueue(newQueue);
+
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `${firstMember} swapped with ${secondMember}\n\n${formattedQueue}`,
+    );
+  }
   //
   // async #rotateQueue() {
   //   const previousMember = await this.redis.lpop(this.keyName);
@@ -177,9 +170,9 @@ class RotationService {
           interaction,
         });
         return;
-      // case 'swap':
-      //   await this.#swap({ currentQueue, mentionedMembers, interaction });
-      //   return;
+      case 'swap':
+        await this.#swap({ currentQueue, mentionedMembers, interaction });
+        return;
       // case 'rotate':
       //   await this.#rotate(interaction);
       //   return;
