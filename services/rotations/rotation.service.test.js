@@ -3,8 +3,6 @@ const db = require('../../db');
 const mockUsers = require('../../test/mocks/database-users/rotations');
 const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');
 
-jest.mock('../redis');
-
 const members = mockUsers.map((user) => new GuildMember(user));
 const channel = new TextChannel('000');
 const guild = new Guild({ members, channels: [channel] });
@@ -57,13 +55,13 @@ afterAll(async () => {
 
 describe('initialization', () => {
   it('tracks created rotations', () => {
-    new RotationService('test1', 'test1');
+    new RotationService('test1');
     expect(RotationService.rotations).toEqual(['test1']);
 
-    new RotationService('test2', 'test2');
+    new RotationService('test2');
     expect(RotationService.rotations).toEqual(['test1', 'test2']);
 
-    new RotationService('test3', 'test3');
+    new RotationService('test3');
     expect(RotationService.rotations).toEqual(['test1', 'test2', 'test3']);
   });
 });
@@ -72,7 +70,7 @@ describe('add', () => {
   const createInteraction = createSubcommand('add');
 
   it('creates a fresh queue with one member', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     const interaction = createInteraction({ user0: members[0] });
     await rotation.handleInteraction(interaction);
@@ -84,7 +82,7 @@ describe('add', () => {
   });
 
   it('adds one member to populated queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0]];
     await populateQueue(queue);
 
@@ -98,7 +96,7 @@ describe('add', () => {
   });
 
   it('adds multiple members to empty queue in a single command', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     const interaction = createInteraction({
       user0: members[0],
@@ -113,7 +111,7 @@ describe('add', () => {
   });
 
   it('adds multiple members to populated queue in a single command', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0]];
     await populateQueue(queue);
 
@@ -134,7 +132,7 @@ describe('add', () => {
   });
 
   it('does not add a member more than once in a single command', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     const interaction = createInteraction({
       user0: members[0],
@@ -149,7 +147,7 @@ describe('add', () => {
   });
 
   it('does not add a member to the queue if they are already in it', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0]];
     await populateQueue(queue);
 
@@ -163,7 +161,7 @@ describe('add', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     const interaction = createInteraction({
       user0: members[3],
@@ -182,7 +180,7 @@ describe('remove', () => {
   const createInteraction = createSubcommand('remove');
 
   it('removes member when at the start of the queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -196,7 +194,7 @@ describe('remove', () => {
   });
 
   it('removes member when in the middle of the queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -210,7 +208,7 @@ describe('remove', () => {
   });
 
   it('removes member when at the end of the queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -224,7 +222,7 @@ describe('remove', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[3], members[4]];
     await populateQueue(queue);
 
@@ -242,7 +240,7 @@ describe('swap', () => {
   const createInteraction = createSubcommand('swap');
 
   it("swaps start and end members' positions", async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -263,7 +261,7 @@ describe('swap', () => {
   });
 
   it("swaps start and middle members' positions", async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -284,7 +282,7 @@ describe('swap', () => {
   });
 
   it("swaps middle and end members' positions", async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -305,7 +303,7 @@ describe('swap', () => {
   });
 
   it('warns when used with fewer than 2 members in the queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     const interaction = createInteraction({
       user0: members[0],
@@ -319,7 +317,7 @@ describe('swap', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[3], members[4]];
     await populateQueue(queue);
 
@@ -340,7 +338,7 @@ describe('rotate', () => {
   const interaction = createSubcommand('rotate')({});
 
   it('rotates the queue, pings the new "current" member in the rotation then reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -366,7 +364,7 @@ describe('rotate', () => {
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1], members[2]];
     await populateQueue(queue);
 
@@ -376,7 +374,7 @@ describe('rotate', () => {
   });
 
   it('warns when used with fewer than 2 members in the queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     await rotation.handleInteraction(interaction);
 
@@ -386,7 +384,7 @@ describe('rotate', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[3], members[4]];
     await populateQueue(queue);
 
@@ -407,7 +405,7 @@ describe('read', () => {
   const interaction = createSubcommand('read')({});
 
   it('reports the queue order', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1]];
     await populateQueue(queue);
 
@@ -419,7 +417,7 @@ describe('read', () => {
   });
 
   it('reports empty queue', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
 
     await rotation.handleInteraction(interaction);
 
@@ -427,7 +425,7 @@ describe('read', () => {
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[0], members[1]];
     await populateQueue(queue);
 
@@ -437,7 +435,7 @@ describe('read', () => {
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
     const queue = [members[3], members[4]];
     await populateQueue(queue);
 

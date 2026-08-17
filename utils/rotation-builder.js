@@ -2,8 +2,8 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { RotationService } = require('../services/rotations/rotation.service');
 const { addSubcommands } = require('./slash-command-helpers');
 
-function rotationBuilder(rotationName, redisKeyName) {
-  const rotationService = new RotationService(rotationName, redisKeyName);
+function rotationBuilder(rotationName) {
+  const rotationService = new RotationService(rotationName);
 
   const subcommands = [
     { name: 'read', description: 'report the current queue order' },

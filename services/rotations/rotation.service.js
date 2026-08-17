@@ -1,22 +1,18 @@
 const { escapeMarkdown } = require('discord.js');
 const db = require('../../db');
-const RedisService = require('../redis');
 
 class RotationService {
   static rotations = [];
 
-  constructor(rotationName, keyName) {
-    this.rotationName = rotationName;
-    this.keyName = keyName;
-    this.redis = RedisService.getInstance();
-
-    RotationService.rotations.push(rotationName);
+  constructor(name) {
+    this.name = name;
+    RotationService.rotations.push(name);
   }
 
   async #getQueue() {
     const { rows } = await db.query(
       'SELECT queue FROM rotations WHERE name = $1;',
-      [this.rotationName],
+      [this.name],
     );
     const { queue } = rows[0];
     return queue ?? [];
@@ -29,7 +25,7 @@ class RotationService {
         SET queue = $1::text[]
         WHERE name = $2;
       `,
-      [newQueue, this.rotationName],
+      [newQueue, this.name],
     );
   }
 
@@ -49,7 +45,7 @@ class RotationService {
       })
       .join(' ');
     const capitalizedRotationName =
-      this.rotationName[0].toUpperCase() + this.rotationName.slice(1);
+      this.name[0].toUpperCase() + this.name.slice(1);
 
     return formattedQueue
       ? `${capitalizedRotationName} rotation queue order: ${formattedQueue}`
@@ -120,7 +116,7 @@ class RotationService {
 
     const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
     interaction.reply(
-      `<@${newQueue[0]}>, it's your turn for the ${this.rotationName} rotation\n\n${formattedQueue}`,
+      `<@${newQueue[0]}>, it's your turn for the ${this.name} rotation\n\n${formattedQueue}`,
     );
   }
 
