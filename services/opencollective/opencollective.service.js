@@ -6,7 +6,7 @@ class OpenCollectiveService {
   static #API_URL = 'https://api.opencollective.com/graphql/v2';
   static #replies = {
     success: 'You have been given the Backer role, thanks for contributing!',
-    failure: `Oops! Something went wrong so try again. If it keeps failing, contact us through <@${config.modmailUserId}> with a link to your Open Collective profile (\`https://opencollective.com/YOURUSERNAME\`) so we can verify and assign the role manually.`,
+    failure: `Oops! Something went wrong so try again. If it keeps failing, contact us through <@${config.modmailUserId}> (instructions in <#${config.channels.contactModeratorsChannelId}>) with a link to your Open Collective profile (\`https://opencollective.com/YOURUSERNAME\`) so we can verify and assign the role manually.`,
     alreadyBacker: 'You already have the Backer role!',
   };
 
