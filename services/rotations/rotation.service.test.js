@@ -42,7 +42,7 @@ async function readQueue() {
 
 async function emptyQueue() {
   await db.query('TRUNCATE rotations;');
-  await db.query("INSERT INTO rotations VALUES ('test', ARRAY[]::text[]);");
+  await db.query("INSERT INTO rotations VALUES ('test');");
 }
 
 beforeEach(async () => {
@@ -178,7 +178,7 @@ describe('add', () => {
   });
 });
 
-describe.skip('remove', () => {
+describe('remove', () => {
   const createInteraction = createSubcommand('remove');
 
   it('removes member when at the start of the queue', async () => {
@@ -192,7 +192,7 @@ describe.skip('remove', () => {
     expect(interaction.reply).toHaveBeenCalledWith(
       `${members[0]} removed from the queue\n\nTest rotation queue order: User 1 *(current)* > User 2 >`,
     );
-    expect(readQueue()).resolves.toEqual([members[1].id, members[2].id]);
+    await expect(readQueue()).resolves.toEqual([members[1].id, members[2].id]);
   });
 
   it('removes member when in the middle of the queue', async () => {
@@ -206,7 +206,7 @@ describe.skip('remove', () => {
     expect(interaction.reply).toHaveBeenCalledWith(
       `${members[1]} removed from the queue\n\nTest rotation queue order: User 0 *(current)* > User 2 >`,
     );
-    expect(readQueue()).resolves.toEqual([members[0].id, members[2].id]);
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[2].id]);
   });
 
   it('removes member when at the end of the queue', async () => {
@@ -220,7 +220,7 @@ describe.skip('remove', () => {
     expect(interaction.reply).toHaveBeenCalledWith(
       `${members[2]} removed from the queue\n\nTest rotation queue order: User 0 *(current)* > User 1 >`,
     );
-    expect(readQueue()).resolves.toEqual([members[0].id, members[1].id]);
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[1].id]);
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
@@ -234,7 +234,7 @@ describe.skip('remove', () => {
     expect(interaction.reply).toHaveBeenCalledWith(
       `${members[0]} removed from the queue\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| >`,
     );
-    expect(readQueue()).resolves.toEqual([members[0].id]);
+    await expect(readQueue()).resolves.toEqual([members[3].id, members[4].id]);
   });
 });
 

@@ -86,6 +86,17 @@ class RotationService {
     interaction.reply(reply);
   }
 
+  async #remove({ currentQueue, memberToRemove, interaction }) {
+    const newQueue = currentQueue.filter((id) => id !== memberToRemove.id);
+
+    await this.#updateQueue(newQueue);
+
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `${memberToRemove} removed from the queue\n\n${formattedQueue}`,
+    );
+  }
+
   // async #swapMembers(memberIds) {
   //   const [firstMember, secondMember] = memberIds;
   //   const queue = await this.#getQueue();
@@ -126,20 +137,6 @@ class RotationService {
   //
   //   interaction.reply(reply.trim());
   // }
-  //
-  // async #removeMember(memberId) {
-  //   await this.redis.lrem(this.keyName, 0, memberId);
-  // }
-  //
-  // async #handleRemoveMember(member, interaction) {
-  //   const memberId = member.id;
-  //   await this.#removeMember(memberId);
-  //
-  //   let reply = `<@${memberId}> removed from the queue\n\n`;
-  //   reply += await this.#getFormattedQueue(interaction);
-  //
-  //   interaction.reply(reply.trim());
-  // }
 
   #getMembers(interactionOptions) {
     const members = [];
@@ -173,15 +170,15 @@ class RotationService {
       case 'add':
         await this.#add({ currentQueue, mentionedMembers, interaction });
         return;
+      case 'remove':
+        await this.#remove({
+          currentQueue,
+          memberToRemove: mentionedMembers[0],
+          interaction,
+        });
+        return;
       // case 'swap':
       //   await this.#swap({ currentQueue, mentionedMembers, interaction });
-      //   return;
-      // case 'remove':
-      //   await this.#remove({
-      //     currentQueue,
-      //     memberToRemove: mentionedMembers[0],
-      //     interaction,
-      //   });
       //   return;
       // case 'rotate':
       //   await this.#rotate(interaction);
