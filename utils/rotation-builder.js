@@ -33,13 +33,12 @@ function rotationBuilder(rotationName) {
     .setDescription(`list ${rotationName} info`)
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages);
 
-  const data = addSubcommands(base, subcommands);
-
-  async function execute(interaction) {
-    await rotationService.handleInteraction(interaction);
-  }
-
-  return { data, execute };
+  return {
+    data: addSubcommands(base, subcommands),
+    execute: async (interaction) => {
+      await rotationService.handleInteraction(interaction);
+    },
+  };
 }
 
 module.exports = { rotationBuilder };
