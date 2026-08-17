@@ -403,7 +403,7 @@ describe('rotate', () => {
   });
 });
 
-describe.skip('read', () => {
+describe('read', () => {
   const interaction = createSubcommand('read')({});
 
   it('reports the queue order', async () => {

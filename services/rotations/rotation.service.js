@@ -124,6 +124,14 @@ class RotationService {
     );
   }
 
+  async #read({ currentQueue, interaction }) {
+    const formattedQueue = await this.#formatQueue(
+      currentQueue,
+      interaction.guild,
+    );
+    interaction.reply(formattedQueue);
+  }
+
   #getMembers(interactionOptions) {
     const members = [];
     for (let i = 0; i < 10; i += 1) {
@@ -169,9 +177,9 @@ class RotationService {
       case 'rotate':
         await this.#rotate({ currentQueue, interaction });
         return;
-      // default:
-      //   await this.#read(interaction);
-      //   return;
+      default:
+        await this.#read({ currentQueue, interaction });
+        return;
     }
   }
 }
