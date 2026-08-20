@@ -1,4 +1,4 @@
-const { RotationService } = require('./rotation.service');
+const RotationService = require('./rotation.service');
 const db = require('../../db');
 const mockUsers = require('../../test/mocks/database-users/rotations');
 const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');

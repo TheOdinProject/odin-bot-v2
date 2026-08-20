@@ -180,4 +180,4 @@ class RotationService {
   }
 }
 
-module.exports = { RotationService };
+module.exports = RotationService;

@@ -1,5 +1,5 @@
 const db = require('../db');
-const { RotationService } = require('../services/rotations');
+const RotationService = require('../services/rotations');
 
 (async () => {
   console.log('Seeding database...');

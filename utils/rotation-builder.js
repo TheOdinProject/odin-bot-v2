@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const { RotationService } = require('../services/rotations/rotation.service');
+const RotationService = require('../services/rotations/rotation.service');
 const { addSubcommands } = require('./slash-command-helpers');
 
 function rotationBuilder(rotationName) {
