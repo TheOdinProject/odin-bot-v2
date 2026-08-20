@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const { token, channels } = require('./config');
+const RedisService = require('./services/redis');
 const MissingEnvVarError = require('./utils/errors/missing-env-var');
 const PendingMigrationsError = require('./utils/errors/pending-migrations');
 const DuplicateIdsError = require('./utils/errors/duplicate-ids');
@@ -18,8 +19,13 @@ if (duplicateKeys.length) {
   throw new DuplicateIdsError(duplicateKeys);
 }
 
-const events = require('./events');
+RedisService.init();
+
+// must deploy commands first to register what rotations need to be seeded)
 require('./bin/deploy-commands');
+require('./bin/seed-database');
+
+const events = require('./events');
 
 const client = new Client({
   intents: [
