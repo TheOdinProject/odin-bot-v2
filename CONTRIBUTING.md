@@ -52,7 +52,7 @@ Leaving the other items as they are with their `''` will not cause issues for no
    DATABASE_URL=postgresql://username:password@localhost:5432/odinbot_development?sslmode=disable
    ```
 
-1. Run `npm run migrate` to apply all the migrations and ensure your development database follows the most up-to-date schema. The bot will not start if there are pending migrations.
+1. Run `npm run migrate:only` to apply all the migrations and ensure your development database follows the most up-to-date schema. The bot will not start if there are pending migrations.
 
 ### Install Redis
 
