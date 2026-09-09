@@ -22,7 +22,7 @@ afterAll(async () => {
 
 const guild = new Guild({
   members: mockUsers.inGuild.map(
-    ({ id, username }) => new GuildMember({ id, username }),
+    ({ id, username, nickname }) => new GuildMember({ id, username, nickname }),
   ),
 });
 
@@ -42,7 +42,7 @@ describe('user', () => {
 
     const botReply = await interaction.reply.mock.results[0]?.value;
     expect(botReply.embeds[0].data).toMatchObject({
-      title: 'TOP Discord points for User 0',
+      title: 'TOP Discord points for User 0 *(User 0)*',
       fields: [
         { name: 'Points', value: 'User 0 has 0 points.' },
         { name: 'Rank', value: 'User 0 is not on the leaderboard.' },
@@ -66,7 +66,7 @@ describe('user', () => {
 
     const botReply = await interaction.reply.mock.results[0]?.value;
     expect(botReply.embeds[0].data).toMatchObject({
-      title: 'TOP Discord points for User 5',
+      title: 'TOP Discord points for User 5 *(User 5)*',
       fields: [
         { name: 'Points', value: 'User 5 has 5 points.' },
         { name: 'Rank', value: 'User 5 is ranked number 26.' },
@@ -80,7 +80,7 @@ describe('user', () => {
 
     const botReply = await interaction.reply.mock.results[0]?.value;
     expect(botReply.embeds[0].data).toMatchObject({
-      title: 'TOP Discord points for User 1',
+      title: 'TOP Discord points for User 1 *(User 1)*',
       fields: [
         { name: 'Points', value: 'User 1 has 1 point.' },
         { name: 'Rank', value: 'User 1 is ranked number 30.' },
@@ -94,7 +94,7 @@ describe('user', () => {
 
     const botReply = await interaction.reply.mock.results[0]?.value;
     expect(botReply.embeds[0].data).toMatchObject({
-      title: 'TOP Discord points for User 30',
+      title: 'TOP Discord points for User 30 *(User 30)*',
       fields: [
         { name: 'Points', value: 'User 30 has 30 points.' },
         { name: 'Rank', value: 'User 30 is ranked number 1 :tada:' },
@@ -108,13 +108,27 @@ describe('user', () => {
 
     const botReply = await interaction.reply.mock.results[0]?.value;
     expect(botReply.embeds[0].data).toMatchObject({
-      title: 'TOP Discord points for User \\*\\*4\\*\\*',
+      title: 'TOP Discord points for User \\*\\*4\\*\\* *(User \\*\\*4\\*\\*)*',
       fields: [
         { name: 'Points', value: 'User \\*\\*4\\*\\* has 4 points.' },
         {
           name: 'Rank',
           value: 'User \\*\\*4\\*\\* is ranked number 27.',
         },
+      ],
+    });
+  });
+
+  it("Displays both user's username and nickname", async () => {
+    const interaction = createInteraction(new User(mockUsers.all[32]));
+    await PointsService.handleInteraction(interaction);
+
+    const botReply = await interaction.reply.mock.results[0]?.value;
+    expect(botReply.embeds[0].data).toMatchObject({
+      title: 'TOP Discord points for notuser32 *(User 32)*',
+      fields: [
+        { name: 'Points', value: 'notuser32 has 0 points.' },
+        { name: 'Rank', value: 'notuser32 is not on the leaderboard.' },
       ],
     });
   });
