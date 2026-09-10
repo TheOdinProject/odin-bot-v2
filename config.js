@@ -23,7 +23,7 @@ const config = {
     botSpamPlaygroundChannelId:
       process.env.BOT_SPAM_PLAYGROUND_CHANNEL_ID || '513125912070455296',
     FAQChannelId: process.env.FAQ_CHANNEL_ID || '823266307293839401',
-    ContactModeratorsChannelId:
+    contactModeratorsChannelId:
       process.env.CONTACT_MODERATORS_CHANNEL_ID || '1059513837197459547',
     rulesChannelId: process.env.RULES_CHANNEL_ID || '693244715839127653',
     moderationLogChannelId:
