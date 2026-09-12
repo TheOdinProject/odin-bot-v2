@@ -14,7 +14,17 @@
     "migrate:new": "dbmate new",
     "migrate:status": "dbmate status --exit-code",
     "format": "prettier --cache --write",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "pin-node": "npm pkg set devEngines.runtime.version=$NEW_NODE_VERSION engines.node=$NEW_NODE_VERSION"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.10"
+    }
+  },
+  "engines": {
+    "node": "^24.10"
   },
   "author": "",
   "license": "ISC",
