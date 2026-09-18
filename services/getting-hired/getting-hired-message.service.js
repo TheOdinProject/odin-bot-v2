@@ -2,28 +2,29 @@ const db = require('../../db');
 const { RESTJSONErrorCodes } = require('discord.js');
 
 class GettingHiredMessageService {
-  cache = new Set();
+  static cache = new Set();
 
-  constructor() {
+  static {
     // Doesn't need to be awaited because handleMessage will do a separate DB check
-    this.#populateCache();
+    GettingHiredMessageService.#populateCache();
   }
 
-  async handleMessage(message) {
+  static async handleMessage(message) {
     const userId = message.member.id;
 
     try {
-      if (this.cache.has(userId)) {
+      if (GettingHiredMessageService.cache.has(userId)) {
         return;
       }
 
-      this.cache.add(userId);
+      GettingHiredMessageService.cache.add(userId);
 
-      const userInDatabase = await this.#isUserInDatabase(userId);
+      const userInDatabase =
+        await GettingHiredMessageService.#isUserInDatabase(userId);
       if (!userInDatabase) {
         await Promise.all([
-          this.#addUserToDatabase(userId),
-          this.#sendIntroMessage(message),
+          GettingHiredMessageService.#addUserToDatabase(userId),
+          GettingHiredMessageService.#sendIntroMessage(message),
         ]);
       }
     } catch (error) {
@@ -31,7 +32,7 @@ class GettingHiredMessageService {
     }
   }
 
-  async #isUserInDatabase(userId) {
+  static async #isUserInDatabase(userId) {
     const { rows } = await db.query(
       `
         SELECT EXISTS (
@@ -44,21 +45,25 @@ class GettingHiredMessageService {
     return rows[0].exists;
   }
 
-  async #addUserToDatabase(userId) {
+  static async #addUserToDatabase(userId) {
     await db.query('INSERT INTO getting_hired_participants VALUES ($1);', [
       userId,
     ]);
   }
 
-  async #populateCache() {
+  static async #populateCache() {
     const { rows } = await db.query(
       'SELECT discord_id FROM getting_hired_participants;',
     );
+
     const discordIds = rows.map((row) => row.discord_id);
-    this.cache = new Set([...this.cache, ...discordIds]);
+    GettingHiredMessageService.cache = new Set([
+      ...GettingHiredMessageService.cache,
+      ...discordIds,
+    ]);
   }
 
-  async #sendIntroMessage(message) {
+  static async #sendIntroMessage(message) {
     const welcomeMessage =
       'Welcome to the channel for the **Getting Hired** part of the curriculum. Please ensure you have **completed the Getting Hired course** and **read all of the pins** prior to engaging in this channel for resume review, interview help, or anything else covered in that section!';
 

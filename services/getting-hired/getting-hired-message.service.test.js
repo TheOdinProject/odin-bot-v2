@@ -5,7 +5,6 @@ const db = require('../../db');
 const { RESTJSONErrorCodes } = require('discord.js');
 
 const participant = { id: 'participant', username: 'User participant' };
-const gettingHiredMessageService = new GettingHiredMessageService();
 
 beforeEach(async () => {
   const initialDbState = [participant.id];
@@ -14,7 +13,7 @@ beforeEach(async () => {
     'INSERT INTO getting_hired_participants VALUES ($1);',
     initialDbState,
   );
-  gettingHiredMessageService.cache = new Set(initialDbState);
+  GettingHiredMessageService.cache = new Set(initialDbState);
   jest.clearAllMocks();
 });
 
@@ -49,7 +48,7 @@ describe('On sending message in Getting Hired channel', () => {
     const author = nonParticipantMember;
     const message = createMessage(author);
 
-    await gettingHiredMessageService.handleMessage(message);
+    await GettingHiredMessageService.handleMessage(message);
     expect(author.send).toHaveBeenCalled();
     expect(message.reply).not.toHaveBeenCalled();
   });
@@ -64,7 +63,7 @@ describe('On sending message in Getting Hired channel', () => {
       throw dmDisabledError;
     });
 
-    await gettingHiredMessageService.handleMessage(message);
+    await GettingHiredMessageService.handleMessage(message);
     expect(message.reply).toHaveBeenCalled();
   });
 
@@ -72,15 +71,15 @@ describe('On sending message in Getting Hired channel', () => {
     const author = nonParticipantMember;
     const message = createMessage(author);
 
-    await gettingHiredMessageService.handleMessage(message);
-    expect(gettingHiredMessageService.cache).toContain(author.id);
+    await GettingHiredMessageService.handleMessage(message);
+    expect(GettingHiredMessageService.cache).toContain(author.id);
   });
 
   it('Adds author to database if they have not posted in the channel before', async () => {
     const author = nonParticipantMember;
     const message = createMessage(author);
 
-    await gettingHiredMessageService.handleMessage(message);
+    await GettingHiredMessageService.handleMessage(message);
     const result = await db.query(
       `
         SELECT EXISTS (
@@ -97,25 +96,25 @@ describe('On sending message in Getting Hired channel', () => {
     const author = participantMember;
     const message = createMessage(author);
 
-    await gettingHiredMessageService.handleMessage(message);
+    await GettingHiredMessageService.handleMessage(message);
     expect(author.send).not.toHaveBeenCalled();
   });
 
   it('Does not DM author if they are not cached but are in the database', async () => {
     const author = participantMember;
     const message = createMessage(author);
-    gettingHiredMessageService.cache.delete(author.id);
+    GettingHiredMessageService.cache.delete(author.id);
 
-    await gettingHiredMessageService.handleMessage(message);
+    await GettingHiredMessageService.handleMessage(message);
     expect(author.send).not.toHaveBeenCalled();
   });
 
   it('Caches author if they are not cached but are in the database', async () => {
     const author = participantMember;
     const message = createMessage(author);
-    gettingHiredMessageService.cache.delete(author.id);
+    GettingHiredMessageService.cache.delete(author.id);
 
-    await gettingHiredMessageService.handleMessage(message);
-    expect(gettingHiredMessageService.cache).toContain(author.id);
+    await GettingHiredMessageService.handleMessage(message);
+    expect(GettingHiredMessageService.cache).toContain(author.id);
   });
 });
