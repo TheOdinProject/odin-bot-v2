@@ -75,9 +75,10 @@ class GettingHiredMessageService {
 
   async #populateCache() {
     const { rows } = await db.query(
-      'SELECT * FROM getting_hired_participants;',
+      'SELECT discord_id FROM getting_hired_participants;',
     );
-    this.cache = new Set([...this.cache, ...rows]);
+    const discordIds = rows.map((row) => row.discord_id);
+    this.cache = new Set([...this.cache, ...discordIds]);
   }
 
   async #sendIntroMessage(message) {
