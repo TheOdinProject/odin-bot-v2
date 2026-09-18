@@ -12,43 +12,36 @@ class GettingHiredMessageService {
   static async handleMessage(message) {
     const userId = message.member.id;
 
+    if (GettingHiredMessageService.cache.has(userId)) {
+      return;
+    }
+
     try {
-      if (GettingHiredMessageService.cache.has(userId)) {
-        return;
-      }
+      const addedRows =
+        await GettingHiredMessageService.#addUserToDatabase(userId);
 
       GettingHiredMessageService.cache.add(userId);
 
-      const userInDatabase =
-        await GettingHiredMessageService.#isUserInDatabase(userId);
-      if (!userInDatabase) {
-        await Promise.all([
-          GettingHiredMessageService.#addUserToDatabase(userId),
-          GettingHiredMessageService.#sendIntroMessage(message),
-        ]);
+      const userIsInDatabase = addedRows.length === 0;
+      if (!userIsInDatabase) {
+        await GettingHiredMessageService.#sendIntroMessage(message);
       }
     } catch (error) {
-      console.log('Error:', error);
+      console.log('Error with GettingHiredMessage handling:', error);
     }
   }
 
-  static async #isUserInDatabase(userId) {
+  static async #addUserToDatabase(userId) {
     const { rows } = await db.query(
       `
-        SELECT EXISTS (
-          SELECT 1 FROM getting_hired_participants
-          WHERE discord_id = $1
-        );
+        INSERT INTO getting_hired_participants
+        VALUES ($1)
+        ON CONFLICT DO NOTHING
+        RETURNING 1;
       `,
       [userId],
     );
-    return rows[0].exists;
-  }
-
-  static async #addUserToDatabase(userId) {
-    await db.query('INSERT INTO getting_hired_participants VALUES ($1);', [
-      userId,
-    ]);
+    return rows;
   }
 
   static async #populateCache() {
