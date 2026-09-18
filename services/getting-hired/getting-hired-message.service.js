@@ -2,34 +2,11 @@ const db = require('../../db');
 const { RESTJSONErrorCodes } = require('discord.js');
 
 class GettingHiredMessageService {
-  static #internalToken = Symbol();
-  static instance = null;
+  cache = new Set();
 
-  // Need a singleton but need its cache to initialise populated with DB data
-  static async new() {
-    if (GettingHiredMessageService.instance) {
-      return GettingHiredMessageService.instance;
-    }
-
-    const instance = new GettingHiredMessageService(
-      GettingHiredMessageService.#internalToken,
-    );
-    await instance.#populateCache();
-    GettingHiredMessageService.instance = instance;
-
-    return instance;
-  }
-
-  constructor(token) {
-    // we want the cache to initialise populated with DB data, but that's async
-    // constructors/static initialisation blocks can only be sync
-    if (token !== GettingHiredMessageService.#internalToken) {
-      throw new Error(
-        'Please instantiate using `await GettingHiredMessageService.new()`!',
-      );
-    }
-
-    this.cache = new Set();
+  constructor() {
+    // Doesn't need to be awaited because handleMessage will do a separate DB check
+    this.#populateCache();
   }
 
   async handleMessage(message) {

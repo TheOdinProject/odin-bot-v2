@@ -1,15 +1,11 @@
 const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');
+const GettingHiredMessageService = require('./getting-hired-message.service');
 const config = require('../../config');
 const db = require('../../db');
 const { RESTJSONErrorCodes } = require('discord.js');
 
 const participant = { id: 'participant', username: 'User participant' };
-let gettingHiredMessageService;
-
-beforeAll(async () => {
-  gettingHiredMessageService =
-    await require('./getting-hired-message.service').new();
-});
+const gettingHiredMessageService = new GettingHiredMessageService();
 
 beforeEach(async () => {
   const initialDbState = [participant.id];

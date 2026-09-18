@@ -152,7 +152,7 @@ module.exports = {
       message.channel.id === config.channels.gettingHiredChannelId &&
       !isAdminMessage
     ) {
-      const gettingHiredMessageService = await GettingHiredMessageService.new();
+      const gettingHiredMessageService = new GettingHiredMessageService();
       await gettingHiredMessageService.handleMessage(message);
 
       return;
