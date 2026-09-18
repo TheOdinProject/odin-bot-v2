@@ -30,8 +30,7 @@ class Guild {
   get members() {
     return {
       cache: this.#members,
-      // TODO: After points overhaul, update to only call it using user id and not user object
-      fetch: (user) => this.#members.get(user.id),
+      fetch: (memberId) => this.#members.get(memberId),
     };
   }
 

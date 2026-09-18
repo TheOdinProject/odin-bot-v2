@@ -19,23 +19,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dbmate": "^2.33.0",
-    "discord.js": "^14.26.4",
-    "dotenv": "^17.4.2",
+    "dbmate": "^2.35.1",
+    "discord.js": "^14.27.0",
     "glob": "^13.0.6",
     "ioredis": "^5.10.1",
-    "pg": "^8.21.0",
-    "prettier": "^3.8.1"
+    "pg": "^8.23.0",
+    "prettier": "^3.9.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
-    "eslint-plugin-check-file": "^3.3.1",
+    "eslint-plugin-check-file": "^3.3.2",
     "eslint-plugin-import": "^2.32.0",
-    "globals": "^17.4.0",
+    "globals": "^17.12.0",
     "husky": "^9.1.7",
-    "jest": "^30.4.2",
-    "lint-staged": "^17.0.8",
+    "jest": "^30.5.1",
+    "lint-staged": "^17.4.1",
     "nodemon": "^3.1.14"
   },
   "lint-staged": {
@@ -44,5 +43,8 @@
       "prettier --check",
       "eslint"
     ]
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
   }
 }
