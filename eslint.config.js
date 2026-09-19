@@ -123,7 +123,7 @@ module.exports = defineConfig([
       '.vscode/**',
       '.husky/**',
       'db/migrations/*',
-      '{README,LICENSE}.md',
+      '{README,LICENSE,CONTRIBUTING}.md',
     ],
     files: ['**/*.!(js)'],
     processor: 'checkFile/eslint-processor-check-file',
