@@ -10,7 +10,7 @@ class DatabaseError extends Error {
   static #messages = new Map()
     .set(
       DatabaseError.#codes.pendingMigrations,
-      'There are migrations pending. Please run `npm run migrate` to apply these migrations.',
+      'There are migrations pending. Please run `npm run migrate:only` to apply these migrations.',
     )
     .set(
       DatabaseError.#codes.connectionError,
