@@ -134,15 +134,29 @@ If you have [Docker](https://docs.docker.com/get-started/get-docker/) (or [Podma
    docker compose run --rm test
    ```
 
-To run any other npm script inside the container, such as the migration commands in [Changes to the Database](#changes-to-the-database), put `docker compose run --rm bot` in front of it. For example:
+To run any other npm script inside the bot container while it's running, such as the migration commands in [Changes to the Database](#changes-to-the-database), put `docker compose exec bot` in front of it. For example:
 
 ```bash
-docker compose run --rm bot npm run migrate:new create-points
+docker compose exec bot npm run migrate:new create-points
+```
+
+If the bot isn't running, use `docker compose run --rm bot` instead of `docker compose exec bot`. This starts a temporary container for the command and removes it afterwards.
+
+To open a shell inside the running bot container, run:
+
+```bash
+docker compose exec bot bash
 ```
 
 Your project folder is mounted into the container, so new migration files and changes to `db/schema.sql` appear in your local repository.
 
-If you change `package.json`, rebuild the image with `docker compose build`. To wipe the database and start fresh, run `docker compose down -v`.
+If you change `package.json`, rebuild the image and refresh the container's `node_modules` with:
+
+```bash
+docker compose up --build --renew-anon-volumes
+```
+
+To wipe the database and start fresh, run `docker compose down -v`.
 
 ## Changes to the Database
 
