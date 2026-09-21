@@ -11,6 +11,7 @@ Before continuing through this guide, be sure you've read our [general contribut
   - [Getting Discord Credentials](#getting-discord-credentials)
   - [Adjust the Bot Settings](#adjust-the-bot-settings)
   - [Invite the Bot to Your Server and Run it Locally](#invite-the-bot-to-your-server-and-run-it-locally)
+  - [Alternative: Run With Docker Compose](#alternative-run-with-docker-compose)
 - [Changes to the Database](#changes-to-the-database)
 - [Slash Commands](#slash-commands)
 
@@ -112,6 +113,36 @@ Colloquially, people call them servers but within the discord.js API, they're kn
 1. In your terminal, navigate to the cloned repository and run `npm run start` to start the bot (or `npm run dev` to allow `nodemon` to auto-restart on changes).
 
 At this point, your cloned version of Odin Bot should come online and its commands should work!
+
+### Alternative: Run With Docker Compose
+
+If you have [Docker](https://docs.docker.com/get-started/get-docker/) (or [Podman](https://podman.io/) with `podman compose`) installed, you can run the bot, PostgreSQL, and Redis in containers instead of installing Node.js, PostgreSQL, and Redis yourself.
+
+1. Create your `.env` file as described in [Initial Setup](#initial-setup), then fill in `DISCORD_API_KEY`, `DISCORD_CLIENT_ID`, and `DISCORD_GUILD_ID` by following [Getting Discord Credentials](#getting-discord-credentials) and [Adjust the Bot Settings](#adjust-the-bot-settings). You can leave `DATABASE_URL`, `TEST_DATABASE_URL`, and `REDIS_URL` as they are. The compose file points these at the containers and overrides whatever is in your `.env`.
+1. Invite the bot to your server as described in the previous section.
+1. Start everything:
+
+   ```bash
+   docker compose up
+   ```
+
+   This starts PostgreSQL and Redis, applies any pending migrations, and then runs the bot with `nodemon`, so it restarts when you change files.
+
+1. To run the tests:
+
+   ```bash
+   docker compose run --rm test
+   ```
+
+To run any other npm script inside the container, such as the migration commands in [Changes to the Database](#changes-to-the-database), put `docker compose run --rm bot` in front of it. For example:
+
+```bash
+docker compose run --rm bot npm run migrate:new create-points
+```
+
+Your project folder is mounted into the container, so new migration files and changes to `db/schema.sql` appear in your local repository.
+
+If you change `package.json`, rebuild the image with `docker compose build`. To wipe the database and start fresh, run `docker compose down -v`.
 
 ## Changes to the Database
 
