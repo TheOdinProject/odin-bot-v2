@@ -6,7 +6,8 @@ Welcome to the Odin Bot repository! This is the codebase that powers Odin's righ
 
 ## Tech Stack
 
-[![Build Status](https://circleci.com/gh/TheOdinProject/theodinproject.svg?style=svg)](https://app.circleci.com/pipelines/github/TheOdinProject/odin-bot-v2)
+![Build status](https://github.com/TheOdinProject/odin-bot-v2/actions/workflows/test.yml/badge.svg)
+![Lint status](https://github.com/TheOdinProject/odin-bot-v2/actions/workflows/lint.yml/badge.svg)
 
 This bot has been built in Node.js using [discord.js](https://discord.js.org/#/docs/main/stable/general/welcome).
 
