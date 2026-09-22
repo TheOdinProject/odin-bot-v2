@@ -6,7 +6,7 @@ class GettingHiredMessageService {
 
   static {
     // Doesn't need to be awaited because handleMessage will do a separate DB check
-    GettingHiredMessageService.#populateCache();
+    GettingHiredMessageService._populateCache();
   }
 
   static async handleMessage(message) {
@@ -27,6 +27,22 @@ class GettingHiredMessageService {
     }
   }
 
+  // While this can technically be private since it's never called directly outside of the class,
+  // it's vital enough that it should be tested, so has to be made public for that.
+  // Until a previous commit, there was a bug where rows weren't mapped to ID strings
+  // but since there were no tests for this, it went uncaught for a while.
+  static async _populateCache() {
+    const { rows } = await db.query(
+      'SELECT discord_id FROM getting_hired_participants;',
+    );
+
+    const discordIds = rows.map((row) => row.discord_id);
+    GettingHiredMessageService.cache = new Set([
+      ...GettingHiredMessageService.cache,
+      ...discordIds,
+    ]);
+  }
+
   static async #addUserToDatabase(userId) {
     const { rows } = await db.query(
       `
@@ -38,18 +54,6 @@ class GettingHiredMessageService {
       [userId],
     );
     return rows;
-  }
-
-  static async #populateCache() {
-    const { rows } = await db.query(
-      'SELECT discord_id FROM getting_hired_participants;',
-    );
-
-    const discordIds = rows.map((row) => row.discord_id);
-    GettingHiredMessageService.cache = new Set([
-      ...GettingHiredMessageService.cache,
-      ...discordIds,
-    ]);
   }
 
   static async #sendIntroMessage(message) {

@@ -21,6 +21,15 @@ afterAll(async () => {
   await db.end();
 });
 
+describe('Initialization', () => {
+  it('Populates cache with string entries (discord IDs)', async () => {
+    await GettingHiredMessageService._populateCache();
+    const values = Array.from(GettingHiredMessageService.cache.values());
+
+    expect(values).toEqual(expect.arrayOf(expect.any(String)));
+  });
+});
+
 describe('On sending message in Getting Hired channel', () => {
   const nonParticipantMember = new GuildMember({
     id: 'nonparticipant',
