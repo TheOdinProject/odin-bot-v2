@@ -116,12 +116,16 @@ module.exports = {
       return;
     }
 
+    // Record every processed message (not just command matches) so the
+    // sliding window rate limit bounds all bot processing per author,
+    // preventing unbounded resource consumption from message flooding.
+    authorBuffer.push(createAuthorEntry(message));
+
     botCommands.forEach(async ({ regex, fn }) => {
       if (process.argv.includes('dev') && message.channel.type !== 'dm') {
         return;
       }
       if (message.content.toLowerCase().match(regex)) {
-        authorBuffer.push(createAuthorEntry(message));
         try {
           // Don't be an idiot like me and remove the callback's message arg
           // Even if none of the ! commands use it, award-points does.
