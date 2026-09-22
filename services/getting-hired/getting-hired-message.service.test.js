@@ -117,4 +117,21 @@ describe('On sending message in Getting Hired channel', () => {
     await GettingHiredMessageService.handleMessage(message);
     expect(GettingHiredMessageService.cache).toContain(author.id);
   });
+
+  it('Does not cache author if the database op fails', async () => {
+    jest.spyOn(db, 'query').mockImplementationOnce(async () => {
+      throw new Error('oops!');
+    });
+
+    const author = nonParticipantMember;
+    const message = createMessage(author);
+
+    try {
+      await GettingHiredMessageService.handleMessage(message);
+    } catch {
+      // error is handled outside of service
+    } finally {
+      expect(GettingHiredMessageService.cache).not.toContain(author.id);
+    }
+  });
 });
