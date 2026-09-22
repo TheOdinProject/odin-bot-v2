@@ -152,7 +152,11 @@ module.exports = {
       message.channel.id === config.channels.gettingHiredChannelId &&
       !isAdminMessage
     ) {
-      await GettingHiredMessageService.handleMessage(message);
+      try {
+        await GettingHiredMessageService.handleMessage(message);
+      } catch (error) {
+        console.log('Error with GettingHiredMessage handling:', error);
+      }
       return;
     }
 

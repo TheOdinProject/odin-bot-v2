@@ -16,18 +16,14 @@ class GettingHiredMessageService {
       return;
     }
 
-    try {
-      const addedRows =
-        await GettingHiredMessageService.#addUserToDatabase(userId);
+    const addedRows =
+      await GettingHiredMessageService.#addUserToDatabase(userId);
 
-      GettingHiredMessageService.cache.add(userId);
+    GettingHiredMessageService.cache.add(userId);
 
-      const userIsInDatabase = addedRows.length === 0;
-      if (!userIsInDatabase) {
-        await GettingHiredMessageService.#sendIntroMessage(message);
-      }
-    } catch (error) {
-      console.log('Error with GettingHiredMessage handling:', error);
+    const userIsInDatabase = addedRows.length === 0;
+    if (!userIsInDatabase) {
+      await GettingHiredMessageService.#sendIntroMessage(message);
     }
   }
 
