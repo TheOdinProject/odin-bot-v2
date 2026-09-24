@@ -34,20 +34,20 @@ describe('UpdateRulesService', () => {
       const embeds = UpdateRulesService.createRulesEmbeds(rawRules);
       expect(embeds.map((embed) => embed.data)).toEqual([
         {
-          color: 0xcc9543,
+          color: 0xe2b260,
           title: 'Community Rules',
           url: 'https://www.theodinproject.com/guides/community/rules',
           description: 'Intro to the rules.\n\n### ✅ Do\n- Be nice',
         },
         {
-          color: 0xcc9543,
+          color: 0xe2b260,
           title: 'Discuss topics that are safe',
           url: 'https://www.theodinproject.com/guides/community/rules#safe-topics',
           description:
             '✅ Discuss safe topics.\n\n❌ Do not discuss unsafe topics.',
         },
         {
-          color: 0xcc9543,
+          color: 0xe2b260,
           title: 'Act professionally',
           url: 'https://www.theodinproject.com/guides/community/rules#respect',
           description: '✅ Be respectful.',
