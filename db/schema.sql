@@ -20,6 +20,15 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: getting_hired_participants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.getting_hired_participants (
+    discord_id text NOT NULL
+);
+
+
+--
 -- Name: points; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -36,6 +45,14 @@ CREATE TABLE public.points (
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: getting_hired_participants getting_hired_participants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.getting_hired_participants
+    ADD CONSTRAINT getting_hired_participants_pkey PRIMARY KEY (discord_id);
 
 
 --
@@ -66,4 +83,5 @@ ALTER TABLE ONLY public.schema_migrations
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20260627132736');
+    ('20260627132736'),
+    ('20260628181723');
