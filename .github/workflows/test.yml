@@ -28,6 +28,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: 'package.json'
+
       - name: Create database
         run: psql -h localhost -U workflow_user -c 'CREATE DATABASE "odinbot_test";'
         env:
