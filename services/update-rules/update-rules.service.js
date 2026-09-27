@@ -1,6 +1,5 @@
 const { EmbedBuilder, MessageFlags } = require('discord.js');
 const config = require('../../config');
-const extraMessages = require('./rules-extras');
 
 class UpdateRulesService {
   static RulesUrl = 'https://www.theodinproject.com/guides/community/rules';
@@ -8,6 +7,9 @@ class UpdateRulesService {
   // matches the `[rule-name]: # (my-rule-name)` markdown comments that precede each rule,
   // capturing the rule name, which is also the rule's anchor on the website
   static RuleNameDelimiter = /\[rule-name\]: # \((.+)\)/;
+
+  // plain text rather than an embed, for anyone with embeds turned off
+  static EmbedsDisabledMessage = `If you are unable to see the above rules, you can either turn on "Show embed and preview website links pasted into chat" or view them online: ${UpdateRulesService.RulesUrl}`;
 
   static async handleInteraction(interaction) {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -89,7 +91,7 @@ class UpdateRulesService {
   static async sendRules(rulesEmbeds, rulesChannel) {
     const messages = [
       ...rulesEmbeds.map((e) => ({ embeds: [e] })),
-      ...extraMessages,
+      UpdateRulesService.EmbedsDisabledMessage,
     ];
     await Promise.all(
       messages.map(async (message) => {
