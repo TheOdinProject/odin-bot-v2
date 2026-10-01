@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageFlags } = require('discord.js');
 const config = require('../../config');
 
 class UpdateFAQsService {
@@ -7,12 +7,14 @@ class UpdateFAQsService {
   static Delimiter = '###';
 
   static async handleInteraction(interaction) {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     let rawFAQs;
     try {
       rawFAQs = await UpdateFAQsService.fetchFAQs();
     } catch (error) {
       console.log(error);
-      await interaction.reply('Failed to update FAQs');
+      await interaction.editReply('Failed to update FAQs');
       return;
     }
 
@@ -22,7 +24,7 @@ class UpdateFAQsService {
     );
     await UpdateFAQsService.deletePreviousFAQs(FAQChannel);
     await UpdateFAQsService.sendFAQs(FAQEmbeds, FAQChannel);
-    await interaction.reply('FAQs updated');
+    await interaction.editReply('FAQs updated');
   }
 
   static async fetchFAQs() {
@@ -52,8 +54,8 @@ class UpdateFAQsService {
   }
 
   static async deletePreviousFAQs(FAQChannel) {
-    const prev = await FAQChannel.messages.fetch({ limit: 10 });
-    prev.forEach((message) => message.delete());
+    const prev = await FAQChannel.messages.fetch({ limit: 100 });
+    await Promise.all(prev.map((message) => message.delete()));
   }
 
   static segments(string, length, delimiter, prependDelimiter = true) {
