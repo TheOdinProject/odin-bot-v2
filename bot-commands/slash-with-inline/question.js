@@ -8,7 +8,7 @@ Asking context-rich questions makes it easy to receive help, and makes it easy f
 
 **Project/Exercise:**
 **Lesson link:**
-**Code:** [code sandbox like codepen, or your github repo]
+**Code:** [GitHub repo, or online sandbox like CodePen]
 **Issue/Problem:** [screenshots if applicable]
 **What I expected:**
 **What I've tried:**
