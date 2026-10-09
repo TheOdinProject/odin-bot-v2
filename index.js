@@ -22,12 +22,14 @@ if (duplicateKeys.length) {
 const events = require('./events');
 require('./bin/deploy-commands');
 
+// PRIVILIGED INTENT ACCESS (MessageContent + GuildMembers) TEMPORARILY DISABLED AS STILL IN REVIEW SO OTHER FEATURES STILL WORK
+// WILL BE RESTORED ONCE APPROVED
 const client = new Client({
   intents: [
-    GatewayIntentBits.MessageContent,
+    // GatewayIntentBits.MessageContent,
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMembers,
+    // GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.DirectMessageReactions,
   ],
