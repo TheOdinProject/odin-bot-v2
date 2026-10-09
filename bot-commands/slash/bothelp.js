@@ -17,10 +17,6 @@ module.exports = {
 **Slash Commands**
 Type a slash \`/\` to see a list of all the available slash commands you can use. Most commands offer extra options, such as pinging a user or specifying additional variables.
 
-**Text-Based Commands**
-We also have these text-based commands which you can use in a sentence:
-\`!xy\`, \`!code\`, \`!question\`, \`!os\` and \`!top\`
-
 **Bot Playground**
 Experiment with our bot in the <#${channels.botSpamPlaygroundChannelId}> channel to try out different commands and features. It's a safe space to explore without disturbing the main channels.
 

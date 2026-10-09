@@ -1,17 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { color } = require('../../config');
 
-const xyEmbed = new EmbedBuilder()
+const topEmbed = new EmbedBuilder()
   .setColor(color)
-  .setTitle('This could very well be an xy problem')
+  .setTitle('The Odin Project')
   .setDescription(
-    'What problem are you *really* trying to solve? Check out [this article about xy problems](https://xyproblem.info/) to help others better understand your question.',
+    'For more information about The Odin Project, visit our site:\n[Your Career in Web Development Starts Here](https://www.theodinproject.com/)',
   );
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('xy')
-    .setDescription('xy problem article')
+    .setName('top')
+    .setDescription('Information about The Odin Project')
     .addUserOption((option) =>
       option.setName('user').setDescription('user to ping'),
     ),
@@ -20,12 +20,7 @@ module.exports = {
 
     await interaction.reply({
       content: userId ? `${userId}` : '',
-      embeds: [xyEmbed],
+      embeds: [topEmbed],
     });
-  },
-  legacy: {
-    name: 'xy',
-    regex: /(?<!\S)!xy(?!\S)/,
-    cb: () => ({ embeds: [xyEmbed] }),
   },
 };

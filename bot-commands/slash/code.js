@@ -40,9 +40,4 @@ module.exports = {
       embeds: [codeEmbed],
     });
   },
-  legacy: {
-    name: 'code',
-    regex: /(?<!\S)!code(?!\S)/,
-    cb: () => ({ embeds: [codeEmbed] }),
-  },
 };

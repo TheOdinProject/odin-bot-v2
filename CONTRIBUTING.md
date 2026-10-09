@@ -128,7 +128,7 @@ Applying or rolling back migrations will also automatically update `db/schema.sq
 
 ## Slash Commands
 
-All our commands are slash commands that can be found in the [`bot-commands/slash`](https://github.com/TheOdinProject/odin-bot-v2/tree/main/bot-commands/slash) directory, with a handful that also have legacy text-based equivalents in the [`bot-commands/slash-with-inline`](https://github.com/TheOdinProject/odin-bot-v2/tree/main/bot-commands/slash-with-inline) directory. Going forward, any new commands should be slash only.
+All our commands are slash commands that can be found in the [`bot-commands/slash`](https://github.com/TheOdinProject/odin-bot-v2/tree/main/bot-commands/slash) directory.
 
 All commands are registered via our [`bin/deploy-commands.js`](https://github.com/TheOdinProject/odin-bot-v2/blob/main/bin/deploy-commands.js) script, though you should not need to manually run this as it is run automatically whenever the bot process starts up. If you add a slash command and the bot process has restarted yet you cannot see the new command in your test server, you can often resolve this by fully closing Discord and re-opening it.
 

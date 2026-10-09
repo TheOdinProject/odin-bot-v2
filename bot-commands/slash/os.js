@@ -22,9 +22,4 @@ module.exports = {
       embeds: [osEmbed],
     });
   },
-  legacy: {
-    name: 'os',
-    regex: /(?<!\S)!os(?!\S)/,
-    cb: () => ({ embeds: [osEmbed] }),
-  },
 };

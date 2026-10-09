@@ -10,7 +10,7 @@ const {
   manuallyRegistrableCommands,
 } = require('../bot-commands');
 
-// Registering non-slash commands like inline ! commands, points and party parrot
+// Registering non-slash commands like points and party parrot
 manuallyRegistrableCommands.forEach((command) => {
   registerBotCommand(command.regex, command.cb);
 });

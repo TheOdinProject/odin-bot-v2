@@ -15,9 +15,8 @@ commandFiles.forEach((file) => {
   if (command.data) {
     discordRegistrableCommands.set(command.data.name, command);
   }
-  if (command.legacy || !command.data) {
-    const commandToSet = command.legacy ?? command;
-    manuallyRegistrableCommands.set(commandToSet.name, commandToSet);
+  if (!command.data) {
+    manuallyRegistrableCommands.set(command.name, command);
   }
 });
 
