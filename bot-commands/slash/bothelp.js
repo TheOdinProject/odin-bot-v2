@@ -28,7 +28,7 @@ Experiment with our bot in the <#${channels.botSpamPlaygroundChannelId}> channel
 Feel free to check out or contribute to the Odin bot's code in the [odin-bot Repository](https://github.com/TheOdinProject/odin-bot-v2)
 
 **Party Parrot**
-Fun fact: Odin-bot loves the Party Parrot! 🦜
+Fun fact: Odin-bot loves the Party Parrot! Try \`/partyparrot\` 🦜
       `);
 
     await interaction.reply({
