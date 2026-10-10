@@ -19,7 +19,7 @@ const club40Role = new Role(config.roles.club40Id, 'club-40');
 const channels = [generalChannel, club40Channel, noPointsChannel];
 const roles = [coreRole, club40Role];
 
-jest.mock('./club-40-gifs.json', () => [
+jest.mock('../../services/points/club-40-gifs.json', () => [
   {
     gif: 'https://i.imgur.com/ofDEfYs.gif',
     author: 'Sully',
@@ -109,8 +109,12 @@ describe('++ / :star:', () => {
     );
     expect(result.rows).toEqual([{ points: 2 }, { points: 3 }]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [`Nice! ${mentionedMember1} now has 2 points`],
-      [`Nice! ${mentionedMember2} now has 3 points`],
+      [
+        [
+          `Nice! ${mentionedMember1} now has 2 points`,
+          `Nice! ${mentionedMember2} now has 3 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 
@@ -171,12 +175,16 @@ describe('++ / :star:', () => {
       { points: 6 }, // points unchanged!
     ]);
     expect(generalChannel.send.mock.calls).toEqual([
-      ['You can only do up to 5 users at a time...'],
-      [`Nice! ${mentionedMembers[0]} now has 2 points`],
-      [`Nice! ${mentionedMembers[1]} now has 3 points`],
-      [`Nice! ${mentionedMembers[2]} now has 4 points`],
-      [`Sweet! ${mentionedMembers[3]} now has 5 points`],
-      [`Sweet! ${mentionedMembers[4]} now has 6 points`],
+      [
+        [
+          'You can only do up to 5 users at a time...',
+          `Nice! ${mentionedMembers[0]} now has 2 points`,
+          `Nice! ${mentionedMembers[1]} now has 3 points`,
+          `Nice! ${mentionedMembers[2]} now has 4 points`,
+          `Sweet! ${mentionedMembers[3]} now has 5 points`,
+          `Sweet! ${mentionedMembers[4]} now has 6 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 
@@ -234,8 +242,7 @@ describe('++ / :star:', () => {
     );
     expect(result.rows).toEqual([]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [selfAwardGif],
-      ["You can't give yourself points!"],
+      [[selfAwardGif, "You can't give yourself points!"].join('\n')],
     ]);
   });
 
@@ -259,9 +266,13 @@ describe('++ / :star:', () => {
     expect(ownAwardResult.rows).toEqual([]);
     expect(otherAwardResult.rows).toEqual([{ points: 1 }]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [selfAwardGif],
-      ["You can't give yourself points!"],
-      [`Nice! ${mentionedMember} now has 1 point`],
+      [
+        [
+          selfAwardGif,
+          "You can't give yourself points!",
+          `Nice! ${mentionedMember} now has 1 point`,
+        ].join('\n'),
+      ],
     ]);
   });
 
@@ -299,13 +310,17 @@ describe('++ / :star:', () => {
       { points: 6 },
     ]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [selfAwardGif],
-      ["You can't give yourself points!"],
-      [`Nice! ${mentionedMembers[0]} now has 2 points`],
-      [`Nice! ${mentionedMembers[1]} now has 3 points`],
-      [`Nice! ${mentionedMembers[2]} now has 4 points`],
-      [`Sweet! ${mentionedMembers[3]} now has 5 points`],
-      [`Sweet! ${mentionedMembers[4]} now has 6 points`],
+      [
+        [
+          selfAwardGif,
+          "You can't give yourself points!",
+          `Nice! ${mentionedMembers[0]} now has 2 points`,
+          `Nice! ${mentionedMembers[1]} now has 3 points`,
+          `Nice! ${mentionedMembers[2]} now has 4 points`,
+          `Sweet! ${mentionedMembers[3]} now has 5 points`,
+          `Sweet! ${mentionedMembers[4]} now has 6 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 });
@@ -332,7 +347,7 @@ describe('?++', () => {
     );
     expect(result.rows).toEqual([]);
     expect(generalChannel.send.mock.calls).toEqual([
-      ['Only staff can use ?++ to give double points!'],
+      ['Only staff can give double points!'],
     ]);
   });
 
@@ -377,8 +392,12 @@ describe('?++', () => {
     );
     expect(result.rows).toEqual([{ points: 3 }, { points: 4 }]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [`Thanks for the great question! ${mentionedMember1} now has 3 points`],
-      [`Thanks for the great question! ${mentionedMember2} now has 4 points`],
+      [
+        [
+          `Thanks for the great question! ${mentionedMember1} now has 3 points`,
+          `Thanks for the great question! ${mentionedMember2} now has 4 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 
@@ -458,8 +477,7 @@ describe('?++', () => {
     );
     expect(result.rows).toEqual([]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [selfAwardGif],
-      ["You can't give yourself points!"],
+      [[selfAwardGif, "You can't give yourself points!"].join('\n')],
     ]);
   });
 
@@ -481,9 +499,13 @@ describe('?++', () => {
     );
     expect(result.rows).toEqual([{ points: 2 }]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [selfAwardGif],
-      ["You can't give yourself points!"],
-      [`Thanks for the great question! ${mentionedMember} now has 2 points`],
+      [
+        [
+          selfAwardGif,
+          "You can't give yourself points!",
+          `Thanks for the great question! ${mentionedMember} now has 2 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 
@@ -506,8 +528,12 @@ describe('?++', () => {
     );
     expect(result.rows).toEqual([{ points: 3 }, { points: 3 }]);
     expect(generalChannel.send.mock.calls).toEqual([
-      [`Thanks for the great question! ${mentionedMember1} now has 3 points`],
-      [`Nice! ${mentionedMember2} now has 3 points`],
+      [
+        [
+          `Thanks for the great question! ${mentionedMember1} now has 3 points`,
+          `Nice! ${mentionedMember2} now has 3 points`,
+        ].join('\n'),
+      ],
     ]);
   });
 
