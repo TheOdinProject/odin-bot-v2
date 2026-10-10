@@ -11,6 +11,7 @@ Before continuing through this guide, be sure you've read our [general contribut
   - [Getting Discord Credentials](#getting-discord-credentials)
   - [Adjust the Bot Settings](#adjust-the-bot-settings)
   - [Invite the Bot to Your Server and Run it Locally](#invite-the-bot-to-your-server-and-run-it-locally)
+- [Updating Node Version Compatibility](#updating-node-version-compatibility)
 - [Changes to the Database](#changes-to-the-database)
 - [Slash Commands](#slash-commands)
 
@@ -112,6 +113,19 @@ Colloquially, people call them servers but within the discord.js API, they're kn
 1. In your terminal, navigate to the cloned repository and run `npm run start` to start the bot (or `npm run dev` to allow `nodemon` to auto-restart on changes).
 
 At this point, your cloned version of Odin Bot should come online and its commands should work!
+
+> [!NOTE]
+> If you get a Node version incompatibility error when starting the bot, install an LTS version of Node that meets the compatibility requirements.
+
+## Updating Node Version Compatibility
+
+To update this codebase's Node version compatibility (assuming a maintainer has agreed to it), use our `pin-node` npm script and set the new semver value as the `NEW_NODE_VERSION` environment variable. For example, to pin Node compatibility to `^26`, run:
+
+```bash
+NEW_NODE_VERSION=^26 npm run pin-node
+```
+
+The updated files can then be committed and PRed.
 
 ## Changes to the Database
 
