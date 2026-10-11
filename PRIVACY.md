@@ -28,7 +28,7 @@ Odin Bot cannot access personal account data such as your email, phone number, o
 
 We use your data strictly in the following ways:
 
-- Message content may be temporarily read for operations such as commands and awarding points, as well as moderation actions. We do not retain message content.
+- Message content may be temporarily read for operations such as commands and awarding points, as well as moderation actions. Some commands are able to retain message content by sending direct messages to the command user. Odin Bot does not retain message content in external stores or for other purposes.
 - User IDs and roles are read for commands and moderation. We retain user IDs for features such as our points system, bot automation, and staff rotation queues.
 - Display names are used to provide more readable names for command output.
 - Any data voluntarily supplied when using commands are used and retained strictly when required for a command to function.
@@ -56,7 +56,7 @@ We take reasonable measures to protect your data from unauthorized access, alter
 
 We may update this Privacy Policy from time to time. When we make a material change, we will update the date at the top and log the change below. Your continued interaction within The Odin Project's Discord server and use of Odin Bot after we make changes to this policy indicates your acceptance of the revised policy.
 
-- **October 11th, 2026**: Clarified third-party data sharing situations.
+- **October 11th, 2026**: Clarified third-party data sharing situations and message content retention.
 - **October 11th, 2026**: Original policy
 
 ## Contact Us
