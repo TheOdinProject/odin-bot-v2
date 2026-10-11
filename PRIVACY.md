@@ -20,6 +20,8 @@ Odin Bot may process the following data provided by Discord:
 - Role and permissions data
 - Message content
 
+Odin Bot can also process any data you voluntarily supply to it as part of using a command.
+
 Odin Bot cannot access personal account data such as your email, phone number, or password.
 
 ## How We Use Your Data
@@ -29,10 +31,18 @@ We use your data strictly in the following ways:
 - Message content may be temporarily read for operations such as commands and awarding points, as well as moderation actions. We do not retain message content.
 - User IDs and roles are read for commands and moderation. We retain user IDs for features such as our points system, bot automation, and staff rotation queues.
 - Display names are used to provide more readable names for command output.
+- Any data voluntarily supplied when using commands are used and retained strictly when required for a command to function.
 
 ## Sharing Your Data
 
-We do not sell or share your data with third parties, and we do not pass any data to AI products or services. However, we may disclose your data in response to legal process or a request from a law enforcement agency or regulatory authority.
+We do not sell your data to third parties, and we do not pass any data to AI products or services.
+
+Data will only be shared with third parties strictly for the following purposes:
+
+- Verifying account and backing status for [The Odin Project on Open Collective](https://opencollective.com/theodinproject).
+- When strictly required by host providers to run the bot.
+
+In addition, we may disclose your data in response to legal process or a request from a law enforcement agency or regulatory authority.
 
 ## Data Retention
 
@@ -46,6 +56,7 @@ We take reasonable measures to protect your data from unauthorized access, alter
 
 We may update this Privacy Policy from time to time. When we make a material change, we will update the date at the top and log the change below. Your continued interaction within The Odin Project's Discord server and use of Odin Bot after we make changes to this policy indicates your acceptance of the revised policy.
 
+- **October 11th, 2026**: Clarified third-party data sharing situations.
 - **October 11th, 2026**: Original policy
 
 ## Contact Us
