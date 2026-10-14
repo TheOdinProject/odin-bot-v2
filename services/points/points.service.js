@@ -109,10 +109,11 @@ Our goal is to maintain a positive and supportive community, where help and cont
     // rank is 1-indexed
     const rank = allUsers.findIndex((user) => user === userInDatabase) + 1;
     const displayName = escapeMarkdown(guildMember.displayName);
+    const username = escapeMarkdown(guildMember.user.username);
 
     const userPointsEmbed = new EmbedBuilder()
       .setColor('#cc9543')
-      .setTitle(`TOP Discord points for ${displayName}`)
+      .setTitle(`TOP Discord points for ${displayName} *(${username})*`)
       .addFields([
         {
           name: 'Points',

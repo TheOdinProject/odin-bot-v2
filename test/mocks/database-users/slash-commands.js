@@ -31,6 +31,7 @@ const mockUsers = [
   { id: '29', username: 'User 29', points: 29 },
   { id: '30', username: 'User 30', points: 30 },
   { id: 'NotInGuild', username: 'User NotInGuild', points: 1000 },
+  { id: '32', username: 'User 32', points: 0, nickname: 'notuser32' },
 ];
 
 module.exports = {

@@ -8,7 +8,7 @@ const {
 const searchSites = new Map()
   .set('google', {
     name: 'Google',
-    url: 'https://www.google.com/search?q=',
+    url: 'https://www.google.com/search?udm=web&q=',
     description: 'Search for terms in Google',
   })
   .set('top', {

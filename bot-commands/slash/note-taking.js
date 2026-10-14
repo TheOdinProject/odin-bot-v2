@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('notes')
+    .setName('notetaking')
     .setDescription('Things to consider about taking notes')
     .addUserOption((option) =>
       option.setName('user').setDescription('user to ping'),
