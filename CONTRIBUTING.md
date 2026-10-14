@@ -120,7 +120,8 @@ If you do anything that requires altering the database schema somehow, such as a
 1. Run `npm run migrate:new <migration-name>`, where the migration name should describe what it involves (e.g. `npm run migrate:new create-points`). This will create a blank migration file within the `db/migrations` directory.
 1. Within your new migration file, write the SQL you need for the new database alterations under the `-- migrate:up` section.
 1. Under the `--migrate:down` section, write the reverse SQL, so that if you need to roll back the migration, it fully undoes whatever it applied. For example if the up migration creates a table, drop it in the down migration.
-1. Run `npm run migrate` to apply the migration(s) you wrote
+1. Run `npm run migrate` to apply the migration(s) you wrote.
+1. If changing anything about the database that involves storing user data (such as Discord data), you **must** amend the [`bin/delete-user-data.js`](./bin/delete-user-data.js) script if necessary to ensure the data can be easily deleted if requested.
 
 Should you need to undo any migrations, you can roll them back one at a time by running `npm run migrate:rollback`.
 
