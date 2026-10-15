@@ -1,7 +1,7 @@
 const { Events } = require('discord.js');
-const GettingHiredMessageService = require('../services/getting-hired-message.service');
 const config = require('../config');
 const { isAdmin } = require('../utils/is-admin');
+const GettingHiredMessageService = require('../services/getting-hired/getting-hired-message.service');
 const SpamKickingService = require('../services/spam-kick/spammer-kick-service');
 
 const botCommands = [];
@@ -148,10 +148,15 @@ module.exports = {
       }
     });
 
-    if (message.channel.id === config.channels.gettingHiredChannelId) {
-      const gettingHiredMessageService = new GettingHiredMessageService();
-      await gettingHiredMessageService.handleMessage(message, isAdminMessage);
-
+    if (
+      message.channel.id === config.channels.gettingHiredChannelId &&
+      !isAdminMessage
+    ) {
+      try {
+        await GettingHiredMessageService.handleMessage(message);
+      } catch (error) {
+        console.log('Error with GettingHiredMessage handling:', error);
+      }
       return;
     }
 
