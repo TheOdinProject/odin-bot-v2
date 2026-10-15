@@ -1,83 +1,84 @@
 const { MessageFlags } = require('discord.js');
 const config = require('../../config');
-const RedisService = require('../redis');
+const db = require('../../db');
 
 class OpenCollectiveService {
-  static API_URL = 'https://api.opencollective.com/graphql/v2';
-
-  static successMessage =
-    'You have been given the Backer role, thanks for contributing!';
-
-  static failureMessage = `Oops! Something went wrong. Try again, or contact us through <@${config.modmailUserId}> with a link to your Open Collective profile (https://opencollective.com/YOURUSERNAME) so we can assign the role manually.`;
-
-  static ourOpenCollectiveUsername = 'theodinproject';
-
-  static redisKeyForVerifiedOpenCollectiveUsernames = 'verified_oc_usernames';
+  static #API_URL = 'https://api.opencollective.com/graphql/v2';
+  static #replies = {
+    success: 'You have been given the Backer role, thanks for contributing!',
+    failure: `Oops! Something went wrong so try again. If it keeps failing, contact us through <@${config.modmailUserId}> (instructions in <#${config.channels.contactModeratorsChannelId}>) with a link to your Open Collective profile (\`https://opencollective.com/YOURUSERNAME\`) so we can verify and assign the role manually.`,
+    alreadyBacker: 'You already have the Backer role!',
+  };
 
   static async handleInteraction(interaction) {
     if (interaction.member.roles.cache.has(config.roles.backer)) {
       return interaction.reply({
-        content: 'You already have the Backer role!',
+        content: OpenCollectiveService.#replies.alreadyBacker,
         flags: MessageFlags.Ephemeral,
       });
     }
 
-    const username = interaction.options.getString('username');
-    const redis = RedisService.getInstance();
+    const openCollectiveUsername = interaction.options.getString('username');
 
-    if (await OpenCollectiveService.isUsernameCached(username, redis)) {
-      return interaction.reply({
-        content: OpenCollectiveService.failureMessage,
-        flags: MessageFlags.Ephemeral,
-      });
-    }
-
-    const data =
-      await OpenCollectiveService.fetchUserOpenCollectiveAccount(username);
-
-    if (data.errors) {
-      return interaction.reply({
-        content: OpenCollectiveService.failureMessage,
-        flags: MessageFlags.Ephemeral,
-      });
-    }
-
-    const userAccount = data.data.account;
-
-    if (OpenCollectiveService.isUserOpenCollectiveMember(userAccount)) {
-      await redis.lpush(
-        OpenCollectiveService.redisKeyForVerifiedOpenCollectiveUsernames,
-        username,
+    const { data, errors } =
+      await OpenCollectiveService.#fetchUserOpenCollectiveAccount(
+        openCollectiveUsername,
       );
-      await interaction.member.roles.add(config.roles.backer);
+    if (errors) {
       return interaction.reply({
-        content: OpenCollectiveService.successMessage,
+        content: OpenCollectiveService.#replies.failure,
         flags: MessageFlags.Ephemeral,
       });
     }
 
-    return interaction.reply({
-      content: OpenCollectiveService.failureMessage,
-      flags: MessageFlags.Ephemeral,
-    });
-  }
-
-  static isUserOpenCollectiveMember(userAccount) {
-    return userAccount.memberOf.nodes.find(
-      (node) =>
-        node.account.slug === OpenCollectiveService.ourOpenCollectiveUsername,
+    const userBacksTOP = data.account.memberOf.nodes.find(
+      ({ account }) => account.slug === 'theodinproject',
     );
-  }
+    if (!userBacksTOP) {
+      return interaction.reply({
+        content: OpenCollectiveService.#replies.failure,
+        flags: MessageFlags.Ephemeral,
+      });
+    }
 
-  static async isUsernameCached(username, redis) {
-    const index = await redis.lpos(
-      OpenCollectiveService.redisKeyForVerifiedOpenCollectiveUsernames,
-      username,
+    const isNewBacker = await this.#storeOpenCollectiveUsername(
+      openCollectiveUsername,
     );
-    return index !== null;
+
+    if (isNewBacker) {
+      await interaction.member.roles.add(config.roles.backer);
+      interaction.reply({
+        content: OpenCollectiveService.#replies.success,
+        flags: MessageFlags.Ephemeral,
+      });
+    } else {
+      // Username in db but no backer role
+      // could mean new Discord account/left server and rejoined
+      // but also anyone can use the command with any Open Collective username (even if not theirs).
+      // So if username already in db, requires manual verification.
+      interaction.reply({
+        content: OpenCollectiveService.#replies.alreadyBacker,
+        flags: MessageFlags.Ephemeral,
+      });
+    }
   }
 
-  static async fetchUserOpenCollectiveAccount(username) {
+  static async #storeOpenCollectiveUsername(username) {
+    const { rows } = await db.query(
+      `
+        INSERT INTO verified_opencollective_usernames
+        VALUES ($1)
+        ON CONFLICT DO NOTHING
+        RETURNING username;
+      `,
+      [username],
+    );
+
+    const isNewBacker = rows.length > 0;
+    return isNewBacker;
+  }
+
+  static async #fetchUserOpenCollectiveAccount(username) {
     const query = `query account($slug: String) {
       account(slug: $slug) {
         name
@@ -106,7 +107,7 @@ class OpenCollectiveService {
       }),
     };
 
-    const result = await fetch(OpenCollectiveService.API_URL, options);
+    const result = await fetch(OpenCollectiveService.#API_URL, options);
     const data = await result.json();
 
     return data;
