@@ -18,8 +18,11 @@ const RedisService = require('../services/redis');
 
     const { rows } = await db.query(
       `
-        INSERT INTO rotations
-        VALUES ('triage', $1), ('email', $2)
+        UPDATE rotations
+        SET queue = CASE
+            WHEN name = 'triage' THEN $1::text[]
+            WHEN name = 'email' THEN $2::text[]
+          END
         RETURNING *;
       `,
       [rotations.triage, rotations.email],
