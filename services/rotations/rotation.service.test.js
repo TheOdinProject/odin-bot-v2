@@ -1,649 +1,448 @@
-const { RotationService } = require('./rotation.service');
-const {
-  buildInteraction,
-  getUsers,
-  initializeServer,
-} = require('../../utils/slash-command-helpers');
+const RotationService = require('./rotation.service');
+const db = require('../../db');
+const mockUsers = require('../../test/mocks/database-users/rotations');
+const { Guild, GuildMember, TextChannel } = require('../../test/mocks/discord');
 
-jest.mock('../redis');
+const members = mockUsers.map((user) => new GuildMember(user));
+const channel = new TextChannel('000');
+const guild = new Guild({ members, channels: [channel] });
 
-describe('addition', () => {
-  it('creates a rotation and reports the inital queue order', async () => {
-    const rotation = new RotationService('test', 'test');
+function createSubcommand(subcommand) {
+  return (mentionedMembers) => {
+    return {
+      guild,
+      options: {
+        getSubcommand: () => subcommand,
+        getMember: (optionName) => mentionedMembers[optionName],
+      },
+      reply: jest.fn((message) => message).mockName('Bot reply'),
+    };
+  };
+}
 
-    const reply = jest.fn();
-    const users = getUsers(2);
-    const server = initializeServer();
-    const interaction = buildInteraction('add', server, users, reply);
+async function populateQueue(members) {
+  await db.query(
+    `
+      UPDATE rotations
+      SET queue = $1::text[]
+      WHERE name = 'test';
+    `,
+    [members.map(({ id }) => id)],
+  );
+}
+
+async function readQueue() {
+  const { rows } = await db.query(
+    "SELECT queue FROM rotations WHERE name = 'test';",
+  );
+  return rows[0].queue;
+}
+
+async function emptyQueue() {
+  await db.query('TRUNCATE rotations;');
+  await db.query("INSERT INTO rotations VALUES ('test');");
+}
+
+beforeEach(async () => {
+  await emptyQueue();
+  RotationService.rotations = [];
+  jest.clearAllMocks();
+});
+
+afterAll(async () => {
+  await db.end();
+});
+
+describe('initialization', () => {
+  it('tracks created rotations', () => {
+    new RotationService('test1');
+    expect(RotationService.rotations).toEqual(['test1']);
+
+    new RotationService('test2');
+    expect(RotationService.rotations).toEqual(['test1', 'test2']);
+
+    new RotationService('test3');
+    expect(RotationService.rotations).toEqual(['test1', 'test2', 'test3']);
+  });
+});
+
+describe('add', () => {
+  const createInteraction = createSubcommand('add');
+
+  it('creates a fresh queue with one member', async () => {
+    const rotation = new RotationService('test');
+
+    const interaction = createInteraction({ user0: members[0] });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[0]} successfully added to the queue\n\nTest rotation queue order: User 0 *(current)* >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id]);
+  });
+
+  it('adds one member to populated queue', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: members[1] });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[1]} successfully added to the queue\n\nTest rotation queue order: User 0 *(current)* > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[1].id]);
+  });
+
+  it('adds multiple members to empty queue in a single command', async () => {
+    const rotation = new RotationService('test');
+
+    const interaction = createInteraction({
+      user0: members[0],
+      user1: members[1],
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[0]} ${members[1]} successfully added to the queue\n\nTest rotation queue order: User 0 *(current)* > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[1].id]);
+  });
+
+  it('adds multiple members to populated queue in a single command', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({
+      user0: members[1],
+      user1: members[2],
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[1]} ${members[2]} successfully added to the queue\n\nTest rotation queue order: User 0 *(current)* > User 1 > User 2 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[0].id,
+      members[1].id,
+      members[2].id,
+    ]);
+  });
+
+  it('does not add a member more than once in a single command', async () => {
+    const rotation = new RotationService('test');
+
+    const interaction = createInteraction({
+      user0: members[0],
+      user1: members[0],
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[0]} successfully added to the queue\n\nTest rotation queue order: User 0 *(current)* >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id]);
+  });
+
+  it('does not add a member to the queue if they are already in it', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: members[0] });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenLastCalledWith(
+      `${queue.at(0)} not added as they are already in the queue\n\nTest rotation queue order: User 0 *(current)* >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id]);
+  });
+
+  it('escapes markdown in usernames and nicknames', async () => {
+    const rotation = new RotationService('test');
+
+    const interaction = createInteraction({
+      user0: members[3],
+      user1: members[4],
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[3]} ${members[4]} successfully added to the queue\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[3].id, members[4].id]);
+  });
+});
+
+describe('remove', () => {
+  const createInteraction = createSubcommand('remove');
+
+  it('removes member when at the start of the queue', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: queue.at(0) });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[0]} removed from the queue\n\nTest rotation queue order: User 1 *(current)* > User 2 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[1].id, members[2].id]);
+  });
+
+  it('removes member when in the middle of the queue', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: queue.at(1) });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[1]} removed from the queue\n\nTest rotation queue order: User 0 *(current)* > User 2 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[2].id]);
+  });
+
+  it('removes member when at the end of the queue', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: queue.at(-1) });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[2]} removed from the queue\n\nTest rotation queue order: User 0 *(current)* > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[0].id, members[1].id]);
+  });
+
+  it('escapes markdown in usernames and nicknames', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[3], members[4]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({ user0: queue.at(0) });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${members[0]} removed from the queue\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[3].id, members[4].id]);
+  });
+});
+
+describe('swap', () => {
+  const createInteraction = createSubcommand('swap');
+
+  it("swaps start and end members' positions", async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({
+      user0: queue.at(0),
+      user1: queue.at(-1),
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(0)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User 2 *(current)* > User 1 > User 0 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[2].id,
+      members[1].id,
+      members[0].id,
+    ]);
+  });
+
+  it("swaps start and middle members' positions", async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({
+      user0: queue.at(0),
+      user1: queue.at(1),
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(0)} swapped with ${queue.at(1)}\n\nTest rotation queue order: User 1 *(current)* > User 0 > User 2 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[1].id,
+      members[0].id,
+      members[2].id,
+    ]);
+  });
+
+  it("swaps middle and end members' positions", async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({
+      user0: queue.at(1),
+      user1: queue.at(-1),
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(1)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User 0 *(current)* > User 2 > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[0].id,
+      members[2].id,
+      members[1].id,
+    ]);
+  });
+
+  it('warns when used with fewer than 2 members in the queue', async () => {
+    const rotation = new RotationService('test');
+
+    const interaction = createInteraction({
+      user0: members[0],
+      user1: members[1],
+    });
+    await rotation.handleInteraction(interaction);
+
+    await expect(interaction.reply).toHaveBeenCalledWith(
+      'Fewer than two members in the queue. Try adding some with `/triage add`!',
+    );
+  });
+
+  it('escapes markdown in usernames and nicknames', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[3], members[4]];
+    await populateQueue(queue);
+
+    const interaction = createInteraction({
+      user0: queue.at(0),
+      user1: queue.at(-1),
+    });
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(0)} swapped with ${queue.at(-1)}\n\nTest rotation queue order: User \\|\\|4\\|\\| *(current)* > User \\*\\*3\\*\\* >`,
+    );
+    await expect(readQueue()).resolves.toEqual([members[4].id, members[3].id]);
+  });
+});
+
+describe('rotate', () => {
+  const interaction = createSubcommand('rotate')({});
+
+  it('rotates the queue, pings the new "current" member in the rotation then reports the new queue order', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
+
+    await rotation.handleInteraction(interaction);
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(1)}, it's your turn for the test rotation\n\nTest rotation queue order: User 1 *(current)* > User 2 > User 0 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[1].id,
+      members[2].id,
+      members[0].id,
+    ]);
+
+    await rotation.handleInteraction(interaction);
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(2)}, it's your turn for the test rotation\n\nTest rotation queue order: User 2 *(current)* > User 0 > User 1 >`,
+    );
+    await expect(readQueue()).resolves.toEqual([
+      members[2].id,
+      members[0].id,
+      members[1].id,
+    ]);
+  });
+
+  it('only replies once', async () => {
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1], members[2]];
+    await populateQueue(queue);
 
     await rotation.handleInteraction(interaction);
 
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz >',
-    );
+    expect(interaction.reply).toHaveBeenCalledTimes(1);
   });
 
-  it('adds one person to the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(2);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const additionUsers = getUsers(1, 2);
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      additionUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@9101> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang >',
-    );
-  });
-
-  it('adds multiple people to the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(2);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const additionUsers = getUsers(2, 2);
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      additionUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@9101> <@1121> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang > Bing >',
-    );
-  });
-
-  it('does not add people to the queue multiple times', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(2);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const additionUsers = getUsers(3, 1);
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      additionUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      'Baz not added as they are already in the queue\n\n <@9101> <@1121> successfully added to the queue\n\nTest rotation queue order: Foo *(current)* > Baz > Bang > Bing >',
-    );
-  });
-
-  it('addresses rejected users by nickname if they have one', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(2);
-    const additionUsers = getUsers(1);
-    additionUsers[0].nickname = 'Bar';
-    const server = initializeServer([...creationUsers, ...additionUsers]);
-
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      additionUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      'Bar not added as they are already in the queue\n\nTest rotation queue order: Bar *(current)* > Baz >',
-    );
-  });
-
-  it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(2);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const additionUsers = getUsers(2, 2);
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      additionUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
-  });
-
-  it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const users = getUsers(2);
-    users[0].nickname = 'Foo `test`';
-    users[1].username = 'Baz *test*';
-
-    const server = initializeServer(users);
-
-    const reply = jest.fn();
-    const interaction = buildInteraction('add', server, users, reply);
+  it('warns when used with fewer than 2 members in the queue', async () => {
+    const rotation = new RotationService('test');
 
     await rotation.handleInteraction(interaction);
 
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> successfully added to the queue\n\nTest rotation queue order: Foo \\`test\\` *(current)* > Baz \\*test\\* >',
+    expect(interaction.reply).toHaveBeenCalledWith(
+      'Fewer than two members in the queue. Try adding some with `/triage add`!',
     );
-  });
-});
-
-describe('removal', () => {
-  it('removes one person from the start of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const removalusers = creationUsers.slice(0, 1);
-    const removalInteraction = buildInteraction(
-      'remove',
-      server,
-      removalusers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(removalInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> removed from the queue\n\nTest rotation queue order: Baz *(current)* > Bang >',
-    );
-  });
-
-  it('removes one person from the middle of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const removalusers = creationUsers.slice(1, 2);
-    const removalInteraction = buildInteraction(
-      'remove',
-      server,
-      removalusers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(removalInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\nTest rotation queue order: Foo *(current)* > Bang >',
-    );
-  });
-
-  it('removes one person from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const removalusers = creationUsers.slice(2);
-    const removalInteraction = buildInteraction(
-      'remove',
-      server,
-      removalusers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(removalInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@9101> removed from the queue\n\nTest rotation queue order: Foo *(current)* > Baz >',
-    );
-  });
-
-  it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const removalusers = creationUsers.slice(2);
-    const removalInteraction = buildInteraction(
-      'remove',
-      server,
-      removalusers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(removalInteraction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[3], members[4]];
+    await populateQueue(queue);
 
-    const users = getUsers(2);
-    users[0].nickname = 'Foo `test`';
-    users[1].username = 'Baz *test*';
+    await rotation.handleInteraction(interaction);
 
-    const server = initializeServer(users);
-
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      users,
-      () => {},
+    expect(interaction.reply).toHaveBeenCalledWith(
+      `${queue.at(1)}, it's your turn for the test rotation\n\nTest rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| > User 0 >`,
     );
-
-    const reply = jest.fn();
-    const removalUsers = users.slice(1);
-    const removalInteraction = buildInteraction(
-      'remove',
-      server,
-      removalUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(additionInteraction);
-
-    await rotation.handleInteraction(removalInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@5678> removed from the queue\n\nTest rotation queue order: Foo \\`test\\` *(current)* >',
-    );
+    await expect(readQueue()).resolves.toEqual([
+      members[3].id,
+      members[4].id,
+      members[0].id,
+    ]);
   });
 });
 
-describe('swapping', () => {
-  it('swaps one person from the start of the queue with one from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
+describe('read', () => {
+  const interaction = createSubcommand('read')({});
 
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const swapUsers = [creationUsers[0], creationUsers[2]];
-    const swappingInteraction = buildInteraction(
-      'swap',
-      server,
-      swapUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(swappingInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@9101> swapped position in the queue\n\nTest rotation queue order: Bang *(current)* > Baz > Foo >',
-    );
-  });
-
-  it('swaps one person from the start of the queue with one from the middle of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const swapUsers = [creationUsers[0], creationUsers[1]];
-    const swappingInteraction = buildInteraction(
-      'swap',
-      server,
-      swapUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(swappingInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\nTest rotation queue order: Baz *(current)* > Foo > Bang >',
-    );
-  });
-
-  it('swaps one person from the middle of the queue with one from the end of the queue and reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const swapUsers = [creationUsers[1], creationUsers[2]];
-    const swappingInteraction = buildInteraction(
-      'swap',
-      server,
-      swapUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(swappingInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@5678> <@9101> swapped position in the queue\n\nTest rotation queue order: Foo *(current)* > Bang > Baz >',
-    );
-  });
-
-  it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const swapUsers = [creationUsers[0], creationUsers[2]];
-    const swappingInteraction = buildInteraction(
-      'swap',
-      server,
-      swapUsers,
-      reply,
-    );
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(swappingInteraction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
-  });
-
-  it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const users = getUsers(2);
-    users[0].nickname = 'Foo `test`';
-    users[1].username = 'Baz *test*';
-
-    const server = initializeServer(users);
-
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      users,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const swapInteraction = buildInteraction('swap', server, users, reply);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    await rotation.handleInteraction(swapInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      '<@1234> <@5678> swapped position in the queue\n\nTest rotation queue order: Baz \\*test\\* *(current)* > Foo \\`test\\` >',
-    );
-  });
-});
-
-describe('reading', () => {
   it('reports the queue order', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1]];
+    await populateQueue(queue);
 
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
+    await rotation.handleInteraction(interaction);
+
+    expect(interaction.reply).toHaveBeenCalledWith(
+      'Test rotation queue order: User 0 *(current)* > User 1 >',
     );
+  });
 
-    const reply = jest.fn();
-    const readInteraction = buildInteraction('read', server, [], reply);
+  it('reports empty queue', async () => {
+    const rotation = new RotationService('test');
 
-    await rotation.handleInteraction(creationInteraction);
+    await rotation.handleInteraction(interaction);
 
-    await rotation.handleInteraction(readInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      'Test rotation queue order: Foo *(current)* > Baz > Bang >',
-    );
+    expect(interaction.reply).toHaveBeenCalledWith('No members');
   });
 
   it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
+    const queue = [members[0], members[1]];
+    await populateQueue(queue);
 
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
+    await rotation.handleInteraction(interaction);
 
-    const reply = jest.fn();
-    const readInteraction = buildInteraction('read', server, [], reply);
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(readInteraction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
+    expect(interaction.reply).toHaveBeenCalledTimes(1);
   });
 
   it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
+    const rotation = new RotationService('test');
+    const queue = [members[3], members[4]];
+    await populateQueue(queue);
 
-    const users = getUsers(2);
-    users[0].nickname = 'Foo `test`';
-    users[1].username = 'Baz *test*';
+    await rotation.handleInteraction(interaction);
 
-    const server = initializeServer(users);
-
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      users,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const readInteraction = buildInteraction('read', server, [], reply);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    await rotation.handleInteraction(readInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      'Test rotation queue order: Foo \\`test\\` *(current)* > Baz \\*test\\* >',
-    );
-  });
-});
-
-describe('rotation', () => {
-  it('rotates the queue, pings the new first user in the rotation then reports the new queue order', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const rotationInteraction = buildInteraction('rotate', server, [], reply);
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(rotationInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      "<@5678> it's your turn for the test rotation.\n\nTest rotation queue order: Baz *(current)* > Bang > Foo >",
-    );
-  });
-
-  it('only replies once', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const creationUsers = getUsers(3);
-    const server = initializeServer();
-    const creationInteraction = buildInteraction(
-      'add',
-      server,
-      creationUsers,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const rotationInteraction = buildInteraction('rotate', server, [], reply);
-
-    await rotation.handleInteraction(creationInteraction);
-
-    await rotation.handleInteraction(rotationInteraction);
-
-    expect(reply).toHaveBeenCalledTimes(1);
-  });
-
-  it('escapes markdown in usernames and nicknames', async () => {
-    const rotation = new RotationService('test', 'test');
-
-    const users = getUsers(2);
-    users[0].nickname = 'Foo `test`';
-    users[1].username = 'Baz *test*';
-
-    const server = initializeServer(users);
-
-    const additionInteraction = buildInteraction(
-      'add',
-      server,
-      users,
-      () => {},
-    );
-
-    const reply = jest.fn();
-    const rotateInteraction = buildInteraction('rotate', server, [], reply);
-
-    await rotation.handleInteraction(additionInteraction);
-
-    await rotation.handleInteraction(rotateInteraction);
-
-    expect(reply).toHaveBeenCalledWith(
-      "<@5678> it's your turn for the test rotation.\n\nTest rotation queue order: Baz \\*test\\* *(current)* > Foo \\`test\\` >",
+    expect(interaction.reply).toHaveBeenCalledWith(
+      'Test rotation queue order: User \\*\\*3\\*\\* *(current)* > User \\|\\|4\\|\\| >',
     );
   });
 });
