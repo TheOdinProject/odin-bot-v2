@@ -21,12 +21,12 @@ class PointsService {
       .setColor('#cc9543')
       .setTitle('Points in the TOP Discord server')
       .setDescription(
-        `Want to give credit where it's due? Show your appreciation for helpful members in our server by giving them a point! Mention their \`@name\` and add \`++\` or \`:star:\`
+        `Want to give credit where it's due? Show your appreciation for helpful members in our server by giving them a point! Tag \`@odin-bot\`, mention their \`@name\` and add \`++\` or \`:star:\`
 
-**Example:**
+**Examples:**
 
-\`@username ++\`
-\`@username :star:\`
+\`@odin-bot @username ++\`
+\`@odin-bot @username :star:\`
 
 The bot will only detect these in new messages, not message edits.
 
