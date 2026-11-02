@@ -21,7 +21,7 @@
   "dependencies": {
     "dbmate": "^2.37.0",
     "discord.js": "^14.27.0",
-    "glob": "^13.0.6",
+    "glob": "^14.0.2",
     "ioredis": "^5.10.1",
     "pg": "^8.23.1",
     "prettier": "^3.9.10"
