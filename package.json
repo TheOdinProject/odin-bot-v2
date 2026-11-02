@@ -24,7 +24,7 @@
     "glob": "^13.0.6",
     "ioredis": "^5.10.1",
     "pg": "^8.23.1",
-    "prettier": "^3.9.9"
+    "prettier": "^3.9.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
