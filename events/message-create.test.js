@@ -1,5 +1,15 @@
 const { Guild, GuildMember, Message, Role } = require('../test/mocks/discord');
 
+// GettingHiredMessageService has static initialization block (SIB) with unawaited async
+// Service not needed for this test - manual mock needed so SIB doesn't run (auto-mock still runs it).
+//
+// Cannot require db and await db.end() in an afterAll here, because
+// it's message-create.js that imports the GettingHiredMessageService,
+// not this test file (order matters!).
+jest.mock(
+  '../services/getting-hired/getting-hired-message.service',
+  () => class Mock {},
+);
 jest.mock('../services/spam-kick/spammer-kick-service');
 
 describe('Spam detection', () => {
