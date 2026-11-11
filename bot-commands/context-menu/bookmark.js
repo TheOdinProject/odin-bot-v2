@@ -9,6 +9,8 @@ module.exports = {
     .setName('Bookmark Message')
     .setType(ApplicationCommandType.Message),
   execute: async (interaction) => {
+    await interaction.deferReply();
+
     await BookmarkMessageService.sendBookmarkedMessage(
       interaction.targetMessage,
       interaction.user,
@@ -19,7 +21,6 @@ module.exports = {
     // No interaction.end() method to silently complete the interaction
     // so this is the next best way for now.
     // Replies can be made interaction-based if we remove the :bookmark: reaction trigger.
-    await interaction.deferReply();
     await interaction.deleteReply();
   },
 };
