@@ -6,7 +6,7 @@ const BookmarkMessageService = require('../../services/bookmark-message.service'
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
-    .setName('Bookmark message')
+    .setName('Bookmark Message')
     .setType(ApplicationCommandType.Message),
   execute: async (interaction) => {
     await BookmarkMessageService.sendBookmarkedMessage(
