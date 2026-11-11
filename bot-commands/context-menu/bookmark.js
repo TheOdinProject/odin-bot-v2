@@ -1,6 +1,7 @@
 const {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
+  MessageFlags,
 } = require('discord.js');
 const BookmarkMessageService = require('../../services/bookmark-message.service');
 
@@ -9,7 +10,7 @@ module.exports = {
     .setName('Bookmark Message')
     .setType(ApplicationCommandType.Message),
   execute: async (interaction) => {
-    await interaction.deferReply();
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     await BookmarkMessageService.sendBookmarkedMessage(
       interaction.targetMessage,
