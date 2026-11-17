@@ -1,14 +1,11 @@
-const { Events } = require('discord.js');
 // const { guildId } = require('../config');
-const RedisService = require('../services/redis');
+const { Events } = require('discord.js');
 
 module.exports = {
   name: Events.ClientReady,
   once: true,
   execute: () => async (/* client */) => {
     console.log('Bot session started:', new Date());
-
-    RedisService.init();
 
     /**
      * TEMPORARILY DISABLED DUE TO PRIVILEGED INTENT ACCESS (GuildMembers) STILL IN REVIEW

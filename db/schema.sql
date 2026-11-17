@@ -15,6 +15,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA public IS '';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -26,6 +40,16 @@ SET default_table_access_method = heap;
 CREATE TABLE public.points (
     discord_id text NOT NULL,
     points integer NOT NULL
+);
+
+
+--
+-- Name: rotations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.rotations (
+    name text NOT NULL,
+    queue text[] DEFAULT ARRAY[]::text[] NOT NULL
 );
 
 
@@ -44,6 +68,14 @@ CREATE TABLE public.schema_migrations (
 
 ALTER TABLE ONLY public.points
     ADD CONSTRAINT points_pkey PRIMARY KEY (discord_id);
+
+
+--
+-- Name: rotations rotations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rotations
+    ADD CONSTRAINT rotations_pkey PRIMARY KEY (name);
 
 
 --
@@ -66,4 +98,5 @@ ALTER TABLE ONLY public.schema_migrations
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20260627132736');
+    ('20260627132736'),
+    ('20260816193351');

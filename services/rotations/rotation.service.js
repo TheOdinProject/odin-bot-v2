@@ -1,193 +1,183 @@
 const { escapeMarkdown } = require('discord.js');
-const RedisService = require('../redis');
+const db = require('../../db');
 
 class RotationService {
-  constructor(rotationName, keyName) {
-    this.rotationName = rotationName;
-    this.keyName = keyName;
-    this.redis = RedisService.getInstance();
+  static rotations = [];
+
+  constructor(name) {
+    this.name = name;
+    RotationService.rotations.push(name);
   }
 
   async #getQueue() {
-    const members = await this.redis.lrange(this.keyName, 0, -1);
-    return members;
-  }
-
-  async #addMembers(memberIds) {
-    const queue = await this.#getQueue();
-
-    const newMemberIds = memberIds.filter((id) => !queue?.includes(id));
-
-    if (newMemberIds.length > 0) {
-      await this.redis.rpush(this.keyName, newMemberIds);
-    }
-
-    return newMemberIds;
-  }
-
-  static #getFormattedPings(memberIds) {
-    return memberIds.reduce((acc, id) => `${acc} <@${id}>`, '');
-  }
-
-  async #getDisplayNames(members, server) {
-    this.displayNames = members.map(async (memberId) => {
-      const member = await server.members.fetch(memberId);
-      return escapeMarkdown(member.nickname || member.user.username);
-    });
-
-    return Promise.all(this.displayNames);
-  }
-
-  async #getFormattedQueue(interaction) {
-    const members = await this.#getQueue();
-    const membersDisplayNames = await this.#getDisplayNames(
-      members,
-      interaction.guild,
+    const { rows } = await db.query(
+      'SELECT queue FROM rotations WHERE name = $1;',
+      [this.name],
     );
-    const formattedQueue = membersDisplayNames
-      .map((name, i) => `${name} ${i === 0 ? '*(current)* >' : '>'}`)
-      .join(' ');
+    const { queue } = rows[0];
+    return queue ?? [];
+  }
 
+  async #updateQueue(newQueue) {
+    await db.query(
+      `
+        UPDATE rotations
+        SET queue = $1::text[]
+        WHERE name = $2;
+      `,
+      [newQueue, this.name],
+    );
+  }
+
+  async #idsToMembers(ids, guild) {
+    return Promise.all(
+      ids.map(async (memberId) => await guild.members.fetch(memberId)),
+    );
+  }
+
+  async #formatQueue(queue, guild) {
+    const queueMembers = await this.#idsToMembers(queue, guild);
+
+    const formattedQueue = queueMembers
+      .map((member, i) => {
+        const displayName = member.nickname || member.user.username;
+        return `${escapeMarkdown(displayName)} ${i === 0 ? '*(current)* >' : '>'}`;
+      })
+      .join(' ');
     const capitalizedRotationName =
-      this.rotationName[0].toUpperCase() + this.rotationName.slice(1);
+      this.name[0].toUpperCase() + this.name.slice(1);
+
     return formattedQueue
       ? `${capitalizedRotationName} rotation queue order: ${formattedQueue}`
       : 'No members';
   }
 
-  async #handleAddMembers(members, interaction) {
+  async #add({ currentQueue, mentionedMembers, interaction }) {
+    const addedMembers = [];
+    const membersAlreadyInQueue = [];
+
+    for (const member of mentionedMembers) {
+      if (currentQueue.includes(member.id)) {
+        membersAlreadyInQueue.push(member);
+      } else if (!addedMembers.includes(member)) {
+        addedMembers.push(member);
+      }
+    }
+
+    const newQueue = [...currentQueue, ...addedMembers.map(({ id }) => id)];
+    await this.#updateQueue(newQueue);
+
     let reply = '';
-    const memberIds = members.map((member) => member?.id || member);
-    const addedIds = await this.#addMembers(memberIds);
-
-    if (addedIds.length !== memberIds.length) {
-      const nonAddedIds = memberIds.filter((id) => !addedIds.includes(id));
-      const nonAddedNames = await this.#getDisplayNames(
-        nonAddedIds,
-        interaction.guild,
-      );
-      const formattedNonAddedNames = nonAddedNames
-        .reduce((acc, name) => `${acc} ${name},`, '')
-        .slice(0, -1);
-      reply += `${formattedNonAddedNames} not added as they are already in the queue\n\n`;
+    if (membersAlreadyInQueue.length) {
+      const mentions = membersAlreadyInQueue.map((member) => member.toString());
+      reply += `${mentions.join(' ')} not added as they are already in the queue\n\n`;
+    }
+    if (addedMembers.length) {
+      const mentions = addedMembers.map((member) => member.toString());
+      reply += `${mentions.join(' ')} successfully added to the queue\n\n`;
     }
 
-    if (addedIds.length > 0) {
-      const addedNotifications = RotationService.#getFormattedPings(addedIds);
-      reply += `${addedNotifications} successfully added to the queue\n\n`;
-    }
+    reply += await this.#formatQueue(newQueue, interaction.guild);
 
-    reply += await this.#getFormattedQueue(interaction);
-
-    interaction.reply(reply.trim());
+    interaction.reply(reply);
   }
 
-  async #createQueue(members) {
-    await this.redis.del(this.keyName);
-    await this.#addMembers(members);
+  async #remove({ currentQueue, memberToRemove, interaction }) {
+    const newQueue = currentQueue.filter((id) => id !== memberToRemove.id);
+
+    await this.#updateQueue(newQueue);
+
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `${memberToRemove} removed from the queue\n\n${formattedQueue}`,
+    );
   }
 
-  async #swapMembers(memberIds) {
-    const [firstMember, secondMember] = memberIds;
-    const queue = await this.#getQueue();
+  async #swap({ currentQueue, mentionedMembers, interaction }) {
+    const [firstMember, secondMember] = mentionedMembers;
+    const firstMemberIndex = currentQueue.indexOf(firstMember.id);
+    const secondMemberIndex = currentQueue.indexOf(secondMember.id);
 
-    const firstMemberIndex = queue.indexOf(firstMember);
-    const secondMemberIndex = queue.indexOf(secondMember);
+    const newQueue = [...currentQueue];
+    newQueue[firstMemberIndex] = secondMember.id;
+    newQueue[secondMemberIndex] = firstMember.id;
 
-    queue[firstMemberIndex] = secondMember;
-    queue[secondMemberIndex] = firstMember;
+    await this.#updateQueue(newQueue);
 
-    await this.#createQueue(queue);
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `${firstMember} swapped with ${secondMember}\n\n${formattedQueue}`,
+    );
   }
 
-  async #handleSwapMembers(members, interaction) {
-    const memberIds = members.map((member) => member.id);
-    await this.#swapMembers(memberIds);
+  async #rotate({ currentQueue, interaction }) {
+    const newQueue = [...currentQueue.slice(1), currentQueue[0]];
+    await this.#updateQueue(newQueue);
 
-    const swappedMemberPings = RotationService.#getFormattedPings(memberIds);
-    let reply = `${swappedMemberPings} swapped position in the queue\n\n`;
-    reply += await this.#getFormattedQueue(interaction);
-
-    interaction.reply(reply.trim());
+    const formattedQueue = await this.#formatQueue(newQueue, interaction.guild);
+    interaction.reply(
+      `<@${newQueue[0]}>, it's your turn for the ${this.name} rotation\n\n${formattedQueue}`,
+    );
   }
 
-  async #rotateQueue() {
-    const previousMember = await this.redis.lpop(this.keyName);
-    await this.#addMembers([previousMember]);
-
-    const memberToPing = await this.redis.lindex(this.keyName, 0);
-    return memberToPing;
-  }
-
-  async #handleRotateQueue(interaction) {
-    const memberToPing = await this.#rotateQueue(interaction);
-
-    let reply = `<@${memberToPing}> it's your turn for the ${this.rotationName} rotation.\n\n`;
-    reply += await this.#getFormattedQueue(interaction);
-
-    interaction.reply(reply.trim());
-  }
-
-  async #removeMember(memberId) {
-    await this.redis.lrem(this.keyName, 0, memberId);
-  }
-
-  async #handleRemoveMember(member, interaction) {
-    const memberId = member.id;
-    await this.#removeMember(memberId);
-
-    let reply = `<@${memberId}> removed from the queue\n\n`;
-    reply += await this.#getFormattedQueue(interaction);
-
-    interaction.reply(reply.trim());
+  async #read({ currentQueue, interaction }) {
+    const formattedQueue = await this.#formatQueue(
+      currentQueue,
+      interaction.guild,
+    );
+    interaction.reply(formattedQueue);
   }
 
   #getMembers(interactionOptions) {
-    this.members = [];
+    const members = [];
     for (let i = 0; i < 10; i += 1) {
-      this.members.push(interactionOptions.getUser(`user${i}`));
+      const mentionedMember = interactionOptions.getMember(`user${i}`);
+      if (mentionedMember) {
+        members.push(mentionedMember);
+      }
     }
-    return this.members.filter((member) => member);
+    return members;
   }
 
   async handleInteraction(interaction) {
-    const actionType = interaction.options.getSubcommand();
+    const subcommand = interaction.options.getSubcommand();
 
     const currentQueue = await this.#getQueue();
-    const currentQueueLength = currentQueue?.length || 0;
-
+    const subcommandsNeedingMultipleMembers = ['swap', 'rotate'];
     if (
-      currentQueueLength < 2 &&
-      actionType !== 'add' &&
-      actionType !== 'remove'
+      currentQueue.length < 2 &&
+      subcommandsNeedingMultipleMembers.includes(subcommand)
     ) {
       await interaction.reply(
-        'Less than two members in the queue. Try adding some with `/triage add`!',
+        'Fewer than two members in the queue. Try adding some with `/triage add`!',
       );
       return;
     }
 
-    const members = this.#getMembers(interaction.options);
+    const mentionedMembers = this.#getMembers(interaction.options);
 
-    switch (actionType) {
+    switch (subcommand) {
       case 'add':
-        await this.#handleAddMembers(members, interaction);
-        return;
-      case 'swap':
-        await this.#handleSwapMembers(members, interaction);
+        await this.#add({ currentQueue, mentionedMembers, interaction });
         return;
       case 'remove':
-        await this.#handleRemoveMember(members[0], interaction);
+        await this.#remove({
+          currentQueue,
+          memberToRemove: mentionedMembers[0],
+          interaction,
+        });
+        return;
+      case 'swap':
+        await this.#swap({ currentQueue, mentionedMembers, interaction });
         return;
       case 'rotate':
-        await this.#handleRotateQueue(interaction);
+        await this.#rotate({ currentQueue, interaction });
         return;
       default:
+        await this.#read({ currentQueue, interaction });
+        return;
     }
-
-    const reply = await this.#getFormattedQueue(interaction);
-    await interaction.reply(reply.trim());
   }
 }
 
-module.exports = { RotationService };
+module.exports = RotationService;
