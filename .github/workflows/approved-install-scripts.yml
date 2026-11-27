@@ -1,0 +1,26 @@
+name: Approved Install Scripts
+on:
+  pull_request:
+    paths:
+      - 'package*.json'
+
+jobs:
+  check:
+    name: Check all install scripts are approved
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      # `npm approve-scripts` requires node_modules
+      - name: Install dependencies
+        run: npm install --silent
+
+      - name: Check install script approval
+        run: |
+          output=$(npm approve-scripts --allow-scripts-pending)
+
+          # `npm approve-scripts` always exits 0, even if unreviewed scripts found
+          if [ "$output" != "No packages with unreviewed install scripts." ]; then
+            echo "::error::${output}"
+            exit 1
+          fi
